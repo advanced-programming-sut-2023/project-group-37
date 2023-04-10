@@ -62,9 +62,9 @@ assignees: Arman17Babaei
 
 ## تسک‌های نفر دوم
 
-  **نام و نام خانوادگی:**
+  **نام و نام خانوادگی: مهرشاد دهقانی**
 <details>
-  <summary>تسک مربوطه</summary>
+  <summary> کامیت نام و شماره دانشجویی در md.README</summary>
 
   <div dir="ltr" align='right'>
 
