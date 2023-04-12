@@ -76,9 +76,9 @@ assignees: Arman17Babaei
 
 ## تسک‌های نفر سوم
 
-  **نام و نام خانوادگی:**
+  **نام و نام خانوادگی: بردیا ماندگار**
 <details>
-  <summary>تسک مربوطه</summary>
+  <summary>کامیت نام و شماره دانشجویی در README.md</summary>
 
   <div dir="ltr" align='right'>
 
