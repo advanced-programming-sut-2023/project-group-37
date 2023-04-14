@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class Troop extends Person {
 
+    private String name;
     private final ArrayList<Weapons> weapons;
 
     public Troop(Government government, Troops troop) {
