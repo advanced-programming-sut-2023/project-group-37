@@ -2,6 +2,8 @@ package controller;
 
 import model.Game;
 import view.enums.messages.GameMenuMessages;
+
+import javax.swing.plaf.InsetsUIResource;
 import java.util.regex.Matcher;
 
 public class GameMenuController {
@@ -21,6 +23,45 @@ public class GameMenuController {
         return null;
     }
     public GameMenuMessages showFoodList(Matcher matcher){
+        return null;
+    }
+    public String setFoodRate(Matcher matcher){
+        return null;
+    }
+    public String ShowFoodRate(Matcher matcher){
+        return null;
+    }
+    public String setTaxRate(Matcher matcher){
+        return null;
+    }
+    public String ShowTaxRate(Matcher matcher){
+        return null;
+    }
+    public String setFearRate(Matcher matcher){
+        return null;
+    }
+    public String ShowFearRate(Matcher matcher){
+        return null;
+    }
+    public String dropBuilding(Matcher matcher){
+        return null;
+    }
+    public String selectBuilding(Matcher matcher){
+        return null;
+    }
+    public String createUnit(Matcher matcher){
+        return null;
+    }
+    public String repair(Matcher matcher){
+        return null;
+    }
+    public String selectUnit(Matcher matcher){
+        return null;
+    }
+    public String moveUnit(Matcher matcher){
+        return null;
+    }
+    public String patrolUnit(Matcher matcher){
         return null;
     }
 }
