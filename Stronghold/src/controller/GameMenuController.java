@@ -14,4 +14,13 @@ public class GameMenuController {
     public GameMenuMessages enterMapMenu(Matcher matcher){
         return null;
     }
+    public GameMenuMessages ShowPopularityFactors(Matcher matcher){
+        return null;
+    }
+    public String showPopularity(Matcher matcher){
+        return null;
+    }
+    public GameMenuMessages showFoodList(Matcher matcher){
+        return null;
+    }
 }

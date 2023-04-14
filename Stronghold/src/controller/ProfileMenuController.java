@@ -24,16 +24,16 @@ public class ProfileMenuController {
     public ProfileMenuMessages removeSlogan(Matcher matcher){
         return null;
     }
-    public ProfileMenuMessages showScore(Matcher matcher){
+    public String showScore(Matcher matcher){
         return null;
     }
-    public ProfileMenuMessages showRank(Matcher matcher){
+    public String showRank(Matcher matcher){
         return null;
     }
-    public ProfileMenuMessages showSlogan(Matcher matcher){
+    public String showSlogan(Matcher matcher){
         return null;
     }
-    public ProfileMenuMessages showProfile(Matcher matcher){
+    public String showProfile(Matcher matcher){
         return null;
     }
 }
