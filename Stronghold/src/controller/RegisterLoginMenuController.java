@@ -1,7 +1,5 @@
 package controller;
 
-import java.io.StringReader;
-import java.util.NavigableMap;
 import java.util.regex.Matcher;
 
 public class RegisterLoginMenuController {
