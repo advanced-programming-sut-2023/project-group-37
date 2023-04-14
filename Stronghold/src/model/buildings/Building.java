@@ -20,7 +20,7 @@ public abstract class Building {
 
     public void repair() {
         // TODO: check if works fine.
-        this.government.resources.put(this.formingMaterial, this.government.resources.get(formingMaterial)
+        this.government.getResources().put(this.formingMaterial, this.government.getResources().get(formingMaterial)
                 - (int) Math.ceil((double) (maxHitPoints - hitPoints) / maxHitPoints) * formingMaterialAmount);
         this.hitPoints = this.maxHitPoints;
     }

@@ -5,5 +5,11 @@ import model.enums.Resources;
 import java.util.HashMap;
 
 public class Government {
-    public HashMap<Resources, Integer> resources;
+
+    private Colors color;
+    private HashMap<Resources, Integer> resources;
+
+    public HashMap<Resources, Integer> getResources() {
+        return this.resources;
+    }
 }
