@@ -1,16 +1,15 @@
 package controller;
 
-import model.Government;
-
-import java.util.Scanner;
+import java.util.regex.Matcher;
 
 public class ShopMenuController {
-    private final Government currentGovernment = Government.getCurrentGovernment();
-
-    private String command;
-    private Scanner scanner;
-
-    public void run() {
-
+    public String showPriceList(Matcher matcher){
+        return null;
+    }
+    public String buy(Matcher matcher){
+        return null;
+    }
+    public String sell(Matcher matcher){
+        return null;
     }
 }
