@@ -3,6 +3,7 @@ package model;
 import model.enums.Foods;
 import model.enums.Resources;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Government {
@@ -21,6 +22,8 @@ public class Government {
     private int fearRate;
 
     private int gold;
+
+    private final ArrayList<Trade> trades = new ArrayList<>();
 
     private HashMap<String, Integer> popularityFactors;
 
