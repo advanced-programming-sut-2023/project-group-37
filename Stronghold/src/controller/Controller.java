@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class Controller {
     private static final Scanner scanner = new Scanner(System.in);
     private final ProfileMenu profileMenu = new ProfileMenu(scanner);
-    private final GameMenu gameMenu = new GameMenu(scanner);
     private final RegisterLoginMenu registerLoginMenu = new RegisterLoginMenu(scanner);
 
 

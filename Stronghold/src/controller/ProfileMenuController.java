@@ -1,37 +1,39 @@
 package controller;
 
+import view.enums.messages.ProfileMenuMessages;
+
 import java.util.regex.Matcher;
 
 public class ProfileMenuController {
 
-    public String changeUsername(Matcher matcher){
+    public ProfileMenuMessages changeUsername(Matcher matcher){
         return null;
     }
-    public String changeNickName(Matcher matcher){
+    public ProfileMenuMessages changeNickName(Matcher matcher){
         return null;
     }
-    public String changePassword(Matcher matcher){
+    public ProfileMenuMessages changePassword(Matcher matcher){
         return null;
     }
-    public String changeEmail(Matcher matcher){
+    public ProfileMenuMessages changeEmail(Matcher matcher){
         return null;
     }
-    public String changeSlogan(Matcher matcher){
+    public ProfileMenuMessages changeSlogan(Matcher matcher){
         return null;
     }
-    public String removeSlogan(Matcher matcher){
+    public ProfileMenuMessages removeSlogan(Matcher matcher){
         return null;
     }
-    public String showScore(Matcher matcher){
+    public ProfileMenuMessages showScore(Matcher matcher){
         return null;
     }
-    public String showRank(Matcher matcher){
+    public ProfileMenuMessages showRank(Matcher matcher){
         return null;
     }
-    public String showSlogan(Matcher matcher){
+    public ProfileMenuMessages showSlogan(Matcher matcher){
         return null;
     }
-    public String showProfile(Matcher matcher){
+    public ProfileMenuMessages showProfile(Matcher matcher){
         return null;
     }
 }
