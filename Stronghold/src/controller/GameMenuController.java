@@ -64,4 +64,20 @@ public class GameMenuController {
     public String patrolUnit(Matcher matcher){
         return null;
     }
+    public String setUnitState(Matcher matcher){
+        return null;
+    }
+    public String attack(Matcher matcher){
+        return null;
+    }
+    public String pourOil(Matcher matcher){
+        return null;
+    }
+    public String digTunnel(Matcher matcher){
+        return null;
+    }
+    public String build(Matcher matcher){
+        return null;
+    }
+
 }
