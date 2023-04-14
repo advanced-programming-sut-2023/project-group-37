@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.StringReader;
+import java.util.NavigableMap;
 import java.util.regex.Matcher;
 
 public class RegisterLoginMenuController {
@@ -18,6 +19,13 @@ public class RegisterLoginMenuController {
     }
 
     public String login(Matcher matcher) {
+        return null;
+    }
+    public String forgot(Matcher matcher){return null;}
+    public String generateRandomPassword(){
+        return null;
+    }
+    public String generateRandomSlogan(){
         return null;
     }
 }
