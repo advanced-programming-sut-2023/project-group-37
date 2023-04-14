@@ -8,10 +8,11 @@ import java.util.regex.Matcher;
 
 public class ProfileMenu {
 
-    private final ProfileMenuController controller;
+    private final ProfileMenuController controller = new ProfileMenuController();
+    private final Scanner scanner;
 
-    public ProfileMenu(){
-        controller = new ProfileMenuController();
+    public ProfileMenu(Scanner scanner){
+        this.scanner = scanner;
     }
 
     public Results run(Scanner scanner){
