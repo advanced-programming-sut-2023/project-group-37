@@ -7,10 +7,11 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class GameMenu {
-    private final GameMenuController controller;
+    private final GameMenuController controller = new GameMenuController();
+    private final Scanner scanner;
 
-    public GameMenu(){
-        controller = new GameMenuController();
+    public GameMenu(Scanner scanner){
+        this.scanner = scanner;
     }
 
     public Results run(Scanner scanner){
