@@ -58,25 +58,16 @@ public class GameMenuController {
     public String selectUnit(Matcher matcher){
         return null;
     }
-    public String moveUnit(Matcher matcher){
+    public String setTexture(Matcher matcher){
         return null;
     }
-    public String patrolUnit(Matcher matcher){
+    public String clearBlock(Matcher matcher){
         return null;
     }
-    public String setUnitState(Matcher matcher){
+    public String dropTree(Matcher matcher){
         return null;
     }
-    public String attack(Matcher matcher){
-        return null;
-    }
-    public String pourOil(Matcher matcher){
-        return null;
-    }
-    public String digTunnel(Matcher matcher){
-        return null;
-    }
-    public String build(Matcher matcher){
+    public String dropRock(Matcher matcher){
         return null;
     }
 
