@@ -4,9 +4,10 @@ public enum Weapons {
     ;
 
     private final Resources formingMaterial;
-
-    Weapons(Resources formingMaterial) {
+    private final int formingMaterialAmount;
+    Weapons(Resources formingMaterial, int formingMaterialAmount) {
         this.formingMaterial = formingMaterial;
+        this.formingMaterialAmount = formingMaterialAmount;
     }
 
     public Resources getFormingMaterial() {
