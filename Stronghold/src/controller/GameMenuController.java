@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 
 public class GameMenuController {
     private Game game;
-
+    
     public GameMenuController(Game game) {
         this.game = game;
     }
