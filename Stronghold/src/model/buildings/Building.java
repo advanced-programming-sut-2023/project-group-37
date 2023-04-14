@@ -4,6 +4,7 @@ import model.Government;
 import model.enums.Resources;
 
 public abstract class Building {
+    private static Building currentBuilding;
     private final int maxHitPoints;
     private int hitPoints;
     private final Resources formingMaterial;
@@ -16,6 +17,14 @@ public abstract class Building {
         this.formingMaterial = formingMaterial;
         this.formingMaterialAmount = formingMaterialAmount;
         this.government = government;
+    }
+
+    public static Building getCurrentBuilding() {
+        return currentBuilding;
+    }
+
+    public static void setCurrentBuilding(Building currentBuilding) {
+        Building.currentBuilding = currentBuilding;
     }
 
     public void repair() {
