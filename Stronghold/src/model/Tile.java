@@ -10,7 +10,7 @@ public class Tile {
     private final int y;
     private final ArrayList<Troop> troops = new ArrayList<>();
     private Building building;
-    private Texture texture;
+    private Textures texture;
 
 
     public Tile(int x, int y) {
@@ -42,11 +42,11 @@ public class Tile {
         return building;
     }
 
-    public Texture getTexture() {
+    public Textures getTexture() {
         return texture;
     }
 
-    public void setTexture(Texture texture) {
+    public void setTexture(Textures texture) {
         this.texture = texture;
     }
 }

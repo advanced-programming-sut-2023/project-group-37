@@ -1,16 +1,22 @@
 package model;
 
+import model.buildings.Granary;
+import model.buildings.Stockpile;
 import model.enums.Foods;
 import model.enums.Resources;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Government {
 
     private Colors color;
-    private HashMap<Resources, Integer> stockpile;
 
-    private HashMap<Foods, Integer> granary;
+    private int gold;
+
+    private ArrayList<Stockpile> stockpile;
+
+    private ArrayList<Granary> granary;
 
     private int popularity;
 
@@ -20,15 +26,13 @@ public class Government {
 
     private int fearRate;
 
-    private int gold;
-
     private HashMap<String, Integer> popularityFactors;
 
     public Government(Colors color) {
         // TODO: fill here
     }
 
-    public HashMap<Resources, Integer> getResources() {
+    public ArrayList<Stockpile> getStockpile() {
         return this.stockpile;
     }
 }

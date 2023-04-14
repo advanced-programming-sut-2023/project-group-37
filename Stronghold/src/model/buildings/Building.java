@@ -11,8 +11,8 @@ public abstract class Building {
     private final int formingMaterialAmount;
     private final Government government;
 
-    public Building(Government government, int maxHp, Resources formingMaterial, int formingMaterialAmount) {
-        this.maxHitPoints = maxHp;
+    public Building(Government government, int maxHitPoints, Resources formingMaterial, int formingMaterialAmount) {
+        this.maxHitPoints = maxHitPoints;
         this.hitPoints = this.maxHitPoints;
         this.formingMaterial = formingMaterial;
         this.formingMaterialAmount = formingMaterialAmount;
@@ -29,8 +29,5 @@ public abstract class Building {
 
     public void repair() {
         // TODO: check if works fine.
-        this.government.getResources().put(this.formingMaterial, this.government.getResources().get(formingMaterial)
-                - (int) Math.ceil((double) (maxHitPoints - hitPoints) / maxHitPoints) * formingMaterialAmount);
-        this.hitPoints = this.maxHitPoints;
     }
 }

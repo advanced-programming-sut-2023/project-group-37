@@ -2,7 +2,7 @@ package model.buildings.enums;
 
 import model.enums.Resources;
 
-public enum IndustrialBuildings {
+public enum IndustrialBuildings{
     ;
 
     private final int maxHitPoints;
