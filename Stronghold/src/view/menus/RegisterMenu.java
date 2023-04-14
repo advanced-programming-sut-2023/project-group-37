@@ -8,10 +8,11 @@ import java.util.regex.Matcher;
 
 public class RegisterMenu {
 
-    private final RegisterMenuController controller;
+    private final RegisterMenuController controller = new RegisterMenuController();
+    private final Scanner scanner;
 
-    public RegisterMenu(){
-        controller = new RegisterMenuController();
+    public RegisterMenu(Scanner scanner){
+        this.scanner = scanner;
     }
 
     public Results run(Scanner scanner){
