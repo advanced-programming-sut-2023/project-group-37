@@ -62,9 +62,9 @@ assignees: Arman17Babaei
 
 ## تسک‌های نفر دوم
 
-  **نام و نام خانوادگی:**
+  **نام و نام خانوادگی: مهرشاد دهقانی**
 <details>
-  <summary>تسک مربوطه</summary>
+  <summary> کامیت نام و شماره دانشجویی در md.README</summary>
 
   <div dir="ltr" align='right'>
 
@@ -76,15 +76,15 @@ assignees: Arman17Babaei
 
 ## تسک‌های نفر سوم
 
-  **نام و نام خانوادگی:**
+  **نام و نام خانوادگی: بردیا ماندگار**
 <details>
-  <summary>تسک مربوطه</summary>
+  <summary>کامیت نام و شماره دانشجویی در README.md</summary>
 
   <div dir="ltr" align='right'>
 
   1. [ ] شروع نشده
   2. [ ] در حال انجام
-  3. [ ] تمام شده
+  3. [X] تمام شده
   </div>
 </details>
 </div>
