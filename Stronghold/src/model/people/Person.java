@@ -2,6 +2,7 @@ package model.people;
 
 import model.Government;
 import model.buildings.Building;
+import model.people.enums.Troops;
 
 public class Person {
 

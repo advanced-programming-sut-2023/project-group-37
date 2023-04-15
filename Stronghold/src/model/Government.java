@@ -17,6 +17,7 @@ public class Government {
     private ArrayList<Stockpile> stockpile;
 
     private ArrayList<Granary> granary;
+    private ArrayList<Trade> trades;
 
     private int popularity;
 
@@ -34,5 +35,11 @@ public class Government {
 
     public ArrayList<Stockpile> getStockpile() {
         return this.stockpile;
+    }
+    public void addTrade(Trade trade){
+        this.trades.add(trade);
+    }
+    public void acceptTrade(Trade trade){
+
     }
 }
