@@ -1,7 +1,7 @@
 package model.buildings;
 
 import model.Government;
-import model.buildings.enums.WeaponBuildings;
+import model.buildings.enums.Buildings;
 import model.enums.Weapons;
 
 public class WeaponBuilding extends Building{
@@ -10,9 +10,9 @@ public class WeaponBuilding extends Building{
 
     private int productionRate;
 
-    public WeaponBuilding(Government government, WeaponBuildings type) {
+    public WeaponBuilding(Government government, Buildings type,Weapons weapon) {
         super(government, type.getMaxHitPoints(), type.getFormingMaterial(),type.getFormingMaterialAmount());
-        this.weapon = type.getWeapon();
+        this.weapon = weapon;
     }
 
     public Weapons getWeapon() {

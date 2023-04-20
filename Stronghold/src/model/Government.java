@@ -10,7 +10,6 @@ import java.util.HashMap;
 
 public class Government {
 
-    private static Government currentGovernment;
     private Colors color;
 
     private int gold;
@@ -18,6 +17,7 @@ public class Government {
     private ArrayList<Stockpile> stockpile;
 
     private ArrayList<Granary> granary;
+    private ArrayList<Trade> trades;
 
     private int popularity;
 
@@ -36,12 +36,10 @@ public class Government {
     public ArrayList<Stockpile> getStockpile() {
         return this.stockpile;
     }
-
-    public static Government getCurrentGovernment() {
-        return currentGovernment;
+    public void addTrade(Trade trade){
+        this.trades.add(trade);
     }
+    public void acceptTrade(Trade trade){
 
-    public static void setCurrentGovernment(Government currentGovernment) {
-        Government.currentGovernment = currentGovernment;
     }
 }
