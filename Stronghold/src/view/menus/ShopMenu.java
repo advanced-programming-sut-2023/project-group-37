@@ -5,7 +5,7 @@ import controller.ShopMenuController;
 import java.util.Scanner;
 
 public class ShopMenu {
-    private final ShopMenuController shopMenuController = new ShopMenuController();
+    private ShopMenuController shopMenuController = new ShopMenuController();
 
     private String command;
     private final Scanner scanner;
