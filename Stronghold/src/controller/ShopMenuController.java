@@ -1,9 +1,17 @@
 package controller;
 
+import model.User;
+
 import java.util.regex.Matcher;
 
 public class ShopMenuController {
-    public String showPriceList(Matcher matcher){
+    private static User currentUser;
+
+    public static void setCurrentUser(User user) {
+        currentUser = user;
+    }
+
+    public String showPriceList(){
         return null;
     }
     public String buy(Matcher matcher){

@@ -7,9 +7,8 @@ import java.util.regex.Pattern;
 
 public enum BuildingMenuCommands {
 
-    DROP_BUILDING("\\s*dropbuilding(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s+-type\\s+(?<type>.+)\\s*"),
-    SELECT_BUILDING("\\s*select\\s+building(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s*"),
-    REPAIR("\\s*repair\\s*");
+    REPAIR("\\s*repair\\s*"),
+    BACK_GAME_MENU("\\s*back\\s+to\\s+game\\s*");
 
     private final String regex;
     BuildingMenuCommands(String regex) {

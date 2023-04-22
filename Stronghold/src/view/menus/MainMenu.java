@@ -17,8 +17,6 @@ public class MainMenu {
     }
 
     public Results run() {
-        controller.setCurrentUser();
-
         String command;
         Matcher matcher;
 
@@ -31,8 +29,8 @@ public class MainMenu {
             }
 
             else if ((matcher = MainMenuCommands.getMatcher(command, MainMenuCommands.START_GAME)) != null) {
-                startGame(matcher);
-                return Results.ENTER_GAME_MENU;
+                if (startGame(matcher))
+                    return Results.ENTER_GAME_MENU;
             }
 
             else if (MainMenuCommands.getMatcher(command, MainMenuCommands.LOGOUT) != null) {
@@ -44,7 +42,10 @@ public class MainMenu {
         }
     }
 
-    private void startGame(Matcher matcher) {
+    private boolean startGame(Matcher matcher) {
         MainMenuMessages message = controller.startGame(matcher);
+        System.out.println(message);
+
+        return message == MainMenuMessages.GAME_STARTED;
     }
 }

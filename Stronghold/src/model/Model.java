@@ -2,7 +2,6 @@ package model;
 
 public class Model {
     private static Map currentMap;
-    private static User currentUser;
 
     public static Map getCurrentMap() {
         return currentMap;
@@ -10,14 +9,6 @@ public class Model {
 
     public static void setCurrentMap(Map currentMap) {
         Model.currentMap = currentMap;
-    }
-
-    public static void setCurrentUser(User currentUser) {
-        Model.currentUser = currentUser;
-    }
-
-    public static User getCurrentUser() {
-        return currentUser;
     }
 
     public static String deleteQuotations(String string) {

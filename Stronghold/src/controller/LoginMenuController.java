@@ -41,8 +41,9 @@ public class LoginMenuController {
             return LoginMenuMessages.INCORRECT_PASSWORD;
         }
 
-        Model.setCurrentUser(user);
         delayTime = 0;
+
+        MainMenuController.setCurrentUser(user);
         return LoginMenuMessages.LOGIN_SUCCESSFUL;
     }
 

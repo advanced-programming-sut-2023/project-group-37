@@ -7,7 +7,8 @@ public enum ShopMenuCommands {
 
     SHOW_PRICE_LIST("\\s*show\\s+price\\s+list\\s*"),
     BUY_ITEM("\\s*buy(\\s+((-i(?<itemName>\".+\"|\\S+))|(-a(?<itemAmount>\\d+))))+\\s*"),
-    SELL_ITEM("\\s*sell(\\s+((-i(?<itemName>\".+\"|\\S+))|(-a(?<itemAmount>\\d+))))+\\s*");
+    SELL_ITEM("\\s*sell(\\s+((-i(?<itemName>\".+\"|\\S+))|(-a(?<itemAmount>\\d+))))+\\s*"),
+    BACK_GAME_MENU("\\s*back\\s+to\\s+game\\s*");
 
     private final String regex;
     ShopMenuCommands(String regex) {

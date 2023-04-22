@@ -1,28 +1,36 @@
 package controller;
 
-import model.Model;
+import model.Map;
 import model.User;
 import view.enums.messages.MainMenuMessages;
-import view.menus.MainMenu;
 
 import java.util.regex.Matcher;
 
 public class MainMenuController {
-    private User currentUser;
+    private static User currentUser;
 
-    public void setCurrentUser() {
-        this.currentUser = Model.getCurrentUser();
+    public static void setCurrentUser(User user) {
+        currentUser = user;
     }
 
     public MainMenuMessages enterProfileMenu() {
-        return null;
+        ProfileMenuController.setCurrentUser(currentUser);
+        return MainMenuMessages.ENTERED_PROFILE_MENU;
     }
 
     public MainMenuMessages startGame(Matcher matcher) {
-        return null;
+
+        GameMenuController.setCurrentUser(currentUser);
+
+        Map map = new Map(0,0);//todo
+        GameMenuController.setGame(map);
+        MapMenuController.setMap(map);
+
+        return MainMenuMessages.GAME_STARTED;
     }
 
     public MainMenuMessages logout() {
+        setCurrentUser(null);
         return MainMenuMessages.LOGOUT_SUCCESSFUL;
     }
 }

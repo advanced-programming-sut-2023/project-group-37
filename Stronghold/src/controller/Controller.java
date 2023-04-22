@@ -60,42 +60,22 @@ public class Controller {
     }
 
     private void runGameMenu() {
-        loop:
         while (true) {
             result = gameMenu.run();
 
             switch (result) {
-                case ENTER_BUILDING_MENU -> runBuildingMenu();
-                case ENTER_MAP_MENU -> runMapMenu();
-                case ENTER_SHOP_MENU -> runSHopMenu();
-                case ENTER_TRADE_MENU -> runTradeMenu();
-                case ENTER_UNIT_MENU -> runUnitMenu();
+                case ENTER_BUILDING_MENU -> buildingMenu.run();
+                case ENTER_MAP_MENU -> mapMenu.run();
+                case ENTER_SHOP_MENU -> shopMenu.run();
+                case ENTER_TRADE_MENU -> tradeMenu.run();
+                case ENTER_UNIT_MENU -> unitMenu.run();
+
                 case END_GAME -> {
                     runMainMenu();
-                    break loop;
+                    return;
                 }
             }
         }
-    }
-
-    private void runBuildingMenu() {
-        result = buildingMenu.run();
-    }
-
-    private void runMapMenu() {
-        result = mapMenu.run();
-    }
-
-    private void runSHopMenu() {
-        result = shopMenu.run();
-    }
-
-    private void runTradeMenu() {
-        result = tradeMenu.run();
-    }
-
-    private void runUnitMenu() {
-        result = unitMenu.run();
     }
 
 }

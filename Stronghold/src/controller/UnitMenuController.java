@@ -1,33 +1,50 @@
 package controller;
 
+import model.User;
+import model.people.Troop;
+import view.enums.messages.UnitMenuMessages;
+
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class UnitMenuController {
-    public String moveUnit(Matcher matcher){
+    private static User currentUser;
+    private static ArrayList<Troop> unit;
+
+    public static void setCurrentUser(User user) {
+        currentUser = user;
+    }
+
+    public static void setUnit(ArrayList<Troop> unit) {
+        UnitMenuController.unit = unit;
+    }
+
+
+    public UnitMenuMessages moveUnit(Matcher matcher){
         return null;
     }
-    public String patrolUnit(Matcher matcher){
+    public UnitMenuMessages patrolUnit(Matcher matcher){
         return null;
     }
-    public String setUnitState(Matcher matcher){
+    public UnitMenuMessages setUnitState(Matcher matcher){
         return null;
     }
-    public String attack(Matcher matcher){
+    public UnitMenuMessages attack(Matcher matcher){
         return null;
     }
-    public String pourOil(Matcher matcher){
+    public UnitMenuMessages pourOil(Matcher matcher){
         return null;
     }
-    public String digTunnel(Matcher matcher){
+    public UnitMenuMessages digTunnel(Matcher matcher){
         return null;
     }
-    public String build(Matcher matcher){
+    public UnitMenuMessages buildEquipment(Matcher matcher){
         return null;
     }
-    public String disbandUnit(Matcher matcher){
+    public UnitMenuMessages disbandUnit(){
         return null;
     }
-    public String digMoat(Matcher matcher){
+    public UnitMenuMessages digMoat(Matcher matcher){
         return null;
     }
 }

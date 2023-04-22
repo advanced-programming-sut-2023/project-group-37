@@ -1,76 +1,107 @@
 package controller;
 
 import model.Game;
-import model.Model;
+import model.Map;
+import model.User;
 import view.enums.messages.GameMenuMessages;
 
 import java.util.regex.Matcher;
 
 public class GameMenuController {
-    private Game game;
-    
-    public GameMenuController() {
+    private static Game game;
+    private static User currentUser;
+
+    public static void setGame(Map map) {
+        game = new Game(map);
     }
 
-    public void setGame() {
-        this.game = new Game(Model.getCurrentMap());
+    public static void setCurrentUser(User user) {
+        currentUser = user;
     }
 
-    public GameMenuMessages enterMapMenu(Matcher matcher){
+    public GameMenuMessages showMap(Matcher matcher) {
         return null;
     }
-    public GameMenuMessages ShowPopularityFactors(Matcher matcher){
+
+    public GameMenuMessages showPopularity() {
         return null;
     }
-    public String showPopularity(Matcher matcher){
+
+    public GameMenuMessages showPopularityFactors() {
         return null;
     }
-    public GameMenuMessages showFoodList(Matcher matcher){
+
+    public GameMenuMessages showFoodList() {
         return null;
     }
-    public String setFoodRate(Matcher matcher){
+
+    public GameMenuMessages setFoodRate(Matcher matcher) {
         return null;
     }
-    public String ShowFoodRate(Matcher matcher){
+
+    public GameMenuMessages showFoodRate() {
         return null;
     }
-    public String setTaxRate(Matcher matcher){
+
+    public GameMenuMessages setTaxRate(Matcher matcher) {
         return null;
     }
-    public String ShowTaxRate(Matcher matcher){
+
+    public GameMenuMessages showTaxRate() {
         return null;
     }
-    public String setFearRate(Matcher matcher){
+
+    public GameMenuMessages setFearRate(Matcher matcher) {
         return null;
     }
-    public String ShowFearRate(Matcher matcher){
+
+    public GameMenuMessages showFearRate() {
         return null;
     }
-    public String dropBuilding(Matcher matcher){
+
+    public GameMenuMessages dropBuilding(Matcher matcher) {
         return null;
     }
-    public String selectBuilding(Matcher matcher){
+
+    public GameMenuMessages selectBuilding(Matcher matcher) {
         return null;
     }
-    public String createUnit(Matcher matcher){
+
+    public GameMenuMessages selectUnit(Matcher matcher) {
         return null;
     }
-    public String repair(Matcher matcher){
+
+    public GameMenuMessages enterShopMenu() {
+        ShopMenuController.setCurrentUser(currentUser);
+        return GameMenuMessages.ENTERED_SHOP_MENU;
+    }
+
+    public GameMenuMessages enterTradeMenu() {
+        TradeMenuController.setCurrentUser(currentUser);
+        return GameMenuMessages.ENTERED_TRADE_MENU;
+    }
+
+    public GameMenuMessages createUnit(Matcher matcher) {
         return null;
     }
-    public String selectUnit(Matcher matcher){
+
+    public GameMenuMessages setTexture(Matcher matcher) {
         return null;
     }
-    public String setTexture(Matcher matcher){
+
+    public GameMenuMessages setRectangleTextures(Matcher matcher) {
         return null;
     }
-    public String clearBlock(Matcher matcher){
+
+    public GameMenuMessages clearTexture(Matcher matcher) {
         return null;
     }
-    public String dropTree(Matcher matcher){
+
+    public GameMenuMessages dropTree(Matcher matcher) {
         return null;
     }
-    public String dropRock(Matcher matcher){
+
+    public GameMenuMessages dropRock(Matcher matcher) {
         return null;
     }
 

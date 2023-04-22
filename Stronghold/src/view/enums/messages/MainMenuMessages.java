@@ -1,6 +1,8 @@
 package view.enums.messages;
 
 public enum MainMenuMessages {
+    ENTERED_PROFILE_MENU("entered profile menu successfully!"),
+    GAME_STARTED("game started successfully!"),//todo
     LOGOUT_SUCCESSFUL("user logged out successfully!");
 
     private final String output;

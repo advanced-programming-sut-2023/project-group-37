@@ -5,11 +5,12 @@ import java.util.regex.Pattern;
 
 public enum TradeMenuCommands {
 
-    TRADE_REQUEST("\\s*trade(\\s+((-t(?<resourceType>\".+\"|\\S+))|(-a(?<resourceAmount>\\d+))|" +
+    REQUEST_TRADE("\\s*trade(\\s+((-t(?<resourceType>\".+\"|\\S+))|(-a(?<resourceAmount>\\d+))|" +
                           "(-p(?<price>\\d+))|(-m(?<message>\".+\"|\\S+))))+\\s*"),
     SHOW_TRADE_LIST("\\s*trade\\s+list\\s*"),
-    TRADE_ACCEPT("\\s*trade\\s+accept(\\s+((-i(?<id>\\d+))|(-m(?<message>\".+\"|\\S+))))+\\s*"),
-    SHOW_TRADE_HISTORY("\\s*trade\\s+history\\s*");
+    ACCEPT_TRADE("\\s*trade\\s+accept(\\s+((-i(?<id>\\d+))|(-m(?<message>\".+\"|\\S+))))+\\s*"),
+    SHOW_TRADE_HISTORY("\\s*trade\\s+history\\s*"),
+    BACK_GAME_MENU("\\s*back\\s+to\\s+game\\s*");
 
     private final String regex;
     TradeMenuCommands(String regex) {

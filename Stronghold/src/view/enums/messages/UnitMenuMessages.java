@@ -1,4 +1,5 @@
 package view.enums.messages;
 
-public class UnitMenuMessages {
+public enum UnitMenuMessages {
+    BACK_GAME_MENU
 }
