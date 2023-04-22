@@ -14,7 +14,7 @@ public class LoginMenu {
     private final Scanner scanner;
     private String command;
 
-    LoginMenu(Scanner scanner) {
+    public LoginMenu(Scanner scanner) {
         this.scanner = scanner;
     }
 

@@ -14,8 +14,7 @@ public enum RegisterMenuMessages {
     INCORRECT_QUESTION_NUMBER("Please select question-number between 1,2,3"),
     INCOMPATIBLE_ANSWERS("Incompatible answers!"),
     REGISTER_SUCCESSFUL("user created successfully!"),
-    NOT_LOGGED_IN("No loggedIn user!"),
-    LOGOUT_SUCCESSFUL("user logged out successfully!");
+    NOT_LOGGED_IN("No loggedIn user!");
 
     private final String output;
     private String secondOutput = "";

@@ -14,7 +14,6 @@ public class User {
     private int rank;
 
     private static final ArrayList<User> users = new ArrayList<>();
-    private static User currentUser;
 
     public User(String username, String password, String email, String slogan) {
         this.username= username;
@@ -92,14 +91,6 @@ public class User {
         }
 
         return null;
-    }
-
-    public static void setCurrentUser(User user) {
-        currentUser = user;
-    }
-
-    public static User getCurrentUser() {
-        return currentUser;
     }
 
 }

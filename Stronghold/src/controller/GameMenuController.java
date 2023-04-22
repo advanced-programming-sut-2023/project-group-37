@@ -1,16 +1,19 @@
 package controller;
 
 import model.Game;
+import model.Model;
 import view.enums.messages.GameMenuMessages;
 
-import javax.swing.plaf.InsetsUIResource;
 import java.util.regex.Matcher;
 
 public class GameMenuController {
     private Game game;
     
-    public GameMenuController(Game game) {
-        this.game = game;
+    public GameMenuController() {
+    }
+
+    public void setGame() {
+        this.game = new Game(Model.getCurrentMap());
     }
 
     public GameMenuMessages enterMapMenu(Matcher matcher){

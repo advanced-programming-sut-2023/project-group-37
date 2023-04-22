@@ -1,5 +1,6 @@
 package controller;
 
+import model.Model;
 import model.User;
 import view.enums.commands.RegisterMenuCommands;
 import view.enums.messages.LoginMenuMessages;
@@ -11,7 +12,7 @@ public class LoginMenuController {
     private String password;
     private int delayTime = 0;
     private String deleteQuotations(String string) {
-        return Controller.deleteQuotations(string);
+        return Model.deleteQuotations(string);
     }
     private static final LoginMenuController loginMenuController = new LoginMenuController();
 
@@ -40,7 +41,7 @@ public class LoginMenuController {
             return LoginMenuMessages.INCORRECT_PASSWORD;
         }
 
-        User.setCurrentUser(user);
+        Model.setCurrentUser(user);
         delayTime = 0;
         return LoginMenuMessages.LOGIN_SUCCESSFUL;
     }

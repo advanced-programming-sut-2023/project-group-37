@@ -1,11 +1,12 @@
 package view.menus;
 
 import controller.ShopMenuController;
+import view.enums.Results;
 
 import java.util.Scanner;
 
 public class ShopMenu {
-    private ShopMenuController shopMenuController = new ShopMenuController();
+    private final ShopMenuController controller = new ShopMenuController();
 
     private String command;
     private final Scanner scanner;
@@ -14,7 +15,7 @@ public class ShopMenu {
         this.scanner = scanner;
     }
 
-    public void run() {
-
+    public Results run() {
+        return null;
     }
 }

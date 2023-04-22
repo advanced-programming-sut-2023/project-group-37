@@ -1,7 +1,7 @@
 package controller;
 
+import model.Model;
 import model.User;
-import view.enums.commands.RegisterMenuCommands;
 import view.enums.messages.RegisterMenuMessages;
 import java.util.regex.Matcher;
 
@@ -12,7 +12,7 @@ public class RegisterMenuController {
         return registerMenuController;
     }
 
-    private RegisterMenuController() {
+    RegisterMenuController() {
 
     }
 
@@ -26,7 +26,7 @@ public class RegisterMenuController {
     }
 
     private String deleteQuotations(String string) {
-        return Controller.deleteQuotations(string);
+        return Model.deleteQuotations(string);
     }
 
     private static boolean checkUsernameNotOK(String username) {
@@ -136,13 +136,5 @@ public class RegisterMenuController {
         }
 
         return RegisterMenuMessages.REENTER_AGAIN;
-    }
-
-    public RegisterMenuMessages logout() {
-        if (User.getCurrentUser() == null)
-            return RegisterMenuMessages.NOT_LOGGED_IN;
-
-        User.setCurrentUser(null);
-        return RegisterMenuMessages.LOGOUT_SUCCESSFUL;
     }
 }

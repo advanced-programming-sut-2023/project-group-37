@@ -3,13 +3,12 @@ package model;
 import java.util.ArrayList;
 
 public class Game {
-    private final ArrayList<Government> governments;
-    private Map map;
+    private final ArrayList<Government> governments = new ArrayList<>();
+    private final Map map;
     int turns;
 
-    public Game(int x,int y) {
-        this.map = new Map(x,y);
-        this.governments = new ArrayList<>();
+    public Game(Map map) {
+        this.map = map;
     }
 
     public ArrayList<Government> getGovernments() {

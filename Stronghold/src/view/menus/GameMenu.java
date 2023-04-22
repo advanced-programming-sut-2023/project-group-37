@@ -8,18 +8,18 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class GameMenu {
-    private final GameMenuController controller;
+    private final GameMenuController controller = new GameMenuController();
     private final Scanner scanner;
 
-    public GameMenu(Scanner scanner,Game game){
+    public GameMenu(Scanner scanner){
         this.scanner = scanner;
-        controller = new GameMenuController(game);
     }
 
-    public Results run(Scanner scanner){
+    public Results run() {
         //TODO: fill
         String command;
         Matcher matcher;
+
         return null;
     }
 }
