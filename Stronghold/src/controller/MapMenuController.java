@@ -1,6 +1,6 @@
 package controller;
 
-import model.Map;
+import model.game.Map;
 import view.enums.messages.MapMenuMessages;
 
 import java.util.regex.Matcher;

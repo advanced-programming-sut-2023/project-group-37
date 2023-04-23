@@ -1,20 +1,35 @@
 package model.people;
 
-import model.Government;
-import model.enums.Weapons;
-import model.people.enums.Troops;
+import model.game.Government;
+import model.game.Item;
 
-import java.util.ArrayList;
+public class Troop extends MilitaryUnit {
 
-public class Troop extends Person {
+    private final TroopType type;
+    private final Item weapon;
+    private final Item armor;
+    private final boolean canClimbLadder;
+    private final boolean canDigMoat;
 
-    private String name;
-    private int attackingDamage;
-    private int defensiveDamage;
-    private final ArrayList<Weapons> weapons;
+    public Troop(Government loyalty, TroopType type) {
+        super(loyalty, type.getMaxHitpointsQuality(), type.getAttackingDamageQuality(), type.getDefencingQuality(),
+                type.getRange(), type.getSpeedQuality());
+        this.type = type;
+        this.weapon = type.getWeapon();
+        this.armor = type.getArmor();
+        this.canClimbLadder = type.canClimbLadder();
+        this.canDigMoat = type.canDigMoat();
+    }
 
-    public Troop(Government government, Troops troop) {
-        super(government, troop.getSpeed(), troop.getMaxHitPoints());
-        this.weapons = troop.getWeapons();
+    public TroopType getType() {
+        return this.type;
+    }
+
+    public boolean canClimbLadder(){
+        return this.canClimbLadder;
+    }
+
+    public boolean canDigMoat(){
+        return this.canDigMoat;
     }
 }

@@ -1,5 +1,7 @@
 package model;
 
+import model.game.Map;
+
 public class Model {
     private static Map currentMap;
 

@@ -1,6 +1,6 @@
 package controller;
 
-import model.User;
+import model.user.User;
 import view.enums.messages.TradeMenuMessages;
 
 import java.util.regex.Matcher;

@@ -1,7 +1,6 @@
 package controller;
 
-import model.Model;
-import model.User;
+import model.user.User;
 
 public class ProfileMenuController {
     private static User currentUser;

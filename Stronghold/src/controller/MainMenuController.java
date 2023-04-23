@@ -1,7 +1,7 @@
 package controller;
 
-import model.Map;
-import model.User;
+import model.game.Map;
+import model.user.User;
 import view.enums.messages.MainMenuMessages;
 
 import java.util.regex.Matcher;
@@ -22,8 +22,8 @@ public class MainMenuController {
 
         GameMenuController.setCurrentUser(currentUser);
 
-        Map map = new Map(0,0);//todo
-        GameMenuController.setGame(map);
+        Map map = new Map(0);//todo
+//        GameMenuController.setGame(map);
         MapMenuController.setMap(map);
 
         return MainMenuMessages.GAME_STARTED;

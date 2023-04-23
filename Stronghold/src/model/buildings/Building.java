@@ -1,33 +1,63 @@
 package model.buildings;
 
-import model.Government;
-import model.enums.Resources;
+import model.game.Government;
+import model.game.Item;
+import model.game.Tile;
 
-public abstract class Building {
-    private static Building currentBuilding;
-    private final int maxHitPoints;
-    private int hitPoints;
-    private final Resources formingMaterial;
-    private final int formingMaterialAmount;
-    private final Government government;
+public class Building {
+    private final Government loyalty;
+    private final Tile location;
+    private final BuildingType type;
+    private final int maxHitpoints;
+    private int hitpoints;
+    private final int goldNeededToBuild;
+    private final Item buildingMaterial;
+    private final int buildingMaterialAmount;
 
-    public Building(Government government, int maxHitPoints, Resources formingMaterial, int formingMaterialAmount) {
-        this.maxHitPoints = maxHitPoints;
-        this.hitPoints = this.maxHitPoints;
-        this.formingMaterial = formingMaterial;
-        this.formingMaterialAmount = formingMaterialAmount;
-        this.government = government;
+    public Building(Government loyalty, Tile location, BuildingType type) {
+        this.loyalty = loyalty;
+        this.location = location;
+        this.type = type;
+        this.maxHitpoints = type.getMaxHitpoints();
+        this.hitpoints = type.getMaxHitpoints();
+        this.goldNeededToBuild = type.getGoldNeededToBuild();
+        this.buildingMaterial = type.getBuildingMaterial();
+        this.buildingMaterialAmount = type.getBuildingMaterialAmount();
     }
 
-    public static Building getCurrentBuilding() {
-        return currentBuilding;
+    public Government getLoyalty() {
+        return this.loyalty;
     }
 
-    public static void setCurrentBuilding(Building currentBuilding) {
-        Building.currentBuilding = currentBuilding;
+    public Tile getLocation() {
+        return this.location;
     }
 
-    public void repair() {
-        // TODO: check if works fine.
+    public BuildingType getType() {
+        return this.type;
+    }
+
+    public int getMaxHitpoints() {
+        return this.maxHitpoints;
+    }
+
+    public int getHitpoints() {
+        return this.hitpoints;
+    }
+
+    public int getGoldNeededToBuild() {
+        return this.goldNeededToBuild;
+    }
+
+    public Item getBuildingMaterial() {
+        return this.buildingMaterial;
+    }
+
+    public int getBuildingMaterialAmount() {
+        return this.buildingMaterialAmount;
+    }
+
+    public void takeDamage(int amount) {
+        this.hitpoints -= amount;
     }
 }

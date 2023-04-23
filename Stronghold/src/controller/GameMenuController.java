@@ -1,8 +1,8 @@
 package controller;
 
-import model.Game;
-import model.Map;
-import model.User;
+import model.game.Game;
+import model.game.Map;
+import model.user.User;
 import view.enums.messages.GameMenuMessages;
 
 import java.util.regex.Matcher;
@@ -11,9 +11,9 @@ public class GameMenuController {
     private static Game game;
     private static User currentUser;
 
-    public static void setGame(Map map) {
-        game = new Game(map);
-    }
+//    public static void setGame(Map map) {
+//        game = new Game(map);
+//    }
 
     public static void setCurrentUser(User user) {
         currentUser = user;

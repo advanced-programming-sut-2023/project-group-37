@@ -1,59 +1,36 @@
 package model.people;
 
-import model.Government;
 import model.buildings.Building;
-import model.people.enums.Troops;
 
 public class Person {
 
-    private final Government government;
-    private final int speed;
-    private final int maxHitPoints;
+    private int hitpoints;
+    private boolean isWorking;
+    private Building workplace;
 
-    private final Building workingPlace;
+    // TODO: add field of workplace!
+    // TODO: add field of location!
+    // TODO: do they have speed?
 
-    // default person:
-    public Person(Government government){
-        this.government = government;
-        //TODO: change maxHitPoint & speed!
-        this.maxHitPoints = 50;
-        this.speed = 50;
-        this.workingPlace = null;
+    public Person(){
+        // TODO: set default hitpoints!
+        this.isWorking = false;
+        this.workplace = null;
     }
 
-    // Unemployed Person.
-    public Person(Government government, int speed, int maxHitPoints) {
-        this.government = government;
-        this.speed = speed;
-        this.maxHitPoints = maxHitPoints;
-        this.workingPlace = null;
+    public int getHitpoints() {
+        return this.hitpoints;
     }
 
-    // Employed Person.
-    public Person(Government government, int speed, int maxHitPoints, Building workingPlace) {
-        this.government = government;
-        this.speed = speed;
-        this.maxHitPoints = maxHitPoints;
-        this.workingPlace = workingPlace;
+    public boolean isWorking() {
+        return this.isWorking;
     }
 
-    public Government getGovernment() {
-        return this.government;
+    public Building getWorkplace() {
+        return this.workplace;
     }
 
-    public int getSpeed() {
-        return this.speed;
-    }
-
-    public int getMaxHitPoints() {
-        return this.maxHitPoints;
-    }
-
-    public boolean isUnemployed(){
-        return this.workingPlace == null;
-    }
-
-    public boolean isMilitary(){
-        return this instanceof Troop;
+    public void setHitpoints(int hitpoints) {
+        this.hitpoints = hitpoints;
     }
 }
