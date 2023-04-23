@@ -71,11 +71,16 @@ public class RegisterMenu {
     private boolean register(Matcher matcher) {
         message = controller.register(matcher);
 
-        System.out.println(message);
+        String randomSlogan;
+        if ((randomSlogan = controller.getRandomSlogan()) != null)
+            System.out.println(RegisterMenuMessages.RANDOM_SLOGAN.continueOutput(randomSlogan));
 
         switch (message) {
 
-            case ASK_FOR_SECURITY_QUESTION -> { return pickQuestion(); }
+            case ASK_FOR_SECURITY_QUESTION -> {
+                System.out.println(message);
+                return pickQuestion();
+            }
 
             case RANDOM_PASSWORD -> {
                 String randomPassword = controller.getRandomPassword();
@@ -94,7 +99,6 @@ public class RegisterMenu {
                     return pickQuestion();
             }
         }
-
         return false;
     }
 

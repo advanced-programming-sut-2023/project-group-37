@@ -2,6 +2,7 @@ package controller;
 
 import model.Model;
 import model.User;
+import model.enums.Slogans;
 import view.enums.messages.RegisterMenuMessages;
 
 import java.security.SecureRandom;
@@ -21,6 +22,7 @@ public class RegisterMenuController {
     private User user;
     private String password;
     private String randomPassword;
+    private String randomSlogan = null;
     private int delayTime = 0;
 
     private void saveUser() {
@@ -50,7 +52,7 @@ public class RegisterMenuController {
         String LOWER_CHARACTERS = "abcdefghijklmnopqrstuvwxyz";
         String UPPER_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String NUMBERS = "0123456789";
-        String OTHER_CHARACTERS = "?!@#$%^&*()_+=-/:;.><";
+        String OTHER_CHARACTERS = "?!@#$%^&*_+=-/:;.><";
 
         StringBuilder password = new StringBuilder();
         int randomIndex;
@@ -89,15 +91,19 @@ public class RegisterMenuController {
         return randomPassword;
     }
 
+    public String getRandomSlogan() {
+        String changer = randomSlogan;
+        randomSlogan = null;
+        return changer;
+    }
+
     private String generateRandomSlogan() {
-        // ToDO : generate slogan
-        return null;
+        return Slogans.getRandomSlogan().toString();
     }
 
     public RegisterMenuMessages register(Matcher matcher) { //TODO : random slogan
         String username = deleteQuotations(matcher.group("username")),
                 password = deleteQuotations(matcher.group("password")),
-                passwordConfirm = deleteQuotations(matcher.group("passwordConfirm")),
                 email = deleteQuotations(matcher.group("email")),
                 nickName = deleteQuotations(matcher.group("nickName")),
                 slogan = deleteQuotations(matcher.group("slogan"));
@@ -112,11 +118,17 @@ public class RegisterMenuController {
             return RegisterMenuMessages.WEAK_PASSWORD;
 
         if (!password.equals("random")) {
+            String passwordConfirm = deleteQuotations(matcher.group("passwordConfirm"));
+
             if (passwordConfirm.isEmpty())
                 return RegisterMenuMessages.EMPTY_FIELD;
 
             if (!passwordConfirm.equals(password))
                 return RegisterMenuMessages.INCOMPATIBLE_PASSWORDS;
+        }
+        else {
+            randomPassword = generateRandomPassword();
+            password = randomPassword;
         }
 
         if (checkEmailNotOK(email))
@@ -125,16 +137,16 @@ public class RegisterMenuController {
         if (slogan.isEmpty())
             slogan = "";
 
-        else if (slogan.equals("random"))
-            slogan = generateRandomSlogan();
+        else if (slogan.equals("random")) {
+            randomSlogan = generateRandomSlogan();
+            slogan = randomSlogan;
+        }
 
         user = new User(username, password, email, slogan);
 
-        if (password.equals("random")) {
-            randomPassword = generateRandomPassword();
-
+        if (password.equals(randomPassword))
             return RegisterMenuMessages.RANDOM_PASSWORD;
-        }
+
         return RegisterMenuMessages.ASK_FOR_SECURITY_QUESTION;
     }
 
