@@ -30,6 +30,11 @@ public class RegisterMenu {
                     return Results.USER_CREATED;
             }
 
+            else if ((matcher = RegisterMenuCommands.getMatcher(command, RegisterMenuCommands.REGISTER_RANDOM_PASSWORD)) != null) {
+                if (register(matcher))
+                    return Results.USER_CREATED;
+            }
+
             else if (RegisterMenuCommands.getMatcher(command, RegisterMenuCommands.ENTER_LOGIN_MENU) != null)
                 return Results.ENTER_LOGIN_MENU;
 
@@ -85,7 +90,8 @@ public class RegisterMenu {
                 } while (message != RegisterMenuMessages.ASK_FOR_SECURITY_QUESTION &&
                         message != RegisterMenuMessages.CANCEL);
 
-                return pickQuestion();
+                if (message == RegisterMenuMessages.ASK_FOR_SECURITY_QUESTION)
+                    return pickQuestion();
             }
         }
 

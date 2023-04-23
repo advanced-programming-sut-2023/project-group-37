@@ -44,6 +44,7 @@ public class LoginMenu {
 
     private boolean login(Matcher matcher) {
         message = controller.login(matcher);
+        System.out.println(message);
 
         return message == LoginMenuMessages.LOGIN_SUCCESSFUL;
     }

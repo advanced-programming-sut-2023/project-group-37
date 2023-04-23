@@ -3,6 +3,8 @@ package controller;
 import model.Model;
 import model.User;
 import view.enums.messages.RegisterMenuMessages;
+
+import java.security.SecureRandom;
 import java.util.regex.Matcher;
 
 public class RegisterMenuController {
@@ -43,8 +45,40 @@ public class RegisterMenuController {
     }
 
     private String generateRandomPassword() {
-        //TODO : generate password
-        return null;
+        SecureRandom random = new SecureRandom();
+
+        String LOWER_CHARACTERS = "abcdefghijklmnopqrstuvwxyz";
+        String UPPER_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String NUMBERS = "0123456789";
+        String OTHER_CHARACTERS = "?!@#$%^&*()_+=-/:;.><";
+
+        StringBuilder password = new StringBuilder();
+        int randomIndex;
+        char randomChar;
+
+        for (int i=0; i<3; i++) {
+            randomIndex = random.nextInt(UPPER_CHARACTERS.length());
+            randomChar = UPPER_CHARACTERS.charAt(randomIndex);
+            password.append(randomChar);
+        }
+        randomIndex = random.nextInt(OTHER_CHARACTERS.length());
+        randomChar = OTHER_CHARACTERS.charAt(randomIndex);
+        password.append(randomChar);
+
+        for (int i=0; i<3; i++) {
+            randomIndex = random.nextInt(LOWER_CHARACTERS.length());
+            randomChar = LOWER_CHARACTERS.charAt(randomIndex);
+            password.append(randomChar);
+        }
+
+        for (int i=0; i<2; i++) {
+            randomIndex = random.nextInt(NUMBERS.length());
+            randomChar = NUMBERS.charAt(randomIndex);
+            password.append(randomChar);
+        }
+
+        randomPassword = password.toString();
+        return randomPassword;
     }
 
     public User getUser() {
@@ -132,7 +166,7 @@ public class RegisterMenuController {
 
         if (passwordConfirm.matches("\\s*" + randomPassword + "\\s*")) {
             saveUser();
-            return RegisterMenuMessages.REGISTER_SUCCESSFUL;
+            return RegisterMenuMessages.ASK_FOR_SECURITY_QUESTION;
         }
 
         return RegisterMenuMessages.REENTER_AGAIN;
