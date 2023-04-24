@@ -1,7 +1,7 @@
 package controller;
 
 import model.Model;
-import model.User;
+import model.user.User;
 import view.enums.commands.RegisterMenuCommands;
 import view.enums.messages.LoginMenuMessages;
 
@@ -35,7 +35,7 @@ public class LoginMenuController {
         if (user == null)
             return LoginMenuMessages.USER_NOT_EXISTS;
 
-        if (!user.checkPassword(password)) {
+        if (!user.isCorrectPassword(password)) {
             // TODO : delay time
             delayTime += 5;
             return LoginMenuMessages.INCORRECT_PASSWORD;
@@ -58,7 +58,7 @@ public class LoginMenuController {
     }
 
     public LoginMenuMessages answerRecoveryQuestion(String answer) {
-        if (user.checkPasswordRecoveryAnswer(answer))
+        if (user.isCorrectAnswer(answer))
             return LoginMenuMessages.ENTER_NEW_PASSWORD;
 
         return LoginMenuMessages.INCORRECT_ANSWER;

@@ -9,8 +9,8 @@ public class User {
     private String nickname;
     private String slogan;
     private String email;
-    private final String securityQuestion;
-    private final String securityQuestionAnswer;
+    private String securityQuestion;
+    private String securityQuestionAnswer;
     private int highScore;
 
     public static User getCurrentUser() {
@@ -19,6 +19,18 @@ public class User {
 
     public static void setCurrentUser(User currentUser) {
         User.currentUser = currentUser;
+    }
+
+    public User(String username, String password, String email, String slogan) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.slogan = slogan;
+    }
+
+    public static User getUserByUsername(String username) {
+        // TODO: get data from db!
+        return null;
     }
 
     public User(String username, String password, String nickname, String slogan, String email, int questionNumber,
@@ -61,9 +73,8 @@ public class User {
         this.username = username;
     }
 
-    public void changePassword(String oldPassword, String newPassword) {
-        if (this.isCorrectPassword(oldPassword))
-            this.password = newPassword;
+    public void changePassword(String newPassword) {
+        this.password = newPassword;
     }
 
     public void setNickname(String nickname) {
@@ -78,6 +89,14 @@ public class User {
         this.email = email;
     }
 
+    public void setSecurityQuestion(int questionNumber) {
+        this.securityQuestion = SecurityQuestion.getQuestion(questionNumber);
+    }
+
+    public void setSecurityQuestionAnswer(String securityQuestionAnswer) {
+        this.securityQuestionAnswer = securityQuestionAnswer;
+    }
+
     public void setHighScore(int highScore) {
         this.highScore = highScore;
     }
@@ -86,7 +105,7 @@ public class User {
         return this.password.equals(password);
     }
 
-    public boolean isCorrectAnswer(String answer){
+    public boolean isCorrectAnswer(String answer) {
         return this.securityQuestionAnswer.equals(answer);
     }
 }

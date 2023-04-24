@@ -6,7 +6,7 @@ import view.menus.*;
 import java.util.Scanner;
 
 public class Controller {
-    private static final Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner;
     private final RegisterMenu registerMenu = new RegisterMenu(scanner);
     private final LoginMenu loginMenu = new LoginMenu(scanner);
     private final MainMenu mainMenu = new MainMenu(scanner);
@@ -18,6 +18,10 @@ public class Controller {
     private final TradeMenu tradeMenu = new TradeMenu(scanner);
     private final UnitMenu unitMenu = new UnitMenu(scanner);
     private Results result;
+
+    static {
+        scanner = new Scanner(System.in);
+    }
 
     public void run() {
         runLoginMenu();
@@ -77,5 +81,4 @@ public class Controller {
             }
         }
     }
-
 }

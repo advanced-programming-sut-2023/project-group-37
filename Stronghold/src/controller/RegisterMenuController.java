@@ -1,7 +1,7 @@
 package controller;
 
 import model.Model;
-import model.User;
+import model.user.User;
 import view.enums.messages.RegisterMenuMessages;
 
 import java.security.SecureRandom;
@@ -153,8 +153,8 @@ public class RegisterMenuController {
         if (!answer.equals(answerConfirm))
             return RegisterMenuMessages.INCOMPATIBLE_ANSWERS;
 
-        user.setPasswordRecoveryQuestion(questionNumber);
-        user.setPasswordRecoveryAnswer(answer);
+        user.setSecurityQuestion(questionNumber);
+        user.setSecurityQuestionAnswer(answer);
 
         saveUser();
         return RegisterMenuMessages.REGISTER_SUCCESSFUL;

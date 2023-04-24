@@ -1,7 +1,7 @@
 package controller;
 
-import model.User;
 import model.people.Troop;
+import model.user.User;
 import view.enums.messages.UnitMenuMessages;
 
 import java.util.ArrayList;
