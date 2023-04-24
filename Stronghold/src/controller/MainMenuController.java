@@ -2,7 +2,7 @@ package controller;
 
 import model.game.Map;
 import model.user.User;
-import view.enums.messages.MainMenuMessages;
+import view.enums.Message;
 
 import java.util.regex.Matcher;
 
@@ -13,12 +13,12 @@ public class MainMenuController {
         currentUser = user;
     }
 
-    public MainMenuMessages enterProfileMenu() {
+    public Message enterProfileMenu() {
         ProfileMenuController.setCurrentUser(currentUser);
-        return MainMenuMessages.ENTERED_PROFILE_MENU;
+        return Message.ENTERED_PROFILE_MENU;
     }
 
-    public MainMenuMessages startGame(Matcher matcher) {
+    public Message startGame(Matcher matcher) {
 
         GameMenuController.setCurrentUser(currentUser);
 
@@ -26,11 +26,11 @@ public class MainMenuController {
 //        GameMenuController.setGame(map);
         MapMenuController.setMap(map);
 
-        return MainMenuMessages.GAME_STARTED;
+        return Message.GAME_STARTED;
     }
 
-    public MainMenuMessages logout() {
+    public Message logout() {
         setCurrentUser(null);
-        return MainMenuMessages.LOGOUT_SUCCESSFUL;
+        return Message.LOGOUT_SUCCESSFUL;
     }
 }

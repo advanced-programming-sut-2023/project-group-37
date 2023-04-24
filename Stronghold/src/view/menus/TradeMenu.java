@@ -1,41 +1,36 @@
 package view.menus;
 
 import controller.TradeMenuController;
-import view.enums.Results;
-import view.enums.commands.TradeMenuCommands;
-import view.enums.messages.TradeMenuMessages;
+import view.enums.Command;
+import view.enums.Message;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class TradeMenu {
-    private final Scanner scanner;
-    private final TradeMenuController controller = new TradeMenuController();
-    public TradeMenu(Scanner scanner) {
-        this.scanner = scanner;
+    private final TradeMenuController controller;
+
+    {
+        this.controller = new TradeMenuController();
     }
 
-    public void run() {
+    public void run(Scanner scanner) {
         String command;
         Matcher matcher;
 
         while (true) {
             command = scanner.nextLine();
 
-            if ((matcher = TradeMenuCommands.getMatcher(command, TradeMenuCommands.REQUEST_TRADE)) != null)
+            if ((matcher = Command.REQUEST_TRADE.getMatcher(command)) != null)
                 System.out.println(controller.requestTrade(matcher));
-
-            else if (TradeMenuCommands.getMatcher(command, TradeMenuCommands.SHOW_TRADE_LIST) != null)
+            else if (Command.SHOW_TRADE_LIST.getMatcher(command) != null)
                 System.out.println(controller.showTradeList());
-
-            else if ((matcher = TradeMenuCommands.getMatcher(command, TradeMenuCommands.ACCEPT_TRADE)) != null)
+            else if ((matcher = Command.ACCEPT_TRADE.getMatcher(command)) != null)
                 System.out.println(controller.acceptTrade(matcher));
-
-            else if (TradeMenuCommands.getMatcher(command, TradeMenuCommands.SHOW_TRADE_HISTORY) != null)
+            else if (Command.SHOW_TRADE_HISTORY.getMatcher(command) != null)
                 System.out.println(controller.showTradeHistory());
-
-            else if (TradeMenuCommands.getMatcher(command, TradeMenuCommands.BACK_GAME_MENU) != null) {
-                System.out.println(TradeMenuMessages.BACK_GAME_MENU);
+            else if (Command.BACK_GAME_MENU.getMatcher(command) != null) {
+                System.out.println(Message.BACK_GAME_MENU);
                 return;
             }
         }

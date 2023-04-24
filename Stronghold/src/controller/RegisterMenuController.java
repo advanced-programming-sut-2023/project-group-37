@@ -1,29 +1,24 @@
 package controller;
 
 import model.Model;
+import model.user.SecurityQuestion;
 import model.user.Slogan;
 import model.user.User;
-import view.enums.messages.RegisterMenuMessages;
+import view.enums.Message;
 
 import java.security.SecureRandom;
 import java.util.regex.Matcher;
 
 public class RegisterMenuController {
-    private static final RegisterMenuController registerMenuController = new RegisterMenuController();
 
-    public static RegisterMenuController getInstance() {
-        return registerMenuController;
-    }
-
-    RegisterMenuController() {
-
-    }
+    // TODO: why these fields?
 
     private User user;
-    private String password;
     private String randomPassword;
     private String randomSlogan = null;
-    private int delayTime = 0;
+
+    // TODO: handle countdown!
+//    private int delayTime = 0;
 
     private void saveUser() {
         //TODO : if <user> not null save <user> in file
@@ -58,7 +53,7 @@ public class RegisterMenuController {
         int randomIndex;
         char randomChar;
 
-        for (int i=0; i<3; i++) {
+        for (int i = 0; i < 3; i++) {
             randomIndex = random.nextInt(UPPER_CHARACTERS.length());
             randomChar = UPPER_CHARACTERS.charAt(randomIndex);
             password.append(randomChar);
@@ -67,13 +62,13 @@ public class RegisterMenuController {
         randomChar = OTHER_CHARACTERS.charAt(randomIndex);
         password.append(randomChar);
 
-        for (int i=0; i<3; i++) {
+        for (int i = 0; i < 3; i++) {
             randomIndex = random.nextInt(LOWER_CHARACTERS.length());
             randomChar = LOWER_CHARACTERS.charAt(randomIndex);
             password.append(randomChar);
         }
 
-        for (int i=0; i<2; i++) {
+        for (int i = 0; i < 2; i++) {
             randomIndex = random.nextInt(NUMBERS.length());
             randomChar = NUMBERS.charAt(randomIndex);
             password.append(randomChar);
@@ -101,86 +96,75 @@ public class RegisterMenuController {
         return Slogan.getRandomSlogan().toString();
     }
 
-    public RegisterMenuMessages register(Matcher matcher) { //TODO : random slogan
+    public Message register(Matcher matcher) { //TODO : random slogan
         String username = deleteQuotations(matcher.group("username")),
                 password = deleteQuotations(matcher.group("password")),
                 email = deleteQuotations(matcher.group("email")),
                 nickName = deleteQuotations(matcher.group("nickName")),
                 slogan = deleteQuotations(matcher.group("slogan"));
-
         if (username.isEmpty() || password.isEmpty() || email.isEmpty() || nickName.isEmpty())
-            return RegisterMenuMessages.EMPTY_FIELD;
-
+            return Message.EMPTY_FIELD;
         if (checkUsernameNotOK(username))
-            return RegisterMenuMessages.INCORRECT_USERNAME_FORM;
-
+            return Message.INCORRECT_USERNAME_FORM;
         if (checkPasswordNotOK(password) && !password.equals("random"))
-            return RegisterMenuMessages.WEAK_PASSWORD;
-
+            return Message.WEAK_PASSWORD;
         if (!password.equals("random")) {
             String passwordConfirm = deleteQuotations(matcher.group("passwordConfirm"));
-
             if (passwordConfirm.isEmpty())
-                return RegisterMenuMessages.EMPTY_FIELD;
-
+                return Message.EMPTY_FIELD;
             if (!passwordConfirm.equals(password))
-                return RegisterMenuMessages.INCOMPATIBLE_PASSWORDS;
-        }
-        else {
+                return Message.INCOMPATIBLE_PASSWORDS;
+        } else {
             randomPassword = generateRandomPassword();
             password = randomPassword;
         }
-
         if (checkEmailNotOK(email))
-            return RegisterMenuMessages.INCORRECT_EMAIL_FORM;
-
+            return Message.INCORRECT_EMAIL_FORM;
         if (slogan.isEmpty())
             slogan = "";
-
         else if (slogan.equals("random")) {
             randomSlogan = generateRandomSlogan();
             slogan = randomSlogan;
         }
-
         user = new User(username, password, email, slogan, nickName);
-
         if (password.equals(randomPassword))
-            return RegisterMenuMessages.RANDOM_PASSWORD;
-
-        return RegisterMenuMessages.ASK_FOR_SECURITY_QUESTION;
+            return null;
+            //TODO: handle!
+//            return Message.RANDOM_PASSWORD;
+        return Message.ASK_FOR_SECURITY_QUESTION;
     }
 
-    public RegisterMenuMessages pickQuestion(Matcher matcher) {
+    public Message pickQuestion(Matcher matcher) {
         int questionNumber = Integer.parseInt(matcher.group("questionNumber"));
 
-        if (questionNumber > 3 || questionNumber < 1)
-            return RegisterMenuMessages.INCORRECT_QUESTION_NUMBER;
+        if (questionNumber > SecurityQuestion.values().length || questionNumber < 1)
+            return Message.INCORRECT_QUESTION_NUMBER;
 
         String answer = deleteQuotations(matcher.group("answer")),
                 answerConfirm = deleteQuotations(matcher.group("answerConfirm"));
 
         if (answer.isEmpty() || answerConfirm.isEmpty())
-            return RegisterMenuMessages.EMPTY_FIELD;
+            return Message.EMPTY_FIELD;
 
         if (!answer.equals(answerConfirm))
-            return RegisterMenuMessages.INCOMPATIBLE_ANSWERS;
+            return Message.INCOMPATIBLE_ANSWERS;
 
         user.setSecurityQuestion(questionNumber);
         user.setSecurityQuestionAnswer(answer);
 
         saveUser();
-        return RegisterMenuMessages.REGISTER_SUCCESSFUL;
+        return Message.REGISTER_SUCCESSFUL;
     }
 
-    public RegisterMenuMessages checkPasswordConfirm(String passwordConfirm) {
+    public Message checkPasswordConfirm(String passwordConfirm) {
         if (passwordConfirm.equals("cancel"))
-            return RegisterMenuMessages.CANCEL;
+            return Message.CANCEL;
 
         if (passwordConfirm.matches("\\s*" + randomPassword + "\\s*")) {
             saveUser();
-            return RegisterMenuMessages.ASK_FOR_SECURITY_QUESTION;
+            return Message.ASK_FOR_SECURITY_QUESTION;
         }
 
-        return RegisterMenuMessages.REENTER_AGAIN;
+        return Message.REENTER_AGAIN;
     }
 }

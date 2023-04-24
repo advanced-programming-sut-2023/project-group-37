@@ -1,6 +1,6 @@
 package view.enums;
 
-public enum Results {
+public enum Result {
     // Register && Login menu
     LOGGED_IN,
     USER_CREATED,

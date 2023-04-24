@@ -1,51 +1,48 @@
 package view.menus;
 
 import controller.MainMenuController;
-import view.enums.Results;
-import view.enums.commands.MainMenuCommands;
-import view.enums.messages.MainMenuMessages;
+import view.enums.Result;
+import view.enums.Command;
+import view.enums.Message;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class MainMenu {
-    private final MainMenuController controller = new MainMenuController();
-    private final Scanner scanner;
+    private final MainMenuController controller;
 
-    public MainMenu(Scanner scanner) {
-        this.scanner = scanner;
+    {
+        this.controller = new MainMenuController();
     }
 
-    public Results run() {
+    public Result run(Scanner scanner) {
         String command;
         Matcher matcher;
 
         while (true) {
             command = scanner.nextLine();
 
-            if (MainMenuCommands.getMatcher(command, MainMenuCommands.ENTER_PROFILE_MENU) != null) {
-                System.out.println(controller.enterProfileMenu());
-                return Results.ENTER_PROFILE_MENU;
+            if (Command.ENTER_PROFILE_MENU.getMatcher(command) != null) {
+                System.out.println(this.controller.enterProfileMenu());
+                return Result.ENTER_PROFILE_MENU;
             }
-
-            else if ((matcher = MainMenuCommands.getMatcher(command, MainMenuCommands.START_GAME)) != null) {
+            else if ((matcher = Command.START_GAME.getMatcher(command)) != null) {
                 if (startGame(matcher))
-                    return Results.ENTER_GAME_MENU;
+                    return Result.ENTER_GAME_MENU;
             }
-
-            else if (MainMenuCommands.getMatcher(command, MainMenuCommands.LOGOUT) != null) {
-                System.out.println(controller.logout());
-                return Results.ENTER_LOGIN_MENU;
+            else if (Command.LOGOUT.getMatcher(command) != null) {
+                System.out.println(this.controller.logout());
+                return Result.ENTER_LOGIN_MENU;
             }
-
-            else System.out.println("Invalid command!");
+            else
+                System.out.println("Invalid command!");
         }
     }
 
     private boolean startGame(Matcher matcher) {
-        MainMenuMessages message = controller.startGame(matcher);
+        Message message = this.controller.startGame(matcher);
         System.out.println(message);
 
-        return message == MainMenuMessages.GAME_STARTED;
+        return message == Message.GAME_STARTED;
     }
 }

@@ -1,130 +1,100 @@
 package view.menus;
 
 import controller.GameMenuController;
-import view.enums.Results;
-import view.enums.commands.GameMenuCommands;
-import view.enums.messages.GameMenuMessages;
+import view.enums.Result;
+import view.enums.Command;
+import view.enums.Message;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class GameMenu {
-    private final GameMenuController controller = new GameMenuController();
-    private final Scanner scanner;
-    private GameMenuMessages message;
+    private final GameMenuController controller;
+    private Message message;
 
-    public GameMenu(Scanner scanner){
-        this.scanner = scanner;
+    {
+        this.controller = new GameMenuController();
     }
 
-    public Results run() {
-        //TODO: fill
+    public Result run(Scanner scanner) {
         String command;
         Matcher matcher;
 
         while (true) {
             command = scanner.nextLine();
 
-            if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.SHOW_MAP)) != null) {
+            if ((matcher = Command.SHOW_MAP.getMatcher(command)) != null)
                 if (showMap(matcher))
-                    return Results.ENTER_MAP_MENU;
-            }
-
-            else if (GameMenuCommands.getMatcher(command, GameMenuCommands.SHOW_POPULARITY) != null)
-                System.out.println(controller.showPopularity());
-
-            else if (GameMenuCommands.getMatcher(command, GameMenuCommands.SHOW_POPULARITY_FACTORS) != null)
-                System.out.println(controller.showPopularityFactors());
-
-            else if (GameMenuCommands.getMatcher(command, GameMenuCommands.SHOW_FOOD_LIST) != null)
-                System.out.println(controller.showFoodList());
-
-            else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.FOOD_RATE)) != null)
-                System.out.println(controller.setFoodRate(matcher));
-
-            else if (GameMenuCommands.getMatcher(command, GameMenuCommands.FOOD_RATE_SHOW) != null)
-                System.out.println(controller.showFoodRate());
-
-            else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.TAX_RATE)) != null)
-                System.out.println(controller.setTaxRate(matcher));
-
-            else if (GameMenuCommands.getMatcher(command, GameMenuCommands.TAX_RATE_SHOW) != null)
-                System.out.println(controller.showTaxRate());
-
-            else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.FEAR_RATE)) != null)
-                System.out.println(controller.setFearRate(matcher));
-
-            else if (GameMenuCommands.getMatcher(command, GameMenuCommands.SHOW_FEAR_RATE) != null)
-                System.out.println(controller.showFearRate());
-
-            else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.DROP_BUILDING)) != null)
-                System.out.println(controller.dropBuilding(matcher));
-
-            else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.CREATE_UNIT)) != null)
-                System.out.println(controller.createUnit(matcher));
-
-            else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.SELECT_BUILDING)) != null) {
-                if (selectBuilding(matcher))
-                    return Results.ENTER_BUILDING_MENU;
-            }
-
-            else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.SELECT_UNIT)) != null) {
-                if (selectUnit(matcher))
-                    return Results.ENTER_UNIT_MENU;
-            }
-
-            else if (GameMenuCommands.getMatcher(command, GameMenuCommands.ENTER_SHOP_MENU) != null)
-            {
-                System.out.println(controller.enterShopMenu());
-                return Results.ENTER_SHOP_MENU;
-            }
-
-            else if (GameMenuCommands.getMatcher(command, GameMenuCommands.ENTER_TRADE_MENU) != null) {
-                System.out.println(controller.enterTradeMenu());
-                return Results.ENTER_TRADE_MENU;
-            }
-
-            else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.SET_TEXTURE)) != null)
-                System.out.println(controller.setTexture(matcher));
-
-            else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.SET_RECTANGLE_TEXTURES)) != null)
-                System.out.println(controller.setRectangleTextures(matcher));
-
-            else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.CLEAR_TEXTURE)) != null)
-                System.out.println(controller.clearTexture(matcher));
-
-            else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.DROP_ROCK)) != null)
-                System.out.println(controller.dropRock(matcher));
-
-            else if ((matcher = GameMenuCommands.getMatcher(command, GameMenuCommands.DROP_TREE)) != null)
-                System.out.println(controller.dropTree(matcher));
-
-            else if (GameMenuCommands.getMatcher(command, GameMenuCommands.END_GAME) != null)
-                return Results.END_GAME;
-
-            else System.out.println("Invalid command!");
+                    return Result.ENTER_MAP_MENU;
+                else if (Command.SHOW_POPULARITY.getMatcher(command) != null)
+                    System.out.println(this.controller.showPopularity());
+                else if (Command.SHOW_POPULARITY_FACTORS.getMatcher(command) != null)
+                    System.out.println(this.controller.showPopularityFactors());
+                else if (Command.SHOW_FOOD_LIST.getMatcher(command) != null)
+                    System.out.println(this.controller.showFoodList());
+                else if ((matcher = Command.FOOD_RATE.getMatcher(command)) != null)
+                    System.out.println(this.controller.setFoodRate(matcher));
+                else if (Command.FOOD_RATE_SHOW.getMatcher(command) != null)
+                    System.out.println(this.controller.showFoodRate());
+                else if ((matcher = Command.TAX_RATE.getMatcher(command)) != null)
+                    System.out.println(this.controller.setTaxRate(matcher));
+                else if (Command.TAX_RATE_SHOW.getMatcher(command) != null)
+                    System.out.println(this.controller.showTaxRate());
+                else if ((matcher = Command.FEAR_RATE.getMatcher(command)) != null)
+                    System.out.println(this.controller.setFearRate(matcher));
+                else if (Command.SHOW_FEAR_RATE.getMatcher(command) != null)
+                    System.out.println(this.controller.showFearRate());
+                else if ((matcher = Command.DROP_BUILDING.getMatcher(command)) != null)
+                    System.out.println(this.controller.dropBuilding(matcher));
+                else if ((matcher = Command.CREATE_UNIT.getMatcher(command)) != null)
+                    System.out.println(this.controller.createUnit(matcher));
+                else if ((matcher = Command.SELECT_BUILDING.getMatcher(command)) != null) {
+                    if (selectBuilding(matcher))
+                        return Result.ENTER_BUILDING_MENU;
+                } else if ((matcher = Command.SELECT_UNIT.getMatcher(command)) != null) {
+                    if (selectUnit(matcher))
+                        return Result.ENTER_UNIT_MENU;
+                } else if (Command.ENTER_SHOP_MENU.getMatcher(command) != null) {
+                    System.out.println(this.controller.enterShopMenu());
+                    return Result.ENTER_SHOP_MENU;
+                } else if (Command.ENTER_TRADE_MENU.getMatcher(command) != null) {
+                    System.out.println(this.controller.enterTradeMenu());
+                    return Result.ENTER_TRADE_MENU;
+                } else if ((matcher = Command.SET_TEXTURE.getMatcher(command)) != null)
+                    System.out.println(this.controller.setTexture(matcher));
+                else if ((matcher = Command.SET_RECTANGLE_TEXTURES.getMatcher(command)) != null)
+                    System.out.println(this.controller.setRectangleTextures(matcher));
+                else if ((matcher = Command.CLEAR_TEXTURE.getMatcher(command)) != null)
+                    System.out.println(this.controller.clearTexture(matcher));
+                else if ((matcher = Command.DROP_ROCK.getMatcher(command)) != null)
+                    System.out.println(this.controller.dropRock(matcher));
+                else if ((matcher = Command.DROP_TREE.getMatcher(command)) != null)
+                    System.out.println(this.controller.dropTree(matcher));
+                else if (Command.END_GAME.getMatcher(command) != null)
+                    return Result.END_GAME;
+                else
+                    System.out.println("Invalid command!");
         }
-
     }
 
     private boolean showMap(Matcher matcher) {
-        message = controller.showMap(matcher);
-        System.out.println(message);
+        this.message = this.controller.showMap(matcher);
+        System.out.println(this.message);
 
-        return message == GameMenuMessages.ENTERED_MAP_MENU;
+        return this.message == Message.ENTERED_MAP_MENU;
     }
 
     private boolean selectBuilding(Matcher matcher) {
-        message = controller.selectBuilding(matcher);
-        System.out.println(message);
+        this.message = this.controller.selectBuilding(matcher);
+        System.out.println(this.message);
 
-        return message == GameMenuMessages.ENTERED_BUILDING_MENU;
+        return this.message == Message.ENTERED_BUILDING_MENU;
     }
 
     private boolean selectUnit(Matcher matcher) {
-        message = controller.selectUnit(matcher);
-        System.out.println(message);
+        this.message = this.controller.selectUnit(matcher);
+        System.out.println(this.message);
 
-        return message == GameMenuMessages.ENTERED_UNIT_MENU;
+        return this.message == Message.ENTERED_UNIT_MENU;
     }
 }

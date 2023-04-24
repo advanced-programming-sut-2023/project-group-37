@@ -1,10 +1,5 @@
 package model;
 
-import model.user.Slogan;
-
-import java.security.SecureRandom;
-import java.util.ArrayList;
-
 import model.game.Map;
 
 public class Model {

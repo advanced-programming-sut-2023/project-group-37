@@ -2,8 +2,8 @@ package controller;
 
 import model.Model;
 import model.user.User;
-import view.enums.commands.ProfileMenuCommands;
-import view.enums.messages.ProfileMenuMessages;
+import view.enums.Command;
+import view.enums.Message;
 
 import java.util.regex.Matcher;
 
@@ -19,87 +19,87 @@ public class ProfileMenuController {
         return Model.deleteQuotations(string);
     }
 
-    public ProfileMenuMessages changeUsername(Matcher matcher) {
+    public Message changeUsername(Matcher matcher) {
         if (matcher.group("username") == null) {
-            return ProfileMenuMessages.CHANGE_USERNAME_ERROR1;
+            return Message.CHANGE_USERNAME_ERROR1;
         }
         String username = deleteQuotation(matcher.group("username"));
         if (RegisterMenuController.checkUsernameNotOK(username)) {
-            return ProfileMenuMessages.CHANGE_USERNAME_ERROR2;
+            return Message.CHANGE_USERNAME_ERROR2;
         }
         if (username.equals(currentUser.getUsername())) {
-            return ProfileMenuMessages.CHANGE_USERNAME_ERROR3;
+            return Message.CHANGE_USERNAME_ERROR3;
         }
         currentUser.setUsername(username);
-        return ProfileMenuMessages.CHANGE_USERNAME;
+        return Message.CHANGE_USERNAME;
     }
 
-    public ProfileMenuMessages changeNickName(Matcher matcher) {
+    public Message changeNickName(Matcher matcher) {
         if (matcher.group("nickname") == null) {
-            return ProfileMenuMessages.CHANGE_NICKNAME_ERROR1;
+            return Message.CHANGE_NICKNAME_ERROR1;
         }
         String nickname = matcher.group("nickname");
         if (nickname.equals(currentUser.getNickName())) {
-            return ProfileMenuMessages.CHANGE_NICKNAME_ERROR2;
+            return Message.CHANGE_NICKNAME_ERROR2;
         }
         currentUser.setNickName(nickname);
-        return ProfileMenuMessages.CHANGE_NICKNAME;
+        return Message.CHANGE_NICKNAME;
     }
 
-    public ProfileMenuMessages changePassword(Matcher matcher) {
+    public Message changePassword(Matcher matcher) {
         if (matcher.group("oldPassword") == null || matcher.group("newPassword") == null) {
-            return ProfileMenuMessages.CHANGE_PASSWORD_ERROR1;
+            return Message.CHANGE_PASSWORD_ERROR1;
         }
         String oldPass = matcher.group("oldPassword");
         String newPass = matcher.group("newPassword");
-        if (!currentUser.isCorrectPassword(oldPass)) {
-            return ProfileMenuMessages.CHANGE_PASSWORD_ERROR2;
+        if (currentUser.isWrongPassword(oldPass)) {
+            return Message.CHANGE_PASSWORD_ERROR2;
         }
         if (RegisterMenuController.checkPasswordNotOK(newPass)) {
-            return ProfileMenuMessages.CHANGE_PASSWORD_ERROR4;
+            return Message.CHANGE_PASSWORD_ERROR4;
         }
         password = matcher.group("newPassword");
-        return ProfileMenuMessages.ENTER_PASSWORD_AGAIN;
+        return Message.ENTER_PASSWORD_AGAIN;
     }
 
-    public ProfileMenuMessages checkPasswordAgain(String newPassword){
-        if (ProfileMenuCommands.getMatcher(newPassword, ProfileMenuCommands.CANCEL) != null)
-            return ProfileMenuMessages.CANCEL;
+    public Message checkPasswordAgain(String newPassword){
+        if (Command.CANCEL.getMatcher(newPassword) != null)
+            return Message.CANCEL;
 
         if(!newPassword.equals(password))
-            return ProfileMenuMessages.CHANGE_PASSWORD_ERROR5;
+            return Message.CHANGE_PASSWORD_ERROR5;
 
         currentUser.changePassword(newPassword);
-        return ProfileMenuMessages.CHANGE_PASSWORD;
+        return Message.CHANGE_PASSWORD;
     }
 
 
-    public ProfileMenuMessages changeEmail(Matcher matcher) {
+    public Message changeEmail(Matcher matcher) {
         String email = matcher.group("email");
         if (email.isEmpty()) {
-            return ProfileMenuMessages.CHANGE_EMAIL_ERROR3;
+            return Message.CHANGE_EMAIL_ERROR3;
         }
         if (RegisterMenuController.checkEmailNotOK(email)) {
-            return ProfileMenuMessages.CHANGE_EMAIL_ERROR1;
+            return Message.CHANGE_EMAIL_ERROR1;
         }
         if (User.getUserByEmail(email) != null) {
-            return ProfileMenuMessages.CHANGE_EMAIL_ERROR2;
+            return Message.CHANGE_EMAIL_ERROR2;
         }
         currentUser.setEmail(matcher.group("email"));
-        return ProfileMenuMessages.CHANGE_EMAIL;
+        return Message.CHANGE_EMAIL;
     }
 
-    public ProfileMenuMessages changeSlogan(Matcher matcher) {
+    public Message changeSlogan(Matcher matcher) {
         if (matcher.group("slogan").isEmpty()) {
-            return ProfileMenuMessages.CHANGE_SLOGAN_ERROR1;
+            return Message.CHANGE_SLOGAN_ERROR1;
         }
         currentUser.setSlogan(matcher.group("slogan"));
-        return ProfileMenuMessages.CHANGE_SLOGAN;
+        return Message.CHANGE_SLOGAN;
     }
 
-    public ProfileMenuMessages removeSlogan(Matcher matcher) {
+    public Message removeSlogan(Matcher matcher) {
         currentUser.setSlogan(null);
-        return ProfileMenuMessages.REMOVE_SLOGAN;
+        return Message.REMOVE_SLOGAN;
     }
 
     public int showScore() {
@@ -112,7 +112,7 @@ public class ProfileMenuController {
 
     public String showSlogan() {
         if (currentUser.getSlogan() == null) {
-            return "Empty Slogan!";
+            return "Empty slogan!";
         }
         return currentUser.getSlogan();
     }
@@ -123,8 +123,8 @@ public class ProfileMenuController {
         info += "Nickname: " + currentUser.getNickName() + "\n";
         info += "Email: " + currentUser.getEmail() + "\n";
         info += "Slogan: " + currentUser.getSlogan() + "\n";
-        info += "highscore: " + currentUser.getHighScore() + "\n";
-        info += "rank: " + currentUser.getRank() + "\n";
-        return info;
+        info += "HighScore: " + currentUser.getHighScore() + "\n";
+        info += "Rank: " + currentUser.getRank() + "\n";
+        return info.trim();
     }
 }

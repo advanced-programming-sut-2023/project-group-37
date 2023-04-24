@@ -1,47 +1,44 @@
 package view.menus;
 
 import controller.RegisterMenuController;
-import view.enums.Results;
-import view.enums.commands.RegisterMenuCommands;
-import view.enums.messages.RegisterMenuMessages;
+import view.enums.Message;
+import view.enums.Result;
+import view.enums.Command;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class RegisterMenu {
-    private final RegisterMenuController controller = RegisterMenuController.getInstance();
-    private RegisterMenuMessages message;
+    private final RegisterMenuController controller;
     private final Scanner scanner;
     private String command;
+    private Message message;
 
-    public RegisterMenu(Scanner scanner) {
+    {
+        this.controller = new RegisterMenuController();
+    }
+
+    public RegisterMenu(Scanner scanner){
         this.scanner = scanner;
     }
 
-    public Results run() {
+    public Result run() {
+        Matcher matcher;
 
         while (true) {
-            command = scanner.nextLine();
+            this.command = scanner.nextLine();
 
-            Matcher matcher;
-
-            if ((matcher = RegisterMenuCommands.getMatcher(command, RegisterMenuCommands.REGISTER)) != null) {
+            // TODO: test if works fine!
+            if ((matcher = Command.REGISTER.getMatcher(this.command)) != null
+                    || (matcher = Command.REGISTER_RANDOM_PASSWORD.getMatcher(this.command)) != null) {
                 if (register(matcher))
-                    return Results.USER_CREATED;
-            }
-
-            else if ((matcher = RegisterMenuCommands.getMatcher(command, RegisterMenuCommands.REGISTER_RANDOM_PASSWORD)) != null) {
-                if (register(matcher))
-                    return Results.USER_CREATED;
-            }
-
-            else if (RegisterMenuCommands.getMatcher(command, RegisterMenuCommands.ENTER_LOGIN_MENU) != null)
-                return Results.ENTER_LOGIN_MENU;
-
-            else if (RegisterMenuCommands.getMatcher(command, RegisterMenuCommands.EXIT) != null)
-                return Results.EXIT;
-
-            else System.out.println("Invalid command!");
+                    return Result.USER_CREATED;
+            } else if (Command.ENTER_LOGIN_MENU.getMatcher(this.command) != null)
+                return Result.ENTER_LOGIN_MENU;
+            else if (Command.EXIT.getMatcher(this.command) != null)
+                return Result.EXIT;
+            else
+                System.out.println("Invalid command!");
         }
     }
 
@@ -49,57 +46,52 @@ public class RegisterMenu {
         Matcher matcher;
 
         while (true) {
-            command = scanner.nextLine();
+            this.command = this.scanner.nextLine();
 
-            if ((matcher = RegisterMenuCommands.getMatcher(command, RegisterMenuCommands.PICK_QUESTION)) != null) {
-                message = controller.pickQuestion(matcher);
-                System.out.println(message);
-
-                if (message == RegisterMenuMessages.REGISTER_SUCCESSFUL)
+            if ((matcher = Command.PICK_QUESTION.getMatcher(this.command)) != null) {
+                this.message = this.controller.pickQuestion(matcher);
+                System.out.println(this.message);
+                if (this.message == Message.REGISTER_SUCCESSFUL)
                     return true;
-            }
-
-            else if (RegisterMenuCommands.getMatcher(command, RegisterMenuCommands.CANCEL) != null) {
-                System.out.println(RegisterMenuMessages.CANCEL);
+            } else if (Command.CANCEL.getMatcher(this.command) != null) {
+                System.out.println(Message.CANCEL);
                 return false;
-            }
-
-            else System.out.println("Invalid command!");
+            } else
+                System.out.println("Invalid command!");
         }
     }
 
     private boolean register(Matcher matcher) {
-        message = controller.register(matcher);
+        this.message = this.controller.register(matcher);
 
         String randomSlogan;
-        if ((randomSlogan = controller.getRandomSlogan()) != null)
-            System.out.println(RegisterMenuMessages.RANDOM_SLOGAN.continueOutput(randomSlogan));
+        if ((randomSlogan = this.controller.getRandomSlogan()) != null)
+            System.out.println();
+            // TODO: handle!
+//            System.out.println(Message.RANDOM_SLOGAN.continueOutput(randomSlogan));
 
-        switch (message) {
-
+        switch (this.message) {
             case ASK_FOR_SECURITY_QUESTION -> {
-                System.out.println(message);
+                System.out.println(this.message);
                 return pickQuestion();
             }
-
-            case RANDOM_PASSWORD -> {
-                String randomPassword = controller.getRandomPassword();
-                System.out.println(RegisterMenuMessages.RANDOM_PASSWORD.continueOutput(randomPassword));
-
-                do {
-                    command = scanner.nextLine();
-
-                    message = controller.checkPasswordConfirm(command);
-                    System.out.println(message);
-
-                } while (message != RegisterMenuMessages.ASK_FOR_SECURITY_QUESTION &&
-                        message != RegisterMenuMessages.CANCEL);
-
-                if (message == RegisterMenuMessages.ASK_FOR_SECURITY_QUESTION)
-                    return pickQuestion();
-            }
+            // TODO: handle!
+//            case RANDOM_PASSWORD -> {
+//                String randomPassword = this.controller.getRandomPassword();
+//                System.out.println(Message.RANDOM_PASSWORD.continueOutput(randomPassword));
+//                do {
+//                    this.command = this.scanner.nextLine();
+//
+//                    this.message = this.controller.checkPasswordConfirm(this.command);
+//                    System.out.println(this.message);
+//
+//                } while (this.message != Message.ASK_FOR_SECURITY_QUESTION &&
+//                        this.message != Message.CANCEL);
+//
+//                if (this.message == Message.ASK_FOR_SECURITY_QUESTION)
+//                    return pickQuestion();
+//            }
         }
         return false;
     }
-
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class User {
 
     private static User currentUser;
-
     private String username;
     private String password;
     private String nickname;
@@ -128,15 +127,11 @@ public class User {
         this.highScore = highScore;
     }
 
-    public boolean isCorrectPassword(String password) {
-        return this.password.equals(password);
+    public boolean isWrongPassword(String password) {
+        return !this.password.equals(password);
     }
 
     public boolean isCorrectAnswer(String answer) {
         return this.securityQuestionAnswer.equals(answer);
-    }
-
-    public String getPasswordRecoveryQuestion() {
-        return securityQuestion;
     }
 }

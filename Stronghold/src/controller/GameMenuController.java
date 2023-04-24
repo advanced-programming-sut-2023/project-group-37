@@ -1,9 +1,8 @@
 package controller;
 
 import model.game.Game;
-import model.game.Map;
 import model.user.User;
-import view.enums.messages.GameMenuMessages;
+import view.enums.Message;
 
 import java.util.regex.Matcher;
 
@@ -19,89 +18,89 @@ public class GameMenuController {
         currentUser = user;
     }
 
-    public GameMenuMessages showMap(Matcher matcher) {
+    public Message showMap(Matcher matcher) {
         return null;
     }
 
-    public GameMenuMessages showPopularity() {
+    public Message showPopularity() {
         return null;
     }
 
-    public GameMenuMessages showPopularityFactors() {
+    public Message showPopularityFactors() {
         return null;
     }
 
-    public GameMenuMessages showFoodList() {
+    public Message showFoodList() {
         return null;
     }
 
-    public GameMenuMessages setFoodRate(Matcher matcher) {
+    public Message setFoodRate(Matcher matcher) {
         return null;
     }
 
-    public GameMenuMessages showFoodRate() {
+    public Message showFoodRate() {
         return null;
     }
 
-    public GameMenuMessages setTaxRate(Matcher matcher) {
+    public Message setTaxRate(Matcher matcher) {
         return null;
     }
 
-    public GameMenuMessages showTaxRate() {
+    public Message showTaxRate() {
         return null;
     }
 
-    public GameMenuMessages setFearRate(Matcher matcher) {
+    public Message setFearRate(Matcher matcher) {
         return null;
     }
 
-    public GameMenuMessages showFearRate() {
+    public Message showFearRate() {
         return null;
     }
 
-    public GameMenuMessages dropBuilding(Matcher matcher) {
+    public Message dropBuilding(Matcher matcher) {
         return null;
     }
 
-    public GameMenuMessages selectBuilding(Matcher matcher) {
+    public Message selectBuilding(Matcher matcher) {
         return null;
     }
 
-    public GameMenuMessages selectUnit(Matcher matcher) {
+    public Message selectUnit(Matcher matcher) {
         return null;
     }
 
-    public GameMenuMessages enterShopMenu() {
+    public Message enterShopMenu() {
         ShopMenuController.setCurrentUser(currentUser);
-        return GameMenuMessages.ENTERED_SHOP_MENU;
+        return Message.ENTERED_SHOP_MENU;
     }
 
-    public GameMenuMessages enterTradeMenu() {
+    public Message enterTradeMenu() {
         TradeMenuController.setCurrentUser(currentUser);
-        return GameMenuMessages.ENTERED_TRADE_MENU;
+        return Message.ENTERED_TRADE_MENU;
     }
 
-    public GameMenuMessages createUnit(Matcher matcher) {
+    public Message createUnit(Matcher matcher) {
         return null;
     }
 
-    public GameMenuMessages setTexture(Matcher matcher) {
+    public Message setTexture(Matcher matcher) {
         return null;
     }
 
-    public GameMenuMessages setRectangleTextures(Matcher matcher) {
+    public Message setRectangleTextures(Matcher matcher) {
         return null;
     }
 
-    public GameMenuMessages clearTexture(Matcher matcher) {
+    public Message clearTexture(Matcher matcher) {
         return null;
     }
 
-    public GameMenuMessages dropTree(Matcher matcher) {
+    public Message dropTree(Matcher matcher) {
         return null;
     }
 
-    public GameMenuMessages dropRock(Matcher matcher) {
+    public Message dropRock(Matcher matcher) {
         return null;
     }
 

@@ -1,39 +1,34 @@
 package view.menus;
 
 import controller.ShopMenuController;
-import view.enums.Results;
-import view.enums.commands.ShopMenuCommands;
-import view.enums.messages.ShopMenuMessages;
+import view.enums.Command;
+import view.enums.Message;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class ShopMenu {
-    private final ShopMenuController controller = new ShopMenuController();
-    private final Scanner scanner;
+    private final ShopMenuController controller;
 
-    public ShopMenu(Scanner scanner) {
-        this.scanner = scanner;
+    {
+        this.controller = new ShopMenuController();
     }
 
-    public void run() {
+    public void run(Scanner scanner) {
         String command;
         Matcher matcher;
 
         while (true) {
             command = scanner.nextLine();
 
-            if(ShopMenuCommands.getMatcher(command, ShopMenuCommands.SHOW_PRICE_LIST) != null)
-                System.out.println(controller.showPriceList());
-
-            else if ((matcher = ShopMenuCommands.getMatcher(command, ShopMenuCommands.BUY_ITEM)) != null)
-                System.out.println(controller.buy(matcher));
-
-            else if ((matcher = ShopMenuCommands.getMatcher(command, ShopMenuCommands.SELL_ITEM)) != null)
-                System.out.println(controller.sell(matcher));
-
-            else if (ShopMenuCommands.getMatcher(command, ShopMenuCommands.BACK_GAME_MENU) != null) {
-                System.out.println(ShopMenuMessages.BACK_GAME_MENU);
+            if(Command.SHOW_PRICE_LIST.getMatcher(command) != null)
+                System.out.println(this.controller .showPriceList());
+            else if ((matcher = Command.BUY_ITEM.getMatcher(command)) != null)
+                System.out.println(this.controller .buy(matcher));
+            else if ((matcher = Command.SELL_ITEM.getMatcher(command)) != null)
+                System.out.println(this.controller .sell(matcher));
+            else if (Command.BACK_GAME_MENU.getMatcher(command) != null) {
+                System.out.println(Message.BACK_GAME_MENU);
                 return;
             }
         }

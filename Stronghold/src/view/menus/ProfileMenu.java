@@ -1,68 +1,75 @@
 package view.menus;
 
 import controller.ProfileMenuController;
-import view.enums.Results;
-import view.enums.commands.ProfileMenuCommands;
-import view.enums.messages.ProfileMenuMessages;
+import view.enums.Result;
+import view.enums.Command;
+import view.enums.Message;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class ProfileMenu {
 
-    private final ProfileMenuController controller = new ProfileMenuController();
+    private final ProfileMenuController controller;
     private final Scanner scanner;
+
+    {
+        this.controller = new ProfileMenuController();
+    }
 
     public ProfileMenu(Scanner scanner) {
         this.scanner = scanner;
     }
 
-    public Results run() {
+    public Result run() {
         String command;
         Matcher matcher;
+
         while (true) {
-            command = scanner.nextLine();
-            if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.CHANGE_USERNAME)) != null) {
-                System.out.println(controller.changeUsername(matcher));
-            } else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.CHANGE_NICKNAME)) != null) {
-                System.out.println(controller.changeNickName(matcher));
-            } else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.CHANGE_PASSWORD)) != null) {
+            command = this.scanner.nextLine();
+            if ((matcher = Command.CHANGE_USERNAME.getMatcher(command)) != null) {
+                System.out.println(this.controller.changeUsername(matcher));
+            } else if ((matcher = Command.CHANGE_NICKNAME.getMatcher(command)) != null) {
+                System.out.println(this.controller.changeNickName(matcher));
+            } else if ((matcher = Command.CHANGE_PASSWORD.getMatcher(command)) != null) {
                 changePassword(matcher);
-            } else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.CHANGE_EMAIL)) != null) {
-                System.out.println(controller.changeEmail(matcher));
-            } else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.CHANGE_SLOGAN)) != null) {
-                System.out.println(controller.changeSlogan(matcher));
-            } else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.REMOVE_SLOGAN)) != null) {
-                System.out.println(controller.removeSlogan(matcher));
-            } else if (ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.DISPLAY_HIGHSCORE) != null) {
-                System.out.println(controller.showScore());
-            } else if (ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.DISPLAY_RANK) != null) {
-                System.out.println(controller.showRank());
-            } else if (ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.DISPLAY_SLOGAN) != null) {
-                System.out.println(controller.showSlogan());
-            } else if (ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.DISPLAY_PROFILE) != null) {
-                System.out.println(controller.showProfile());
+            } else if ((matcher = Command.CHANGE_EMAIL.getMatcher(command)) != null) {
+                System.out.println(this.controller.changeEmail(matcher));
+            } else if ((matcher = Command.CHANGE_SLOGAN.getMatcher(command)) != null) {
+                System.out.println(this.controller.changeSlogan(matcher));
+            } else if ((matcher = Command.REMOVE_SLOGAN.getMatcher(command)) != null) {
+                System.out.println(this.controller.removeSlogan(matcher));
+            } else if (Command.DISPLAY_HIGHSCORE.getMatcher(command) != null) {
+                System.out.println(this.controller.showScore());
+            } else if (Command.DISPLAY_RANK.getMatcher(command) != null) {
+                System.out.println(this.controller.showRank());
+            } else if (Command.DISPLAY_SLOGAN.getMatcher(command) != null) {
+                System.out.println(this.controller.showSlogan());
+            } else if (Command.DISPLAY_PROFILE.getMatcher(command) != null) {
+                System.out.println(this.controller.showProfile());
+                //TODO: hardcode:
             } else if (command.matches("\\s*enter\\s+main\\s+menu\\s*")) {
-                return Results.ENTER_MAIN_MENU;
-            } else {
+                return Result.ENTER_MAIN_MENU;
+            } else
                 System.out.println("Invalid Command!");
-            }
         }
     }
 
     private void changePassword(Matcher matcher) {
-        ProfileMenuMessages message = controller.changePassword(matcher);
+        Message message = this.controller.changePassword(matcher);
         System.out.println(message);
 
-        if(message.equals(ProfileMenuMessages.ENTER_PASSWORD_AGAIN)){
+        if (message.equals(Message.ENTER_PASSWORD_AGAIN)) {
             String password;
-            flag : while (true){
-                password = scanner.nextLine();
-                message = controller.checkPasswordAgain(password);
+            flag:
+            while (true) {
+                password = this.scanner.nextLine();
+                message = this.controller.checkPasswordAgain(password);
                 System.out.println(message);
-
                 switch (message) {
-                    case CHANGE_PASSWORD , CANCEL -> {break flag;}
+                    case CHANGE_PASSWORD, CANCEL -> {
+                        break flag;
+                    }
                 }
             }
         }

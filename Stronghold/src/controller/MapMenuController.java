@@ -1,7 +1,7 @@
 package controller;
 
 import model.game.Map;
-import view.enums.messages.MapMenuMessages;
+import view.enums.Message;
 
 import java.util.regex.Matcher;
 
@@ -12,11 +12,11 @@ public class MapMenuController {
         MapMenuController.map = map;
     }
 
-    public MapMenuMessages moveMap(Matcher matcher) {
+    public Message moveMap(Matcher matcher) {
         return null;
     }
 
-    public MapMenuMessages showDetails(Matcher matcher) {
+    public Message showDetails(Matcher matcher) {
         return null;
     }
 }

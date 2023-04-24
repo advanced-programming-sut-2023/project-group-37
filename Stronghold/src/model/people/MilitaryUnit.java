@@ -11,7 +11,7 @@ public abstract class MilitaryUnit {
     private final int range;
     private final int speed;
 
-    // TODO: do they need location?
+    // TODO: define location!
 
     public MilitaryUnit(Government loyalty, Quality hitpointsQuality, Quality attackingDamageQuality, Quality defencingDamageQuality,
                         int range, Quality speedQuality) {

@@ -1,81 +1,77 @@
 package controller;
 
-import view.enums.Results;
+import view.enums.Result;
 import view.menus.*;
 
 import java.util.Scanner;
 
 public class Controller {
-    private static final Scanner scanner;
-    private final RegisterMenu registerMenu = new RegisterMenu(scanner);
-    private final LoginMenu loginMenu = new LoginMenu(scanner);
-    private final MainMenu mainMenu = new MainMenu(scanner);
-    private final ProfileMenu profileMenu = new ProfileMenu(scanner);
-    private final GameMenu gameMenu = new GameMenu(scanner);
-    private final BuildingMenu buildingMenu = new BuildingMenu(scanner);
-    private final MapMenu mapMenu = new MapMenu(scanner);
-    private final ShopMenu shopMenu = new ShopMenu(scanner);
-    private final TradeMenu tradeMenu = new TradeMenu(scanner);
-    private final UnitMenu unitMenu = new UnitMenu(scanner);
-    private Results result;
+    private final Scanner scanner;
+    private final RegisterMenu registerMenu;
+    private final LoginMenu loginMenu;
+    private final MainMenu mainMenu;
+    private final ProfileMenu profileMenu;
+    private final GameMenu gameMenu;
+    private final BuildingMenu buildingMenu;
+    private final MapMenu mapMenu;
+    private final ShopMenu shopMenu;
+    private final TradeMenu tradeMenu;
+    private final UnitMenu unitMenu;
 
-    static {
+    {
         scanner = new Scanner(System.in);
+        registerMenu = new RegisterMenu(scanner);
+        loginMenu = new LoginMenu(scanner);
+        mainMenu = new MainMenu();
+        profileMenu = new ProfileMenu(scanner);
+        gameMenu = new GameMenu();
+        buildingMenu = new BuildingMenu();
+        mapMenu = new MapMenu();
+        shopMenu = new ShopMenu();
+        tradeMenu = new TradeMenu();
+        unitMenu = new UnitMenu();
     }
 
     public void run() {
-        runLoginMenu();
-    }
+        Result result;
 
-    private void runLoginMenu() {
-        result = loginMenu.run();
+        if ((result = this.loginMenu.run()) == Result.EXIT)
+            return;
 
-        switch (result) {
-            case ENTER_REGISTER_MENU -> runRegisterMenu();
-            case LOGGED_IN -> runMainMenu();
-        }
-    }
-
-    private void runRegisterMenu() {
-        result = registerMenu.run();
-
-        switch (result) {
-            case ENTER_LOGIN_MENU, USER_CREATED -> runLoginMenu();
-        }
-    }
-
-    private void runMainMenu() {
-        result = mainMenu.run();
-
-        switch (result) {
-            case ENTER_LOGIN_MENU -> runLoginMenu();
-            case ENTER_PROFILE_MENU -> runProfileMenu();
-            case ENTER_GAME_MENU -> runGameMenu();
-        }
-    }
-
-    private void runProfileMenu() {
-        result = profileMenu.run();
-
-        switch (result) {
-            case ENTER_LOGIN_MENU -> runLoginMenu();
-            case ENTER_MAIN_MENU -> runMainMenu();
+        while (true) {
+            switch (result) {
+                case LOGGED_IN:
+                    switch (this.mainMenu.run(this.scanner)) {
+                        case ENTER_PROFILE_MENU -> this.profileMenu.run();
+                        case ENTER_GAME_MENU -> runGameMenu();
+                        // TODO: case map edition menu!
+                        case ENTER_LOGIN_MENU -> {
+                            this.run();
+                            return;
+                        }
+                    }
+                    break;
+                case ENTER_REGISTER_MENU:
+                    if (this.registerMenu.run() == Result.EXIT)
+                        return;
+                    this.run();
+                    return;
+            }
         }
     }
 
     private void runGameMenu() {
+        Result result;
+
         while (true) {
-            result = gameMenu.run();
-
+            result = this.gameMenu.run(this.scanner);
             switch (result) {
-                case ENTER_BUILDING_MENU -> buildingMenu.run();
-                case ENTER_MAP_MENU -> mapMenu.run();
-                case ENTER_SHOP_MENU -> shopMenu.run();
-                case ENTER_TRADE_MENU -> tradeMenu.run();
-                case ENTER_UNIT_MENU -> unitMenu.run();
-
+                case ENTER_BUILDING_MENU -> this.buildingMenu.run(scanner);
+                case ENTER_MAP_MENU -> this.mapMenu.run(scanner);
+                case ENTER_SHOP_MENU -> this.shopMenu.run(scanner);
+                case ENTER_TRADE_MENU -> this.tradeMenu.run(scanner);
+                case ENTER_UNIT_MENU -> this.unitMenu.run(scanner);
                 case END_GAME -> {
-                    runMainMenu();
                     return;
                 }
             }

@@ -25,6 +25,10 @@ public enum BuildingType {
         this.workersNeeded = workersNeeded;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     public int getMaxHitpoints() {
         return this.maxHitpoints;
     }

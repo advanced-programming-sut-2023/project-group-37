@@ -2,8 +2,8 @@ package controller;
 
 import model.Model;
 import model.user.User;
-import view.enums.commands.RegisterMenuCommands;
-import view.enums.messages.LoginMenuMessages;
+import view.enums.Command;
+import view.enums.Message;
 
 import java.util.regex.Matcher;
 
@@ -16,6 +16,7 @@ public class LoginMenuController {
     }
     private static final LoginMenuController loginMenuController = new LoginMenuController();
 
+    // TODO: what tf does these fields & ctor do here?
     LoginMenuController() {
 
     }
@@ -24,7 +25,7 @@ public class LoginMenuController {
         return loginMenuController;
     }
 
-    public LoginMenuMessages login(Matcher matcher) {
+    public Message login(Matcher matcher) {
         String username = deleteQuotations(matcher.group("username")),
                 password = deleteQuotations(matcher.group("password"));
 
@@ -33,57 +34,58 @@ public class LoginMenuController {
 
         user = User.getUserByUsername(username);
         if (user == null)
-            return LoginMenuMessages.USER_NOT_EXISTS;
+            return Message.USER_NOT_EXISTS;
 
-        if (!user.isCorrectPassword(password)) {
+        if (user.isWrongPassword(password)) {
             // TODO : delay time
             delayTime += 5;
-            return LoginMenuMessages.INCORRECT_PASSWORD;
+            return Message.INCORRECT_PASSWORD;
         }
 
         delayTime = 0;
 
         MainMenuController.setCurrentUser(user);
-        return LoginMenuMessages.LOGIN_SUCCESSFUL;
+        return Message.LOGIN_SUCCESSFUL;
     }
 
-    public LoginMenuMessages forgot(Matcher matcher) {
+    public Message forgotPassword(Matcher matcher) {
         String username = matcher.group("username");
 
         user = User.getUserByUsername(username);
         if (user == null)
-            return LoginMenuMessages.USER_NOT_EXISTS;
+            return Message.USER_NOT_EXISTS;
 
-        return LoginMenuMessages.ASK_QUESTION;
+        return Message.ASK_QUESTION;
     }
 
-    public LoginMenuMessages answerRecoveryQuestion(String answer) {
+    public Message answerSecurityQuestion(String answer) {
         if (user.isCorrectAnswer(answer))
-            return LoginMenuMessages.ENTER_NEW_PASSWORD;
+            return Message.ENTER_NEW_PASSWORD;
 
-        return LoginMenuMessages.INCORRECT_ANSWER;
+        return Message.INCORRECT_ANSWER;
     }
 
-    public LoginMenuMessages enterNewPassword(String newPassword) {
-        if (RegisterMenuCommands.getMatcher(newPassword, RegisterMenuCommands.CANCEL) != null)
-            return LoginMenuMessages.CANCEL;
+    public Message getNewPassword(String newPassword) {
+        if (Command.CANCEL.getMatcher(newPassword) != null)
+            return Message.CANCEL;
 
         if (RegisterMenuController.checkPasswordNotOK(newPassword))
-            return LoginMenuMessages.WEAK_PASSWORD;
+            return Message.WEAK_PASSWORD;
 
         password = newPassword;
-        return LoginMenuMessages.ENTER_NEW_PASSWORD_AGAIN;
+        return Message.ENTER_NEW_PASSWORD_AGAIN;
     }
 
-    public LoginMenuMessages enterNewPasswordAgain(String newPassword) {
-        if (RegisterMenuCommands.getMatcher(newPassword, RegisterMenuCommands.CANCEL) != null)
-            return LoginMenuMessages.CANCEL;
+    // TODO: merge!
+    public Message getNewPasswordAgain(String newPassword) {
+        if (Command.CANCEL.getMatcher(newPassword) != null)
+            return Message.CANCEL;
 
         if (!newPassword.equals(password))
-            return LoginMenuMessages.INCOMPATIBLE_PASSWORDS;
+            return Message.INCOMPATIBLE_PASSWORDS;
 
         user.changePassword(newPassword);
-        return LoginMenuMessages.CHANGE_PASSWORD_SUCCESSFUL;
+        return Message.CHANGE_PASSWORD_SUCCESSFUL;
     }
 
     public User getUser() {

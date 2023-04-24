@@ -1,37 +1,33 @@
 package view.menus;
 
 import controller.MapMenuController;
-import view.enums.Results;
-import view.enums.commands.MapMenuCommands;
-import view.enums.messages.MapMenuMessages;
+import view.enums.Command;
+import view.enums.Message;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class MapMenu {
 
-    private final MapMenuController controller = new MapMenuController();
-    private final Scanner scanner;
+    private final MapMenuController controller;
 
-    public MapMenu(Scanner scanner) {
-        this.scanner = scanner;
+    {
+        this.controller = new MapMenuController();
     }
 
-    public void run() {
+    public void run(Scanner scanner) {
         String command;
         Matcher matcher;
 
         while (true) {
             command = scanner.nextLine();
 
-            if ((matcher = MapMenuCommands.getMatcher(command, MapMenuCommands.MOVE_THE_MAP)) != null)
-                System.out.println(controller.moveMap(matcher));
-
-            else if ((matcher = MapMenuCommands.getMatcher(command, MapMenuCommands.SHOW_DETAILS)) != null)
-                System.out.println(controller.showDetails(matcher));
-
-            else if (MapMenuCommands.getMatcher(command, MapMenuCommands.BACK_GAME_MENU) != null) {
-                System.out.println(MapMenuMessages.BACK_GAME_MENU);
+            if ((matcher = Command.MOVE_THE_MAP.getMatcher(command)) != null)
+                System.out.println(this.controller.moveMap(matcher));
+            else if ((matcher = Command.SHOW_DETAILS.getMatcher(command)) != null)
+                System.out.println(this.controller.showDetails(matcher));
+            else if (Command.BACK_GAME_MENU.getMatcher(command) != null) {
+                System.out.println(Message.BACK_GAME_MENU);
                 return;
             }
         }

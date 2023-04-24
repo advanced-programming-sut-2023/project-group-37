@@ -1,7 +1,7 @@
 package controller;
 
 import model.user.User;
-import view.enums.messages.TradeMenuMessages;
+import view.enums.Message;
 
 import java.util.regex.Matcher;
 
@@ -12,19 +12,19 @@ public class TradeMenuController {
         currentUser = user;
     }
 
-    public TradeMenuMessages requestTrade(Matcher matcher) {
+    public Message requestTrade(Matcher matcher) {
         return null;
     }
 
-    public TradeMenuMessages showTradeList() {
+    public Message showTradeList() {
         return null;
     }
 
-    public TradeMenuMessages acceptTrade(Matcher matcher) {
+    public Message acceptTrade(Matcher matcher) {
         return null;
     }
 
-    public TradeMenuMessages showTradeHistory() {
+    public Message showTradeHistory() {
         return null;
     }
 }

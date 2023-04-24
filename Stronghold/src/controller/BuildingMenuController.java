@@ -2,7 +2,7 @@ package controller;
 
 import model.buildings.BuildingType;
 import model.user.User;
-import view.enums.messages.BuildingMenuMessages;
+import view.enums.Message;
 
 public class BuildingMenuController {
     private static User currentUser;
@@ -16,7 +16,7 @@ public class BuildingMenuController {
         BuildingMenuController.building = building;
     }
 
-    public BuildingMenuMessages repair() {
+    public Message repair() {
         return null;
     }
 }
