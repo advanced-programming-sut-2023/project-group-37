@@ -31,7 +31,7 @@ public class RegisterMenuController {
         return Model.deleteQuotations(string);
     }
 
-    private static boolean checkUsernameNotOK(String username) {
+    static boolean checkUsernameNotOK(String username) {
         return !username.matches("[A-Za-z0-9_]+");
     }
 
@@ -40,7 +40,7 @@ public class RegisterMenuController {
                 password.matches(".*[0-9].*") && password.length() > 5 && password.matches(".*[^a-zA_Z0-9].*"));
     }
 
-    private static boolean checkEmailNotOK(String email) {
+    static boolean checkEmailNotOK(String email) {
         return !email.matches("[A-Za-z0-9_.]+@[a-zA-Z0-9_]+\\.[A-Za-z0-9_.]+");
     }
 
@@ -97,7 +97,6 @@ public class RegisterMenuController {
     public RegisterMenuMessages register(Matcher matcher) { //TODO : random slogan
         String username = deleteQuotations(matcher.group("username")),
                 password = deleteQuotations(matcher.group("password")),
-                passwordConfirm = deleteQuotations(matcher.group("passwordConfirm")),
                 email = deleteQuotations(matcher.group("email")),
                 nickName = deleteQuotations(matcher.group("nickName")),
                 slogan = deleteQuotations(matcher.group("slogan"));
@@ -112,6 +111,7 @@ public class RegisterMenuController {
             return RegisterMenuMessages.WEAK_PASSWORD;
 
         if (!password.equals("random")) {
+            String passwordConfirm = deleteQuotations(matcher.group("passwordConfirm"));
             if (passwordConfirm.isEmpty())
                 return RegisterMenuMessages.EMPTY_FIELD;
 
@@ -121,9 +121,6 @@ public class RegisterMenuController {
 
         if (checkEmailNotOK(email))
             return RegisterMenuMessages.INCORRECT_EMAIL_FORM;
-
-        if (slogan.isEmpty())
-            slogan = "";
 
         else if (slogan.equals("random"))
             slogan = generateRandomSlogan();
@@ -164,7 +161,7 @@ public class RegisterMenuController {
         if (passwordConfirm.equals("cancel"))
             return RegisterMenuMessages.CANCEL;
 
-        if (passwordConfirm.matches("\\s*" + randomPassword + "\\s*")) {
+        if (passwordConfirm.equals(password)) {
             saveUser();
             return RegisterMenuMessages.ASK_FOR_SECURITY_QUESTION;
         }

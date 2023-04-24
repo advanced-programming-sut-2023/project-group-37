@@ -1,5 +1,7 @@
 package model.user;
 
+import java.util.ArrayList;
+
 public class User {
 
     private static User currentUser;
@@ -12,6 +14,8 @@ public class User {
     private String securityQuestion;
     private String securityQuestionAnswer;
     private int highScore;
+    private int rank;
+    private static final ArrayList<User> users = new ArrayList<>();
 
     public static User getCurrentUser() {
         return User.currentUser;
@@ -26,11 +30,29 @@ public class User {
         this.password = password;
         this.email = email;
         this.slogan = slogan;
+        users.add(this);
     }
 
     public static User getUserByUsername(String username) {
-        // TODO: get data from db!
+        for (User user : users) {
+            if (user.getUsername().equals(username))
+                return user;
+        }
+
         return null;
+    }
+
+    public static User getUserByEmail(String email) {
+        for (User user : users) {
+            if (user.getEmail().equals(email))
+                return user;
+        }
+
+        return null;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 
     public User(String username, String password, String nickname, String slogan, String email, int questionNumber,
@@ -45,11 +67,15 @@ public class User {
         this.highScore = 0;
     }
 
+    public int getRank() {
+        return rank;
+    }
+
     public String getUsername() {
         return this.username;
     }
 
-    public String getNickname() {
+    public String getNickName() {
         return this.nickname;
     }
 
@@ -77,7 +103,7 @@ public class User {
         this.password = newPassword;
     }
 
-    public void setNickname(String nickname) {
+    public void setNickName(String nickname) {
         this.nickname = nickname;
     }
 
@@ -107,5 +133,9 @@ public class User {
 
     public boolean isCorrectAnswer(String answer) {
         return this.securityQuestionAnswer.equals(answer);
+    }
+
+    public String getPasswordRecoveryQuestion() {
+        return securityQuestion;
     }
 }

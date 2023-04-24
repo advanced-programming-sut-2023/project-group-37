@@ -80,7 +80,7 @@ public class LoginMenuController {
             return LoginMenuMessages.CANCEL;
 
         if (!newPassword.equals(password))
-            return LoginMenuMessages.INCOMPATIBLE_PASSWORDS; //TODO : what is the continue ?
+            return LoginMenuMessages.INCOMPATIBLE_PASSWORDS;
 
         user.changePassword(newPassword);
         return LoginMenuMessages.CHANGE_PASSWORD_SUCCESSFUL;
