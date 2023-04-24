@@ -1,4 +1,4 @@
-package model.enums;
+package model.user;
 
 import model.Model;
 
@@ -6,7 +6,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public enum Slogans {
+public enum Slogan {
     SLOGAN_1("I shall have my revenge, in this life or the next"),
     SLOGAN_2("Give yourself more time to think about your next move"),
     SLOGAN_3("Try not to repeat the same moves as your opponent"),
@@ -19,14 +19,14 @@ public enum Slogans {
     SLOGAN_10("");
 
     private final String slogan;
-    private static final ArrayList<Slogans> allSlogans = new ArrayList<>();
+    private static final ArrayList<Slogan> allSlogans = new ArrayList<>();
 
-    Slogans(String slogan) {
+    Slogan(String slogan) {
         this.slogan = slogan;
     }
 
     static {
-        allSlogans.addAll(Arrays.asList(Slogans.values()));
+        allSlogans.addAll(Arrays.asList(Slogan.values()));
     }
 
     @Override
@@ -34,7 +34,7 @@ public enum Slogans {
         return this.slogan;
     }
 
-    public static Slogans getRandomSlogan() {
+    public static Slogan getRandomSlogan() {
         SecureRandom random = new SecureRandom();
 
         int randomIndex = random.nextInt(allSlogans.size());

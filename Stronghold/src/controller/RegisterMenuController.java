@@ -1,8 +1,8 @@
 package controller;
 
 import model.Model;
-import model.User;
-import model.enums.Slogans;
+import model.user.Slogan;
+import model.user.User;
 import view.enums.messages.RegisterMenuMessages;
 
 import java.security.SecureRandom;
@@ -33,7 +33,7 @@ public class RegisterMenuController {
         return Model.deleteQuotations(string);
     }
 
-    private static boolean checkUsernameNotOK(String username) {
+    static boolean checkUsernameNotOK(String username) {
         return !username.matches("[A-Za-z0-9_]+");
     }
 
@@ -42,7 +42,7 @@ public class RegisterMenuController {
                 password.matches(".*[0-9].*") && password.length() > 5 && password.matches(".*[^a-zA_Z0-9].*"));
     }
 
-    private static boolean checkEmailNotOK(String email) {
+    static boolean checkEmailNotOK(String email) {
         return !email.matches("[A-Za-z0-9_.]+@[a-zA-Z0-9_]+\\.[A-Za-z0-9_.]+");
     }
 
@@ -98,7 +98,7 @@ public class RegisterMenuController {
     }
 
     private String generateRandomSlogan() {
-        return Slogans.getRandomSlogan().toString();
+        return Slogan.getRandomSlogan().toString();
     }
 
     public RegisterMenuMessages register(Matcher matcher) { //TODO : random slogan
@@ -142,7 +142,7 @@ public class RegisterMenuController {
             slogan = randomSlogan;
         }
 
-        user = new User(username, password, email, slogan);
+        user = new User(username, password, email, slogan, nickName);
 
         if (password.equals(randomPassword))
             return RegisterMenuMessages.RANDOM_PASSWORD;
@@ -165,8 +165,8 @@ public class RegisterMenuController {
         if (!answer.equals(answerConfirm))
             return RegisterMenuMessages.INCOMPATIBLE_ANSWERS;
 
-        user.setPasswordRecoveryQuestion(questionNumber);
-        user.setPasswordRecoveryAnswer(answer);
+        user.setSecurityQuestion(questionNumber);
+        user.setSecurityQuestionAnswer(answer);
 
         saveUser();
         return RegisterMenuMessages.REGISTER_SUCCESSFUL;

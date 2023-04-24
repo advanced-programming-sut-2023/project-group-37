@@ -25,11 +25,12 @@ public class User {
         User.currentUser = currentUser;
     }
 
-    public User(String username, String password, String email, String slogan) {
+    public User(String username, String password, String email, String slogan,String nickname) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.slogan = slogan;
+        this.nickname = nickname;
         users.add(this);
     }
 
