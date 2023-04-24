@@ -7,6 +7,7 @@ public enum RegisterMenuMessages {
     WEAK_PASSWORD("Weak password!"),
     INCOMPATIBLE_PASSWORDS("Incompatible passwords!"),
     INCORRECT_EMAIL_FORM("Incorrect email format!"),
+    RANDOM_SLOGAN("Your slogan is \"", "\""),
     RANDOM_PASSWORD("Your random password is: " , "\n" + "Please re-enter your password here:"),
     REENTER_AGAIN("Please re-enter your password again:"),
     ASK_FOR_SECURITY_QUESTION("Pick your security question: 1. What is my father’s name? 2. What\n" +

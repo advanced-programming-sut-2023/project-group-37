@@ -71,6 +71,10 @@ public class RegisterMenu {
     private boolean register(Matcher matcher) {
         message = controller.register(matcher);
 
+        String randomSlogan;
+        if ((randomSlogan = controller.getRandomSlogan()) != null)
+            System.out.println(RegisterMenuMessages.RANDOM_SLOGAN.continueOutput(randomSlogan));
+
         switch (message) {
 
             case ASK_FOR_SECURITY_QUESTION -> {
@@ -95,7 +99,6 @@ public class RegisterMenu {
                     return pickQuestion();
             }
         }
-
         return false;
     }
 

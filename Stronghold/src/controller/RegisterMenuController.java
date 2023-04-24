@@ -1,7 +1,8 @@
 package controller;
 
 import model.Model;
-import model.user.User;
+import model.User;
+import model.enums.Slogans;
 import view.enums.messages.RegisterMenuMessages;
 
 import java.security.SecureRandom;
@@ -21,6 +22,7 @@ public class RegisterMenuController {
     private User user;
     private String password;
     private String randomPassword;
+    private String randomSlogan = null;
     private int delayTime = 0;
 
     private void saveUser() {
@@ -31,7 +33,7 @@ public class RegisterMenuController {
         return Model.deleteQuotations(string);
     }
 
-    static boolean checkUsernameNotOK(String username) {
+    private static boolean checkUsernameNotOK(String username) {
         return !username.matches("[A-Za-z0-9_]+");
     }
 
@@ -40,7 +42,7 @@ public class RegisterMenuController {
                 password.matches(".*[0-9].*") && password.length() > 5 && password.matches(".*[^a-zA_Z0-9].*"));
     }
 
-    static boolean checkEmailNotOK(String email) {
+    private static boolean checkEmailNotOK(String email) {
         return !email.matches("[A-Za-z0-9_.]+@[a-zA-Z0-9_]+\\.[A-Za-z0-9_.]+");
     }
 
@@ -50,7 +52,7 @@ public class RegisterMenuController {
         String LOWER_CHARACTERS = "abcdefghijklmnopqrstuvwxyz";
         String UPPER_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String NUMBERS = "0123456789";
-        String OTHER_CHARACTERS = "?!@#$%^&*()_+=-/:;.><";
+        String OTHER_CHARACTERS = "?!@#$%^&*_+=-/:;.><";
 
         StringBuilder password = new StringBuilder();
         int randomIndex;
@@ -89,9 +91,14 @@ public class RegisterMenuController {
         return randomPassword;
     }
 
+    public String getRandomSlogan() {
+        String changer = randomSlogan;
+        randomSlogan = null;
+        return changer;
+    }
+
     private String generateRandomSlogan() {
-        // ToDO : generate slogan
-        return null;
+        return Slogans.getRandomSlogan().toString();
     }
 
     public RegisterMenuMessages register(Matcher matcher) { //TODO : random slogan
@@ -112,26 +119,34 @@ public class RegisterMenuController {
 
         if (!password.equals("random")) {
             String passwordConfirm = deleteQuotations(matcher.group("passwordConfirm"));
+
             if (passwordConfirm.isEmpty())
                 return RegisterMenuMessages.EMPTY_FIELD;
 
             if (!passwordConfirm.equals(password))
                 return RegisterMenuMessages.INCOMPATIBLE_PASSWORDS;
         }
+        else {
+            randomPassword = generateRandomPassword();
+            password = randomPassword;
+        }
 
         if (checkEmailNotOK(email))
             return RegisterMenuMessages.INCORRECT_EMAIL_FORM;
 
-        else if (slogan.equals("random"))
-            slogan = generateRandomSlogan();
+        if (slogan.isEmpty())
+            slogan = "";
+
+        else if (slogan.equals("random")) {
+            randomSlogan = generateRandomSlogan();
+            slogan = randomSlogan;
+        }
 
         user = new User(username, password, email, slogan);
 
-        if (password.equals("random")) {
-            randomPassword = generateRandomPassword();
-
+        if (password.equals(randomPassword))
             return RegisterMenuMessages.RANDOM_PASSWORD;
-        }
+
         return RegisterMenuMessages.ASK_FOR_SECURITY_QUESTION;
     }
 
@@ -150,8 +165,8 @@ public class RegisterMenuController {
         if (!answer.equals(answerConfirm))
             return RegisterMenuMessages.INCOMPATIBLE_ANSWERS;
 
-        user.setSecurityQuestion(questionNumber);
-        user.setSecurityQuestionAnswer(answer);
+        user.setPasswordRecoveryQuestion(questionNumber);
+        user.setPasswordRecoveryAnswer(answer);
 
         saveUser();
         return RegisterMenuMessages.REGISTER_SUCCESSFUL;
@@ -161,7 +176,7 @@ public class RegisterMenuController {
         if (passwordConfirm.equals("cancel"))
             return RegisterMenuMessages.CANCEL;
 
-        if (passwordConfirm.equals(password)) {
+        if (passwordConfirm.matches("\\s*" + randomPassword + "\\s*")) {
             saveUser();
             return RegisterMenuMessages.ASK_FOR_SECURITY_QUESTION;
         }
