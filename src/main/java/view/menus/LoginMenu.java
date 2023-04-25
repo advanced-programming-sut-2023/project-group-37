@@ -34,7 +34,7 @@ public class LoginMenu {
             else if (Command.EXIT.getMatcher(this.command) != null)
                 return Result.EXIT;
             else
-                System.out.println("Invalid command!");
+                System.out.println(Message.INVALID_COMMAND);
         }
     }
 

@@ -40,8 +40,9 @@ public class UnitMenu {
             else if (Command.BACK_GAME_MENU.getMatcher(command) != null) {
                 System.out.println(Message.BACK_GAME_MENU);
                 return;
-            } else
-                System.out.println("Invalid command!");
+            }
+            else
+                System.out.println(Message.INVALID_COMMAND);
         }
     }
 }

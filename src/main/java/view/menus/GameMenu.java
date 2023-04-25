@@ -73,7 +73,7 @@ public class GameMenu {
                 else if (Command.END_GAME.getMatcher(command) != null)
                     return Result.END_GAME;
                 else
-                    System.out.println("Invalid command!");
+                    System.out.println(Message.INVALID_COMMAND);
         }
     }
 

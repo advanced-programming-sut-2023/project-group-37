@@ -13,7 +13,7 @@ public enum SecurityQuestion {
 
         for (SecurityQuestion question : values()) {
             result.append(index).append(". ").append(question.question).append(" ");
-            if (index % 2 == 0)
+            if (index % 2 == 1)
                 result.append("\n");
             index++;
         }
