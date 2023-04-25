@@ -2,6 +2,7 @@ package model.game;
 
 import model.buildings.Building;
 import model.people.MilitaryUnit;
+import model.people.Person;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ public class Tile {
     private final int y;
     private Texture texture;
 
-    // TODO: may need another arraylist of normal people
+    private final ArrayList<Person> people;
     private final ArrayList<MilitaryUnit> militaryUnits;
     private Building building;
 
@@ -18,6 +19,7 @@ public class Tile {
         this.x = x;
         this.y = y;
         this.texture = Texture.GROUND;
+        this.people = new ArrayList<>();
         this.militaryUnits = new ArrayList<>();
         this.building = null;
     }
@@ -48,5 +50,13 @@ public class Tile {
 
     public void setBuilding(Building building) {
         this.building = building;
+    }
+
+    public void addPerson(Person person){
+        this.people.add(person);
+    }
+
+    public void addMilitaryUnit(MilitaryUnit unit){
+        this.militaryUnits.add(unit);
     }
 }

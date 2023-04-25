@@ -1,8 +1,10 @@
 package model.people;
 
 import model.game.Government;
+import model.game.Movable;
+import model.game.Tile;
 
-public abstract class MilitaryUnit {
+public abstract class MilitaryUnit implements Movable {
 
     private final Government loyalty;
     private int hitpoints;
@@ -11,10 +13,11 @@ public abstract class MilitaryUnit {
     private final int range;
     private final int speed;
 
-    // TODO: define location!
+    private Tile location;
 
     public MilitaryUnit(Government loyalty, Quality hitpointsQuality, Quality attackingDamageQuality, Quality defencingDamageQuality,
                         int range, Quality speedQuality) {
+
         this.loyalty = loyalty;
         this.hitpoints = Quality.getHitpointsByQuality(hitpointsQuality);
         this.attackingDamage = Quality.getAttackingDamageByQuality(attackingDamageQuality);
@@ -49,5 +52,14 @@ public abstract class MilitaryUnit {
 
     public int getSpeed() {
         return speed;
+    }
+
+    public Tile getLocation() {
+        return this.location;
+    }
+
+    public void move(Tile destination){
+        this.location = destination;
+        destination.addMilitaryUnit(this);
     }
 }
