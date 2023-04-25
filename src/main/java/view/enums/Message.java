@@ -6,36 +6,40 @@ public enum Message {
     // MultiMenu:
     WEAK_PASSWORD("Weak password!"),
     INCOMPATIBLE_PASSWORDS("Incompatible passwords!"),
+    BACK_GAME_MENU("Returned to game menu"),
+    BACK_MAIN_MENU("Returned main menu"),
+    INVALID_COMMAND("Invalid command!"),
 
     // SignupMenu:
     CANCEL("The process canceled successfully!"),
     EMPTY_FIELD("Please fill all necessary fields!"),
     INCORRECT_USERNAME_FORM("Incorrect username format!"),
+    USERNAME_ALREADY_EXISTS("Username already exists"),
     INCORRECT_EMAIL_FORM("Incorrect email format!"),
-//    RANDOM_SLOGAN("Your slogan is \"", "\""),
+    ENTERED_LOGIN_MENU("Entered login menu!"),
+    //    RANDOM_SLOGAN("Your slogan is \"", "\""),
 //    RANDOM_PASSWORD("Your random password is: " , "\n" + "Please re-enter your password here:"),
     REENTER_AGAIN("Please re-enter your password again:"),
-    ASK_FOR_SECURITY_QUESTION(SecurityQuestion.getAllQuestions()),
+    ASK_FOR_SECURITY_QUESTION("Pick your security question: " +SecurityQuestion.getAllQuestions()),
     INCORRECT_QUESTION_NUMBER("Please select question-number between 1,2,3:"),
     INCOMPATIBLE_ANSWERS("Incompatible answers!"),
-    REGISTER_SUCCESSFUL("user created successfully!"),
-    NOT_LOGGED_IN("No loggedIn user!"),
+    REGISTER_SUCCESSFUL("User created successfully!"),
 
     // LoginMenu:
-//    CANCEL("The process canceled successfully!"),
     USER_NOT_EXISTS("Username and password didn't match!"),
     INCORRECT_PASSWORD("Username and password didn't match!"),
     ASK_QUESTION("Please answer following question to change your password:"),
-    LOGIN_SUCCESSFUL("user logged in successfully!"),
+    LOGIN_SUCCESSFUL("User logged in successfully!"),
     INCORRECT_ANSWER("Incorrect answer!"),
     ENTER_NEW_PASSWORD("Please Enter your new password:"),
     ENTER_NEW_PASSWORD_AGAIN("Please enter your new password again:"),
-    CHANGE_PASSWORD_SUCCESSFUL("password changed successfully!"),
+    CHANGE_PASSWORD_SUCCESSFUL("Password changed successfully!"),
+    ENTERED_REGISTER_MENU("Entered register menu!"),
 
     // MainMenu:
-    ENTERED_PROFILE_MENU("entered profile menu successfully!"),
-    GAME_STARTED("game started successfully!"),
-    LOGOUT_SUCCESSFUL("user logged out successfully!"),
+    ENTERED_PROFILE_MENU("Entered profile menu successfully!"),
+    GAME_STARTED("Game started successfully!"),
+    LOGOUT_SUCCESSFUL("User logged out successfully!"),
 
     // ProfileMenu:
     CHANGE_USERNAME("Username changed successfully!"),
@@ -58,18 +62,17 @@ public enum Message {
     CHANGE_EMAIL_ERROR3("Please enter an email!"),
     CHANGE_SLOGAN("Slogan changed successfully!"),
     CHANGE_SLOGAN_ERROR1("Please enter a slogan! (empty field)"),
-    REMOVE_SLOGAN("slogan removed successfully!"),
+    REMOVE_SLOGAN("Slogan removed successfully!"),
 //    CANCEL("process canceled!"),
 
     // GameMenu:
-    ENTERED_MAP_MENU(""),
-    ENTERED_BUILDING_MENU(""),
-    ENTERED_UNIT_MENU(""),
-    ENTERED_SHOP_MENU(""),
+    ENTERED_MAP_MENU("Entered map menu"),
+    ENTERED_BUILDING_MENU("Entered Building menu"),
+    ENTERED_UNIT_MENU("Entered unit menu"),
+    ENTERED_SHOP_MENU("Entered shop menu"),
     ENTERED_TRADE_MENU(""),
 
     // MapMenu:
-    BACK_GAME_MENU(""),
 
     // ShopMenu:
 
@@ -88,5 +91,9 @@ public enum Message {
     @Override
     public String toString() {
         return this.message;
+    }
+
+    public boolean equals(String message) {
+        return message.equals(this.message);
     }
 }

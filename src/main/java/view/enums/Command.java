@@ -8,13 +8,14 @@ public enum Command {
     // MultiMenu:
     EXIT("\\s*exit\\s*"),
     CANCEL("\\s*cancel\\s*"),
+    BACK("back"),
 
     // SignupMenu:
-    REGISTER("\\s*create\\s+user(\\s+((-u\\s+(?<username>\".+\"|\\S+))|" +
+    REGISTER("\\s*user\\s+create(\\s+((-u\\s+(?<username>\".+\"|\\S+))|" +
             "(-p\\s+(?<password>\".+\"|\\S+)\\s+(?<passwordConfirm>\".+\"|\\S+))|" +
             "(-e\\s+(?<email>\".+\"|\\S+))|(-s\\s+(?<slogan>\".+\"|\\S+))|" +
             "(-n\\s+(?<nickName>\".+\"|\\S+))))*\\s*"),
-    REGISTER_RANDOM_PASSWORD("\\s*create\\s+user(\\s+((-u\\s+(?<username>\".+\"|\\S+))|" +
+    REGISTER_RANDOM_PASSWORD("\\s*user\\s+create(\\s+((-u\\s+(?<username>\".+\"|\\S+))|" +
             "(-p\\s+(?<password>\".+\"|\\S+))|" +
             "(-e\\s+(?<email>\".+\"|\\S+))|(-s\\s+(?<slogan>\".+\"|\\S+))|" +
             "(-n\\s+(?<nickName>\".+\"|\\S+))))*\\s*"),
@@ -25,7 +26,7 @@ public enum Command {
 
     // LoginMenu:
     LOGIN("\\s*user\\s+login(\\s+((-u\\s+(?<username>\".+\"|\\S+))|" +
-                  "(-p\\s+(?<password>\".+\"|\\S+))|(?<stayLoggedIn>--stay-logged-in)))*\\s*"),
+            "(-p\\s+(?<password>\".+\"|\\S+))|(?<stayLoggedIn>--stay-logged-in)))*\\s*"),
     FORGOT_PASSWORD("\\s*forgot\\s+my\\s+password\\s+-u\\s+(?<username>\".+\"|\\S+)\\s*"),
     ENTER_REGISTER_MENU("\\s*enter\\s+register\\s+menu\\s*"),
 
@@ -99,7 +100,7 @@ public enum Command {
     // UnitMenu:
     MOVE_UNIT("\\s*move\\s+unit\\s+to(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s*"),
     PATROL_UNIT("\\s*patrol\\s+unit(\\s+((-x1\\s+(?<x1>\\d+))|(-y1\\s+(?<y1>\\d+))|" +
-                        "(-x2\\s+(?<x2>\\d+))|(-y2\\s+(?<y2>\\d+)))+\\s*"),
+            "(-x2\\s+(?<x2>\\d+))|(-y2\\s+(?<y2>\\d+)))+\\s*"),
     SET_UNIT("\\s*set(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-s\\s+(?<state>\".+\"|\\S+)))+\\s*"),
     ATTACK("\\s*attack(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(?<isEarth>-e)))+\\s*"),//if isEarth is not null we have earth attack
     POUR_OIL("\\s*pour\\s+oil\\s+-d\\s+(?<direction>\".+\"|\\S+)\\s*"),

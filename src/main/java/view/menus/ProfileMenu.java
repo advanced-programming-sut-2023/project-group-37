@@ -37,8 +37,8 @@ public class ProfileMenu {
                 System.out.println(this.controller.changeEmail(matcher));
             } else if ((matcher = Command.CHANGE_SLOGAN.getMatcher(command)) != null) {
                 System.out.println(this.controller.changeSlogan(matcher));
-            } else if ((matcher = Command.REMOVE_SLOGAN.getMatcher(command)) != null) {
-                System.out.println(this.controller.removeSlogan(matcher));
+            } else if (Command.REMOVE_SLOGAN.getMatcher(command) != null) {
+                System.out.println(this.controller.removeSlogan());
             } else if (Command.DISPLAY_HIGHSCORE.getMatcher(command) != null) {
                 System.out.println(this.controller.showScore());
             } else if (Command.DISPLAY_RANK.getMatcher(command) != null) {
@@ -48,10 +48,11 @@ public class ProfileMenu {
             } else if (Command.DISPLAY_PROFILE.getMatcher(command) != null) {
                 System.out.println(this.controller.showProfile());
                 //TODO: hardcode:
-            } else if (command.matches("\\s*enter\\s+main\\s+menu\\s*")) {
+            } else if (Command.BACK.getMatcher(command) != null) {
+                System.out.println(Message.BACK_MAIN_MENU);
                 return Result.ENTER_MAIN_MENU;
             } else
-                System.out.println("Invalid Command!");
+                System.out.println(Message.INVALID_COMMAND);
         }
     }
 

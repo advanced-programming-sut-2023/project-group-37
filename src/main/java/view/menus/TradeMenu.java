@@ -33,6 +33,8 @@ public class TradeMenu {
                 System.out.println(Message.BACK_GAME_MENU);
                 return;
             }
+
+            else System.out.println(Message.INVALID_COMMAND);
         }
     }
 }

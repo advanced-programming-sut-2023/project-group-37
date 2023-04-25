@@ -35,7 +35,7 @@ public class MainMenu {
                 return Result.ENTER_LOGIN_MENU;
             }
             else
-                System.out.println("Invalid command!");
+                System.out.println(Message.INVALID_COMMAND);
         }
     }
 

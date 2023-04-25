@@ -97,7 +97,7 @@ public class ProfileMenuController {
         return Message.CHANGE_SLOGAN;
     }
 
-    public Message removeSlogan(Matcher matcher) {
+    public Message removeSlogan() {
         currentUser.setSlogan(null);
         return Message.REMOVE_SLOGAN;
     }

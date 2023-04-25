@@ -15,7 +15,6 @@ public class RegisterMenuController {
 
     private User user;
     private String randomPassword;
-    private String randomSlogan = null;
 
     // TODO: handle countdown!
 //    private int delayTime = 0;
@@ -41,7 +40,7 @@ public class RegisterMenuController {
         return !email.matches("[A-Za-z0-9_.]+@[a-zA-Z0-9_]+\\.[A-Za-z0-9_.]+");
     }
 
-    private String generateRandomPassword() {
+    private void generateRandomPassword() {
         SecureRandom random = new SecureRandom();
 
         String LOWER_CHARACTERS = "abcdefghijklmnopqrstuvwxyz";
@@ -75,96 +74,92 @@ public class RegisterMenuController {
         }
 
         randomPassword = password.toString();
-        return randomPassword;
     }
 
     public User getUser() {
         return user;
     }
 
-    public String getRandomPassword() {
-        return randomPassword;
-    }
-
-    public String getRandomSlogan() {
-        String changer = randomSlogan;
-        randomSlogan = null;
-        return changer;
-    }
-
     private String generateRandomSlogan() {
         return Slogan.getRandomSlogan().toString();
     }
 
-    public Message register(Matcher matcher) { //TODO : random slogan
+    public String register(Matcher matcher) { //TODO : random slogan
         String username = deleteQuotations(matcher.group("username")),
                 password = deleteQuotations(matcher.group("password")),
                 email = deleteQuotations(matcher.group("email")),
                 nickName = deleteQuotations(matcher.group("nickName")),
                 slogan = deleteQuotations(matcher.group("slogan"));
+
+        String randomMessages = "";
+
         if (username.isEmpty() || password.isEmpty() || email.isEmpty() || nickName.isEmpty())
-            return Message.EMPTY_FIELD;
+            return Message.EMPTY_FIELD.toString();
         if (checkUsernameNotOK(username))
-            return Message.INCORRECT_USERNAME_FORM;
+            return Message.INCORRECT_USERNAME_FORM.toString();
+        if (User.getUserByUsername(username) != null)
+            return Message.USERNAME_ALREADY_EXISTS.toString();
         if (checkPasswordNotOK(password) && !password.equals("random"))
-            return Message.WEAK_PASSWORD;
+            return Message.WEAK_PASSWORD.toString();
+
+        if (slogan.equals("random")) {
+            slogan = generateRandomSlogan();
+            randomMessages += "Your slogan is \"" + slogan + "\"\n";
+        }
+
         if (!password.equals("random")) {
             String passwordConfirm = deleteQuotations(matcher.group("passwordConfirm"));
             if (passwordConfirm.isEmpty())
-                return Message.EMPTY_FIELD;
+                return Message.EMPTY_FIELD.toString();
             if (!passwordConfirm.equals(password))
-                return Message.INCOMPATIBLE_PASSWORDS;
-        } else {
-            randomPassword = generateRandomPassword();
-            password = randomPassword;
+                return Message.INCOMPATIBLE_PASSWORDS.toString();
         }
+        else {
+            generateRandomPassword();
+            this.user = new User(username, randomPassword, email, slogan, nickName);
+            randomMessages += "Your random password is: " + randomPassword + "\nPlease re-enter your password here:";
+            return randomMessages;
+        }
+
         if (checkEmailNotOK(email))
-            return Message.INCORRECT_EMAIL_FORM;
-        if (slogan.isEmpty())
-            slogan = "";
-        else if (slogan.equals("random")) {
-            randomSlogan = generateRandomSlogan();
-            slogan = randomSlogan;
-        }
-        user = new User(username, password, email, slogan, nickName);
-        if (password.equals(randomPassword))
-            return null;
-            //TODO: handle!
-//            return Message.RANDOM_PASSWORD;
-        return Message.ASK_FOR_SECURITY_QUESTION;
+            return Message.INCORRECT_EMAIL_FORM.toString();
+
+        this.user = new User(username, password, email, slogan, nickName);
+
+        return randomMessages + Message.ASK_FOR_SECURITY_QUESTION;
     }
 
-    public Message pickQuestion(Matcher matcher) {
+    public String pickQuestion(Matcher matcher) {
         int questionNumber = Integer.parseInt(matcher.group("questionNumber"));
 
         if (questionNumber > SecurityQuestion.values().length || questionNumber < 1)
-            return Message.INCORRECT_QUESTION_NUMBER;
+            return Message.INCORRECT_QUESTION_NUMBER.toString();
 
         String answer = deleteQuotations(matcher.group("answer")),
                 answerConfirm = deleteQuotations(matcher.group("answerConfirm"));
 
         if (answer.isEmpty() || answerConfirm.isEmpty())
-            return Message.EMPTY_FIELD;
+            return Message.EMPTY_FIELD.toString();
 
         if (!answer.equals(answerConfirm))
-            return Message.INCOMPATIBLE_ANSWERS;
+            return Message.INCOMPATIBLE_ANSWERS.toString();
 
         user.setSecurityQuestion(questionNumber);
         user.setSecurityQuestionAnswer(answer);
 
         saveUser();
-        return Message.REGISTER_SUCCESSFUL;
+        return Message.REGISTER_SUCCESSFUL.toString();
     }
 
-    public Message checkPasswordConfirm(String passwordConfirm) {
+    public String checkPasswordConfirm(String passwordConfirm) {
         if (passwordConfirm.equals("cancel"))
-            return Message.CANCEL;
+            return Message.CANCEL.toString();
 
-        if (passwordConfirm.matches("\\s*" + randomPassword + "\\s*")) {
+        if (passwordConfirm.equals(randomPassword)) {
             saveUser();
-            return Message.ASK_FOR_SECURITY_QUESTION;
+            return Message.ASK_FOR_SECURITY_QUESTION.toString();
         }
 
-        return Message.REENTER_AGAIN;
+        return Message.REENTER_AGAIN.toString();
     }
 }
