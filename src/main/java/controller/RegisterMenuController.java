@@ -1,12 +1,14 @@
 package controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import model.Model;
 import model.user.SecurityQuestion;
 import model.user.Slogan;
 import model.user.User;
 import view.enums.Message;
-
 import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 
 public class RegisterMenuController {
@@ -20,7 +22,7 @@ public class RegisterMenuController {
 //    private int delayTime = 0;
 
     private void saveUser() {
-        //TODO : if <user> not null save <user> in file
+        User.saveUsersToFile();
     }
 
     private String deleteQuotations(String string) {
@@ -129,7 +131,7 @@ public class RegisterMenuController {
         return randomMessages + Message.ASK_FOR_SECURITY_QUESTION;
     }
 
-    public String pickQuestion(Matcher matcher) {
+    public String pickQuestion(Matcher matcher) { // TODO : remove user if canceled
         int questionNumber = Integer.parseInt(matcher.group("questionNumber"));
 
         if (questionNumber > SecurityQuestion.values().length || questionNumber < 1)
@@ -152,11 +154,12 @@ public class RegisterMenuController {
     }
 
     public String checkPasswordConfirm(String passwordConfirm) {
-        if (passwordConfirm.equals("cancel"))
+        if (passwordConfirm.equals("cancel")) {
+            User.deleteUser(user);
             return Message.CANCEL.toString();
+        }
 
         if (passwordConfirm.equals(randomPassword)) {
-            saveUser();
             return Message.ASK_FOR_SECURITY_QUESTION.toString();
         }
 

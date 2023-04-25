@@ -26,7 +26,7 @@ public enum Message {
     REGISTER_SUCCESSFUL("User created successfully!"),
 
     // LoginMenu:
-    USER_NOT_EXISTS("Username and password didn't match!"),
+    USER_NOT_EXISTS("Username doesn't exist!"),
     INCORRECT_PASSWORD("Username and password didn't match!"),
     ASK_QUESTION("Please answer following question to change your password:"),
     LOGIN_SUCCESSFUL("User logged in successfully!"),

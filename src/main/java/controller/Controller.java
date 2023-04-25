@@ -1,5 +1,6 @@
 package controller;
 
+import model.user.User;
 import view.enums.Result;
 import view.menus.*;
 
@@ -33,6 +34,7 @@ public class Controller {
     }
 
     public void run() {
+        User.loadUsersFromFile();
         Result result;
 
         if ((result = this.loginMenu.run()) == Result.EXIT)

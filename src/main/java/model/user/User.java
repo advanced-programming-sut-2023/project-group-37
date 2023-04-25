@@ -1,8 +1,17 @@
 package model.user;
 
-import java.util.ArrayList;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-public class User {
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
+public class User implements Serializable {
 
     private static User currentUser;
     private String username;
@@ -14,11 +23,11 @@ public class User {
     private String securityQuestionAnswer;
     private int highScore;
     private int rank;
-    private static final ArrayList<User> users = new ArrayList<>();
-
+    private static ArrayList<User> users = new ArrayList<>();
     public static User getCurrentUser() {
         return User.currentUser;
     }
+    static final Gson gson = new Gson();
 
     public static void setCurrentUser(User currentUser) {
         User.currentUser = currentUser;
@@ -65,6 +74,7 @@ public class User {
         this.securityQuestion = SecurityQuestion.getQuestion(questionNumber);
         this.securityQuestionAnswer = answer;
         this.highScore = 0;
+        users.add(this);
     }
 
     public int getRank() {
@@ -133,5 +143,32 @@ public class User {
 
     public boolean isCorrectAnswer(String answer) {
         return this.securityQuestionAnswer.equals(answer);
+    }
+    public static void loadUsersFromFile() {
+        try {
+            String json = new String(Files.readAllBytes(Paths.get("./src/main/resources/userDatabase.json")));
+            ArrayList<User> createdUsers;
+            createdUsers = gson.fromJson(json, new TypeToken<List<User>>() {
+            }.getType());
+            if (createdUsers != null) {
+                users = createdUsers;
+            }
+        } catch (IOException ignored) {
+            System.out.println("hhh");
+        }
+    }
+
+    public static void saveUsersToFile() {
+        try {
+            FileWriter fileWriter = new FileWriter("./src/main/resources/userDatabase.json");
+            fileWriter.write(gson.toJson(users));
+            fileWriter.close();
+            System.out.println("Kar mikone");
+        } catch (IOException ignored) {
+            System.out.println("hhh");
+        }
+    }
+    public static void deleteUser(User user){
+        users.remove(user);
     }
 }

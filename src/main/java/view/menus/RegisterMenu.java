@@ -68,7 +68,7 @@ public class RegisterMenu {
             }
 
             else
-                System.out.println("Invalid command!");
+                System.out.println(Message.INVALID_COMMAND);
         }
     }
 
