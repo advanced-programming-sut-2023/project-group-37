@@ -34,6 +34,11 @@ public class MainMenu {
                 System.out.println(this.controller.logout());
                 return Result.ENTER_LOGIN_MENU;
             }
+
+            else if (Command.EXIT.getMatcher(command) != null) {
+                return Result.EXIT;
+            }
+
             else
                 System.out.println(Message.INVALID_COMMAND);
         }

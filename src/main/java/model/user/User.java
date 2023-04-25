@@ -3,6 +3,7 @@ package model.user;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
@@ -145,27 +146,74 @@ public class User implements Serializable {
         return this.securityQuestionAnswer.equals(answer);
     }
     public static void loadUsersFromFile() {
+        String filePath = "./src/main/resources/userDatabase.json";
         try {
-            String json = new String(Files.readAllBytes(Paths.get("./src/main/resources/userDatabase.json")));
-            ArrayList<User> createdUsers;
-            createdUsers = gson.fromJson(json, new TypeToken<List<User>>() {
+            String json = new String(Files.readAllBytes(Paths.get(filePath)));
+            ArrayList<User> createdUsers = gson.fromJson(json, new TypeToken<List<User>>() {
             }.getType());
+
             if (createdUsers != null) {
                 users = createdUsers;
             }
         } catch (IOException ignored) {
-            System.out.println("hhh");
+            File file = new File(filePath);
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public static User loadStayLoggedIn() {
+        String filePath = "./src/main/resources/stayLoggedIn.json";
+       try {
+           String json = new String(Files.readAllBytes(Paths.get(filePath)));
+
+           return gson.fromJson(json, new TypeToken<User>() {
+           }.getType());
+
+       } catch (IOException ignored) {
+           File file = new File(filePath);
+           try {
+               file.createNewFile();
+           } catch (IOException e) {
+               throw new RuntimeException(e);
+           }
+
+           return null;
+       }
+    }
+
+    public static void setStayLoggedIn(User loggedInUser) {
+        String filePath = "./src/main/resources/stayLoggedIn.json";
+        try {
+            FileWriter fileWriter = new FileWriter(filePath);
+            fileWriter.write(gson.toJson(loggedInUser));
+            fileWriter.close();
+        } catch (IOException ignored) {
+            File file = new File(filePath);
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     public static void saveUsersToFile() {
+        String filePath = "./src/main/resources/userDatabase.json";
         try {
-            FileWriter fileWriter = new FileWriter("./src/main/resources/userDatabase.json");
+            FileWriter fileWriter = new FileWriter(filePath);
             fileWriter.write(gson.toJson(users));
             fileWriter.close();
-            System.out.println("Kar mikone");
         } catch (IOException ignored) {
-            System.out.println("hhh");
+            File file = new File(filePath);
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     public static void deleteUser(User user){

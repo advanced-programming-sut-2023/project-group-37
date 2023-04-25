@@ -30,7 +30,6 @@ public class LoginMenuController {
                 password = deleteQuotations(matcher.group("password"));
 
         boolean stayLoggedIn = matcher.group("stayLoggedIn") != null;
-        // TODO : set stayLoggedIn
 
         user = User.getUserByUsername(username);
         if (user == null)
@@ -45,6 +44,9 @@ public class LoginMenuController {
         delayTime = 0;
 
         MainMenuController.setCurrentUser(user);
+        if (stayLoggedIn)
+            User.setStayLoggedIn(user);
+
         return Message.LOGIN_SUCCESSFUL;
     }
 

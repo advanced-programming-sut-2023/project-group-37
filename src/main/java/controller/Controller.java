@@ -35,6 +35,16 @@ public class Controller {
 
     public void run() {
         User.loadUsersFromFile();
+        User loggedInUser = User.loadStayLoggedIn();
+
+        if (loggedInUser != null) {
+            MainMenuController.setCurrentUser(loggedInUser);
+
+            while (true) {
+                if (runMainMenu()) return;
+            }
+        }
+
         Result result;
 
         if ((result = this.loginMenu.run()) == Result.EXIT)
@@ -42,24 +52,34 @@ public class Controller {
 
         while (true) {
             switch (result) {
-                case LOGGED_IN:
-                    switch (this.mainMenu.run(this.scanner)) {
-                        case ENTER_PROFILE_MENU -> this.profileMenu.run();
-                        case ENTER_GAME_MENU -> runGameMenu();
-                        // TODO: case map edition menu!
-                        case ENTER_LOGIN_MENU -> {
-                            this.run();
-                            return;
-                        }
-                    }
-                    break;
-                case ENTER_REGISTER_MENU:
+                case LOGGED_IN -> {
+                    if (runMainMenu()) return;
+                }
+
+                case ENTER_REGISTER_MENU -> {
                     if (this.registerMenu.run() == Result.EXIT)
                         return;
                     this.run();
                     return;
+                }
             }
         }
+    }
+
+    private boolean runMainMenu() {
+        switch (this.mainMenu.run(this.scanner)) {
+            case ENTER_PROFILE_MENU -> this.profileMenu.run();
+            case ENTER_GAME_MENU -> runGameMenu();
+            // TODO: case map edition menu!
+            case ENTER_LOGIN_MENU -> {
+                this.run();
+                return true;
+            }
+            case EXIT -> {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void runGameMenu() {

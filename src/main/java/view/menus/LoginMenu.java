@@ -29,8 +29,10 @@ public class LoginMenu {
                     return Result.LOGGED_IN;
             } else if ((matcher = Command.FORGOT_PASSWORD.getMatcher(this.command)) != null)
                 forgotPassword(matcher);
-            else if (Command.ENTER_REGISTER_MENU.getMatcher(this.command) != null)
+            else if (Command.ENTER_REGISTER_MENU.getMatcher(this.command) != null) {
+                System.out.println(Message.ENTERED_REGISTER_MENU);
                 return Result.ENTER_REGISTER_MENU;
+            }
             else if (Command.EXIT.getMatcher(this.command) != null)
                 return Result.EXIT;
             else

@@ -31,6 +31,7 @@ public class MainMenuController {
 
     public Message logout() {
         setCurrentUser(null);
+        User.setStayLoggedIn(null);
         return Message.LOGOUT_SUCCESSFUL;
     }
 }

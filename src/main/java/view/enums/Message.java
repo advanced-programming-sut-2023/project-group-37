@@ -7,7 +7,7 @@ public enum Message {
     WEAK_PASSWORD("Weak password!"),
     INCOMPATIBLE_PASSWORDS("Incompatible passwords!"),
     BACK_GAME_MENU("Returned to game menu"),
-    BACK_MAIN_MENU("Returned main menu"),
+    BACK_MAIN_MENU("Returned to main menu"),
     INVALID_COMMAND("Invalid command!"),
 
     // SignupMenu:
