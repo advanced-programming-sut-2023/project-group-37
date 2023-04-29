@@ -24,7 +24,7 @@ public class LoginMenuController {
         return loginMenuController;
     }
 
-    public Message login(Matcher matcher) {
+    public String login(Matcher matcher) {
         String username = deleteQuotations(matcher.group("username")),
                 password = deleteQuotations(matcher.group("password"));
 
@@ -32,12 +32,12 @@ public class LoginMenuController {
 
         user = User.getUserByUsername(username);
         if (user == null)
-            return Message.USER_NOT_EXISTS;
+            return Message.USER_NOT_EXISTS.toString();
 
         if (user.isWrongPassword(password)) {
             // TODO : delay time
             delayTime += 5;
-            return Message.INCORRECT_PASSWORD;
+            return Message.INCORRECT_PASSWORD.toString();
         }
 
         delayTime = 0;
@@ -46,47 +46,47 @@ public class LoginMenuController {
         if (stayLoggedIn)
             User.setStayLoggedIn(user);
 
-        return Message.LOGIN_SUCCESSFUL;
+        return Message.LOGIN_SUCCESSFUL.toString();
     }
 
-    public Message forgotPassword(Matcher matcher) {
+    public String forgotPassword(Matcher matcher) {
         String username = matcher.group("username");
 
         user = User.getUserByUsername(username);
         if (user == null)
-            return Message.USER_NOT_EXISTS;
+            return Message.USER_NOT_EXISTS.toString();
 
-        return Message.ASK_QUESTION;
+        return Message.ASK_QUESTION.toString();
     }
 
-    public Message answerSecurityQuestion(String answer) {
+    public String answerSecurityQuestion(String answer) {
         if (user.isCorrectAnswer(answer))
-            return Message.ENTER_NEW_PASSWORD;
+            return Message.ENTER_NEW_PASSWORD.toString();
 
-        return Message.INCORRECT_ANSWER;
+        return Message.INCORRECT_ANSWER.toString();
     }
 
-    public Message getNewPassword(String newPassword) {
+    public String getNewPassword(String newPassword) {
         if (Command.CANCEL.getMatcher(newPassword) != null)
-            return Message.CANCEL;
+            return Message.CANCEL.toString();
 
         if (RegisterMenuController.checkPasswordNotOK(newPassword))
-            return Message.WEAK_PASSWORD;
+            return Message.WEAK_PASSWORD.toString();
 
         password = newPassword;
-        return Message.ENTER_NEW_PASSWORD_AGAIN;
+        return Message.ENTER_NEW_PASSWORD_AGAIN.toString();
     }
 
     // TODO: merge!
-    public Message getNewPasswordAgain(String newPassword) {
+    public String getNewPasswordAgain(String newPassword) {
         if (Command.CANCEL.getMatcher(newPassword) != null)
-            return Message.CANCEL;
+            return Message.CANCEL.toString();
 
         if (!newPassword.equals(password))
-            return Message.INCOMPATIBLE_PASSWORDS;
+            return Message.INCOMPATIBLE_PASSWORDS.toString();
 
         user.changePassword(newPassword);
-        return Message.CHANGE_PASSWORD_SUCCESSFUL;
+        return Message.CHANGE_PASSWORD_SUCCESSFUL.toString();
     }
 
     public User getUser() {

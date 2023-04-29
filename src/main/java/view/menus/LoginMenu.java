@@ -12,7 +12,7 @@ public class LoginMenu {
     private final LoginMenuController controller = LoginMenuController.getInstance();
     private final Scanner scanner;
     private String command;
-    private Message message;
+    private String message;
 
     public LoginMenu(Scanner scanner) {
         this.scanner = scanner;
@@ -44,14 +44,14 @@ public class LoginMenu {
         this.message = this.controller.login(matcher);
         System.out.println(this.message);
 
-        return message == Message.LOGIN_SUCCESSFUL;
+        return Message.LOGIN_SUCCESSFUL.equals(message);
     }
 
     private void forgotPassword(Matcher matcher) {
         this.message = this.controller.forgotPassword(matcher);
         System.out.println(this.message);
 
-        if (this.message == Message.ASK_QUESTION) {
+        if (Message.ASK_QUESTION.equals(message)) {
             System.out.println(this.controller.getUser().getSecurityQuestion());
             do {
                 this.command = this.scanner.nextLine();
@@ -59,7 +59,7 @@ public class LoginMenu {
 
                 System.out.println(this.message);
 
-            } while (this.message != Message.ENTER_NEW_PASSWORD);
+            } while (Message.ENTER_NEW_PASSWORD.equals(message));
 
             firstLoop:
             while (true) {
@@ -68,15 +68,15 @@ public class LoginMenu {
 
                 System.out.println(this.message);
 
-                if (this.message == Message.ENTER_NEW_PASSWORD_AGAIN)
+                if (Message.ENTER_PASSWORD_AGAIN.equals(message))
                     while (true) {
                         this.command = this.scanner.nextLine();
                         this.message = this.controller.getNewPasswordAgain(this.command);
                         System.out.println(this.message);
-                        if (this.message == Message.CHANGE_PASSWORD_SUCCESSFUL || this.message == Message.CANCEL)
+                        if (Message.CHANGE_PASSWORD_SUCCESSFUL.equals(message) || Message.CANCEL.equals(message))
                             break firstLoop;
                     }
-                else if (this.message == Message.CANCEL)
+                else if (Message.CANCEL.equals(message))
                     break;
             }
         }
