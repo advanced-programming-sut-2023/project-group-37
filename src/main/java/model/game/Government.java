@@ -50,4 +50,20 @@ public class Government {
     public int getPopularity() {
         return this.popularity;
     }
+
+    public void addItem(Item item, int amount) {
+        gold -= amount * item.getBuyCost();
+        // TODO : handle
+    }
+
+    public void removeItem(Item item, int amount) {
+        gold += amount * item.getSellCost();
+        //TODO : handle
+    }
+
+    public void checkForHighScore() {
+        int score = 0; // todo : handle score
+        if (user.getHighScore() < score)
+            user.setHighScore(score);
+    }
 }

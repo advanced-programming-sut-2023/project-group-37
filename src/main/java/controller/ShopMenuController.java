@@ -17,16 +17,30 @@ public class ShopMenuController {
         return null;
     }
     public String buy(Matcher matcher){
-        int Amount = Integer.parseInt(matcher.group("itemAmount"));
+        int amount = Integer.parseInt(matcher.group("itemAmount"));
         Item item = Item.getItemByName(matcher.group("itemName"));
 
         if (item == null)
             return Message.INVALID_ITEM_NAME.toString();
 
-        int cost = Amount * item.getBuyCost();
+        if(government.getGold() < amount * item.getBuyCost())
+            return Message.NOT_ENOUGH_GOLD.toString();
+
+        government.addItem(item, amount);
+        return Message.BOUGHT_SUCCESSFUL.toString();
 
     }
+
     public String sell(Matcher matcher){
-        return null;
+        int amount = Integer.parseInt(matcher.group("itemAmount"));
+        Item item = Item.getItemByName(matcher.group("ItemName"));
+
+        if (item == null)
+            return Message.INVALID_ITEM_NAME.toString();
+
+        //TODO : handle numbers
+
+        government.removeItem(item, amount);
+        return Message.SOLD_SUCCESSFUL.toString();
     }
 }

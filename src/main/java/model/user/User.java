@@ -25,22 +25,45 @@ public class User implements Serializable {
     private int highScore;
     private int rank;
     private static ArrayList<User> users = new ArrayList<>();
+
     public static User getCurrentUser() {
         return User.currentUser;
     }
+
     static final Gson gson = new Gson();
 
     public static void setCurrentUser(User currentUser) {
         User.currentUser = currentUser;
     }
 
-    public User(String username, String password, String email, String slogan,String nickname) {
+    public User(String username, String password, String email, String slogan, String nickname) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.slogan = slogan;
         this.nickname = nickname;
+        this.rank = users.size() + 1;
         users.add(this);
+    }
+
+    private void setRanks() {
+        for (User user : users)
+            user.rank = 0;
+
+        int rank = 1, highScore;
+        User rankedUser = users.get(0);
+
+        while (rank <= users.size()) {
+            highScore = 0;
+            for (User user : users) {
+                if (user.highScore > highScore && user.rank == 0) {
+                    rankedUser = user;
+                    highScore = user.highScore;
+                }
+            }
+            rankedUser.rank = rank;
+            rank++;
+        }
     }
 
     public static User getUserByUsername(String username) {
@@ -136,6 +159,7 @@ public class User implements Serializable {
 
     public void setHighScore(int highScore) {
         this.highScore = highScore;
+        setRanks();
     }
 
     public boolean isWrongPassword(String password) {
@@ -145,6 +169,7 @@ public class User implements Serializable {
     public boolean isCorrectAnswer(String answer) {
         return this.securityQuestionAnswer.equals(answer);
     }
+
     public static void loadUsersFromFile() {
         String filePath = "./src/main/resources/userDatabase.json";
         try {
@@ -167,22 +192,22 @@ public class User implements Serializable {
 
     public static User loadStayLoggedIn() {
         String filePath = "./src/main/resources/stayLoggedIn.json";
-       try {
-           String json = new String(Files.readAllBytes(Paths.get(filePath)));
+        try {
+            String json = new String(Files.readAllBytes(Paths.get(filePath)));
 
-           return gson.fromJson(json, new TypeToken<User>() {
-           }.getType());
+            return gson.fromJson(json, new TypeToken<User>() {
+            }.getType());
 
-       } catch (IOException ignored) {
-           File file = new File(filePath);
-           try {
-               file.createNewFile();
-           } catch (IOException e) {
-               throw new RuntimeException(e);
-           }
+        } catch (IOException ignored) {
+            File file = new File(filePath);
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-           return null;
-       }
+            return null;
+        }
     }
 
     public static void setStayLoggedIn(User loggedInUser) {
@@ -216,7 +241,8 @@ public class User implements Serializable {
             }
         }
     }
-    public static void deleteUser(User user){
+
+    public static void deleteUser(User user) {
         users.remove(user);
     }
 }
