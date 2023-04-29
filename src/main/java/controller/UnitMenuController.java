@@ -1,18 +1,17 @@
 package controller;
 
+import model.game.Government;
 import model.people.MilitaryUnit;
-import model.people.Troop;
-import model.user.User;
 import view.enums.Message;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class UnitMenuController {
-    private static User currentUser;
+    private static Government government;
     private static ArrayList<MilitaryUnit> unit;
-    public static void setCurrentUser(User user) {
-        currentUser = user;
+    public static void setGovernment(Government government) {
+        UnitMenuController.government = government;
     }
     public static void setUnit(ArrayList<MilitaryUnit> unit) {
         UnitMenuController.unit = unit;

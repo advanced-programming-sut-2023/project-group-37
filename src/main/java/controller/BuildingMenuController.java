@@ -1,15 +1,16 @@
 package controller;
 
 import model.buildings.BuildingType;
+import model.game.Government;
 import model.user.User;
 import view.enums.Message;
 
 public class BuildingMenuController {
-    private static User currentUser;
+    private static Government government;
     private static BuildingType building;
 
-    public static void setCurrentUser(User user) {
-        currentUser = user;
+    public static void setGovernment(Government government) {
+        BuildingMenuController.government = government;
     }
 
     public static void setBuilding(BuildingType building) {

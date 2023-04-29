@@ -1,5 +1,7 @@
 package controller;
 
+import model.game.Color;
+import model.game.Government;
 import model.game.Map;
 import model.user.User;
 import view.enums.Message;
@@ -20,7 +22,7 @@ public class MainMenuController {
 
     public Message startGame(Matcher matcher) {
 
-        GameMenuController.setGovernment(currentUser);
+        GameMenuController.setGovernment(new Government(currentUser, Color.GREEN )); // todo : color
 
         Map map = new Map(0);//todo
 //        GameMenuController.setGame(map);
