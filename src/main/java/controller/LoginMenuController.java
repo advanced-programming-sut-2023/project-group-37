@@ -1,6 +1,5 @@
 package controller;
 
-import model.Model;
 import model.user.User;
 import view.enums.Command;
 import view.enums.Message;
@@ -12,7 +11,7 @@ public class LoginMenuController {
     private String password;
     private int delayTime = 0;
     private String deleteQuotations(String string) {
-        return Model.deleteQuotations(string);
+        return MultiMenuFunctions.deleteQuotations(string);
     }
     private static final LoginMenuController loginMenuController = new LoginMenuController();
 

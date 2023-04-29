@@ -1,5 +1,7 @@
 package model.game;
 
+import controller.GameMenuController;
+
 import java.util.ArrayList;
 
 public class Game {
@@ -7,13 +9,15 @@ public class Game {
     private final int turns;
     private final ArrayList<Government> governments;
     private Government currentTurnGovernment;
+    private int index;
 
-    public Game(Map map, int turns, Government starter) {
+    public Game(Map map, int turns, ArrayList<Government> governments) {
         this.map = map;
         this.turns = turns;
-        this.governments = new ArrayList<>();
-        this.governments.add(starter);
-        this.currentTurnGovernment = starter;
+        this.governments = governments;
+        this.currentTurnGovernment = governments.get(0);
+        GameMenuController.setGovernment(currentTurnGovernment);
+        index = 0;
     }
 
     public Map getMap() {
@@ -34,5 +38,16 @@ public class Game {
 
     public void addGovernment(Government government){
         this.governments.add(government);
+    }
+
+    public void goNextTurn() {
+        if (index == governments.size()-1)
+        {
+            //todo : do all changes
+        }
+
+        index = (index+1) % governments.size();
+        currentTurnGovernment = governments.get(index);
+        GameMenuController.setGovernment(currentTurnGovernment);
     }
 }

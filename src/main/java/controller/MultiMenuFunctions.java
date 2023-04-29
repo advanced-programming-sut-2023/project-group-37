@@ -1,18 +1,6 @@
-package model;
+package controller;
 
-import model.game.Map;
-
-public class Model {
-    private static Map currentMap;
-
-    public static Map getCurrentMap() {
-        return currentMap;
-    }
-
-    public static void setCurrentMap(Map currentMap) {
-        Model.currentMap = currentMap;
-    }
-
+public class MultiMenuFunctions {
     public static String deleteQuotations(String string) {
 
         if (string == null)
@@ -28,5 +16,4 @@ public class Model {
         }
         return string;
     }
-
 }

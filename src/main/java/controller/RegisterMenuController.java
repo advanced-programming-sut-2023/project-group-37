@@ -1,14 +1,10 @@
 package controller;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import model.Model;
 import model.user.SecurityQuestion;
 import model.user.Slogan;
 import model.user.User;
 import view.enums.Message;
 import java.security.SecureRandom;
-import java.time.LocalDate;
 import java.util.regex.Matcher;
 
 public class RegisterMenuController {
@@ -26,7 +22,7 @@ public class RegisterMenuController {
     }
 
     private String deleteQuotations(String string) {
-        return Model.deleteQuotations(string);
+        return MultiMenuFunctions.deleteQuotations(string);
     }
 
     static boolean checkUsernameNotOK(String username) {

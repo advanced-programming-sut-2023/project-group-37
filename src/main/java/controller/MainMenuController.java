@@ -1,11 +1,13 @@
 package controller;
 
 import model.game.Color;
+import model.game.Game;
 import model.game.Government;
 import model.game.Map;
 import model.user.User;
 import view.enums.Message;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class MainMenuController {
@@ -20,13 +22,23 @@ public class MainMenuController {
         return Message.ENTERED_PROFILE_MENU;
     }
 
-    public Message startGame(Matcher matcher) {
+    public Message startGame(String[] usernames, int turns, int size) {
 
-        GameMenuController.setGovernment(new Government(currentUser, Color.GREEN )); // todo : color
+        ArrayList<Government> governments = new ArrayList<>();
+        User user;
 
-        Map map = new Map(0);//todo
-//        GameMenuController.setGame(map);
-        MapMenuController.setMap(map);
+        governments.add(new Government(currentUser, Color.GREEN)); // TODO : color
+
+        for (String username : usernames) {
+            user = User.getUserByUsername(username);
+            if (user == null)
+                return Message.USERNAME_NOT_FOUND;
+
+            governments.add(new Government(user, Color.GREEN)); // TODO : color
+        }
+
+        Game game = new Game(new Map(size) ,turns, governments);
+        GameMenuController.setGame(game);
 
         return Message.GAME_STARTED;
     }

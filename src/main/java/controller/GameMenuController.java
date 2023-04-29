@@ -19,9 +19,9 @@ public class GameMenuController {
         BuildingMenuController.setGovernment(government);
     }
 
-//    public static void setGame(Map map) {
-//        game = new Game(map);
-//    }
+    public static void setGame(Game game) {
+        GameMenuController.game = game;
+    }
 
     public Message showMap(Matcher matcher) {
         return null;

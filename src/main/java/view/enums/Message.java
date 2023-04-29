@@ -17,8 +17,6 @@ public enum Message {
     USERNAME_ALREADY_EXISTS("Username already exists"),
     INCORRECT_EMAIL_FORM("Incorrect email format!"),
     ENTERED_LOGIN_MENU("Entered login menu!"),
-    //    RANDOM_SLOGAN("Your slogan is \"", "\""),
-//    RANDOM_PASSWORD("Your random password is: " , "\n" + "Please re-enter your password here:"),
     REENTER_AGAIN("Please re-enter your password again:"),
     ASK_FOR_SECURITY_QUESTION("Pick your security question: " +SecurityQuestion.getAllQuestions()),
     INCORRECT_QUESTION_NUMBER("Please select question-number between 1,2,3:"),
@@ -38,7 +36,8 @@ public enum Message {
 
     // MainMenu:
     ENTERED_PROFILE_MENU("Entered profile menu successfully!"),
-    GAME_STARTED("Game started successfully!"),
+    USERNAME_NOT_FOUND("Some usernames dont exist!"),
+    GAME_STARTED("Game started successfully!"), // todo : is message correct ?
     LOGOUT_SUCCESSFUL("User logged out successfully!"),
 
     // ProfileMenu:

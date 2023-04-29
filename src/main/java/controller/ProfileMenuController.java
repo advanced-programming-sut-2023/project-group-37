@@ -1,6 +1,5 @@
 package controller;
 
-import model.Model;
 import model.user.User;
 import view.enums.Command;
 import view.enums.Message;
@@ -16,7 +15,7 @@ public class ProfileMenuController {
     }
 
     public String deleteQuotation(String string) {
-        return Model.deleteQuotations(string);
+        return MultiMenuFunctions.deleteQuotations(string);
     }
 
     public Message changeUsername(Matcher matcher) {

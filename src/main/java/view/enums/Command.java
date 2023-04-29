@@ -32,8 +32,7 @@ public enum Command {
 
     // MainMenu:
     ENTER_PROFILE_MENU("\\s*enter\\s+profile\\s+menu\\s*"),
-    // TODO: fill
-    START_GAME(""),
+    START_GAME("start\\s+game(\\s+((-t\\s+(?<turns>\\d+))|(-s\\s+(?<size>\\d+))|(-u\\s+(?<users>\"\\s*.+\\s*\")))\\s*"), // TODO: check
     LOGOUT("\\s*logout\\s*"),
 
     // ProfileMenu:
