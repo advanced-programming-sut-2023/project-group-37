@@ -1,21 +1,30 @@
 package controller;
 
-import model.user.User;
+import model.game.Government;
+import model.game.Item;
+import view.enums.Message;
 
 import java.util.regex.Matcher;
 
 public class ShopMenuController {
-    private static User currentUser;
+    private static Government government;
 
-    public static void setCurrentUser(User user) {
-        currentUser = user;
+    public static void setGovernment(Government government) {
+        ShopMenuController.government = government;
     }
 
     public String showPriceList(){
         return null;
     }
     public String buy(Matcher matcher){
-        return null;
+        int Amount = Integer.parseInt(matcher.group("itemAmount"));
+        Item item = Item.getItemByName(matcher.group("itemName"));
+
+        if (item == null)
+            return Message.INVALID_ITEM_NAME.toString();
+
+        int cost = Amount * item.getBuyCost();
+
     }
     public String sell(Matcher matcher){
         return null;

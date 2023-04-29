@@ -20,7 +20,7 @@ public class MainMenuController {
 
     public Message startGame(Matcher matcher) {
 
-        GameMenuController.setCurrentUser(currentUser);
+        GameMenuController.setGovernment(currentUser);
 
         Map map = new Map(0);//todo
 //        GameMenuController.setGame(map);

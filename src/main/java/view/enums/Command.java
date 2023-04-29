@@ -9,6 +9,7 @@ public enum Command {
     EXIT("\\s*exit\\s*"),
     CANCEL("\\s*cancel\\s*"),
     BACK("back"),
+    BACK_GAME_MENU("\\s*back\\s+to\\s+game\\s*"),
 
     // SignupMenu:
     REGISTER("\\s*user\\s+create(\\s+((-u\\s+(?<username>\".+\"|\\S+))|" +
@@ -21,7 +22,6 @@ public enum Command {
             "(-n\\s+(?<nickName>\".+\"|\\S+))))*\\s*"),
     PICK_QUESTION("\\s*question\\s+pick(\\s+((-q\\s+(?<questionNumber>\\d+))|" +
             "(-a\\s+(?<answer>\".+\"|\\S+))|(-c\\s+(?<answerConfirm>\".+\"|\\S+))))*\\s*"),
-    //TODO: back
     ENTER_LOGIN_MENU("\\s*enter\\s+login\\s+menu\\s*"),
 
     // LoginMenu:
@@ -80,14 +80,11 @@ public enum Command {
     MOVE_THE_MAP("map(\\s+(((?<up>up)(\\s+(?<upDistance>\\d+))?)|((?<down>down)(\\s+(?<downDistance>\\d+))?)|" +
             "((?<left>left)(\\s+(?<leftDistance>\\d+))?)|((?<right>right)(\\s+(?<rightDistance>\\d+))?)))+\\s*"),
     SHOW_DETAILS("\\s*show\\s+details(\\s+((-x(?<x>\\d+))|(-y(?<y>\\d+))))+\\s*"),
-//    BACK_GAME_MENU("\\s*back\\s+to\\s+game\\s*"),
 
     // ShopMenu:
     SHOW_PRICE_LIST("\\s*show\\s+price\\s+list\\s*"),
     BUY_ITEM("\\s*buy(\\s+((-i(?<itemName>\".+\"|\\S+))|(-a(?<itemAmount>\\d+))))+\\s*"),
     SELL_ITEM("\\s*sell(\\s+((-i(?<itemName>\".+\"|\\S+))|(-a(?<itemAmount>\\d+))))+\\s*"),
-    // TODO: handle back
-//    BACK_GAME_MENU("\\s*back\\s+to\\s+game\\s*"),
 
     // TradeMenu:
     REQUEST_TRADE("\\s*trade(\\s+((-t(?<resourceType>\".+\"|\\S+))|(-a(?<resourceAmount>\\d+))|" +
@@ -95,7 +92,6 @@ public enum Command {
     SHOW_TRADE_LIST("\\s*trade\\s+list\\s*"),
     ACCEPT_TRADE("\\s*trade\\s+accept(\\s+((-i(?<id>\\d+))|(-m(?<message>\".+\"|\\S+))))+\\s*"),
     SHOW_TRADE_HISTORY("\\s*trade\\s+history\\s*"),
-    BACK_GAME_MENU("\\s*back\\s+to\\s+game\\s*"),
 
     // UnitMenu:
     MOVE_UNIT("\\s*move\\s+unit\\s+to(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s*"),

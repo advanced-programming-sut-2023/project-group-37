@@ -76,6 +76,8 @@ public enum Message {
 
     // ShopMenu:
 
+    INVALID_ITEM_NAME("There are no item with this name!"), //TODO : is message correct ?
+
     // TradeMenu:
 
     // UnitMenu:

@@ -1,15 +1,16 @@
 package controller;
 
+import model.game.Government;
 import model.user.User;
 import view.enums.Message;
 
 import java.util.regex.Matcher;
 
 public class TradeMenuController {
-    private static User currentUser;
+    private static Government government;
 
-    public static void setCurrentUser(User user) {
-        currentUser = user;
+    public static void setGovernment(Government government) {
+        TradeMenuController.government = government;
     }
 
     public Message requestTrade(Matcher matcher) {

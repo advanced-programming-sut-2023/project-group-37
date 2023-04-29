@@ -13,6 +13,7 @@ public enum Item {
     // WEAPONS
     ;
 
+    private final String name;
     private final ItemCategory category;
 
     private final Item formingMaterial;
@@ -21,7 +22,8 @@ public enum Item {
     private final int buyCost;
     private final int sellCost;
 
-    Item(ItemCategory category, int buyCost, int sellCost) {
+    Item( String name, ItemCategory category, int buyCost, int sellCost) {
+        this.name = name;
         this.category = category;
         this.formingMaterial = null;
         this.formingMaterialAmount = 0;
@@ -29,12 +31,21 @@ public enum Item {
         this.sellCost = sellCost;
     }
 
-    Item(ItemCategory category, Item formingMaterial, int formingMaterialAmount, int buyCost, int sellCost) {
+    Item(String name, ItemCategory category, Item formingMaterial, int formingMaterialAmount, int buyCost, int sellCost) {
+        this.name = name;
         this.category = category;
         this.formingMaterial = formingMaterial;
         this.formingMaterialAmount = formingMaterialAmount;
         this.buyCost = buyCost;
         this.sellCost = sellCost;
+    }
+
+    public static Item getItemByName(String name) {
+        for (Item item : Item.values()) {
+            if (item.name.equals(name))
+                return item;
+        }
+        return null;
     }
 
     public ItemCategory getCategory() {

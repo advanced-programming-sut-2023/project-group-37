@@ -22,11 +22,14 @@ public class ShopMenu {
             command = scanner.nextLine();
 
             if(Command.SHOW_PRICE_LIST.getMatcher(command) != null)
-                System.out.println(this.controller .showPriceList());
+                System.out.println(this.controller.showPriceList());
+
             else if ((matcher = Command.BUY_ITEM.getMatcher(command)) != null)
-                System.out.println(this.controller .buy(matcher));
+                System.out.println(this.controller.buy(matcher));
+
             else if ((matcher = Command.SELL_ITEM.getMatcher(command)) != null)
-                System.out.println(this.controller .sell(matcher));
+                System.out.println(this.controller.sell(matcher));
+
             else if (Command.BACK_GAME_MENU.getMatcher(command) != null) {
                 System.out.println(Message.BACK_GAME_MENU);
                 return;

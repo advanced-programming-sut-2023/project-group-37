@@ -1,6 +1,7 @@
 package controller;
 
 import model.game.Game;
+import model.game.Government;
 import model.user.User;
 import view.enums.Message;
 
@@ -8,15 +9,11 @@ import java.util.regex.Matcher;
 
 public class GameMenuController {
     private static Game game;
-    private static User currentUser;
+    private static Government government = game.getGovernments().get(0);
 
 //    public static void setGame(Map map) {
 //        game = new Game(map);
 //    }
-
-    public static void setCurrentUser(User user) {
-        currentUser = user;
-    }
 
     public Message showMap(Matcher matcher) {
         return null;
@@ -71,12 +68,12 @@ public class GameMenuController {
     }
 
     public Message enterShopMenu() {
-        ShopMenuController.setCurrentUser(currentUser);
+        ShopMenuController.setGovernment(government);
         return Message.ENTERED_SHOP_MENU;
     }
 
     public Message enterTradeMenu() {
-        TradeMenuController.setCurrentUser(currentUser);
+        TradeMenuController.setGovernment(government);
         return Message.ENTERED_TRADE_MENU;
     }
 

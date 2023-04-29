@@ -1,10 +1,12 @@
 package model.game;
 
 import model.buildings.Storage;
+import model.user.User;
 
 import java.util.ArrayList;
 
 public class Government {
+    private final User user;
     private final Color color;
     private int gold;
     private final ArrayList<Storage> stockpile;
@@ -12,7 +14,8 @@ public class Government {
     private final ArrayList<Storage> armory;
     private int popularity;
 
-    public Government(Color color) {
+    public Government(User user, Color color) {
+        this.user = user;
         this.color = color;
         // TODO: set default value for gold!
         this.gold = 0;
