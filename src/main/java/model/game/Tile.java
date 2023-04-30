@@ -14,6 +14,7 @@ public class Tile {
     private final ArrayList<Person> people;
     private final ArrayList<MilitaryUnit> militaryUnits;
     private Building building;
+    private Character state;
 
     public Tile(int x, int y) {
         this.x = x;
@@ -52,11 +53,23 @@ public class Tile {
         this.building = building;
     }
 
+    public Character getState() {
+        return state;
+    }
+
+    public void setState() {
+        //todo
+    }
+
     public void addPerson(Person person){
         this.people.add(person);
     }
 
     public void addMilitaryUnit(MilitaryUnit unit){
         this.militaryUnits.add(unit);
+    }
+
+    public ArrayList<Person> getPeople() {
+        return people;
     }
 }

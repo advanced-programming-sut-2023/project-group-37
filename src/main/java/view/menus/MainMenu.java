@@ -47,11 +47,9 @@ public class MainMenu {
     private boolean startGame(Matcher matcher) {
         String[] usernames = matcher.group("users").split("\\s*&\\s*");
 
-        Message message = this.controller.startGame(usernames, Integer.parseInt(matcher.group("turns")),
-                Integer.parseInt(matcher.group("size")));
-
+        String message = this.controller.startGame(usernames, matcher.group("turns"), matcher.group("size"));
         System.out.println(message);
 
-        return message == Message.GAME_STARTED;
+        return message.equals(Message.GAME_STARTED.toString());
     }
 }

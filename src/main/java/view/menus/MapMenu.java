@@ -19,6 +19,8 @@ public class MapMenu {
         String command;
         Matcher matcher;
 
+        controller.showMap();
+
         while (true) {
             command = scanner.nextLine();
 

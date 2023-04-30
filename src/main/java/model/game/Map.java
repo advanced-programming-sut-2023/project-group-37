@@ -16,4 +16,11 @@ public class Map {
     public Tile[][] getMap() {
         return this.map;
     }
+
+    public void setAllTiles() {
+        for (int i =0; i < size; i++) {
+            for (int j=0; j<size; j++)
+                map[i][j].setState();
+        }
+    }
 }

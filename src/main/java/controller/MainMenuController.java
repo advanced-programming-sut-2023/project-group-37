@@ -22,7 +22,7 @@ public class MainMenuController {
         return Message.ENTERED_PROFILE_MENU;
     }
 
-    public Message startGame(String[] usernames, int turns, int size) {
+    public String startGame(String[] usernames, String turns, String size) {
 
         ArrayList<Government> governments = new ArrayList<>();
         User user;
@@ -32,15 +32,18 @@ public class MainMenuController {
         for (String username : usernames) {
             user = User.getUserByUsername(username);
             if (user == null)
-                return Message.USERNAME_NOT_FOUND;
+                return Message.USERNAME_NOT_FOUND.toString();
 
             governments.add(new Government(user, Color.GREEN)); // TODO : color
         }
 
-        Game game = new Game(new Map(size) ,turns, governments);
+        if(turns == null || size == null)
+            return Message.EMPTY_FIELD.toString();
+
+        Game game = new Game(new Map(Integer.parseInt(size)) , Integer.parseInt(turns), governments);
         GameMenuController.setGame(game);
 
-        return Message.GAME_STARTED;
+        return Message.GAME_STARTED.toString();
     }
 
     public Message logout() {
