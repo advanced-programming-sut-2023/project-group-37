@@ -21,6 +21,10 @@ public class GameMenuController {
 
     public static void setGame(Game game) {
         GameMenuController.game = game;
+        TradeMenuController.setGame(game);
+        MapMenuController.setGame(game);
+        UnitMenuController.setGame(game);
+        BuildingMenuController.setGame(game);
     }
 
     public Message showMap(Matcher matcher) {

@@ -45,6 +45,10 @@ public enum Item {
         return null;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public ItemCategory getCategory() {
         return this.category;
     }
