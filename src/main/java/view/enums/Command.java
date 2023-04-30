@@ -86,7 +86,7 @@ public enum Command {
     SELL_ITEM("\\s*sell(\\s+((-i(?<itemName>\".+\"|\\S+))|(-a(?<itemAmount>\\d+))))+\\s*"),
 
     // TradeMenu:
-    REQUEST_TRADE("\\s*trade(\\s+((-t(?<resourceType>\".+\"|\\S+))|(-a(?<resourceAmount>\\d+))|" +
+    REQUEST_TRADE("\\s*trade(\\s+((-t(?<resourceType>\".+\"|\\S+))|(-u(?<receiverUsername>\".+\"|\\S+))|(-a(?<resourceAmount>\\d+))|" +
             "(-p(?<price>\\d+))|(-m(?<message>\".+\"|\\S+))))+\\s*"),
     SHOW_TRADE_LIST("\\s*trade\\s+list\\s*"),
     ACCEPT_TRADE("\\s*trade\\s+accept(\\s+((-i(?<id>\\d+))|(-m(?<message>\".+\"|\\S+))))+\\s*"),

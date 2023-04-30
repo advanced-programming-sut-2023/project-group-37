@@ -8,7 +8,6 @@ import model.user.User;
 import view.enums.Message;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 
 public class MainMenuController {
     private static User currentUser;
@@ -23,18 +22,22 @@ public class MainMenuController {
     }
 
     public String startGame(String[] usernames, String turns, String size) {
+        if (usernames.length > 7)
+            return Message.USER_NUMBER_LIMIT.toString();
 
         ArrayList<Government> governments = new ArrayList<>();
         User user;
 
-        governments.add(new Government(currentUser, Color.GREEN)); // TODO : color
+        governments.add(new Government(currentUser, Color.BLUE));
 
+        int i = 1;
         for (String username : usernames) {
             user = User.getUserByUsername(username);
             if (user == null)
                 return Message.USERNAME_NOT_FOUND.toString();
 
-            governments.add(new Government(user, Color.GREEN)); // TODO : color
+            governments.add(new Government(user, Color.values()[i]));
+            i++;
         }
 
         if(turns == null || size == null)

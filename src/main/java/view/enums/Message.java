@@ -7,6 +7,8 @@ public enum Message {
     WEAK_PASSWORD("Weak password!"),
     INCOMPATIBLE_PASSWORDS("Incompatible passwords!"),
     BACK_GAME_MENU("Returned to game menu"),
+    INVALID_ITEM_NAME("There are no item with this name!"),
+    INVALID_AMOUNT("Invalid amount!"),
     BACK_MAIN_MENU("Returned to main menu"),
     INVALID_COMMAND("Invalid command!"),
 
@@ -36,6 +38,7 @@ public enum Message {
 
     // MainMenu:
     ENTERED_PROFILE_MENU("Entered profile menu successfully!"),
+    USER_NUMBER_LIMIT("You can only choose 7 users to start the game"),
     USERNAME_NOT_FOUND("Some usernames dont exist!"),
     GAME_STARTED("Game started successfully!"), // todo : is message correct ?
     LOGOUT_SUCCESSFUL("User logged out successfully!"),
@@ -75,13 +78,15 @@ public enum Message {
 
     // ShopMenu:
 
-    INVALID_ITEM_NAME("There are no item with this name!"), //TODO : is message correct ?
+    //TODO : is message correct ?
     NOT_ENOUGH_GOLD("Not enough gold!"),
+    NOT_ENOUGH_SPACE("Not enough space"),
     NOT_ENOUGH_AMOUNT("Not enough amount!"),
     BOUGHT_SUCCESSFUL("Items bought successfully"),
     SOLD_SUCCESSFUL("Items sold successfully!"),
 
     // TradeMenu:
+    INVALID_PRICE("Invalid price!"),
 
     // UnitMenu:
 

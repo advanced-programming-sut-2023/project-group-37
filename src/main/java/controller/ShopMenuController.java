@@ -23,10 +23,15 @@ public class ShopMenuController {
         if (item == null)
             return Message.INVALID_ITEM_NAME.toString();
 
+        if (amount < 1)
+            return Message.INVALID_AMOUNT.toString();
+
         if(government.getGold() < amount * item.getBuyCost())
             return Message.NOT_ENOUGH_GOLD.toString();
 
-        government.addItem(item, amount);
+        if (!government.addItem(item, amount))
+            return Message.NOT_ENOUGH_SPACE.toString();
+
         return Message.BOUGHT_SUCCESSFUL.toString();
 
     }
@@ -38,7 +43,10 @@ public class ShopMenuController {
         if (item == null)
             return Message.INVALID_ITEM_NAME.toString();
 
-        if (government.removeItem(item, amount))
+        if (amount < 1)
+            return Message.INVALID_AMOUNT.toString();
+
+        if (!government.removeItem(item, amount))
             return Message.NOT_ENOUGH_AMOUNT.toString();
         return Message.SOLD_SUCCESSFUL.toString();
     }

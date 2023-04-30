@@ -20,6 +20,14 @@ public class Game {
         index = 0;
     }
 
+    public Government getGovernmentByUsername(String username) {
+        for (Government government : governments) {
+            if (government.getUsername().equals(username))
+                return government;
+        }
+        return null;
+    }
+
     public Map getMap() {
         return this.map;
     }
