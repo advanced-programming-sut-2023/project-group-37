@@ -3,7 +3,9 @@ package model.buildings;
 import model.game.Item;
 
 public enum BuildingType {
-    ;
+    STOCKPILE("", 0,0,null, 0, null, null, 0),
+    GRANARY("", 0,0,null, 0, null, null, 0),
+    ARMORY("", 0,0,null, 0, null, null, 0), ;
     private final String name;
     private final int maxHitpoints;
     private final int goldNeededToBuild;

@@ -51,9 +51,21 @@ public class Government {
         return this.popularity;
     }
 
+    private void addToTargetRepository(ArrayList<Storage> repository, Item item, int amount) {
+        for (Storage storage : repository) {
+            if (amount < 1)
+                break;
+
+            amount = storage.addStock(item, amount);
+        }
+    }
     public void addItem(Item item, int amount) {
         gold -= amount * item.getBuyCost();
-        // TODO : handle
+        switch (item.getCategory()) {
+            case FOODS -> addToTargetRepository(granary, item, amount);
+            case WEAPONS -> addToTargetRepository(armory, item, amount);
+            case RESOURCES -> addToTargetRepository(stockpile, item, amount);
+        }
     }
 
     public void removeItem(Item item, int amount) {
