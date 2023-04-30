@@ -6,6 +6,7 @@ import model.game.Item;
 import model.game.TradeRequest;
 import view.enums.Message;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class TradeMenuController {
@@ -51,14 +52,24 @@ public class TradeMenuController {
             message.append("Id: ").append(id).append(", Sender: ").append(request.getSender().getUsername())
                     .append(", Type: ").append(request.getItem().getName()).append(", Amount: ").append(request.getItemAmount())
                     .append(", Price: ").append(request.getPrice()).append("\n").append("Message: ")
-                    .append(request.getMessage()).append("\n");
+                    .append(request.getSenderMessage()).append("\n");
         }
 
         return message.toString().trim();
     }
 
-    public Message acceptTrade(Matcher matcher) {
-        return null;
+    public String acceptTrade(Matcher matcher) {
+        int id = Integer.parseInt(matcher.group("id"));
+
+        ArrayList<TradeRequest> requests = TradeRequest.getRequestsByReceiver(government);
+        if (requests.size() < id || id < 1)
+            return Message.INVALID_ID.toString();
+
+        TradeRequest request = requests.get(id-1);
+        if (!request.doTrade(matcher.group("message")))
+            return Message.TRADE_FAILED.toString();
+
+        return Message.TRADE_SUCCESS.toString();
     }
 
     public Message showTradeHistory() {

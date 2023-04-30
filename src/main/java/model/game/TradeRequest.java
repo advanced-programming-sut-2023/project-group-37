@@ -1,7 +1,5 @@
 package model.game;
 
-import controller.TradeMenuController;
-
 import java.util.ArrayList;
 
 public class TradeRequest {
@@ -10,15 +8,17 @@ public class TradeRequest {
     private final Item item;
     private final int itemAmount;
     private final int price;
-    private final String message;
+    private boolean isDone = false;
+    private final String senderMessage;
+    private String receiverMessage;
     private final Government sender;
     private final Government receiver;
 
-    public TradeRequest(Item item, int itemAmount, int price, String message, Government sender, Government receiver) {
+    public TradeRequest(Item item, int itemAmount, int price, String senderMessage, Government sender, Government receiver) {
         this.item = item;
         this.itemAmount = itemAmount;
         this.price = price;
-        this.message = message;
+        this.senderMessage = senderMessage;
         this.sender = sender;
         this.receiver = receiver;
         requests.add(this);
@@ -44,23 +44,26 @@ public class TradeRequest {
         ArrayList<TradeRequest> requests = new ArrayList<>();
 
         for (TradeRequest request : TradeRequest.requests) {
-            if (request.receiver == receiver)
+            if (request.receiver == receiver && !request.isDone)
                 requests.add(request);
         }
 
         return requests;
     }
 
-    public void doTrade() {
+    public boolean doTrade(String receiverMessage) {
+        this.receiverMessage = receiverMessage;
         //todo : handle
-        requests.remove(this);
+        isDone = true;
+
+        return true;
     }
 
     public int getPrice() {
         return price;
     }
 
-    public String getMessage() {
-        return message;
+    public String getSenderMessage() {
+        return senderMessage;
     }
 }

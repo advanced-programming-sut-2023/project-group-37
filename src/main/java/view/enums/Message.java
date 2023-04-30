@@ -88,6 +88,9 @@ public enum Message {
     // TradeMenu:
     INVALID_PRICE("Invalid price!"),
     REQUEST_SENT("Request sent successful"),
+    INVALID_ID("Invalid id!"),
+    TRADE_FAILED("This trade can't be done!"),
+    TRADE_SUCCESS("The trade was successfully completed"),
 
     // UnitMenu:
 
