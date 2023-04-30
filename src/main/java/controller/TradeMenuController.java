@@ -39,15 +39,22 @@ public class TradeMenuController {
         if (price < 0)
             return Message.INVALID_PRICE.toString();
 
-        new TradeRequest(item, amount, government, receiver);
+        new TradeRequest(item, amount, price, message, government, receiver);
 
-        //todo
-        return null;
-
+        return Message.REQUEST_SENT.toString();
     }
 
-    public Message showTradeList() {
-        return null;
+    public String showTradeList() {
+        StringBuilder message = new StringBuilder();
+        int id = 1;
+        for (TradeRequest request : TradeRequest.getRequestsByReceiver(government)) {
+            message.append("Id: ").append(id).append(", Sender: ").append(request.getSender().getUsername())
+                    .append(", Type: ").append(request.getItem().getName()).append(", Amount: ").append(request.getItemAmount())
+                    .append(", Price: ").append(request.getPrice()).append("\n").append("Message: ")
+                    .append(request.getMessage()).append("\n");
+        }
+
+        return message.toString().trim();
     }
 
     public Message acceptTrade(Matcher matcher) {

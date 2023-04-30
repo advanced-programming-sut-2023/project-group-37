@@ -87,6 +87,7 @@ public enum Message {
 
     // TradeMenu:
     INVALID_PRICE("Invalid price!"),
+    REQUEST_SENT("Request sent successful"),
 
     // UnitMenu:
 
