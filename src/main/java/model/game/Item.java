@@ -8,6 +8,14 @@ public enum Item {
     // FOODS
 
     // WEAPONS
+    BOW(),
+    SPEAR(),
+    MACE(),
+    PIKE(),
+    SWORD(),
+    ARMOR(),
+    LEATHER(),
+
     ;
 
     private final String name;

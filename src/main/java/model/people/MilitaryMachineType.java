@@ -4,43 +4,36 @@ import java.util.ArrayList;
 
 public enum MilitaryMachineType {
     ;
-    private final Quality maxHitpointsQuality;
-    private final Quality attackingDamageQuality;
-    private final Quality defencingDamageQuality;
+    private final int maxHitpoints;
+    private final int damage;
     private final int range;
-    private final Quality speedQuality;
+    private final int speed;
     private final int engineersNeeded;
     private final ArrayList<Troop> operators;
 
-    MilitaryMachineType(Quality maxHitpointsQuality, Quality attackingDamageQuality, Quality defencingDamageQuality,
-                        int range , Quality speedQuality, int engineersNeeded) {
-        this.maxHitpointsQuality = maxHitpointsQuality;
-        this.attackingDamageQuality = attackingDamageQuality;
-        this.defencingDamageQuality = defencingDamageQuality;
+    MilitaryMachineType(int maxHitpoints, int damage, int range , int speedQuality, int engineersNeeded) {
+        this.maxHitpoints = maxHitpoints;
+        this.damage = damage;
         this.range = range;
-        this.speedQuality = speedQuality;
+        this.speed = speedQuality;
         this.engineersNeeded = engineersNeeded;
-        operators = new ArrayList<>();
+        this.operators = new ArrayList<>();
     }
 
-    public Quality getMaxHitpointsQuality() {
-        return this.maxHitpointsQuality;
+    public int getMaxHitpointsQuality() {
+        return this.maxHitpoints;
     }
 
-    public Quality getAttackingDamageQuality() {
-        return this.attackingDamageQuality;
-    }
-
-    public Quality getDefencingDamageQuality() {
-        return this.defencingDamageQuality;
+    public int getAttackingDamageQuality() {
+        return this.damage;
     }
 
     public int getRange() {
         return this.range;
     }
 
-    public Quality getSpeedQuality() {
-        return this.speedQuality;
+    public int getSpeedQuality() {
+        return this.speed;
     }
 
     public int getEngineersNeeded() {

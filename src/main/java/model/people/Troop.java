@@ -10,15 +10,15 @@ public class Troop extends MilitaryUnit {
     private final Item armor;
     private final boolean canClimbLadder;
     private final boolean canDigMoat;
-
+    private boolean hasLadder;
     public Troop(Government loyalty, TroopType type) {
-        super(loyalty, type.getMaxHitpointsQuality(), type.getAttackingDamageQuality(), type.getDefencingQuality(),
-                type.getRange(), type.getSpeedQuality());
+        super(loyalty, type.getMaxHitpoints(), type.getDamage(), type.getRange(), type.getSpeed());
         this.type = type;
         this.weapon = type.getWeapon();
         this.armor = type.getArmor();
         this.canClimbLadder = type.canClimbLadder();
         this.canDigMoat = type.canDigMoat();
+        this.hasLadder = type == TroopType.LADDERMAN;
     }
 
     public TroopType getType() {
@@ -32,4 +32,6 @@ public class Troop extends MilitaryUnit {
     public boolean canDigMoat(){
         return this.canDigMoat;
     }
+
+    // TODO: implement drop ladder!
 }

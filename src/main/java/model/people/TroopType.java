@@ -5,12 +5,31 @@ import model.game.Item;
 enum Nation {EUROPEAN, ARABIAN}
 
 public enum TroopType {
-    ;
-    private final Quality maxHitpointsQuality;
-    private final Quality attackingDamageQuality;
-    private final Quality defencingQuality;
-    private final int range;
-    private final Quality speedQuality;
+
+    // TODO: check canClimb out of the source more accurately!
+
+    // EUROPEAN:
+    ARCHER(12, 45, 40, 90, 18, Nation.EUROPEAN, Item.BOW, null,
+            true, true),
+    SPEARMAN(8,50, 50, 60, 1.5, Nation.EUROPEAN, Item.SPEAR, null,
+            true,true),
+    MaceMan(20,70, 75, 85, 1.5, Nation.EUROPEAN, Item.MACE, Item.LEATHER,
+            false,false),
+    CROSSBOWMAN(20,75, 70, 55, 16, Nation.EUROPEAN, Item.MACE, Item.LEATHER,
+            false,false),
+    PIKEMAN(20, 77, 76, 60, 1.5, Nation.EUROPEAN, Item.PIKE, Item.ARMOR,
+            false, true),
+    SWORDSMAN(40, 94,94, 40, 1.5, Nation.EUROPEAN, Item.SWORD, Item.ARMOR,
+            false, false),
+    // TODO: define horse
+    KNIGHT(40, 90, 94, 95, 1.5, Nation.EUROPEAN, Item.SWORD, Item.ARMOR,
+            false,false),    ;
+
+    private int cost;
+    private final int maxHitpoints;
+    private final int  damage;
+    private final double range;
+    private final int speed;
     private final Nation nation;
     private final Item weapon;
     private final Item armor;
@@ -25,13 +44,13 @@ public enum TroopType {
         return valueOf(type.toUpperCase()).nation == Nation.ARABIAN;
     }
 
-    TroopType(Quality maxHitpointsQuality, Quality attackingDamageQuality, Quality defencingQuality, Quality speedQuality,
-              int range, Nation nation, Item weapon, Item armor, boolean canClimbLadder, boolean canDigMoat) {
-        this.maxHitpointsQuality = maxHitpointsQuality;
-        this.attackingDamageQuality = attackingDamageQuality;
-        this.defencingQuality = defencingQuality;
+    TroopType(int cost, int maxHitpoints, int damage, int speed, double range, Nation nation, Item weapon, Item armor,
+              boolean canClimbLadder, boolean canDigMoat) {
+        this.cost = cost;
+        this.maxHitpoints = maxHitpoints;
+        this.damage = damage;
         this.range = range;
-        this.speedQuality = speedQuality;
+        this.speed = speed;
         this.nation = nation;
         this.weapon = weapon;
         this.armor = armor;
@@ -39,24 +58,24 @@ public enum TroopType {
         this.canDigMoat = canDigMoat;
     }
 
-    public Quality getMaxHitpointsQuality() {
-        return this.maxHitpointsQuality;
+    public int getCost() {
+        return this.cost;
     }
 
-    public Quality getAttackingDamageQuality() {
-        return this.attackingDamageQuality;
+    public int getMaxHitpoints() {
+        return this.maxHitpoints;
     }
 
-    public Quality getDefencingQuality() {
-        return this.defencingQuality;
+    public int getDamage() {
+        return this.damage;
     }
 
-    public int getRange() {
+    public double getRange() {
         return this.range;
     }
 
-    public Quality getSpeedQuality() {
-        return this.speedQuality;
+    public int getSpeed() {
+        return this.speed;
     }
 
     public Item getWeapon() {

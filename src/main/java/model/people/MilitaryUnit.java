@@ -8,22 +8,18 @@ public abstract class MilitaryUnit implements Movable {
 
     private final Government loyalty;
     private int hitpoints;
-    private final int attackingDamage;
-    private final int defencingDamage;
-    private final int range;
+    private final int damage;
+    private final double range;
     private final int speed;
-
     private Tile location;
 
-    public MilitaryUnit(Government loyalty, Quality hitpointsQuality, Quality attackingDamageQuality, Quality defencingDamageQuality,
-                        int range, Quality speedQuality) {
+    public MilitaryUnit(Government loyalty, int hitpoints, int damage, double range, int speed) {
 
         this.loyalty = loyalty;
-        this.hitpoints = Quality.getHitpointsByQuality(hitpointsQuality);
-        this.attackingDamage = Quality.getAttackingDamageByQuality(attackingDamageQuality);
-        this.defencingDamage = Quality.getDefencingDamageByQuality(defencingDamageQuality);
+        this.hitpoints = hitpoints;
+        this.damage = damage;
         this.range = range;
-        this.speed = Quality.getSpeedByQuality(speedQuality);
+        this.speed = speed;
     }
 
     public Government getLoyalty() {
@@ -38,27 +34,23 @@ public abstract class MilitaryUnit implements Movable {
         this.hitpoints = hitpoints;
     }
 
-    public int getAttackingDamage() {
-        return attackingDamage;
+    public int getDamage() {
+        return this.damage;
     }
 
-    public int getDefencingDamage() {
-        return defencingDamage;
-    }
-
-    public int getRange() {
+    public double getRange() {
         return this.range;
     }
 
     public int getSpeed() {
-        return speed;
+        return this.speed;
     }
 
     public Tile getLocation() {
         return this.location;
     }
 
-    public void move(Tile destination){
+    public void move(Tile destination) {
         this.location = destination;
         destination.addMilitaryUnit(this);
     }
