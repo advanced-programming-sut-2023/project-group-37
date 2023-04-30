@@ -51,26 +51,69 @@ public class Government {
         return this.popularity;
     }
 
-    private void addToTargetRepository(ArrayList<Storage> repository, Item item, int amount) {
+    private int getFreeSpace(ArrayList<Storage> repository) {
+        int freeSpace = 0;
+        for (Storage storage : repository) {
+            freeSpace += storage.getFreeSpace();
+        }
+
+        return freeSpace;
+    }
+
+    private int getItemAmount(Item item, ArrayList<Storage> repository) {
+        int itemAmount = 0;
+        for (Storage storage : repository) {
+            itemAmount += storage.getItemAmount(item);
+        }
+
+        return itemAmount;
+    }
+
+    private boolean addToTargetRepository(ArrayList<Storage> repository, Item item, int amount) {
+        if (getFreeSpace(repository) < amount)
+            return false;
+
+        gold -= amount * item.getBuyCost();
+
         for (Storage storage : repository) {
             if (amount < 1)
                 break;
 
-            amount = storage.addStock(item, amount);
+            amount = storage.increaseStock(item, amount);
         }
+        return true;
     }
-    public void addItem(Item item, int amount) {
-        gold -= amount * item.getBuyCost();
+    public boolean addItem(Item item, int amount) {
         switch (item.getCategory()) {
-            case FOODS -> addToTargetRepository(granary, item, amount);
-            case WEAPONS -> addToTargetRepository(armory, item, amount);
-            case RESOURCES -> addToTargetRepository(stockpile, item, amount);
+            case FOODS -> {return addToTargetRepository(granary, item, amount);}
+            case WEAPONS -> {return addToTargetRepository(armory, item, amount);}
+            case RESOURCES -> {return addToTargetRepository(stockpile, item, amount);}
         }
+        return false;
     }
 
-    public void removeItem(Item item, int amount) {
+    private boolean removeFromTargetRepository(ArrayList<Storage> repository, Item item, int amount) {
+        if (getItemAmount(item, repository) < amount)
+            return false;
+
         gold += amount * item.getSellCost();
-        //TODO : handle
+
+        for (Storage storage : repository) {
+            if (amount < 1)
+                break;
+
+            amount = storage.decreaseStock(item, amount);
+        }
+        return true;
+    }
+
+    public boolean removeItem(Item item, int amount) {
+        switch (item.getCategory()) {
+            case FOODS -> {return removeFromTargetRepository(granary, item, amount);}
+            case WEAPONS -> {return removeFromTargetRepository(armory, item, amount);}
+            case RESOURCES -> {return removeFromTargetRepository(stockpile, item, amount);}
+        }
+        return false;
     }
 
     public void checkForHighScore() {

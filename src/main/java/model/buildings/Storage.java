@@ -20,7 +20,7 @@ public class Storage extends Building {
         //TODO: add items to stock based on type!
         this.stock = new HashMap<>();
         ItemCategory category = null;
-        switch (this.type){
+        switch (this.type) {
             case STOCKPILE -> category = ItemCategory.RESOURCES;
             case GRANARY -> category = ItemCategory.FOODS;
             case ARMORY -> category = ItemCategory.WEAPONS;
@@ -28,24 +28,39 @@ public class Storage extends Building {
         for (Item item : Item.values())
             if (item.getCategory() == category)
                 this.stock.put(item, 0);
-            //TODO: set defaults!
+        //TODO: set defaults!
     }
 
-    public int addStock(Item item, int amount){
+    public int getFreeSpace() {
         int totalStock = 0;
         for (Integer count : this.stock.values())
             totalStock += count;
 
-        int freeSpace = capacity - totalStock, finalAmount = amount;
+        return capacity - totalStock;
+    }
+
+    public int getItemAmount(Item item) {
+        return stock.get(item);
+    }
+
+    public int increaseStock(Item item, int amount) {
+        int freeSpace = getFreeSpace(), finalAmount = amount;
 
         if (freeSpace < amount)
             finalAmount = freeSpace;
 
-        this.stock.put(item,this.stock.get(item) + finalAmount);
+        this.stock.put(item, this.stock.get(item) + finalAmount);
 
-        if (amount == finalAmount)
-            return 0;
+        return amount - finalAmount;
+    }
 
+    public int decreaseStock(Item item, int amount) {
+        int itemAmount = getItemAmount(item), finalAmount = amount;
+
+        if (itemAmount < amount)
+            finalAmount = itemAmount;
+
+        this.stock.put(item, this.stock.get(item) - finalAmount);
         return amount - finalAmount;
     }
 

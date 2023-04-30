@@ -38,9 +38,8 @@ public class ShopMenuController {
         if (item == null)
             return Message.INVALID_ITEM_NAME.toString();
 
-        //TODO : handle numbers
-
-        government.removeItem(item, amount);
+        if (government.removeItem(item, amount))
+            return Message.NOT_ENOUGH_AMOUNT.toString();
         return Message.SOLD_SUCCESSFUL.toString();
     }
 }

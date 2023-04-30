@@ -77,6 +77,7 @@ public enum Message {
 
     INVALID_ITEM_NAME("There are no item with this name!"), //TODO : is message correct ?
     NOT_ENOUGH_GOLD("Not enough gold!"),
+    NOT_ENOUGH_AMOUNT("Not enough amount!"),
     BOUGHT_SUCCESSFUL("Items bought successfully"),
     SOLD_SUCCESSFUL("Items sold successfully!"),
 
