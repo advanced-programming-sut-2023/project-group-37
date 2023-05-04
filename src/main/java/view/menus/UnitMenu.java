@@ -22,7 +22,9 @@ public class UnitMenu {
             command = scanner.nextLine();
 
             if ((matcher = Command.MOVE_UNIT.getMatcher(command)) != null)
-                System.out.println(this.controller.moveUnit(matcher));
+                System.out.println(this.controller.moveUnit(Integer.parseInt(matcher.group("x")),
+                        Integer.parseInt(matcher.group("y"))));
+
             else if ((matcher = Command.PATROL_UNIT.getMatcher(command)) != null)
                 System.out.println(this.controller.patrolUnit(matcher));
             else if ((matcher = Command.SET_UNIT.getMatcher(command)) != null)

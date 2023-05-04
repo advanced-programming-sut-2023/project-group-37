@@ -10,6 +10,7 @@ public enum Message {
     INVALID_ITEM_NAME("There are no item with this name!"),
     INVALID_AMOUNT("Invalid amount!"),
     BACK_MAIN_MENU("Returned to main menu"),
+    SUCCESS("Success!"),
     INVALID_COMMAND("Invalid command!"),
 
     // SignupMenu:
@@ -93,6 +94,9 @@ public enum Message {
     TRADE_SUCCESS("The trade was successfully completed"),
 
     // UnitMenu:
+    ADDRESS_OUT_OF_BOUNDS("Address out of bounds!"),
+    CURRENT_LOCATION("Address equals current location"),
+    NO_ROUTS_FOUND("Cant move to the address!"),
 
     // BuildingMenu:
     ;

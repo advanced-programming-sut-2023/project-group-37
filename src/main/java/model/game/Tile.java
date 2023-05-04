@@ -15,6 +15,7 @@ public class Tile {
     private final ArrayList<MilitaryUnit> militaryUnits;
     private Building building;
     private Character state;
+    public boolean canCross = true;
 
     public Tile(int x, int y) {
         this.x = x;
@@ -71,5 +72,10 @@ public class Tile {
 
     public ArrayList<Person> getPeople() {
         return people;
+    }
+
+
+    public boolean equals(Tile tile) {
+        return (this.x == tile.x && this.y == tile.y);
     }
 }

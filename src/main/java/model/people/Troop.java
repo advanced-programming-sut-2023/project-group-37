@@ -2,6 +2,9 @@ package model.people;
 
 import model.game.Government;
 import model.game.Item;
+import model.game.Tile;
+
+import java.util.ArrayList;
 
 public class Troop extends MilitaryUnit {
 
@@ -25,11 +28,22 @@ public class Troop extends MilitaryUnit {
         return this.type;
     }
 
-    public boolean canClimbLadder(){
+    public boolean canClimbLadder() {
         return this.canClimbLadder;
     }
 
-    public boolean canDigMoat(){
+    public boolean canDigMoat() {
         return this.canDigMoat;
+    }
+
+    public void move() {
+        ArrayList<Tile> route = this.getRoute();
+        int speed = this.getSpeed(); //todo : handle speed if its high
+        if (route.size() - 1 < speed)
+            speed = route.size() - 1;
+
+        this.move(route.get(speed));
+
+        route.subList(0, speed).clear();
     }
 }

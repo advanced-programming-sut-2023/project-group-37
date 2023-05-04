@@ -1,5 +1,10 @@
 package controller;
 
+
+import java.util.ArrayList;
+import model.game.Tile;
+import model.game.Direction;
+
 public class MultiMenuFunctions {
     public static String deleteQuotations(String string) {
 
@@ -15,5 +20,13 @@ public class MultiMenuFunctions {
             string = stringBuilder.toString();
         }
         return string;
+    }
+
+    public static ArrayList<Tile> routeFinder(Tile origin, Tile destination) {
+        int rightDistance = destination.getX() - origin.getX();
+        int upDistance = destination.getY() - origin.getY();
+
+        return null;
+        //todo
     }
 }
