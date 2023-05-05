@@ -11,6 +11,7 @@ public enum Item {
     BOW(),
     SPEAR(),
     MACE(),
+    CROSSBOW(),
     PIKE(),
     SWORD(),
     ARMOR(),

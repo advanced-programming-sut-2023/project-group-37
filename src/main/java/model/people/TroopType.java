@@ -9,26 +9,43 @@ public enum TroopType {
     // TODO: check canClimb out of the source more accurately!
 
     // EUROPEAN:
-    ARCHER(12, 45, 40, 90, 18, Nation.EUROPEAN, Item.BOW, null,
+    ARCHER(12, 45, 40, 90, 10, Nation.EUROPEAN, Item.BOW, null,
             true, true),
-    SPEARMAN(8,50, 50, 60, 1.5, Nation.EUROPEAN, Item.SPEAR, null,
+    SPEARMAN(8,50, 50, 60, 1, Nation.EUROPEAN, Item.SPEAR, null,
             true,true),
-    MaceMan(20,70, 75, 85, 1.5, Nation.EUROPEAN, Item.MACE, Item.LEATHER,
+    MaceMan(20,70, 75, 85, 1, Nation.EUROPEAN, Item.MACE, Item.LEATHER,
+            true,true),
+    CROSSBOWMAN(20,75, 70, 55, 8, Nation.EUROPEAN, Item.CROSSBOW, Item.LEATHER,
             false,false),
-    CROSSBOWMAN(20,75, 70, 55, 16, Nation.EUROPEAN, Item.MACE, Item.LEATHER,
-            false,false),
-    PIKEMAN(20, 77, 76, 60, 1.5, Nation.EUROPEAN, Item.PIKE, Item.ARMOR,
+    PIKEMAN(20, 77, 76, 60, 1, Nation.EUROPEAN, Item.PIKE, Item.ARMOR,
             false, true),
-    SWORDSMAN(40, 94,94, 40, 1.5, Nation.EUROPEAN, Item.SWORD, Item.ARMOR,
+    SWORDSMAN(40, 94,94, 40, 1, Nation.EUROPEAN, Item.SWORD, Item.ARMOR,
             false, false),
-    // TODO: define horse
-    KNIGHT(40, 90, 94, 95, 1.5, Nation.EUROPEAN, Item.SWORD, Item.ARMOR,
-            false,false),    ;
+    // TODO: define horse!
+    KNIGHT(40, 90, 94, 95, 1, Nation.EUROPEAN, Item.SWORD, Item.ARMOR,
+            false,false),
 
-    private int cost;
+    // ARABIAN:
+    // TODO: some free weapons may be needed!
+    ARABIAN_ARCHER(75, 45,45,90, 12, Nation.ARABIAN, null,null,
+            false, true),
+    SLAVE(5, 20,10,90, 1, Nation.ARABIAN, null,null,
+            false, true),
+    SLINGER(12, 20,36,90, 6, Nation.ARABIAN, null,null,
+            false, false),
+    HORSE_ARCHER(80, 55,50,95, 12, Nation.ARABIAN, null,null,
+            false, false),
+    ARABIAN_SWORDSMAN(80, 88,88,40, 1, Nation.ARABIAN, null,null,
+            false, false),
+    ASSASSIN(60, 73,76,67, 1, Nation.ARABIAN, null,null,
+            false, false),
+    FIRE_THROWER(100, 60,84,60, 4, Nation.ARABIAN, null,null,
+            false, false);
+
+    private final int cost;
     private final int maxHitpoints;
     private final int  damage;
-    private final double range;
+    private final int range;
     private final int speed;
     private final Nation nation;
     private final Item weapon;
@@ -44,7 +61,7 @@ public enum TroopType {
         return valueOf(type.toUpperCase()).nation == Nation.ARABIAN;
     }
 
-    TroopType(int cost, int maxHitpoints, int damage, int speed, double range, Nation nation, Item weapon, Item armor,
+    TroopType(int cost, int maxHitpoints, int damage, int speed, int range, Nation nation, Item weapon, Item armor,
               boolean canClimbLadder, boolean canDigMoat) {
         this.cost = cost;
         this.maxHitpoints = maxHitpoints;
@@ -70,7 +87,7 @@ public enum TroopType {
         return this.damage;
     }
 
-    public double getRange() {
+    public int getRange() {
         return this.range;
     }
 
