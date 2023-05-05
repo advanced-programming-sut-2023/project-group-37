@@ -13,16 +13,16 @@ public enum TroopType {
             true, true),
     SPEARMAN(8,50, 50, 60, 1, Nation.EUROPEAN, Item.SPEAR, null,
             true,true),
-    MaceMan(20,70, 75, 85, 1, Nation.EUROPEAN, Item.MACE, Item.LEATHER,
+    MaceMan(20,70, 75, 85, 1, Nation.EUROPEAN, Item.MACE, Item.LEATHER_ARMOR,
             true,true),
-    CROSSBOWMAN(20,75, 70, 55, 8, Nation.EUROPEAN, Item.CROSSBOW, Item.LEATHER,
+    CROSSBOWMAN(20,75, 70, 55, 8, Nation.EUROPEAN, Item.CROSSBOW, Item.LEATHER_ARMOR,
             false,false),
-    PIKEMAN(20, 77, 76, 60, 1, Nation.EUROPEAN, Item.PIKE, Item.ARMOR,
+    PIKEMAN(20, 77, 76, 60, 1, Nation.EUROPEAN, Item.PIKE, Item.METAL_ARMOR,
             false, true),
-    SWORDSMAN(40, 94,94, 40, 1, Nation.EUROPEAN, Item.SWORD, Item.ARMOR,
+    SWORDSMAN(40, 94,94, 40, 1, Nation.EUROPEAN, Item.SWORD, Item.METAL_ARMOR,
             false, false),
     // TODO: define horse!
-    KNIGHT(40, 90, 94, 95, 1, Nation.EUROPEAN, Item.SWORD, Item.ARMOR,
+    KNIGHT(40, 90, 94, 95, 1, Nation.EUROPEAN, Item.SWORD, Item.METAL_ARMOR,
             false,false),
 
     // ARABIAN:
