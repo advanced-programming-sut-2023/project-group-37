@@ -3,23 +3,42 @@ package model.buildings;
 import model.game.Item;
 
 public enum BuildingType {
-    STOCKPILE("", 0,0,null, 0, null, null, 0),
-    GRANARY("", 0,0,null, 0, null, null, 0),
-    ARMORY("", 0,0,null, 0, null, null, 0), ;
-    private final String name;
+    // Our stockpile has hitpoints & can be destroyed!
+    // hitpoints are : 150 250 350
+    STOCKPILE(250, Item.WOOD, 5),
+    GRANARY(250, Item.WOOD, 5),
+    ARMORY(250, Item.WOOD, 5),
+    MERCENARY_POST(250, Item.WOOD, 10),
+    BARRACKS(250,  Item.STONE, 15),
+    ENGINEER_GUILD(100,250, Item.WOOD, 10);
+
+    private final int cost;
     private final int maxHitpoints;
-    private final int goldNeededToBuild;
     private final Item buildingMaterial;
     private final int buildingMaterialAmount;
     private final Item rawMaterial;
     private final Item product;
     private final int workersNeeded;
 
-    BuildingType(String name, int maxHitpoints, int goldNeededToBuild, Item buildingMaterial,
-                 int buildingMaterialAmount, Item rawMaterial, Item product, int workersNeeded) {
-        this.name = name;
+    // not processing
+    BuildingType(int cost, int maxHitpoints, Item buildingMaterial, int buildingMaterialAmount, int workersNeeded) {
+        this(cost, maxHitpoints, buildingMaterial, buildingMaterialAmount, null, null, workersNeeded);
+    }
+
+    // not processing + not workerNeeded
+    BuildingType(int cost, int maxHitpoints, Item buildingMaterial, int buildingMaterialAmount) {
+        this(cost, maxHitpoints, buildingMaterial, buildingMaterialAmount, 0);
+    }
+
+    // not processing + not workerNeeded + free
+    BuildingType(int maxHitpoints, Item buildingMaterial, int buildingMaterialAmount) {
+        this(0, maxHitpoints, buildingMaterial, buildingMaterialAmount);
+    }
+
+    BuildingType(int cost, int maxHitpoints, Item buildingMaterial, int buildingMaterialAmount, Item rawMaterial,
+                 Item product, int workersNeeded) {
+        this.cost = cost;
         this.maxHitpoints = maxHitpoints;
-        this.goldNeededToBuild = goldNeededToBuild;
         this.buildingMaterial = buildingMaterial;
         this.buildingMaterialAmount = buildingMaterialAmount;
         this.rawMaterial = rawMaterial;
@@ -27,16 +46,8 @@ public enum BuildingType {
         this.workersNeeded = workersNeeded;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
     public int getMaxHitpoints() {
         return this.maxHitpoints;
-    }
-
-    public int getGoldNeededToBuild() {
-        return this.goldNeededToBuild;
     }
 
     public Item getBuildingMaterial() {
@@ -62,4 +73,4 @@ public enum BuildingType {
     public BuildingType getBuildingTypeByName(String name) {
         return valueOf(name.toUpperCase());
     }
-}
+    }

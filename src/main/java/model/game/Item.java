@@ -3,28 +3,28 @@ package model.game;
 
 public enum Item {
 
+    // TODO: handle prices!
+
     // RESOURCES
-    WOOD(),
-    STONE(),
-    IRON(),
+    WOOD(ItemCategory.RESOURCES, 0, 0),
+    STONE(ItemCategory.RESOURCES, 0, 0),
+    IRON(ItemCategory.RESOURCES, 0, 0),
 
     // FOODS
 
     // WEAPONS
     // TODO: fill sell/buy costs!
-    BOW(ItemCategory.WEAPONS, Item.WOOD, 2, 0,0),
+    BOW(ItemCategory.WEAPONS, Item.WOOD, 2, 0, 0),
     SPEAR(ItemCategory.WEAPONS, Item.WOOD, 1, 0, 0),
-    MACE(ItemCategory.WEAPONS, Item.IRON, 1,0,0),
-    CROSSBOW(ItemCategory.WEAPONS, Item.WOOD, 3,0,0),
-    PIKE(ItemCategory.WEAPONS, Item.WOOD, 2,0,0),
-    SWORD(ItemCategory.WEAPONS, Item.IRON, 1,0,0),
-    METAL_ARMOR(ItemCategory.WEAPONS, Item.IRON, 1,0,0),
+    MACE(ItemCategory.WEAPONS, Item.IRON, 1, 0, 0),
+    CROSSBOW(ItemCategory.WEAPONS, Item.WOOD, 3, 0, 0),
+    PIKE(ItemCategory.WEAPONS, Item.WOOD, 2, 0, 0),
+    SWORD(ItemCategory.WEAPONS, Item.IRON, 1, 0, 0),
+    METAL_ARMOR(ItemCategory.WEAPONS, Item.IRON, 1, 0, 0),
     // TODO: fill leather after defining cow!
-    LEATHER_ARMOR(ItemCategory.WEAPONS, null, 0,0,0);
+    LEATHER_ARMOR(ItemCategory.WEAPONS, null, 0, 0, 0);;
 
-    ;
-
-//    private final String name;
+    //    private final String name;
     private final ItemCategory category;
     private final Item formingMaterial;
     private final int formingMaterialAmount;
