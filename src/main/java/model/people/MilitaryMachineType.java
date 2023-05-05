@@ -1,30 +1,39 @@
 package model.people;
 
-import java.util.ArrayList;
-
 public enum MilitaryMachineType {
+
+    PORTABLE_SHIELD(5, 120, 0, 0, 80, 1),
+    BATTERING_RAM(150, 500, 200, 1, 45, 40),
+    SIEGE_TOWER(150, 120, 0, 1, 50, 4),
+    CATAPULT(150, 80, 100, 35, 45, 2),
+    TREBUCHET(150, 80, 125, 45, 0, 3),
+    FIRE_BALLISTA(150, 75, 40, 30, 30, 2),
     ;
+    private final int cost;
     private final int maxHitpoints;
     private final int damage;
     private final int range;
     private final int speed;
-    private final int engineersNeeded;
-    private final ArrayList<Troop> operators;
+    private final int operatorsNeeded;
 
-    MilitaryMachineType(int maxHitpoints, int damage, int range , int speedQuality, int engineersNeeded) {
+    MilitaryMachineType(int cost, int maxHitpoints, int damage, int range, int speed, int engineersNeeded) {
+        this.cost = cost;
         this.maxHitpoints = maxHitpoints;
         this.damage = damage;
         this.range = range;
-        this.speed = speedQuality;
-        this.engineersNeeded = engineersNeeded;
-        this.operators = new ArrayList<>();
+        this.speed = speed;
+        this.operatorsNeeded = engineersNeeded;
     }
 
-    public int getMaxHitpointsQuality() {
+    public int getCost() {
+        return this.cost;
+    }
+
+    public int getMaxHitpoints() {
         return this.maxHitpoints;
     }
 
-    public int getAttackingDamageQuality() {
+    public int getDamage() {
         return this.damage;
     }
 
@@ -32,15 +41,11 @@ public enum MilitaryMachineType {
         return this.range;
     }
 
-    public int getSpeedQuality() {
+    public int getSpeed() {
         return this.speed;
     }
 
-    public int getEngineersNeeded() {
-        return this.engineersNeeded;
-    }
-
-    public ArrayList<Troop> getOperators() {
-        return this.operators;
+    public int getOperatorsNeeded() {
+        return this.operatorsNeeded;
     }
 }
