@@ -83,8 +83,7 @@ public class RegisterMenu {
                 this.message = this.controller.checkPasswordConfirm(this.command);
                 System.out.println(this.message);
 
-            } while (!Message.ASK_FOR_SECURITY_QUESTION.equals(this.message) &&
-                    Message.CANCEL.equals(this.message));
+            } while (Message.REENTER_AGAIN.equals(message));
 
             if (Message.ASK_FOR_SECURITY_QUESTION.equals(this.message))
                 return pickQuestion();

@@ -17,7 +17,7 @@ public enum Command {
             "(-e\\s+(?<email>\".+\"|\\S+))|(-s\\s+(?<slogan>\".+\"|\\S+))|" +
             "(-n\\s+(?<nickName>\".+\"|\\S+))))*\\s*"),
     REGISTER_RANDOM_PASSWORD("\\s*user\\s+create(\\s+((-u\\s+(?<username>\".+\"|\\S+))|" +
-            "(-p\\s+(?<password>\".+\"|\\S+))|" +
+            "(-p\\s+(?<password>random|\"\\s*random\\s*\"))|" +
             "(-e\\s+(?<email>\".+\"|\\S+))|(-s\\s+(?<slogan>\".+\"|\\S+))|" +
             "(-n\\s+(?<nickName>\".+\"|\\S+))))*\\s*"),
     PICK_QUESTION("\\s*question\\s+pick(\\s+((-q\\s+(?<questionNumber>\\d+))|" +
@@ -32,7 +32,7 @@ public enum Command {
 
     // MainMenu:
     ENTER_PROFILE_MENU("\\s*enter\\s+profile\\s+menu\\s*"),
-    START_GAME("start\\s+game(\\s+((-t\\s+(?<turns>\\d+))|(-s\\s+(?<size>\\d+))|(-u\\s+(?<users>\"\\s*.+\\s*\")))\\s*"), // TODO: check
+    START_GAME("\\s*start\\s+game(\\s+((-t\\s+(?<turns>\\d+))|(-s\\s+(?<size>\\d+))|(-u\\s+(?<users>\"\\s*.+\\s*\"))))\\s*"), // TODO: check
     LOGOUT("\\s*logout\\s*"),
 
     // ProfileMenu:
