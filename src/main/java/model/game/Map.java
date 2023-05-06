@@ -4,6 +4,8 @@ public class Map {
     private final int size;
     private final Tile[][] map;
 
+    // TODO: handle headquarters illegible on page 29!
+
     public Map(int size) {
         this.size = size;
         this.map = new Tile[size][size];

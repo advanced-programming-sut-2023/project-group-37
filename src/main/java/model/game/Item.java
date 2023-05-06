@@ -9,53 +9,35 @@ public enum Item {
     WOOD(ItemCategory.RESOURCES, 0, 0),
     STONE(ItemCategory.RESOURCES, 0, 0),
     IRON(ItemCategory.RESOURCES, 0, 0),
+    HOPS(ItemCategory.RESOURCES, 0, 0),
+    WHEAT(ItemCategory.RESOURCES, 0, 0),
+    FLOUR(ItemCategory.RESOURCES, 0,0),
 
     // FOODS
+    APPLE(ItemCategory.FOODS, 0, 0),
+    CHEESE(ItemCategory.FOODS, 0, 0),
+    MEAT(ItemCategory.FOODS, 0, 0),
 
     // WEAPONS
-    // TODO: fill sell/buy costs!
-    BOW(ItemCategory.WEAPONS, Item.WOOD, 2, 0, 0),
-    SPEAR(ItemCategory.WEAPONS, Item.WOOD, 1, 0, 0),
-    MACE(ItemCategory.WEAPONS, Item.IRON, 1, 0, 0),
-    CROSSBOW(ItemCategory.WEAPONS, Item.WOOD, 3, 0, 0),
-    PIKE(ItemCategory.WEAPONS, Item.WOOD, 2, 0, 0),
-    SWORD(ItemCategory.WEAPONS, Item.IRON, 1, 0, 0),
-    METAL_ARMOR(ItemCategory.WEAPONS, Item.IRON, 1, 0, 0),
+    BOW(ItemCategory.WEAPONS, 0, 0),
+    SPEAR(ItemCategory.WEAPONS, 0, 0),
+    MACE(ItemCategory.WEAPONS, 0, 0),
+    CROSSBOW(ItemCategory.WEAPONS, 0, 0),
+    PIKE(ItemCategory.WEAPONS, 0, 0),
+    SWORD(ItemCategory.WEAPONS, 0, 0),
+    METAL_ARMOR(ItemCategory.WEAPONS, 0, 0),
     // TODO: fill leather after defining cow!
-    LEATHER_ARMOR(ItemCategory.WEAPONS, null, 0, 0, 0);;
+    LEATHER_ARMOR(ItemCategory.WEAPONS, 0, 0);;
 
-    //    private final String name;
     private final ItemCategory category;
-    private final Item formingMaterial;
-    private final int formingMaterialAmount;
     private final int buyCost;
     private final int sellCost;
 
-    Item(/*String name, */ItemCategory category, int buyCost, int sellCost) {
-//        this.name = name;
+    Item(ItemCategory category, int buyCost, int sellCost) {
         this.category = category;
-        this.formingMaterial = null;
-        this.formingMaterialAmount = 0;
         this.buyCost = buyCost;
         this.sellCost = sellCost;
     }
-
-    Item(/*String name, */ItemCategory category, Item formingMaterial, int formingMaterialAmount, int buyCost, int sellCost) {
-//        this.name = name;
-        this.category = category;
-        this.formingMaterial = formingMaterial;
-        this.formingMaterialAmount = formingMaterialAmount;
-        this.buyCost = buyCost;
-        this.sellCost = sellCost;
-    }
-
-//    public static Item getItemByName(String name) {
-//        for (Item item : Item.values()) {
-//            if (item.name.equals(name))
-//                return item;
-//        }
-//        return null;
-//    }
 
     public ItemCategory getCategory() {
         return this.category;
