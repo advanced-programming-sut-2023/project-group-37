@@ -16,6 +16,7 @@ public class Tile {
     private Building building;
     private Character state;
     public boolean canCross = true;
+    private Government territory;
 
     public Tile(int x, int y) {
         this.x = x;

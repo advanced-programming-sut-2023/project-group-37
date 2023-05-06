@@ -8,16 +8,20 @@ import java.util.ArrayList;
 public class Government {
     private final User user;
     private final String username;
+    private final int territory;
     private final Color color;
+
+
     private int gold;
     private final ArrayList<Storage> stockpile;
     private final ArrayList<Storage> granary;
     private final ArrayList<Storage> armory;
     private int popularity;
 
-    public Government(User user, Color color) {
+    public Government(User user, Color color, int territory) {
         this.user = user;
         this.username = user.getUsername();
+        this.territory = territory;
         this.color = color;
         // TODO: set default value for gold!
         this.gold = 0;
@@ -29,6 +33,9 @@ public class Government {
         this.popularity = 100;
     }
 
+    public int getTerritory() {
+        return territory;
+    }
     public Color getColor() {
         return this.color;
     }

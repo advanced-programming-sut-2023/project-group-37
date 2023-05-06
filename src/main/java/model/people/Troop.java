@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Troop extends MilitaryUnit {
 
     private final TroopType type;
+    private final int territory;
     private final Item weapon;
     private final Item armor;
     private final boolean canClimbLadder;
@@ -18,6 +19,7 @@ public class Troop extends MilitaryUnit {
         super(loyalty, type.getMaxHitpointsQuality(), type.getAttackingDamageQuality(), type.getDefencingQuality(),
                 type.getRange(), type.getSpeedQuality());
         this.type = type;
+        this.territory = loyalty.getTerritory();
         this.weapon = type.getWeapon();
         this.armor = type.getArmor();
         this.canClimbLadder = type.canClimbLadder();

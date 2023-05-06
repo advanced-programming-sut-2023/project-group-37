@@ -17,7 +17,7 @@ public class Map {
         return this.map;
     }
 
-    public void setAllTiles() {
+    public void setTilesState() {
         for (int i =0; i < size; i++) {
             for (int j=0; j<size; j++)
                 map[i][j].setState();

@@ -3,7 +3,6 @@ package controller;
 import model.game.Game;
 import model.game.Government;
 import model.game.Map;
-import model.game.Tile;
 import view.enums.Message;
 
 import java.util.regex.Matcher;
@@ -24,13 +23,13 @@ public class MapMenuController {
     }
 
     public String showMap() {
-        map.setAllTiles();
+        map.setTilesState();
         //todo;
         return null;
     }
 
     public Message moveMap(Matcher matcher) {
-        map.setAllTiles();
+        map.setTilesState();
         return null;
     }
 

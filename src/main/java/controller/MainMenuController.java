@@ -28,7 +28,7 @@ public class MainMenuController {
         ArrayList<Government> governments = new ArrayList<>();
         User user;
 
-        governments.add(new Government(currentUser, Color.BLUE));
+        governments.add(new Government(currentUser, Color.BLUE, 1)); //todo : territory
 
         int i = 1;
         for (String username : usernames) {
@@ -36,7 +36,7 @@ public class MainMenuController {
             if (user == null)
                 return Message.USERNAME_NOT_FOUND.toString();
 
-            governments.add(new Government(user, Color.values()[i]));
+            governments.add(new Government(user, Color.values()[i], 1));
             i++;
         }
 
