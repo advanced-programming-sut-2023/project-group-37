@@ -6,31 +6,30 @@ public enum Item {
     // TODO: handle prices!
 
     // RESOURCES
-    WOOD(ItemCategory.RESOURCES, 0, 0),
-    STONE(ItemCategory.RESOURCES, 0, 0),
-    IRON(ItemCategory.RESOURCES, 0, 0),
-    HOPS(ItemCategory.RESOURCES, 0, 0),
-    WHEAT(ItemCategory.RESOURCES, 0, 0),
-    FLOUR(ItemCategory.RESOURCES, 0, 0),
-    ALE(ItemCategory.RESOURCES, 0, 0),
-    PITCH(ItemCategory.RESOURCES, 0, 0),
-
+    WOOD(ItemCategory.RESOURCES, 4, 1),
+    STONE(ItemCategory.RESOURCES, 14, 7),
+    IRON(ItemCategory.RESOURCES, 45, 23),
+    HOPS(ItemCategory.RESOURCES, 15, 8),
+    WHEAT(ItemCategory.RESOURCES, 23, 8),
+    FLOUR(ItemCategory.RESOURCES, 32, 10),
+    ALE(ItemCategory.RESOURCES, 20, 10),
+    PITCH(ItemCategory.RESOURCES, 20, 10),
 
     // FOODS
-    APPLE(ItemCategory.FOODS, 0, 0),
-    CHEESE(ItemCategory.FOODS, 0, 0),
-    MEAT(ItemCategory.FOODS, 0, 0),
+    APPLE(ItemCategory.FOODS, 8, 4),
+    CHEESE(ItemCategory.FOODS, 8, 4),
+    MEAT(ItemCategory.FOODS, 8, 4),
 
     // WEAPONS
-    BOW(ItemCategory.WEAPONS, 0, 0),
-    SPEAR(ItemCategory.WEAPONS, 0, 0),
-    MACE(ItemCategory.WEAPONS, 0, 0),
-    CROSSBOW(ItemCategory.WEAPONS, 0, 0),
-    PIKE(ItemCategory.WEAPONS, 0, 0),
-    SWORD(ItemCategory.WEAPONS, 0, 0),
-    METAL_ARMOR(ItemCategory.WEAPONS, 0, 0),
+    BOW(ItemCategory.WEAPONS, 31, 15),
+    SPEAR(ItemCategory.WEAPONS, 20, 10),
+    MACE(ItemCategory.WEAPONS, 58, 30),
+    CROSSBOW(ItemCategory.WEAPONS, 58, 30),
+    PIKE(ItemCategory.WEAPONS, 36, 18),
+    SWORD(ItemCategory.WEAPONS, 58, 30),
+    METAL_ARMOR(ItemCategory.WEAPONS, 58, 30),
     // TODO: fill leather after defining cow!
-    LEATHER_ARMOR(ItemCategory.WEAPONS, 0, 0);;
+    LEATHER_ARMOR(ItemCategory.WEAPONS, 25, 12);;
 
     private final ItemCategory category;
     private final int buyCost;
