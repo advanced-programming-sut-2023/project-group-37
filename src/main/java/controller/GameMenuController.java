@@ -42,7 +42,7 @@ public class GameMenuController {
     }
 
     public String showMap(int x, int y) {
-        if (x > game.getMap().getSize() || x < 0 || y > game.getMap().getSize() || y < 0)
+        if (x >= game.getMap().getSize() || x < 0 || y >= game.getMap().getSize() || y < 0)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
         return mapMenuController.showMap(x,y);

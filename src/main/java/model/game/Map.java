@@ -25,9 +25,13 @@ public class Map {
     }
 
     public Tile getTileByLocation(int x, int y) {
-        if (x <= size || y >= size || x < 0 || y < 0)
+        if (x >= size || y >= size || x < 0 || y < 0)
             return null;
 
+        return map[x][y];
+    }
+
+    public Tile getTileBySafeLocation(int x, int y) {
         return map[x][y];
     }
 }
