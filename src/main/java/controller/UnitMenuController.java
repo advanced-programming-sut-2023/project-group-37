@@ -7,6 +7,7 @@ import model.people.MilitaryUnit;
 import view.enums.Message;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 
 public class UnitMenuController {
@@ -34,7 +35,7 @@ public class UnitMenuController {
         if (destination.equals(origin))
             return Message.CURRENT_LOCATION.toString();
 
-        ArrayList<Tile> route = MultiMenuFunctions.routeFinder(origin, destination);
+        LinkedList<Tile> route = MultiMenuFunctions.routeFinder(origin, destination, game.getMap());
 
         if (route == null)
             return Message.NO_ROUTS_FOUND.toString();

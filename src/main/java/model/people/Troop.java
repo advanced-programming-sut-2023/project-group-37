@@ -5,6 +5,7 @@ import model.game.Item;
 import model.game.Tile;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Troop extends MilitaryUnit {
 
@@ -39,7 +40,7 @@ public class Troop extends MilitaryUnit {
     }
 
     public void move() {
-        ArrayList<Tile> route = this.getRoute();
+        LinkedList<Tile> route = this.getRoute();
         int speed = this.getSpeed(); //todo : handle speed if its high
         if (route.size() - 1 < speed)
             speed = route.size() - 1;

@@ -15,8 +15,9 @@ public class Tile {
     private final ArrayList<MilitaryUnit> militaryUnits;
     private Building building;
     private Character state;
-    public boolean canCross = true;
+    private boolean isPassable = true;
     private Government territory;
+    public int number; // it is just for rootFinder
 
     public Tile(int x, int y) {
         this.x = x;
@@ -57,6 +58,9 @@ public class Tile {
 
     public Character getState() {
         return state;
+    }
+    public boolean isPassable() {
+        return isPassable;
     }
 
     public void setState() {

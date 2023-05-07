@@ -5,6 +5,7 @@ import model.game.Movable;
 import model.game.Tile;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public abstract class MilitaryUnit implements Movable {
 
@@ -17,7 +18,7 @@ public abstract class MilitaryUnit implements Movable {
 
 
     private Tile location;
-    private ArrayList<Tile> route;
+    private LinkedList<Tile> route;
 
 
     public MilitaryUnit(Government loyalty, Quality hitpointsQuality, Quality attackingDamageQuality, Quality defencingDamageQuality,
@@ -68,11 +69,11 @@ public abstract class MilitaryUnit implements Movable {
         destination.addMilitaryUnit(this);
     }
 
-    public void setRoute(ArrayList<Tile> route) {
+    public void setRoute(LinkedList<Tile> route) {
         this.route = route;
     }
 
-    protected ArrayList<Tile> getRoute() {
+    protected LinkedList<Tile> getRoute() {
         return this.route;
     }
 }

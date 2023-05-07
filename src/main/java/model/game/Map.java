@@ -3,10 +3,12 @@ package model.game;
 public class Map {
     private final int size;
     private final Tile[][] map;
+    private final boolean[][] tilesPassability;
 
     public Map(int size) {
         this.size = size;
         this.map = new Tile[size][size];
+        this.tilesPassability = new boolean[size][size];
     }
 
     public int getSize() {
@@ -17,10 +19,21 @@ public class Map {
         return this.map;
     }
 
+    public boolean[][] getTilesPassability() {
+        return tilesPassability;
+    }
+
     public void setTilesState() {
         for (int i =0; i < size; i++) {
             for (int j=0; j<size; j++)
                 map[i][j].setState();
+        }
+    }
+
+    public void resetNumbers() {
+        for (int i =0; i < size; i++) {
+            for (int j=0; j<size; j++)
+                map[i][j].number = 0;
         }
     }
 
