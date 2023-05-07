@@ -3,46 +3,50 @@ package model.game;
 
 public enum Item {
 
+    // TODO: handle prices!
+
     // RESOURCES
+    WOOD(ItemCategory.RESOURCES, 4, 1),
+    STONE(ItemCategory.RESOURCES, 14, 7),
+    IRON(ItemCategory.RESOURCES, 45, 23),
+    HOPS(ItemCategory.RESOURCES, 15, 8),
+    WHEAT(ItemCategory.RESOURCES, 23, 8),
+    FLOUR(ItemCategory.RESOURCES, 32, 10),
+    ALE(ItemCategory.RESOURCES, 20, 10),
+    PITCH(ItemCategory.RESOURCES, 20, 10),
 
     // FOODS
+    APPLE(ItemCategory.FOODS, 8, 4),
+    CHEESE(ItemCategory.FOODS, 8, 4),
+    MEAT(ItemCategory.FOODS, 8, 4),
 
     // WEAPONS
-    ;
+    BOW(ItemCategory.WEAPONS, 31, 15),
+    SPEAR(ItemCategory.WEAPONS, 20, 10),
+    MACE(ItemCategory.WEAPONS, 58, 30),
+    CROSSBOW(ItemCategory.WEAPONS, 58, 30),
+    PIKE(ItemCategory.WEAPONS, 36, 18),
+    SWORD(ItemCategory.WEAPONS, 58, 30),
+    METAL_ARMOR(ItemCategory.WEAPONS, 58, 30),
+    // TODO: fill leather after defining cow!
+    LEATHER_ARMOR(ItemCategory.WEAPONS, 25, 12);;
 
-    private final String name;
     private final ItemCategory category;
-
-    private final Item formingMaterial;
-    private final int formingMaterialAmount;
-
     private final int buyCost;
     private final int sellCost;
 
-    Item( String name, ItemCategory category, int buyCost, int sellCost) {
-        this.name = name;
+    Item(ItemCategory category, int buyCost, int sellCost) {
         this.category = category;
-        this.formingMaterial = null;
-        this.formingMaterialAmount = 0;
-        this.buyCost = buyCost;
-        this.sellCost = sellCost;
-    }
-
-    Item(String name, ItemCategory category, Item formingMaterial, int formingMaterialAmount, int buyCost, int sellCost) {
-        this.name = name;
-        this.category = category;
-        this.formingMaterial = formingMaterial;
-        this.formingMaterialAmount = formingMaterialAmount;
         this.buyCost = buyCost;
         this.sellCost = sellCost;
     }
 
     public static Item getItemByName(String name) {
-        for (Item item : Item.values()) {
-            if (item.name.equals(name))
-                return item;
+        try {
+            return valueOf(name.toUpperCase());
+        } catch (Exception ignored) {
+            return null;
         }
-        return null;
     }
 
     public String getName() {

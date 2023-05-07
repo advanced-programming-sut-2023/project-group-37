@@ -27,14 +27,22 @@ public enum Texture {
     private boolean canHaveBuildingAndUnit;
 
     // TODO: remove empty ctor later!
-    Texture(){
+    Texture() {
 
     }
 
-    Texture(Color color, boolean canHaveTree, boolean canHaveBuildingAndUnit){
+    Texture(Color color, boolean canHaveTree, boolean canHaveBuildingAndUnit) {
         this.color = color;
         this.canHaveTree = canHaveTree;
         this.canHaveBuildingAndUnit = canHaveBuildingAndUnit;
+    }
+
+    public static Texture getTextureByName(String name) {
+        try {
+            return valueOf(name.toUpperCase());
+        } catch (Exception ignored) {
+            return null;
+        }
     }
 
     public Color getColor() {

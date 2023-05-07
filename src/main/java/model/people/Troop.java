@@ -13,29 +13,32 @@ public class Troop extends MilitaryUnit {
     private final int territory;
     private final Item weapon;
     private final Item armor;
+    private int hitpoints;
     private final boolean canClimbLadder;
     private final boolean canDigMoat;
+    private boolean hasLadder;
 
     public Troop(Government loyalty, TroopType type) {
-        super(loyalty, type.getMaxHitpointsQuality(), type.getAttackingDamageQuality(), type.getDefencingQuality(),
-                type.getRange(), type.getSpeedQuality());
+        super(loyalty, type.getMaxHitpoints(), type.getDamage(), type.getRange(), type.getSpeed());
         this.type = type;
         this.territory = loyalty.getTerritory();
         this.weapon = type.getWeapon();
         this.armor = type.getArmor();
+        this.hitpoints = this.type.getMaxHitpoints();
         this.canClimbLadder = type.canClimbLadder();
         this.canDigMoat = type.canDigMoat();
+        this.hasLadder = type == TroopType.LADDERMAN;
     }
 
     public TroopType getType() {
         return this.type;
     }
 
-    public boolean canClimbLadder() {
+    public boolean canClimbLadder(){
         return this.canClimbLadder;
     }
 
-    public boolean canDigMoat() {
+    public boolean canDigMoat(){
         return this.canDigMoat;
     }
 
@@ -49,4 +52,6 @@ public class Troop extends MilitaryUnit {
 
         route.subList(0, speed).clear();
     }
+
+    // TODO: implement drop ladder!
 }

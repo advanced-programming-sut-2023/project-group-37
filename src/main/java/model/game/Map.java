@@ -5,6 +5,8 @@ public class Map {
     private final Tile[][] map;
     private final boolean[][] tilesPassability;
 
+    // TODO: handle headquarters illegible on page 29!
+
     public Map(int size) {
         this.size = size;
         this.map = new Tile[size][size];
