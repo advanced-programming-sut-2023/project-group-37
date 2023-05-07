@@ -48,6 +48,12 @@ public class GameMenuController {
         return mapMenuController.showMap(x,y);
     }
 
+    public String enterShopMenu() {
+        if (government.hasShop())
+            return Message.ENTERED_SHOP_MENU.toString();
+        return Message.MARKET_NOT_EXISTS.toString();
+    }
+
     public String showPopularity() {
         return null;
     }

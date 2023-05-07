@@ -60,7 +60,7 @@ public class GameMenu {
                         return Result.ENTER_UNIT_MENU;
 
                 } else if (Command.ENTER_SHOP_MENU.getMatcher(command) != null) {
-                    System.out.println(Message.ENTERED_SHOP_MENU);
+                    System.out.println(controller.enterShopMenu());
                     return Result.ENTER_SHOP_MENU;
 
                 } else if (Command.ENTER_TRADE_MENU.getMatcher(command) != null) {

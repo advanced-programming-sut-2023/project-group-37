@@ -39,6 +39,7 @@ public enum Message {
 
     // MainMenu:
     ENTERED_PROFILE_MENU("Entered profile menu successfully!"),
+    TERRITORY_NOT_ASSIGNED("Please assign territory for each user!"),
     USER_NUMBER_LIMIT("You can only choose 7 users to start the game"),
     USERNAME_NOT_FOUND("Some usernames dont exist!"),
     GAME_STARTED("Game started successfully!"), // todo : is message correct ?
@@ -72,6 +73,7 @@ public enum Message {
     ENTERED_MAP_MENU("Entered map menu!"),
     ENTERED_BUILDING_MENU("Entered Building menu!"),
     ENTERED_UNIT_MENU("Entered unit menu!"),
+    MARKET_NOT_EXISTS("Market not exists!"),
     ENTERED_SHOP_MENU("Entered shop menu!"),
     ENTERED_TRADE_MENU("Entered trade menu!"),
 

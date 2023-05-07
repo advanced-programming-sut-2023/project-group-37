@@ -31,6 +31,7 @@ public class MainMenu {
             else if ((matcher = Command.START_GAME.getMatcher(command)) != null) {
                 if (startGame(matcher))
                     return Result.ENTER_GAME_MENU;
+                System.out.println(Message.TERRITORY_NOT_ASSIGNED);
             }
             else if (Command.LOGOUT.getMatcher(command) != null) {
                 System.out.println(this.controller.logout());
@@ -47,9 +48,23 @@ public class MainMenu {
     }
 
     private boolean startGame(Matcher matcher) {
-        String[] usernames = matcher.group("users").split("\\s*&\\s*");
+        String[] parts = matcher.group("users").trim().split("\\s*&\\s*");
+        String[] usernames = new String[parts.length];
+        String[] numbers = new String[parts.length];
+        String[] split;
 
-        String message = this.controller.startGame(usernames, matcher.group("turns"), matcher.group("size"));
+        for (int index = 0; index < parts.length; index++) {
+            try {
+                split = parts[index].split("\\s+");
+                usernames[index] = split[0];
+                numbers[index] = split[1];
+            }
+            catch (Exception ex) {
+                return false;
+            }
+        }
+
+        String message = this.controller.startGame(usernames, numbers, matcher.group("turns"), matcher.group("size"));
         System.out.println(message);
 
         return message.equals(Message.GAME_STARTED.toString());

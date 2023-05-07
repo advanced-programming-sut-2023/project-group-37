@@ -26,23 +26,34 @@ public class MainMenuController {
         return Message.ENTERED_PROFILE_MENU;
     }
 
-    public String startGame(String[] usernames, String turns, String size) {
-        if (usernames.length > 7)
+    public String startGame(String[] usernames, String[] numbers, String turns, String size) {
+        int length = numbers.length;
+        if (length > 7)
             return Message.USER_NUMBER_LIMIT.toString();
+
+        int[] territories = new int[length];
+        try {
+            for (int index = 0; index < length; index ++) {
+                territories[index] = Integer.parseInt(numbers[index]);
+            }
+        }
+        catch (Exception ex) {
+            return Message.TERRITORY_NOT_ASSIGNED.toString();
+        }
 
         ArrayList<Government> governments = new ArrayList<>();
         User user;
 
-        governments.add(new Government(currentUser, Color.BLUE, 1)); //todo : territory
+        governments.add(new Government(currentUser, Color.RED, territories[0]));
 
-        int i = 1;
+        int index = 1;
         for (String username : usernames) {
             user = User.getUserByUsername(username);
             if (user == null)
                 return Message.USERNAME_NOT_FOUND.toString();
 
-            governments.add(new Government(user, Color.values()[i], 1));
-            i++;
+            governments.add(new Government(user, Color.values()[index], territories[index-1]));
+            index++;
         }
 
         if(turns == null || size == null)

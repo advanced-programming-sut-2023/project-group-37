@@ -90,6 +90,13 @@ public class Tile {
         return people;
     }
 
+    public String showDetails() {
+        StringBuilder message = new StringBuilder();
+        message.append("");
+
+
+        return message.toString().trim();
+    }
 
     public boolean equals(Tile tile) {
         return (this.x == tile.x && this.y == tile.y);

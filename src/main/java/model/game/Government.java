@@ -1,5 +1,7 @@
 package model.game;
 
+import model.buildings.Building;
+import model.buildings.BuildingType;
 import model.buildings.Storage;
 import model.user.User;
 
@@ -10,9 +12,9 @@ public class Government {
     private final String username;
     private final int territory;
     private final Color color;
-
-
     private int gold;
+    private ArrayList<Building> buildings;
+    private boolean hasMarket;
     private final ArrayList<Storage> stockpile;
     private final ArrayList<Storage> granary;
     private final ArrayList<Storage> armory;
@@ -31,6 +33,8 @@ public class Government {
         this.armory = new ArrayList<>();
         // TODO: set default popularity!
         this.popularity = 100;
+        this.buildings = new ArrayList<>();
+        this.hasMarket = false;
     }
 
     public int getTerritory() {
@@ -44,6 +48,9 @@ public class Government {
         return this.gold;
     }
 
+    public boolean hasShop() {
+        return hasMarket;
+    }
     public ArrayList<Storage> getStockpile() {
         return this.stockpile;
     }
@@ -59,6 +66,24 @@ public class Government {
     public int getPopularity() {
         return this.popularity;
     }
+
+    public void addBuilding(Building building) {
+        if(building.getType() == BuildingType.STOCKPILE)
+            this.stockpile.add((Storage) building);
+        else if (building.getType() == BuildingType.GRANARY)
+            this.granary.add((Storage) building);
+        else if (building.getType() == BuildingType.ARMORY)
+            this.armory.add((Storage) building);
+        // todo : unComment these :
+//        else if (building.getType() == BuildingType.MARKET) {
+//            this.hasMarket = true;
+//            this.buildings.add(building);
+//        }
+        else
+            this.buildings.add(building);
+    }
+
+    // Shop Menu Methods :
 
     private int getFreeSpace(ArrayList<Storage> repository) {
         int freeSpace = 0;
@@ -78,7 +103,7 @@ public class Government {
         return itemAmount;
     }
 
-    private boolean addToTargetRepository(ArrayList<Storage> repository, Item item, int amount) {
+    public boolean addToTargetRepository(ArrayList<Storage> repository, Item item, int amount) {
         if (getFreeSpace(repository) < amount)
             return false;
 
@@ -92,16 +117,8 @@ public class Government {
         }
         return true;
     }
-    public boolean addItem(Item item, int amount) {
-        switch (item.getCategory()) {
-            case FOODS -> {return addToTargetRepository(granary, item, amount);}
-            case WEAPONS -> {return addToTargetRepository(armory, item, amount);}
-            case RESOURCES -> {return addToTargetRepository(stockpile, item, amount);}
-        }
-        return false;
-    }
 
-    private boolean removeFromTargetRepository(ArrayList<Storage> repository, Item item, int amount) {
+    public boolean removeFromTargetRepository(ArrayList<Storage> repository, Item item, int amount) {
         if (getItemAmount(item, repository) < amount)
             return false;
 
@@ -114,15 +131,6 @@ public class Government {
             amount = storage.decreaseStock(item, amount);
         }
         return true;
-    }
-
-    public boolean removeItem(Item item, int amount) {
-        switch (item.getCategory()) {
-            case FOODS -> {return removeFromTargetRepository(granary, item, amount);}
-            case WEAPONS -> {return removeFromTargetRepository(armory, item, amount);}
-            case RESOURCES -> {return removeFromTargetRepository(stockpile, item, amount);}
-        }
-        return false;
     }
 
     public void checkForHighScore() {

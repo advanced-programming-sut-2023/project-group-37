@@ -1,8 +1,8 @@
 package model.game;
 
 public enum Color {
-    BLUE,
     RED,
+    BLUE,
     YELLOW,
     GREEN,
     WHITE,

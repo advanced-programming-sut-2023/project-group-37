@@ -4,15 +4,19 @@ import java.util.ArrayList;
 
 public class TradeRequest {
 
-    private final static ArrayList<TradeRequest> requests = new ArrayList<>();
+    private final static ArrayList<TradeRequest> requests;
     private final Item item;
     private final int itemAmount;
     private final int price;
-    private boolean isDone = false;
+    private boolean isDone;
     private final String senderMessage;
     private String receiverMessage;
     private final Government sender;
     private final Government receiver;
+
+    static {
+        requests = new ArrayList<>();
+    }
 
     public TradeRequest(Item item, int itemAmount, int price, String senderMessage, Government sender, Government receiver) {
         this.item = item;
@@ -21,6 +25,7 @@ public class TradeRequest {
         this.senderMessage = senderMessage;
         this.sender = sender;
         this.receiver = receiver;
+        this.isDone = false;
         requests.add(this);
     }
 
