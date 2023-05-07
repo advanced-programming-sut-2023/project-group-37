@@ -11,6 +11,7 @@ public class Map {
         this.size = size;
         this.map = new Tile[size][size];
         this.tilesPassability = new boolean[size][size];
+        this.initializeTiles();
     }
 
     public int getSize() {
@@ -47,6 +48,13 @@ public class Map {
     }
     public boolean getPassabilitybyLocation(int x,int y){
         return this.map[x][y].isPassable();
+    }
+    private void initializeTiles(){
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                this.map[i][j] = new Tile(i,j);
+            }
+        }
     }
 
     public Tile getTileBySafeLocation(int x, int y) {
