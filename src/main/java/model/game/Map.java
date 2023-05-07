@@ -45,6 +45,9 @@ public class Map {
 
         return map[x][y];
     }
+    public boolean getPassabilitybyLocation(int x,int y){
+        return this.map[x][y].isPassable();
+    }
 
     public Tile getTileBySafeLocation(int x, int y) {
         return map[x][y];
