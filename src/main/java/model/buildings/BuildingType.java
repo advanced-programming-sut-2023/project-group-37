@@ -13,12 +13,17 @@ public enum BuildingType {
     DIARY_FARMER(150, Item.WOOD, 10, Item.CHEESE, 4, 1),
     HOPS_FARMER(150, Item.WOOD, 15, Item.HOPS, 3, 1),
     HUNTER_POST(150, Item.WOOD, 5, Item.MEAT, 4, 1),
-    WHEAT_FARMER(150,Item.WOOD, 15, Item.WHEAT, 2, 1),
-    MILL(150, Item.WOOD, 20, Item.WHEAT, 3, Item.FLOUR, 3, 3),
+    WHEAT_FARMER(150, Item.WOOD, 15, Item.WHEAT, 2, 1),
     BAKERY(150, Item.WOOD, 10, Item.WHEAT, 4, Item.FLOUR, 1, 1),
+    BREWER(150, Item.WOOD, 10, Item.HOPS, 1, Item.ALE, 2, 1),
+    INN(100, 150, Item.WOOD, 20, Item.ALE, 1, null, 0, 1),
+    MILL(150, Item.WOOD, 20, Item.WHEAT, 3, Item.FLOUR, 3, 3),
+    IRON_MINE(150, Item.WOOD, 20, Item.IRON, 2, 2),
+    PITCH_RIG(150, Item.WOOD, 20, Item.PITCH, 1),
+    QUARRY(150, Item.WOOD, 20, Item.STONE, 3),
+    WOODCUTTER(150, Item.WOOD, 3, Item.WOOD, 18,1),
 
     // Non processing:
-
     SMALL_GATEHOUSE(350, Item.STONE, 10),
     LARGE_GATEHOUSE(450, Item.STONE, 20),
     // TODO: decide not to be destroyable (as real game) or else!
@@ -30,6 +35,16 @@ public enum BuildingType {
     SQUARE_TOWER(450, Item.STONE, 35),
     ROUND_TOWER(450, Item.STONE, 40),
     TUNNELER_GUILD(100, 250, Item.WOOD, 10, 0),
+    OX_TETHER(150, Item.WOOD, 5, 1),
+    HOVEL(150, Item.WOOD, 6),
+    CHAPEL(250, null, 0),
+    CHURCH(500, null, 0),
+    CATHEDRAL(1000, null, 0),
+    WELL(30, null,0,1),
+    WATER_POT(60,null,0,3),
+    GOOD_THINGS(25, null,0),
+    BAD_THINGS(45, null,0),
+
 
 
     // Our stockpile has hitpoints & can be destroyed!
@@ -38,7 +53,8 @@ public enum BuildingType {
     ARMORY(250, Item.WOOD, 5),
     MERCENARY_POST(250, Item.WOOD, 10),
     BARRACKS(250, Item.STONE, 15),
-    ENGINEER_GUILD(100, 250, Item.WOOD, 10, 0);
+    ENGINEER_GUILD(100, 250, Item.WOOD, 10, 0),
+    MARKET(250, Item.WOOD, 5, 1);
 
     private final int cost;
     private final int maxHitpoints;
@@ -109,6 +125,18 @@ public enum BuildingType {
         this.workersNeeded = workersNeeded;
     }
 
+    public static BuildingType getBuildingTypeByName(String name) {
+        try {
+            return valueOf(name.toUpperCase());
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
+    public int getCost() {
+        return this.cost;
+    }
+
     public int getMaxHitpoints() {
         return this.maxHitpoints;
     }
@@ -132,8 +160,4 @@ public enum BuildingType {
     public int getWorkersNeeded() {
         return this.workersNeeded;
     }
-
-    public BuildingType getBuildingTypeByName(String name) {
-        return valueOf(name.toUpperCase());
     }
-}

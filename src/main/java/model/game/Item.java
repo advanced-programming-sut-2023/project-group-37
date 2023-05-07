@@ -11,7 +11,10 @@ public enum Item {
     IRON(ItemCategory.RESOURCES, 0, 0),
     HOPS(ItemCategory.RESOURCES, 0, 0),
     WHEAT(ItemCategory.RESOURCES, 0, 0),
-    FLOUR(ItemCategory.RESOURCES, 0,0),
+    FLOUR(ItemCategory.RESOURCES, 0, 0),
+    ALE(ItemCategory.RESOURCES, 0, 0),
+    PITCH(ItemCategory.RESOURCES, 0, 0),
+
 
     // FOODS
     APPLE(ItemCategory.FOODS, 0, 0),
@@ -37,6 +40,14 @@ public enum Item {
         this.category = category;
         this.buyCost = buyCost;
         this.sellCost = sellCost;
+    }
+
+    public static Item getItemByName(String name) {
+        try {
+            return valueOf(name.toUpperCase());
+        } catch (Exception ignored) {
+            return null;
+        }
     }
 
     public ItemCategory getCategory() {

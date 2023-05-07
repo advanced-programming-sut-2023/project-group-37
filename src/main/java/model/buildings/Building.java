@@ -8,21 +8,13 @@ public class Building {
     private final Government loyalty;
     private final Tile location;
     private final BuildingType type;
-    private final int maxHitpoints;
     private int hitpoints;
-    private final int goldNeededToBuild;
-    private final Item buildingMaterial;
-    private final int buildingMaterialAmount;
 
     public Building(Government loyalty, Tile location, BuildingType type) {
         this.loyalty = loyalty;
         this.location = location;
         this.type = type;
-        this.maxHitpoints = type.getMaxHitpoints();
         this.hitpoints = type.getMaxHitpoints();
-        this.goldNeededToBuild = type.getGoldNeededToBuild();
-        this.buildingMaterial = type.getBuildingMaterial();
-        this.buildingMaterialAmount = type.getBuildingMaterialAmount();
     }
 
     public Government getLoyalty() {
@@ -37,24 +29,24 @@ public class Building {
         return this.type;
     }
 
+    public int getCost() {
+        return this.type.getCost();
+    }
+
     public int getMaxHitpoints() {
-        return this.maxHitpoints;
+        return this.type.getMaxHitpoints();
     }
 
     public int getHitpoints() {
         return this.hitpoints;
     }
 
-    public int getGoldNeededToBuild() {
-        return this.goldNeededToBuild;
-    }
-
     public Item getBuildingMaterial() {
-        return this.buildingMaterial;
+        return this.type.getBuildingMaterial();
     }
 
     public int getBuildingMaterialAmount() {
-        return this.buildingMaterialAmount;
+        return this.type.getBuildingMaterialAmount();
     }
 
     public void takeDamage(int amount) {

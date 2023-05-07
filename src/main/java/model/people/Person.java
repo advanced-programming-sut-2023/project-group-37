@@ -23,7 +23,7 @@ public class Person implements Movable {
         this.isWorking = false;
         this.workplace = null;
         // TODO: handle default people speed
-        this.speed = Quality.getSpeedByQuality(Quality.MEDIUM);
+        this.speed = 10;
     }
 
     public int getHitpoints() {

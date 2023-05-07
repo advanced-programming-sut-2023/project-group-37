@@ -44,7 +44,7 @@ public enum TroopType {
     ENGINEER(BuildingType.ENGINEER_GUILD, 30, 10, 0, 60, 1,
             null, null, false, false),
     LADDERMAN(BuildingType.ENGINEER_GUILD, 4, 5, 0, 60, 1,
-            null,null,false,false);
+            null, null, false, false);
 
     // TODO: implement monk!
 
@@ -71,6 +71,14 @@ public enum TroopType {
         this.armor = armor;
         this.canClimbLadder = canClimbLadder;
         this.canDigMoat = canDigMoat;
+    }
+
+    public static TroopType getTroopTypeByName(String name) {
+        try {
+            return valueOf(name.toUpperCase());
+        } catch (Exception ignored) {
+            return null;
+        }
     }
 
     public BuildingType getTrainingCamp() {
