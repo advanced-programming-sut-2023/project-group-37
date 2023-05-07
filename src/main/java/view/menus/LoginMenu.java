@@ -1,6 +1,7 @@
 package view.menus;
 
 import controller.LoginMenuController;
+import controller.MultiMenuFunctions;
 import view.enums.Result;
 import view.enums.Command;
 import view.enums.Message;
@@ -9,13 +10,14 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class LoginMenu {
-    private final LoginMenuController controller = LoginMenuController.getInstance();
+    private final LoginMenuController controller;
     private final Scanner scanner;
     private String command;
     private String message;
 
-    public LoginMenu(Scanner scanner) {
+    public LoginMenu(Scanner scanner, LoginMenuController loginMenuController) {
         this.scanner = scanner;
+        this.controller = loginMenuController;
     }
 
     public Result run() {
@@ -43,6 +45,11 @@ public class LoginMenu {
     private boolean login(Matcher matcher) {
         this.message = this.controller.login(matcher);
         System.out.println(this.message);
+
+        if (Message.INCORRECT_PASSWORD.equals(message)) {
+            System.out.println("You can try again in " + controller.getDelayTime() + " seconds!");
+            MultiMenuFunctions.wait(controller.getDelayTime() * 1000);
+        }
 
         return Message.LOGIN_SUCCESSFUL.equals(message);
     }

@@ -53,6 +53,9 @@ public class TradeMenuController {
                     .append(", Type: ").append(request.getItem().getName()).append(", Amount: ").append(request.getItemAmount())
                     .append(", Price: ").append(request.getPrice()).append("\n").append("Message: ")
                     .append(request.getSenderMessage()).append("\n");
+
+            if (request.isDone())
+                message.append("--isDone ").append("Your message: ").append(request.getReceiverMessage()).append("\n");
         }
 
         return message.toString().trim();

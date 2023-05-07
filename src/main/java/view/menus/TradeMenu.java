@@ -25,12 +25,16 @@ public class TradeMenu {
 
             if ((matcher = Command.REQUEST_TRADE.getMatcher(command)) != null)
                 System.out.println(controller.requestTrade(matcher));
+
             else if (Command.SHOW_TRADE_LIST.getMatcher(command) != null)
                 System.out.println(controller.showTradeList());
+
             else if ((matcher = Command.ACCEPT_TRADE.getMatcher(command)) != null)
                 System.out.println(controller.acceptTrade(matcher));
+
             else if (Command.SHOW_TRADE_HISTORY.getMatcher(command) != null)
                 System.out.println(controller.showTradeHistory());
+
             else if (Command.BACK_GAME_MENU.getMatcher(command) != null) {
                 System.out.println(Message.BACK_GAME_MENU);
                 return;

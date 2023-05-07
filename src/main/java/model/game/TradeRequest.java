@@ -45,6 +45,14 @@ public class TradeRequest {
         return receiver;
     }
 
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public String getReceiverMessage() {
+        return receiverMessage;
+    }
+
     public static ArrayList<TradeRequest> getRequestsByReceiver(Government receiver) {
         ArrayList<TradeRequest> requests = new ArrayList<>();
 

@@ -3,9 +3,21 @@ package controller;
 
 import java.util.ArrayList;
 import model.game.Tile;
-import model.game.Direction;
 
 public class MultiMenuFunctions {
+
+    public static void wait(int ms)
+    {
+        try
+        {
+            Thread.sleep(ms);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
+    }
+
     public static String deleteQuotations(String string) {
 
         if (string == null)

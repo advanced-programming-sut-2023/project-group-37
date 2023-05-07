@@ -38,10 +38,10 @@ public class Controller {
 
     {
         scanner = new Scanner(System.in);
-        registerMenu = new RegisterMenu(scanner);
-        loginMenu = new LoginMenu(scanner);
+        registerMenu = new RegisterMenu(scanner, registerMenuController);
+        loginMenu = new LoginMenu(scanner, loginMenuController);
         mainMenu = new MainMenu(scanner, mainMenuController);
-        profileMenu = new ProfileMenu(scanner);
+        profileMenu = new ProfileMenu(scanner, profileMenuController);
         gameMenu = new GameMenu(scanner, gameMenuController);
         buildingMenu = new BuildingMenu(scanner, buildingMenuController);
         mapMenu = new MapMenu(scanner, mapMenuController);

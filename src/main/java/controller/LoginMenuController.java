@@ -10,18 +10,13 @@ public class LoginMenuController {
     private User user;
     private String password;
     private int delayTime = 0;
+
+    public int getDelayTime() {
+        return delayTime;
+    }
+
     private String deleteQuotations(String string) {
         return MultiMenuFunctions.deleteQuotations(string);
-    }
-    private static final LoginMenuController loginMenuController = new LoginMenuController();
-
-    // TODO: what tf does these fields & ctor do here?
-    LoginMenuController() {
-
-    }
-
-    public static LoginMenuController getInstance() {
-        return loginMenuController;
     }
 
     public String login(Matcher matcher) {
@@ -35,7 +30,6 @@ public class LoginMenuController {
             return Message.USER_NOT_EXISTS.toString();
 
         if (user.isWrongPassword(password)) {
-            // TODO : delay time
             delayTime += 5;
             return Message.INCORRECT_PASSWORD.toString();
         }
@@ -77,7 +71,6 @@ public class LoginMenuController {
         return Message.ENTER_NEW_PASSWORD_AGAIN.toString();
     }
 
-    // TODO: merge!
     public String getNewPasswordAgain(String newPassword) {
         if (Command.CANCEL.getMatcher(newPassword) != null)
             return Message.CANCEL.toString();

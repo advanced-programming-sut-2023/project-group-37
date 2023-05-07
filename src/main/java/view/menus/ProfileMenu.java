@@ -13,12 +13,9 @@ public class ProfileMenu {
     private final ProfileMenuController controller;
     private final Scanner scanner;
 
-    {
-        this.controller = new ProfileMenuController();
-    }
-
-    public ProfileMenu(Scanner scanner) {
+    public ProfileMenu(Scanner scanner, ProfileMenuController profileMenuController) {
         this.scanner = scanner;
+        this.controller = profileMenuController;
     }
 
     public Result run() {

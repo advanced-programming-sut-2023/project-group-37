@@ -14,12 +14,9 @@ public class RegisterMenu {
     private String command;
     private String message;
 
-    {
-        this.controller = new RegisterMenuController();
-    }
-
-    public RegisterMenu(Scanner scanner){
+    public RegisterMenu(Scanner scanner, RegisterMenuController registerMenuController){
         this.scanner = scanner;
+        this.controller = registerMenuController;
     }
 
     public Result run() {
