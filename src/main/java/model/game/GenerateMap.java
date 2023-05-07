@@ -64,6 +64,11 @@ public class GenerateMap {
     }
 
 
+    public static Map createMap2(){
+        //TODO ...
+        return map
+    }
+
     public static void printMap(){
         for (int i = 0; i < 200; i++) {
             for (int j = 0; j < 200; j++) {
