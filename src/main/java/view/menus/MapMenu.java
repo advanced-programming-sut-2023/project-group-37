@@ -10,16 +10,16 @@ import java.util.regex.Matcher;
 public class MapMenu {
 
     private final MapMenuController controller;
+    private final Scanner scanner;
 
-    {
-        this.controller = new MapMenuController();
+    public MapMenu(Scanner scanner, MapMenuController mapMenuController) {
+        this.scanner = scanner;
+        this.controller = mapMenuController;
     }
 
     public void run(Scanner scanner) {
         String command;
         Matcher matcher;
-
-        controller.showMap();
 
         while (true) {
             command = scanner.nextLine();

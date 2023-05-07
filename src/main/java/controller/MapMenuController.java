@@ -10,11 +10,11 @@ import java.util.regex.Matcher;
 public class MapMenuController {
     private static Game game;
     private static Map map;
-    private static Government government;
+    private Government government;
 
 
-    public static void setGovernment(Government government) {
-        MapMenuController.government = government;
+    public void setGovernment(Government government) {
+        this.government = government;
     }
 
     public static void setGame(Game game) {
@@ -22,9 +22,13 @@ public class MapMenuController {
         MapMenuController.map = game.getMap();
     }
 
-    public String showMap() {
+    public String showMap(int x, int y) {
         map.setTilesState();
-        //todo;
+        int minX = x - 30;
+        int maxX = x + 30;
+        int minY = y -30;
+        int maxY = y + 30;
+
         return null;
     }
 

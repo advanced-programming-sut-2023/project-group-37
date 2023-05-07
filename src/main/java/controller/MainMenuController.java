@@ -12,6 +12,11 @@ import java.util.ArrayList;
 public class MainMenuController {
     private static User currentUser;
 
+    private final GameMenuController gameMenuController;
+    public MainMenuController(GameMenuController gameMenuController) {
+        this.gameMenuController = gameMenuController;
+    }
+
     public static void setCurrentUser(User user) {
         currentUser = user;
     }
@@ -43,7 +48,7 @@ public class MainMenuController {
         if(turns == null || size == null)
             return Message.EMPTY_FIELD.toString();
 
-        Game game = new Game(new Map(Integer.parseInt(size)) , Integer.parseInt(turns), governments);
+        Game game = new Game(gameMenuController, new Map(Integer.parseInt(size)) , Integer.parseInt(turns), governments);
         GameMenuController.setGame(game);
 
         return Message.GAME_STARTED.toString();

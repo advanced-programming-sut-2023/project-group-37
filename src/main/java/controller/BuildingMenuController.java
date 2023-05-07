@@ -8,11 +8,11 @@ import view.enums.Message;
 
 public class BuildingMenuController {
     private static Game game;
-    private static Government government;
+    private Government government;
     private static BuildingType building;
 
-    public static void setGovernment(Government government) {
-        BuildingMenuController.government = government;
+    public void setGovernment(Government government) {
+        this.government = government;
     }
     public static void setGame(Game game) {
         BuildingMenuController.game = game;

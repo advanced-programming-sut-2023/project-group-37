@@ -5,18 +5,20 @@ import controller.GameMenuController;
 import java.util.ArrayList;
 
 public class Game {
+    private final GameMenuController gameMenuController;
     private final Map map;
     private final int turns;
     private final ArrayList<Government> governments;
     private Government currentTurnGovernment;
     private int index;
 
-    public Game(Map map, int turns, ArrayList<Government> governments) {
+    public Game(GameMenuController gameMenuController, Map map, int turns, ArrayList<Government> governments) {
         this.map = map;
         this.turns = turns;
         this.governments = governments;
         this.currentTurnGovernment = governments.get(0);
-        GameMenuController.setGovernment(currentTurnGovernment);
+        this.gameMenuController = gameMenuController;
+        gameMenuController.setGovernment(currentTurnGovernment);
         index = 0;
     }
 
@@ -56,6 +58,6 @@ public class Game {
 
         index = (index+1) % governments.size();
         currentTurnGovernment = governments.get(index);
-        GameMenuController.setGovernment(currentTurnGovernment);
+        gameMenuController.setGovernment(currentTurnGovernment);
     }
 }

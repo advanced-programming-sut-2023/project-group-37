@@ -7,6 +7,22 @@ import view.menus.*;
 import java.util.Scanner;
 
 public class Controller {
+
+    // controllers :
+    private final LoginMenuController loginMenuController = new LoginMenuController();
+    private final RegisterMenuController registerMenuController = new RegisterMenuController();
+    private final ProfileMenuController profileMenuController = new ProfileMenuController();
+    private final MapMenuController mapMenuController = new MapMenuController();
+    private final ShopMenuController shopMenuController = new ShopMenuController();
+    private final TradeMenuController tradeMenuController = new TradeMenuController();
+    private final BuildingMenuController buildingMenuController = new BuildingMenuController();
+    private final UnitMenuController unitMenuController = new UnitMenuController();
+    private final GameMenuController gameMenuController = new GameMenuController(mapMenuController, shopMenuController,
+            tradeMenuController, buildingMenuController, unitMenuController);
+    private final MainMenuController mainMenuController = new MainMenuController(gameMenuController);
+
+
+    // menus :
     private final Scanner scanner;
     private final RegisterMenu registerMenu;
     private final LoginMenu loginMenu;
@@ -19,18 +35,19 @@ public class Controller {
     private final TradeMenu tradeMenu;
     private final UnitMenu unitMenu;
 
+
     {
         scanner = new Scanner(System.in);
         registerMenu = new RegisterMenu(scanner);
         loginMenu = new LoginMenu(scanner);
-        mainMenu = new MainMenu();
+        mainMenu = new MainMenu(scanner, mainMenuController);
         profileMenu = new ProfileMenu(scanner);
-        gameMenu = new GameMenu();
-        buildingMenu = new BuildingMenu();
-        mapMenu = new MapMenu();
-        shopMenu = new ShopMenu();
-        tradeMenu = new TradeMenu();
-        unitMenu = new UnitMenu();
+        gameMenu = new GameMenu(scanner, gameMenuController);
+        buildingMenu = new BuildingMenu(scanner, buildingMenuController);
+        mapMenu = new MapMenu(scanner, mapMenuController);
+        shopMenu = new ShopMenu(scanner, shopMenuController);
+        tradeMenu = new TradeMenu(scanner, tradeMenuController);
+        unitMenu = new UnitMenu(scanner, unitMenuController);
     }
 
     public void run() {
@@ -67,7 +84,7 @@ public class Controller {
     }
 
     private boolean runMainMenu() {
-        switch (this.mainMenu.run(this.scanner)) {
+        switch (this.mainMenu.run()) {
             case ENTER_PROFILE_MENU -> this.profileMenu.run();
             case ENTER_GAME_MENU -> runGameMenu();
             // TODO: case map edition menu!
@@ -86,7 +103,7 @@ public class Controller {
         Result result;
 
         while (true) {
-            result = this.gameMenu.run(this.scanner);
+            result = this.gameMenu.run();
             switch (result) {
                 case ENTER_BUILDING_MENU -> this.buildingMenu.run(scanner);
                 case ENTER_MAP_MENU -> this.mapMenu.run(scanner);

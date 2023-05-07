@@ -8,15 +8,29 @@ import java.util.regex.Matcher;
 
 public class GameMenuController {
     private static Game game;
-    private static Government government;
+    private final MapMenuController mapMenuController;
+    private final ShopMenuController shopMenuController;
+    private final TradeMenuController tradeMenuController;
+    private final BuildingMenuController buildingMenuController;
+    private final UnitMenuController unitMenuController;
+    private Government government;
 
-    public static void setGovernment(Government government) {
-        GameMenuController.government = government;
-        ShopMenuController.setGovernment(government);
-        TradeMenuController.setGovernment(government);
-        MapMenuController.setGovernment(government);
-        UnitMenuController.setGovernment(government);
-        BuildingMenuController.setGovernment(government);
+    public GameMenuController(MapMenuController mapMenuController, ShopMenuController shopMenuController,
+                              TradeMenuController tradeMenuController, BuildingMenuController buildingMenuController,
+                              UnitMenuController unitMenuController) {
+        this.mapMenuController = mapMenuController;
+        this.shopMenuController = shopMenuController;
+        this.tradeMenuController = tradeMenuController;
+        this.buildingMenuController = buildingMenuController;
+        this.unitMenuController = unitMenuController;
+    }
+    public void setGovernment(Government government) {
+        this.government = government;
+        shopMenuController.setGovernment(government);
+        tradeMenuController.setGovernment(government);
+        mapMenuController.setGovernment(government);
+        unitMenuController.setGovernment(government);
+        buildingMenuController.setGovernment(government);
     }
 
     public static void setGame(Game game) {
@@ -27,64 +41,59 @@ public class GameMenuController {
         BuildingMenuController.setGame(game);
     }
 
-    public Message showMap(Matcher matcher) {
+    public String showMap(int x, int y) {
+        if (x > game.getMap().getSize() || x < 0 || y > game.getMap().getSize() || y < 0)
+            return Message.ADDRESS_OUT_OF_BOUNDS.toString();
+
+        return mapMenuController.showMap(x,y);
+    }
+
+    public String showPopularity() {
         return null;
     }
 
-    public Message showPopularity() {
+    public String showPopularityFactors() {
         return null;
     }
 
-    public Message showPopularityFactors() {
+    public String showFoodList() {
         return null;
     }
 
-    public Message showFoodList() {
+    public String setFoodRate(Matcher matcher) {
         return null;
     }
 
-    public Message setFoodRate(Matcher matcher) {
+    public String showFoodRate() {
         return null;
     }
 
-    public Message showFoodRate() {
+    public String setTaxRate(Matcher matcher) {
         return null;
     }
 
-    public Message setTaxRate(Matcher matcher) {
+    public String showTaxRate() {
         return null;
     }
 
-    public Message showTaxRate() {
+    public String setFearRate(Matcher matcher) {
         return null;
     }
 
-    public Message setFearRate(Matcher matcher) {
+    public String  showFearRate() {
         return null;
     }
 
-    public Message showFearRate() {
+    public String dropBuilding(Matcher matcher) {
         return null;
     }
 
-    public Message dropBuilding(Matcher matcher) {
+    public String selectBuilding(Matcher matcher) {
         return null;
     }
 
-    public Message selectBuilding(Matcher matcher) {
+    public String  selectUnit(Matcher matcher) {
         return null;
-    }
-
-    public Message selectUnit(Matcher matcher) {
-        return null;
-    }
-
-    public Message enterShopMenu() {
-        return Message.ENTERED_SHOP_MENU;
-    }
-
-    public Message enterTradeMenu() {
-        return Message.ENTERED_TRADE_MENU;
     }
 
     public Message createUnit(Matcher matcher) {

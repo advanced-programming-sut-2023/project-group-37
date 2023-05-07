@@ -7,10 +7,10 @@ import view.enums.Message;
 import java.util.regex.Matcher;
 
 public class ShopMenuController {
-    private static Government government;
+    private Government government;
 
-    public static void setGovernment(Government government) {
-        ShopMenuController.government = government;
+    public void setGovernment(Government government) {
+        this.government = government;
     }
 
     public String showPriceList(){

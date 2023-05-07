@@ -10,13 +10,16 @@ import java.util.regex.Matcher;
 
 public class GameMenu {
     private final GameMenuController controller;
-    private Message message;
+    private String message;
 
-    {
-        this.controller = new GameMenuController();
+    private final Scanner scanner;
+
+    public GameMenu(Scanner scanner, GameMenuController gameMenuController) {
+        this.scanner = scanner;
+        this.controller = gameMenuController;
     }
 
-    public Result run(Scanner scanner) {
+    public Result run() {
         String command;
         Matcher matcher;
 
@@ -51,15 +54,19 @@ public class GameMenu {
                 else if ((matcher = Command.SELECT_BUILDING.getMatcher(command)) != null) {
                     if (selectBuilding(matcher))
                         return Result.ENTER_BUILDING_MENU;
+
                 } else if ((matcher = Command.SELECT_UNIT.getMatcher(command)) != null) {
                     if (selectUnit(matcher))
                         return Result.ENTER_UNIT_MENU;
+
                 } else if (Command.ENTER_SHOP_MENU.getMatcher(command) != null) {
-                    System.out.println(this.controller.enterShopMenu());
+                    System.out.println(Message.ENTERED_SHOP_MENU);
                     return Result.ENTER_SHOP_MENU;
+
                 } else if (Command.ENTER_TRADE_MENU.getMatcher(command) != null) {
-                    System.out.println(this.controller.enterTradeMenu());
+                    System.out.println(Message.ENTERED_TRADE_MENU);
                     return Result.ENTER_TRADE_MENU;
+
                 } else if ((matcher = Command.SET_TEXTURE.getMatcher(command)) != null)
                     System.out.println(this.controller.setTexture(matcher));
                 else if ((matcher = Command.SET_RECTANGLE_TEXTURES.getMatcher(command)) != null)
@@ -78,23 +85,24 @@ public class GameMenu {
     }
 
     private boolean showMap(Matcher matcher) {
-        this.message = this.controller.showMap(matcher);
-        System.out.println(this.message);
+        this.message = this.controller.showMap(Integer.parseInt(matcher.group("x")),
+                Integer.parseInt(matcher.group("y")));
 
-        return this.message == Message.ENTERED_MAP_MENU;
+        System.out.println(this.message);
+        return Message.ENTERED_MAP_MENU.equals(message);
     }
 
     private boolean selectBuilding(Matcher matcher) {
         this.message = this.controller.selectBuilding(matcher);
         System.out.println(this.message);
 
-        return this.message == Message.ENTERED_BUILDING_MENU;
+        return Message.ENTERED_BUILDING_MENU.equals(message);
     }
 
     private boolean selectUnit(Matcher matcher) {
         this.message = this.controller.selectUnit(matcher);
         System.out.println(this.message);
 
-        return this.message == Message.ENTERED_UNIT_MENU;
+        return Message.ENTERED_UNIT_MENU.equals(message);
     }
 }

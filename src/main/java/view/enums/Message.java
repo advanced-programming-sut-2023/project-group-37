@@ -69,11 +69,11 @@ public enum Message {
 //    CANCEL("process canceled!"),
 
     // GameMenu:
-    ENTERED_MAP_MENU("Entered map menu"),
-    ENTERED_BUILDING_MENU("Entered Building menu"),
-    ENTERED_UNIT_MENU("Entered unit menu"),
-    ENTERED_SHOP_MENU("Entered shop menu"),
-    ENTERED_TRADE_MENU(""),
+    ENTERED_MAP_MENU("Entered map menu!"),
+    ENTERED_BUILDING_MENU("Entered Building menu!"),
+    ENTERED_UNIT_MENU("Entered unit menu!"),
+    ENTERED_SHOP_MENU("Entered shop menu!"),
+    ENTERED_TRADE_MENU("Entered trade menu!"),
 
     // MapMenu:
 

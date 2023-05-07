@@ -8,9 +8,11 @@ import java.util.Scanner;
 
 public class BuildingMenu {
     private final BuildingMenuController controller;
+    private final Scanner scanner;
 
-    {
-        this.controller = new BuildingMenuController();
+    public BuildingMenu(Scanner scanner, BuildingMenuController buildingMenuController) {
+        this.scanner = scanner;
+        this.controller = buildingMenuController;
     }
 
     public void run(Scanner scanner) {

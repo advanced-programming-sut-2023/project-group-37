@@ -9,9 +9,11 @@ import java.util.regex.Matcher;
 
 public class TradeMenu {
     private final TradeMenuController controller;
+    private final Scanner scanner;
 
-    {
-        this.controller = new TradeMenuController();
+    public TradeMenu(Scanner scanner, TradeMenuController tradeMenuController) {
+        this.scanner = scanner;
+        this.controller = tradeMenuController;
     }
 
     public void run(Scanner scanner) {

@@ -11,10 +11,10 @@ import java.util.regex.Matcher;
 
 public class UnitMenuController {
     private static Game game;
-    private static Government government;
+    private Government government;
     private static ArrayList<MilitaryUnit> unit;
-    public static void setGovernment(Government government) {
-        UnitMenuController.government = government;
+    public void setGovernment(Government government) {
+        this.government = government;
     }
     public static void setUnit(ArrayList<MilitaryUnit> unit) {
         UnitMenuController.unit = unit;

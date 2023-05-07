@@ -60,7 +60,22 @@ public class Tile {
     }
 
     public void setState() {
-        //todo
+        if(militaryUnits.size() > 0) {
+            state = 'S';
+            return;
+        }
+
+        if (building != null) {
+            state = 'B';
+            return;
+        }
+        //todo : W for wall
+        if (texture == Texture.OLIVE_TREE || texture == Texture.DESERT_TREE) {
+            state = 'T';
+            return;
+        }
+
+//  todo :       if (texture == harchi) state = yechi;
     }
 
     public void addPerson(Person person){
