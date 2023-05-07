@@ -6,36 +6,39 @@ public enum Item {
     // TODO: handle prices!
 
     // RESOURCES
-    WOOD(ItemCategory.RESOURCES, 4, 1),
-    STONE(ItemCategory.RESOURCES, 14, 7),
-    IRON(ItemCategory.RESOURCES, 45, 23),
-    HOPS(ItemCategory.RESOURCES, 15, 8),
-    WHEAT(ItemCategory.RESOURCES, 23, 8),
-    FLOUR(ItemCategory.RESOURCES, 32, 10),
-    ALE(ItemCategory.RESOURCES, 20, 10),
-    PITCH(ItemCategory.RESOURCES, 20, 10),
+    WOOD("Wood", ItemCategory.RESOURCES, 4, 1),
+    STONE("Stone", ItemCategory.RESOURCES, 14, 7),
+    IRON("Iron", ItemCategory.RESOURCES, 45, 23),
+    HOPS("Hops",ItemCategory.RESOURCES, 15, 8),
+    WHEAT("Wheat",ItemCategory.RESOURCES, 23, 8),
+    FLOUR("Flour", ItemCategory.RESOURCES, 32, 10),
+    ALE("Ale", ItemCategory.RESOURCES, 20, 10),
+    PITCH("Pitch", ItemCategory.RESOURCES, 20, 10),
 
     // FOODS
-    APPLE(ItemCategory.FOODS, 8, 4),
-    CHEESE(ItemCategory.FOODS, 8, 4),
-    MEAT(ItemCategory.FOODS, 8, 4),
+    APPLE("Apple", ItemCategory.FOODS, 8, 4),
+    CHEESE("Cheese", ItemCategory.FOODS, 8, 4),
+    MEAT("Meat", ItemCategory.FOODS, 8, 4),
 
     // WEAPONS
-    BOW(ItemCategory.WEAPONS, 31, 15),
-    SPEAR(ItemCategory.WEAPONS, 20, 10),
-    MACE(ItemCategory.WEAPONS, 58, 30),
-    CROSSBOW(ItemCategory.WEAPONS, 58, 30),
-    PIKE(ItemCategory.WEAPONS, 36, 18),
-    SWORD(ItemCategory.WEAPONS, 58, 30),
-    METAL_ARMOR(ItemCategory.WEAPONS, 58, 30),
+    BOW("Bow", ItemCategory.WEAPONS, 31, 15),
+    SPEAR("Spear", ItemCategory.WEAPONS, 20, 10),
+    MACE("Mace", ItemCategory.WEAPONS, 58, 30),
+    CROSSBOW("Crossbow", ItemCategory.WEAPONS, 58, 30),
+    PIKE("Pike", ItemCategory.WEAPONS, 36, 18),
+    SWORD("Sword", ItemCategory.WEAPONS, 58, 30),
+    METAL_ARMOR("Metal armor", ItemCategory.WEAPONS, 58, 30),
     // TODO: fill leather after defining cow!
-    LEATHER_ARMOR(ItemCategory.WEAPONS, 25, 12);;
+    LEATHER_ARMOR("Leather armor", ItemCategory.WEAPONS, 25, 12);
+
+    private final String name;
 
     private final ItemCategory category;
     private final int buyCost;
     private final int sellCost;
 
-    Item(ItemCategory category, int buyCost, int sellCost) {
+    Item(String name, ItemCategory category, int buyCost, int sellCost) {
+        this.name = name;
         this.category = category;
         this.buyCost = buyCost;
         this.sellCost = sellCost;
@@ -50,7 +53,7 @@ public enum Item {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public ItemCategory getCategory() {

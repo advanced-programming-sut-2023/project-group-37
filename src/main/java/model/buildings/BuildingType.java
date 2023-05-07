@@ -44,10 +44,10 @@ public enum BuildingType {
     TUNNELER_GUILD(100, 250, Item.WOOD, 10, 0),
     OX_TETHER(150, Item.WOOD, 5, 1),
     HOVEL(150, Item.WOOD, 6),
-//    CHAPEL(250, null, 0),
+    //    CHAPEL(250, null, 0),
     CHURCH(500, null, 0),
     CATHEDRAL(1000, null, 0),
-//    WELL(30, null, 0, 1),
+    //    WELL(30, null, 0, 1),
 //    WATER_POT(60, null, 0, 3),
     GOOD_THINGS(25, null, 0),
     BAD_THINGS(45, null, 0),
@@ -56,9 +56,9 @@ public enum BuildingType {
     OIL_SMELTER(100, Item.IRON, 10, 1),
     // TODO: I set a dummy hp of 1 not to be removed!
     PITCH_DITCH(1, Item.PITCH, 1),
-    CAGED_WAR_DOGS(100, 150, Item.WOOD, 10,0),
+    CAGED_WAR_DOGS(100, 150, Item.WOOD, 10, 0),
     SIEGE_TENT(150, null, 0),
-    TUNNEL_ENTRANCE(150,null,0),
+    TUNNEL_ENTRANCE(150, null, 0),
 
     // Our stockpile has hitpoints & can be destroyed!
     STOCKPILE(250, Item.WOOD, 5),
@@ -166,8 +166,16 @@ public enum BuildingType {
         return this.rawMaterial;
     }
 
+    public int getRawMaterialUses() {
+        return this.rawMaterialUses;
+    }
+
     public Item getProduct() {
         return this.product;
+    }
+
+    public int getProductProvides() {
+        return this.productProvides;
     }
 
     public int getWorkersNeeded() {
