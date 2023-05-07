@@ -28,15 +28,15 @@ public class ProfileMenu {
         while (true) {
             command = this.scanner.nextLine();
             if ((matcher = Command.CHANGE_USERNAME.getMatcher(command)) != null) {
-                System.out.println(this.controller.changeUsername(matcher));
+                System.out.println(this.controller.changeUsername(matcher.group("username")));
             } else if ((matcher = Command.CHANGE_NICKNAME.getMatcher(command)) != null) {
-                System.out.println(this.controller.changeNickName(matcher));
+                System.out.println(this.controller.changeNickName(matcher.group("nickname")));
             } else if ((matcher = Command.CHANGE_PASSWORD.getMatcher(command)) != null) {
                 changePassword(matcher);
             } else if ((matcher = Command.CHANGE_EMAIL.getMatcher(command)) != null) {
-                System.out.println(this.controller.changeEmail(matcher));
+                System.out.println(this.controller.changeEmail(matcher.group("email")));
             } else if ((matcher = Command.CHANGE_SLOGAN.getMatcher(command)) != null) {
-                System.out.println(this.controller.changeSlogan(matcher));
+                System.out.println(this.controller.changeSlogan(matcher.group("slogan")));
             } else if (Command.REMOVE_SLOGAN.getMatcher(command) != null) {
                 System.out.println(this.controller.removeSlogan());
             } else if (Command.DISPLAY_HIGHSCORE.getMatcher(command) != null) {
@@ -57,7 +57,7 @@ public class ProfileMenu {
     }
 
     private void changePassword(Matcher matcher) {
-        Message message = this.controller.changePassword(matcher);
+        Message message = this.controller.changePassword(matcher.group("oldPassword"),matcher.group("newPassword"));
         System.out.println(message);
 
         if (message.equals(Message.ENTER_PASSWORD_AGAIN)) {

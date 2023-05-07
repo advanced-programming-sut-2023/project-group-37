@@ -6,6 +6,8 @@ import view.enums.Message;
 
 import java.util.regex.Matcher;
 
+import static controller.RegisterMenuController.checkUsernameNotOK;
+
 public class ProfileMenuController {
     private static User currentUser;
     private String password;
@@ -18,11 +20,11 @@ public class ProfileMenuController {
         return MultiMenuFunctions.deleteQuotations(string);
     }
 
-    public Message changeUsername(Matcher matcher) {
-        if (matcher.group("username") == null) {
+    public Message changeUsername(String username) {
+        if (username == null) {
             return Message.CHANGE_USERNAME_ERROR1;
         }
-        String username = deleteQuotation(matcher.group("username"));
+        username = deleteQuotation(username);
         if (RegisterMenuController.checkUsernameNotOK(username)) {
             return Message.CHANGE_USERNAME_ERROR2;
         }
@@ -33,11 +35,10 @@ public class ProfileMenuController {
         return Message.CHANGE_USERNAME;
     }
 
-    public Message changeNickName(Matcher matcher) {
-        if (matcher.group("nickname") == null) {
+    public Message changeNickName(String nickname) {
+        if (nickname == null) {
             return Message.CHANGE_NICKNAME_ERROR1;
         }
-        String nickname = matcher.group("nickname");
         if (nickname.equals(currentUser.getNickName())) {
             return Message.CHANGE_NICKNAME_ERROR2;
         }
@@ -45,19 +46,17 @@ public class ProfileMenuController {
         return Message.CHANGE_NICKNAME;
     }
 
-    public Message changePassword(Matcher matcher) {
-        if (matcher.group("oldPassword") == null || matcher.group("newPassword") == null) {
+    public Message changePassword(String oldPass,String newPass) {
+        if (oldPass == null || newPass == null) {
             return Message.CHANGE_PASSWORD_ERROR1;
         }
-        String oldPass = matcher.group("oldPassword");
-        String newPass = matcher.group("newPassword");
         if (currentUser.isWrongPassword(oldPass)) {
             return Message.CHANGE_PASSWORD_ERROR2;
         }
         if (RegisterMenuController.checkPasswordNotOK(newPass)) {
             return Message.CHANGE_PASSWORD_ERROR4;
         }
-        password = matcher.group("newPassword");
+        password = newPass;
         return Message.ENTER_PASSWORD_AGAIN;
     }
 
@@ -73,26 +72,25 @@ public class ProfileMenuController {
     }
 
 
-    public Message changeEmail(Matcher matcher) {
-        String email = matcher.group("email");
-        if (email.isEmpty()) {
+    public Message changeEmail(String newEmail) {
+        if (newEmail.isEmpty()) {
             return Message.CHANGE_EMAIL_ERROR3;
         }
-        if (RegisterMenuController.checkEmailNotOK(email)) {
+        if (RegisterMenuController.checkEmailNotOK(newEmail)) {
             return Message.CHANGE_EMAIL_ERROR1;
         }
-        if (User.getUserByEmail(email) != null) {
+        if (User.getUserByEmail(newEmail) != null) {
             return Message.CHANGE_EMAIL_ERROR2;
         }
-        currentUser.setEmail(matcher.group("email"));
+        currentUser.setEmail(newEmail);
         return Message.CHANGE_EMAIL;
     }
 
-    public Message changeSlogan(Matcher matcher) {
-        if (matcher.group("slogan").isEmpty()) {
+    public Message changeSlogan(String newSlogan) {
+        if (newSlogan.isEmpty()) {
             return Message.CHANGE_SLOGAN_ERROR1;
         }
-        currentUser.setSlogan(matcher.group("slogan"));
+        currentUser.setSlogan(newSlogan);
         return Message.CHANGE_SLOGAN;
     }
 
