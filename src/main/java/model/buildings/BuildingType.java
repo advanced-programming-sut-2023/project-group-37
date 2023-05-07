@@ -21,7 +21,14 @@ public enum BuildingType {
     IRON_MINE(150, Item.WOOD, 20, Item.IRON, 2, 2),
     PITCH_RIG(150, Item.WOOD, 20, Item.PITCH, 1),
     QUARRY(150, Item.WOOD, 20, Item.STONE, 3),
-    WOODCUTTER(150, Item.WOOD, 3, Item.WOOD, 18,1),
+    WOODCUTTER(150, Item.WOOD, 3, Item.WOOD, 18, 1),
+    ARMOURER(100, 150, Item.WOOD, 20, Item.IRON, 1, Item.METAL_ARMOR, 1, 1),
+    BLACKSMITH(200, 150, Item.WOOD, 20, Item.IRON, 1, Item.SWORD, 1, 1),
+    // TODO: rawMaterialUses is related to product mode!
+    FLETCHER(100, 150, Item.WOOD, 20, Item.WOOD, 2, Item.BOW, 1, 1),
+    POLETURNER(100, 150, Item.WOOD, 10, Item.WOOD, 1, Item.SPEAR, 1, 1),
+    // TODO: change it after implementing cow!
+    TANNER(100, 150, Item.WOOD, 10, null, 1, Item.LEATHER_ARMOR, 3, 1),
 
     // Non processing:
     SMALL_GATEHOUSE(350, Item.STONE, 10),
@@ -37,15 +44,21 @@ public enum BuildingType {
     TUNNELER_GUILD(100, 250, Item.WOOD, 10, 0),
     OX_TETHER(150, Item.WOOD, 5, 1),
     HOVEL(150, Item.WOOD, 6),
-    CHAPEL(250, null, 0),
+//    CHAPEL(250, null, 0),
     CHURCH(500, null, 0),
     CATHEDRAL(1000, null, 0),
-    WELL(30, null,0,1),
-    WATER_POT(60,null,0,3),
-    GOOD_THINGS(25, null,0),
-    BAD_THINGS(45, null,0),
-
-
+//    WELL(30, null, 0, 1),
+//    WATER_POT(60, null, 0, 3),
+    GOOD_THINGS(25, null, 0),
+    BAD_THINGS(45, null, 0),
+    // TODO: I set a dummy hp of 1 not to be removed!
+    KILLING_PIT(1, Item.WOOD, 6),
+    OIL_SMELTER(100, Item.IRON, 10, 1),
+    // TODO: I set a dummy hp of 1 not to be removed!
+    PITCH_DITCH(1, Item.PITCH, 1),
+    CAGED_WAR_DOGS(100, 150, Item.WOOD, 10,0),
+    SIEGE_TENT(150, null, 0),
+    TUNNEL_ENTRANCE(150,null,0),
 
     // Our stockpile has hitpoints & can be destroyed!
     STOCKPILE(250, Item.WOOD, 5),
@@ -160,4 +173,4 @@ public enum BuildingType {
     public int getWorkersNeeded() {
         return this.workersNeeded;
     }
-    }
+}
