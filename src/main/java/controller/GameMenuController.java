@@ -10,7 +10,6 @@ import model.people.Troop;
 import model.people.TroopType;
 import view.enums.Message;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 

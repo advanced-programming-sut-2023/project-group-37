@@ -29,8 +29,10 @@ public class UnitMenu {
 
             else if ((matcher = Command.PATROL_UNIT.getMatcher(command)) != null)
                 System.out.println(this.controller.patrolUnit(matcher));
+
             else if ((matcher = Command.SET_UNIT.getMatcher(command)) != null)
-                System.out.println(this.controller.setUnitState(matcher));
+                System.out.println(this.controller.setUnitState(matcher.group("state")));
+
             else if ((matcher = Command.ATTACK.getMatcher(command)) != null)
                 System.out.println(this.controller.attack(matcher));
             else if ((matcher = Command.POUR_OIL.getMatcher(command)) != null)

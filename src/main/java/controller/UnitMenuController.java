@@ -4,9 +4,9 @@ import model.game.Game;
 import model.game.Government;
 import model.game.Tile;
 import model.people.MilitaryUnit;
+import model.people.MilitaryUnitStance;
 import view.enums.Message;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
@@ -51,8 +51,11 @@ public class UnitMenuController {
     public Message patrolUnit(Matcher matcher){
         return null;
     }
-    public Message setUnitState(Matcher matcher){
-        return null;
+    public String setUnitState(String state){
+        for (MilitaryUnit militaryUnit : unit.keySet()) {
+            militaryUnit.setStance(MilitaryUnitStance.getByState(state));
+        }
+        return Message.STATE_IS_SET.toString();
     }
     public Message attack(Matcher matcher){
         return null;

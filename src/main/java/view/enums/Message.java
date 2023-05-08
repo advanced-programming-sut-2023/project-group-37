@@ -105,6 +105,7 @@ public enum Message {
     BARRACKS_NOT_EXISTS("Barracks not exists!"),
     MERCENARY_POST_NOT_EXISTS("Mercenary Post not exists!"),
     CREATE_UNIT_SUCCESSFUL("Create unit successful!"),
+    STATE_IS_SET("State set Successfully!"),
 
     // BuildingMenu:
     ;
