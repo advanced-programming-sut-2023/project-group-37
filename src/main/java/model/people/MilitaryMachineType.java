@@ -25,6 +25,13 @@ public enum MilitaryMachineType {
         this.operatorsNeeded = engineersNeeded;
     }
 
+    public static MilitaryMachineType getByName(String name) {
+        try {
+            return valueOf(name.toUpperCase());
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
     public int getCost() {
         return this.cost;
     }

@@ -9,6 +9,8 @@ public enum Message {
     BACK_GAME_MENU("Returned to game menu"),
     INVALID_ITEM_NAME("There are no item with this name!"),
     INVALID_AMOUNT("Invalid amount!"),
+    ADDRESS_OUT_OF_BOUNDS("Address out of bounds!"),
+    CURRENT_LOCATION("Address equals current location"),
     BACK_MAIN_MENU("Returned to main menu"),
     SUCCESS("Success!"),
     INVALID_COMMAND("Invalid command!"),
@@ -96,9 +98,13 @@ public enum Message {
     TRADE_SUCCESS("The trade was successfully completed"),
 
     // UnitMenu:
-    ADDRESS_OUT_OF_BOUNDS("Address out of bounds!"),
-    CURRENT_LOCATION("Address equals current location"),
     NO_ROUTS_FOUND("Cant move to the address!"),
+    UNIT_NOT_EXISTS("There are no units on address!"),
+    UNIT_SELECTED("Unit selected and entered unitMenu!"),
+    TYPE_NOT_EXISTS("There are no troop with this type!"),
+    BARRACKS_NOT_EXISTS("Barracks not exists!"),
+    MERCENARY_POST_NOT_EXISTS("Mercenary Post not exists!"),
+    CREATE_UNIT_SUCCESSFUL("Create unit successful!"),
 
     // BuildingMenu:
     ;

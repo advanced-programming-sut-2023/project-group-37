@@ -3,9 +3,11 @@ package model.game;
 import model.buildings.Building;
 import model.buildings.BuildingType;
 import model.buildings.Storage;
+import model.people.Troop;
 import model.user.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Government {
     private final User user;
@@ -14,6 +16,7 @@ public class Government {
     private final Color color;
     private int gold;
     private ArrayList<Building> buildings;
+    private HashMap<Troop, Integer> troops;
     private boolean hasMarket;
     private final ArrayList<Storage> stockpile;
     private final ArrayList<Storage> granary;
@@ -34,7 +37,13 @@ public class Government {
         // TODO: set default popularity!
         this.popularity = 100;
         this.buildings = new ArrayList<>();
+        this.troops = new HashMap<>();
         this.hasMarket = false;
+    }
+
+    public void addTroops(Troop troop, int count) {
+        troops.put(troop, count + troops.getOrDefault(troop, 0));
+        troop.getLocation().addMilitaryUnit(troop, count);
     }
 
     public int getTerritory() {
@@ -43,7 +52,13 @@ public class Government {
     public Color getColor() {
         return this.color;
     }
-
+    public Building getUnicBuilding(BuildingType type) {
+        for (Building building : buildings) {
+            if (building.getType() == type)
+                return building;
+        }
+        return null;
+    }
     public int getGold() {
         return this.gold;
     }

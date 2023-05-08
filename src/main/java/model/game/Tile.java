@@ -5,6 +5,7 @@ import model.people.MilitaryUnit;
 import model.people.Person;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Tile {
     private final int x;
@@ -12,7 +13,7 @@ public class Tile {
     private Texture texture;
 
     private final ArrayList<Person> people;
-    private final ArrayList<MilitaryUnit> militaryUnits;
+    private final HashMap<MilitaryUnit, Integer> militaryUnits;
     private Building building;
     private Character state;
     private boolean isPassable = true;
@@ -24,7 +25,7 @@ public class Tile {
         this.y = y;
         this.texture = Texture.GROUND;
         this.people = new ArrayList<>();
-        this.militaryUnits = new ArrayList<>();
+        this.militaryUnits = new HashMap<>();
         this.building = null;
     }
 
@@ -44,7 +45,7 @@ public class Tile {
         this.texture = texture;
     }
 
-    public ArrayList<MilitaryUnit> getMilitaryUnits() {
+    public HashMap<MilitaryUnit, Integer> getMilitaryUnits() {
         return militaryUnits;
     }
 
@@ -59,12 +60,13 @@ public class Tile {
     public Character getState() {
         return state;
     }
+
     public boolean isPassable() {
         return isPassable;
     }
 
     public void setState() {
-        if(militaryUnits.size() > 0) {
+        if (militaryUnits.size() > 0) {
             state = 'S';
             return;
         }
@@ -82,12 +84,12 @@ public class Tile {
 //  todo :       if (texture == harchi) state = yechi;
     }
 
-    public void addPerson(Person person){
+    public void addPerson(Person person) {
         this.people.add(person);
     }
 
-    public void addMilitaryUnit(MilitaryUnit unit){
-        this.militaryUnits.add(unit);
+    public void addMilitaryUnit(MilitaryUnit troop, int count) {
+        this.militaryUnits.put(troop, count + militaryUnits.getOrDefault(troop, 0));
     }
 
     public ArrayList<Person> getPeople() {

@@ -79,7 +79,7 @@ public abstract class MilitaryUnit implements Movable {
 
     public void move(Tile destination) {
         this.location = destination;
-        destination.addMilitaryUnit(this);
+        destination.addMilitaryUnit(this, 1);
     }
 
     public void setRoute(LinkedList<Tile> route) {
