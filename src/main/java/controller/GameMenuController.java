@@ -38,7 +38,7 @@ public class GameMenuController {
         TradeMenuController.setGame(game);
         MapMenuController.setGame(game);
         UnitMenuController.setGame(game);
-        BuildingMenuController.setGame(game);
+        BuildingMenuController.setCurrentGame(game);
     }
 
     public String showMap(int x, int y) {

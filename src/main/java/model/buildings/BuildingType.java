@@ -1,6 +1,9 @@
 package model.buildings;
 
 import model.game.Item;
+import model.people.Person;
+
+import java.util.ArrayList;
 
 public enum BuildingType {
 
@@ -16,14 +19,14 @@ public enum BuildingType {
     WHEAT_FARMER("wheatfarmer", 150, Item.WOOD, 15, Item.WHEAT, 2, 1),
     BAKERY("bakery", 150, Item.WOOD, 10, Item.WHEAT, 4, Item.FLOUR, 1, 1),
     BREWER("brewer", 150, Item.WOOD, 10, Item.HOPS, 1, Item.ALE, 2, 1),
-    INN("inn",100, 150, Item.WOOD, 20, Item.ALE, 1, null, 0, 1),
+    INN("inn", 100, 150, Item.WOOD, 20, Item.ALE, 1, null, 0, 1),
     MILL("mill", 150, Item.WOOD, 20, Item.WHEAT, 3, Item.FLOUR, 3, 3),
     IRON_MINE("ironmine", 150, Item.WOOD, 20, Item.IRON, 2, 2),
     PITCH_RIG("pitchrig", 150, Item.WOOD, 20, Item.PITCH, 1),
     QUARRY("quarry", 150, Item.WOOD, 20, Item.STONE, 3),
     WOODCUTTER("woodcutter", 150, Item.WOOD, 3, Item.WOOD, 18, 1),
     ARMOURER("armourer", 100, 150, Item.WOOD, 20, Item.IRON, 1, Item.METAL_ARMOR, 1, 1),
-    BLACKSMITH("blacksmith", 200, 150, Item.WOOD, 20, Item.IRON, 1,1, Item.SWORD, Item.MACE, 1, 1),
+    BLACKSMITH("blacksmith", 200, 150, Item.WOOD, 20, Item.IRON, 1, 1, Item.SWORD, Item.MACE, 1, 1),
     // TODO: rawMaterialUses is related to product mode!
     FLETCHER("fletcher", 100, 150, Item.WOOD, 20, Item.WOOD, 2, 3, Item.BOW, Item.CROSSBOW, 1, 1),
     POLETURNER("poleturner", 100, 150, Item.WOOD, 10, Item.WOOD, 1, 2, Item.SPEAR, Item.PIKE, 1, 1),
@@ -31,31 +34,24 @@ public enum BuildingType {
     TANNER("tanner", 100, 150, Item.WOOD, 10, null, 1, Item.LEATHER_ARMOR, 3, 1),
 
     // Non processing:
-    SMALL_GATEHOUSE("smallgatehouse", 350, Item.STONE, 10),
-    LARGE_GATEHOUSE("largegatehouse", 450, Item.STONE, 20),
     // TODO: decide not to be destroyable (as real game) or else!
     DRAWBRIDGE("drawbridge", 250, Item.WOOD, 10),
-    // TODO: decide if they need a seperated class or category field or else!
-    LOOKOUT_TOWER("lookouttower", 250, Item.STONE, 10),
-    PERIMETER_TOWER("perimetertower", 350, Item.STONE, 10),
-    DEFENCE_TOWER("defencetower", 350, Item.STONE, 15),
-    SQUARE_TOWER("squaretower", 450, Item.STONE, 35),
-    ROUND_TOWER("roundtower", 450, Item.STONE, 40),
     TUNNELER_GUILD("tunnelerguild", 100, 250, Item.WOOD, 10, 0),
-    OX_TETHER("oxtether",150, Item.WOOD, 5, 1),
+    OX_TETHER("oxtether", 150, Item.WOOD, 5, 1),
     HOVEL("hovel", 150, Item.WOOD, 6),
     //    CHAPEL(250, null, 0),
     CHURCH("church", 500, null, 0),
     CATHEDRAL("cathedral", 1000, null, 0),
     //    WELL(30, null, 0, 1),
 //    WATER_POT(60, null, 0, 3),
-    GOOD_THINGS("goodthings", 25, null, 0),
-    BAD_THINGS("badthings", 45, null, 0),
+//    GOOD_THINGS("goodthings", 25, null, 0),
+//    BAD_THINGS("badthings", 45, null, 0),
     // TODO: I set a dummy hp of 1 not to be removed!
     KILLING_PIT("killingpit", 1, Item.WOOD, 6),
     OIL_SMELTER("oilsmelter", 100, Item.IRON, 10, 1),
     // TODO: I set a dummy hp of 1 not to be removed!
-    PITCH_DITCH("pitchditch", 1, Item.PITCH, 1),
+    // pitchditch seems not to be in doc
+//    PITCH_DITCH("pitchditch", 1, Item.PITCH, 1),
     CAGED_WAR_DOGS("cagedwardogs", 100, 150, Item.WOOD, 10, 0),
     SIEGE_TENT("siegetent", 150, null, 0),
     TUNNEL_ENTRANCE("tunnelentrance", 150, null, 0),
@@ -67,7 +63,7 @@ public enum BuildingType {
     MERCENARY_POST("mercenarypost", 250, Item.WOOD, 10),
     BARRACKS("barracks", 250, Item.STONE, 15),
     ENGINEER_GUILD("engineerguild", 100, 250, Item.WOOD, 10, 0),
-    MARKET("market",250, Item.WOOD, 5, 1);
+    MARKET("market", 250, Item.WOOD, 5, 1);
 
     private final String name;
     private final int cost;
@@ -81,6 +77,7 @@ public enum BuildingType {
     private final Item secondProduct;
     private final int productProvides;
     private final int workersNeeded;
+    private final ArrayList<Person> oprtators;
 
     // multi item producers:
 
@@ -99,12 +96,13 @@ public enum BuildingType {
         this.secondProduct = secondProduct;
         this.productProvides = productProvides;
         this.workersNeeded = workersNeeded;
+        this.oprtators = null;
     }
 
     // Free processing:
     BuildingType(String name, int maxHitpoints, Item buildingMaterial, int buildingMaterialAmount, Item rawMaterial,
                  int rawMaterialUses, Item product, int productProvides, int workersNeeded) {
-        this(name,0, maxHitpoints, buildingMaterial, buildingMaterialAmount, rawMaterial, rawMaterialUses,
+        this(name, 0, maxHitpoints, buildingMaterial, buildingMaterialAmount, rawMaterial, rawMaterialUses,
                 product, productProvides, workersNeeded);
     }
 
@@ -131,7 +129,7 @@ public enum BuildingType {
 
     // Free non processing:
     BuildingType(String name, int maxHitpoints, Item buildingMaterial, int buildingMaterialAmount, int workersNeeded) {
-        this(name,0, maxHitpoints, buildingMaterial, buildingMaterialAmount, workersNeeded);
+        this(name, 0, maxHitpoints, buildingMaterial, buildingMaterialAmount, workersNeeded);
     }
 
     // Free non workerNeeded non processing:
@@ -154,14 +152,14 @@ public enum BuildingType {
         this.secondProduct = null;
         this.productProvides = productProvides;
         this.workersNeeded = workersNeeded;
+        this.oprtators = new ArrayList<>();
     }
 
     public static BuildingType getBuildingTypeByName(String name) {
-        try {
-            return valueOf(name.toUpperCase());
-        } catch (Exception ignored) {
-            return null;
-        }
+        for (BuildingType type : values())
+            if (type.getName().equals(name))
+                return type;
+        return null;
     }
 
     public String getName() {

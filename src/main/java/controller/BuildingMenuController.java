@@ -1,8 +1,6 @@
 package controller;
 
-import javafx.css.Match;
 import model.buildings.Building;
-import model.buildings.BuildingType;
 import model.game.Game;
 import model.game.Government;
 import model.game.Tile;
@@ -22,7 +20,7 @@ public class BuildingMenuController {
         this.currentGovernment = currentGovernment;
     }
 
-    public static void setGame(Game game) {
+    public static void setCurrentGame(Game game) {
         currentGame = game;
     }
 
