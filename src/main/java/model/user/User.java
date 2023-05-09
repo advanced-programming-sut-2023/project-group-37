@@ -84,6 +84,10 @@ public class User implements Serializable {
         return null;
     }
 
+    public static Gson getGson(){
+        return User.gson;
+    }
+
     public void setRank(int rank) {
         this.rank = rank;
     }

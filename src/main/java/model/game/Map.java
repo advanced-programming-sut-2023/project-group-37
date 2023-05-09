@@ -1,18 +1,29 @@
 package model.game;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import model.user.User;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Map {
 
     // TODO: handle load maps!
-    private final static ArrayList<Map> maps;
+    private static ArrayList<Map> maps;
     private final String name;
     private final int size;
     private final Tile[][] map;
     private final boolean[][] tilesPassability;
     private HashMap<Integer, Government> territories;
     private HashMap<Integer, Tile> headQuarters;
+    private static final Gson gson = new Gson();
 
     static {
         maps = new ArrayList<>();
@@ -55,7 +66,45 @@ public class Map {
     }
 
     public static void loadMaps(){
+            String filePath = "./src/main/resources/sampleMaps.json";
+            try {
+                String json = new String(Files.readAllBytes(Paths.get(filePath)));
+                ArrayList<Map> sampleMaps = gson.fromJson(json, new TypeToken<List<Map>>() {
+                }.getType());
 
+                if (sampleMaps != null) {
+                    Map.maps = sampleMaps;
+                }
+            } catch (IOException ignored) {
+                File file = new File(filePath);
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+    }
+
+
+    public static void main(String[] args) {
+        writeMapsToFile();
+    }
+    public static void writeMapsToFile(){
+        maps.add(GenerateMap.createMap1());
+        //Map.maps.add(GenerateMap.createMap2());
+        String filePath = "./src/main/resources/sampleMaps.json";
+        try {
+            FileWriter fileWriter = new FileWriter(filePath);
+            fileWriter.write(gson.toJson(maps));
+            fileWriter.close();
+        } catch (IOException ignored) {
+            File file = new File(filePath);
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public String getName() {

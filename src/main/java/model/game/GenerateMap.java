@@ -1,13 +1,14 @@
 package model.game;
 
 public class GenerateMap {
-    private static final Map map = new Map("North vs South");
+    private static Map map;
 
     /*public static void main(String[] args) {
         createMap1();
         printMap();
     }*/
     public static Map createMap1() {
+        map = new Map("North vs South");
         //set ground
         for (int i = 0; i < 200; i++) {
             for (int j = 0; j < 200; j++) {
@@ -60,7 +61,10 @@ public class GenerateMap {
                 }
             }
         }
+        //iron
+
         // 30 * 30 territory
+
         return map;
     }
 

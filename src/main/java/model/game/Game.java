@@ -24,7 +24,7 @@ public class Game {
 
     public Government getGovernmentByUsername(String username) {
         for (Government government : governments) {
-            if (government.getUsername().equals(username))
+            if (government.getUser().getUsername().equals(username))
                 return government;
         }
         return null;

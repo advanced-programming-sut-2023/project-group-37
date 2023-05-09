@@ -1,5 +1,6 @@
 package controller;
 
+import model.game.Map;
 import model.user.User;
 import view.enums.Result;
 import view.menus.*;
@@ -53,6 +54,7 @@ public class Controller {
     public void run() {
         User.loadUsersFromFile();
         User loggedInUser = User.loadStayLoggedIn();
+        Map.loadMaps();
 
         if (loggedInUser != null) {
             MainMenuController.setCurrentUser(loggedInUser);
