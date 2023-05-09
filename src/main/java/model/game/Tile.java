@@ -18,7 +18,10 @@ public class Tile {
     private Character state;
     private boolean isPassable = true;
     private Government territory;
+    private int territoryNumber;
     public int number; // it is just for rootFinder
+
+
 
     public Tile(int x, int y) {
         this.x = x;
@@ -68,10 +71,17 @@ public class Tile {
     public Government getTerritory() {
         return this.territory;
     }
+    public int getTerritoryNumber() {
+        return territoryNumber;
+    }
 
     public void setTerritory(Government territory) {
         this.territory = territory;
     }
+    public void setTerritoryNumber(int territoryNumber) {
+        this.territoryNumber = territoryNumber;
+    }
+
 
     public void setState() {
         if (militaryUnits.size() > 0) {
@@ -99,6 +109,10 @@ public class Tile {
     public void addMilitaryUnit(MilitaryUnit troop, int count) {
         for (int i = 0; i < count; i++)
             militaryUnits.add(troop);
+    }
+
+    public void setPassability(boolean passability) {
+        isPassable = passability;
     }
 
     public ArrayList<Person> getPeople() {

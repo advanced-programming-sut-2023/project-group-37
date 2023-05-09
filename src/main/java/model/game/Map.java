@@ -37,6 +37,7 @@ public class Map {
         this.map = new Tile[size][size];
         this.tilesPassability = new boolean[size][size];
         this.initializeTiles();
+        headQuarters = new HashMap<>();
     }
 
     public Map(String name, int size, Tile[][] map, boolean[][] tilesPassability,
@@ -66,7 +67,7 @@ public class Map {
     }
 
     public static void loadMaps(){
-            String filePath = "./src/main/resources/sampleMaps.json";
+            String filePath = "src/main/resources/sampleMaps.json";
             try {
                 String json = new String(Files.readAllBytes(Paths.get(filePath)));
                 ArrayList<Map> sampleMaps = gson.fromJson(json, new TypeToken<List<Map>>() {
@@ -86,13 +87,13 @@ public class Map {
     }
 
 
-    public static void main(String[] args) {
-        writeMapsToFile();
-    }
+//    public static void main(String[] args) {
+//        writeMapsToFile();
+//    }
     public static void writeMapsToFile(){
         maps.add(GenerateMap.createMap1());
         //Map.maps.add(GenerateMap.createMap2());
-        String filePath = "./src/main/resources/sampleMaps.json";
+        String filePath = "src/main/resources/sampleMaps.json";
         try {
             FileWriter fileWriter = new FileWriter(filePath);
             fileWriter.write(gson.toJson(maps));
