@@ -102,4 +102,23 @@ public class MultiMenuFunctions {
 
         return result;
     }
+
+    public static double distance(Tile tile1, Tile tile2) {
+        int x1 = tile1.getX(), y1 = tile1.getY(), x2 = tile2.getX(), y2 = tile2.getY();
+        return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+    }
+
+    public static Tile getNearestPassableTile(Tile origin, Map map) {
+        Tile tile;
+        for (int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+                if (i != 0 || j != 0) {
+                    tile = map.getTileByLocation(origin.getX() + i, origin.getY() + j);
+                    if (tile.isPassable())
+                        return tile;
+                }
+            }
+        }
+        return origin;
+    }
 }

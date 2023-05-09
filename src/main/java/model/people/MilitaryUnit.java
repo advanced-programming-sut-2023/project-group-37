@@ -17,15 +17,15 @@ public abstract class MilitaryUnit implements Movable {
     // According to this.stance
     private int reaction_range;
     private final int speed;
-
-
     private Tile location;
     private LinkedList<Tile> route;
-
+    private LinkedList<Tile> patrolRoute;
+    private Tile target;
     private MilitaryUnitStance stance;
 
-    public MilitaryUnit(Government loyalty, int hitpoints, int damage, int range, int speed) {
+    public MilitaryUnit(Government loyalty, Tile location, int hitpoints, int damage, int range, int speed) {
         this.loyalty = loyalty;
+        this.location = location;
         this.hitpoints = hitpoints;
         this.damage = damage;
         this.range = range;
@@ -84,6 +84,13 @@ public abstract class MilitaryUnit implements Movable {
 
     public void setRoute(LinkedList<Tile> route) {
         this.route = route;
+    }
+    public void setPatrol(LinkedList<Tile> patrolRoute) {
+        this.patrolRoute = patrolRoute;
+    }
+
+    public void setTarget(Tile target) {
+        this.target = target;
     }
 
     protected LinkedList<Tile> getRoute() {

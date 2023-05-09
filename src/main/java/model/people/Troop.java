@@ -18,8 +18,8 @@ public class Troop extends MilitaryUnit {
     private final boolean canDigMoat;
     private boolean hasLadder;
 
-    public Troop(Government loyalty, TroopType type, Tile tile) {
-        super(loyalty, type.getMaxHitpoints(), type.getDamage(), type.getRange(), type.getSpeed());
+    public Troop(Government loyalty, TroopType type, Tile location) {
+        super(loyalty, location, type.getMaxHitpoints(), type.getDamage(), type.getRange(), type.getSpeed());
         this.type = type;
         this.territory = loyalty.getTerritory();
         this.weapon = type.getWeapon();

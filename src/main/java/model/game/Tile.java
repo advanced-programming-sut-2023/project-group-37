@@ -13,7 +13,7 @@ public class Tile {
     private Texture texture;
 
     private final ArrayList<Person> people;
-    private final HashMap<MilitaryUnit, Integer> militaryUnits;
+    private final ArrayList<MilitaryUnit> militaryUnits;
     private Building building;
     private Character state;
     private boolean isPassable = true;
@@ -25,7 +25,7 @@ public class Tile {
         this.y = y;
         this.texture = Texture.GROUND;
         this.people = new ArrayList<>();
-        this.militaryUnits = new HashMap<>();
+        this.militaryUnits = new ArrayList<>();
         this.building = null;
     }
 
@@ -45,7 +45,7 @@ public class Tile {
         this.texture = texture;
     }
 
-    public HashMap<MilitaryUnit, Integer> getMilitaryUnits() {
+    public ArrayList<MilitaryUnit> getMilitaryUnits() {
         return militaryUnits;
     }
 
@@ -89,7 +89,8 @@ public class Tile {
     }
 
     public void addMilitaryUnit(MilitaryUnit troop, int count) {
-        this.militaryUnits.put(troop, count + militaryUnits.getOrDefault(troop, 0));
+        for (int i = 0; i < count; i++)
+            militaryUnits.add(troop);
     }
 
     public ArrayList<Person> getPeople() {

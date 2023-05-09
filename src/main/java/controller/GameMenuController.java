@@ -10,6 +10,7 @@ import model.people.Troop;
 import model.people.TroopType;
 import view.enums.Message;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 
@@ -111,11 +112,17 @@ public class GameMenuController {
         if (tile == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        HashMap<MilitaryUnit, Integer> unit = tile.getMilitaryUnits();
-        if (unit.size() == 0)
+        ArrayList<MilitaryUnit> unit = tile.getMilitaryUnits();
+        ArrayList<MilitaryUnit> myUnit = new ArrayList<>();
+        for (MilitaryUnit militaryUnit : unit) {
+            if (militaryUnit.getLoyalty() == government)
+                myUnit.add(militaryUnit);
+        }
+
+        if (myUnit.size() == 0)
             return Message.UNIT_NOT_EXISTS.toString();
 
-        unitMenuController.setUnit(unit, tile);
+        unitMenuController.setUnit(myUnit, tile);
         return Message.UNIT_SELECTED.toString();
     }
 
@@ -137,7 +144,7 @@ public class GameMenuController {
         }
 
 
-        Troop troop = new Troop(government, troopType, building.getLocation());
+        Troop troop = new Troop(government, troopType, MultiMenuFunctions.getNearestPassableTile(building.getLocation(), game.getMap()));
 
         if (count < 0)
             return Message.INVALID_AMOUNT.toString();

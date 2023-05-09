@@ -26,15 +26,16 @@ public class UnitMenu {
             if ((matcher = Command.MOVE_UNIT.getMatcher(command)) != null)
                 System.out.println(this.controller.moveUnit(Integer.parseInt(matcher.group("x")),
                         Integer.parseInt(matcher.group("y"))));
-
             else if ((matcher = Command.PATROL_UNIT.getMatcher(command)) != null)
-                System.out.println(this.controller.patrolUnit(matcher));
+                System.out.println(this.controller.patrolUnit(Integer.parseInt(matcher.group("x1")), Integer.parseInt(matcher.group("y1")),
+                        Integer.parseInt(matcher.group("x2")), Integer.parseInt(matcher.group("y2"))));
 
             else if ((matcher = Command.SET_UNIT.getMatcher(command)) != null)
                 System.out.println(this.controller.setUnitState(matcher.group("state")));
-
             else if ((matcher = Command.ATTACK.getMatcher(command)) != null)
-                System.out.println(this.controller.attack(matcher));
+                System.out.println(this.controller.attack(Integer.parseInt(matcher.group("x")),
+                        Integer.parseInt(matcher.group("y")), matcher.group("isEarth") != null));
+
             else if ((matcher = Command.POUR_OIL.getMatcher(command)) != null)
                 System.out.println(this.controller.pourOil(matcher));
             else if ((matcher = Command.DIG_TUNNEL.getMatcher(command)) != null)

@@ -1,6 +1,7 @@
 package model.people;
 
 import model.game.Government;
+import model.game.Tile;
 
 import java.util.ArrayList;
 
@@ -10,8 +11,8 @@ public class MilitaryMachine extends MilitaryUnit{
     private int hitpoints;
     private final ArrayList<Troop> operators;
 
-    public MilitaryMachine(Government loyalty, MilitaryMachineType type) {
-        super(loyalty, type.getMaxHitpoints(), type.getDamage(), type.getRange(), type.getSpeed());
+    public MilitaryMachine(Government loyalty, MilitaryMachineType type, Tile location) {
+        super(loyalty, location,type.getMaxHitpoints(), type.getDamage(), type.getRange(), type.getSpeed());
         this.type = type;
         this.hitpoints = this.type.getMaxHitpoints();
         this.operators = new ArrayList<>();

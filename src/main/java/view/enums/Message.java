@@ -106,6 +106,10 @@ public enum Message {
     MERCENARY_POST_NOT_EXISTS("Mercenary Post not exists!"),
     CREATE_UNIT_SUCCESSFUL("Create unit successful!"),
     STATE_IS_SET("State set Successfully!"),
+    NO_ENEMY("You can just attack to an address that exist enemy!"),
+    NO_ARCHER("You dont have any archers in this place"),
+    OUT_OF_RANGE("Out of range!"),
+    NO_MEALY_UNIT("You dont have any mealy unit in this place!"),
 
     // BuildingMenu:
     ;
