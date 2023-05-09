@@ -66,7 +66,7 @@ public class GenerateMap {
 
     public static Map createMap2(){
         //TODO ...
-        return map
+        return map;
     }
 
     public static void printMap(){
