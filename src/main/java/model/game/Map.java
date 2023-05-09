@@ -54,6 +54,10 @@ public class Map {
         return null;
     }
 
+    public static void loadMaps(){
+
+    }
+
     public String getName() {
         return this.name;
     }

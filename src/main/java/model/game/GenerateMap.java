@@ -1,7 +1,7 @@
 package model.game;
 
 public class GenerateMap {
-    private static final Map map = new Map("North VS South");
+    private static final Map map = new Map("North vs South");
 
     /*public static void main(String[] args) {
         createMap1();
@@ -33,7 +33,7 @@ public class GenerateMap {
             for (int j = 0; j < 200; j++) {
                 if(!((75 <= i && i < 125) || (30 < i && i < 50) || (150 < i && i < 170)) && ((55 < j && j < 60) ||
                         (140 < j && j < 145))){
-                    map.getMap()[i][j].changeTexture(Texture.ROCK);
+                    map.getMap()[i][j].changeTexture(Texture.STONE);
                 }
             }
         }
@@ -41,7 +41,7 @@ public class GenerateMap {
         for (int j = 90; j < 110 ; j++) {
             for (int i = 60; i < 140; i++) {
                 if(i < 70 || 130 < i){
-                    map.getMap()[i][j].changeTexture(Texture.STONE);
+                    map.getMap()[i][j].changeTexture(Texture.ROCK);
                 }
             }
         }
@@ -60,6 +60,7 @@ public class GenerateMap {
                 }
             }
         }
+        // 30 * 30 territory
         return map;
     }
 

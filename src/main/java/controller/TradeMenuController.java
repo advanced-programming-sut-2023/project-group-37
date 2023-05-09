@@ -49,7 +49,7 @@ public class TradeMenuController {
         StringBuilder message = new StringBuilder();
         int id = 1;
         for (TradeRequest request : TradeRequest.getRequestsByReceiver(government)) {
-            message.append("Id: ").append(id).append(", Sender: ").append(request.getSender().getUsername())
+            message.append("Id: ").append(id).append(", Sender: ").append(request.getSender().getUser().getUsername())
                     .append(", Type: ").append(request.getItem().getName()).append(", Amount: ").append(request.getItemAmount())
                     .append(", Price: ").append(request.getPrice()).append("\n").append("Message: ")
                     .append(request.getSenderMessage()).append("\n");

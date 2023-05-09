@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 public class BuildingMenu {
     private final BuildingMenuController controller;
 
-    public BuildingMenu(BuildingMenuController buildingMenuController) {
+    public BuildingMenu(Scanner scanner, BuildingMenuController buildingMenuController) {
         this.controller = buildingMenuController;
     }
 
