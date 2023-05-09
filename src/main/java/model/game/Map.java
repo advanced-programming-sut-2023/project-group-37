@@ -1,8 +1,8 @@
 package model.game;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import model.user.User;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -57,6 +57,10 @@ public class Map {
                 return map;
         return null;
     }
+    public static ArrayList<Map> getMaps() {
+        return maps;
+    }
+
 
     public static Map getMapCopyByName(String name) {
         for (Map map : maps)
@@ -66,13 +70,13 @@ public class Map {
         return null;
     }
 
+
     public static void loadMaps(){
             String filePath = "src/main/resources/sampleMaps.json";
             try {
                 String json = new String(Files.readAllBytes(Paths.get(filePath)));
                 ArrayList<Map> sampleMaps = gson.fromJson(json, new TypeToken<List<Map>>() {
                 }.getType());
-
                 if (sampleMaps != null) {
                     Map.maps = sampleMaps;
                 }
@@ -96,7 +100,7 @@ public class Map {
         String filePath = "src/main/resources/sampleMaps.json";
         try {
             FileWriter fileWriter = new FileWriter(filePath);
-            fileWriter.write(gson.toJson(maps));
+            fileWriter.write(new ObjectMapper().writeValueAsString(maps));
             fileWriter.close();
         } catch (IOException ignored) {
             File file = new File(filePath);

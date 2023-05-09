@@ -54,7 +54,7 @@ public class Controller {
     public void run() {
         User.loadUsersFromFile();
         User loggedInUser = User.loadStayLoggedIn();
-        Map.loadMaps();
+        //Map.loadMaps();
 
         if (loggedInUser != null) {
             MainMenuController.setCurrentUser(loggedInUser);
