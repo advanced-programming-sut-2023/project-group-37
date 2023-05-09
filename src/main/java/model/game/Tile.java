@@ -5,6 +5,7 @@ import model.people.MilitaryUnit;
 import model.people.Person;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Tile {
     private final int x;
@@ -59,6 +60,7 @@ public class Tile {
     public Character getState() {
         return state;
     }
+
     public boolean isPassable() {
         return isPassable;
     }
@@ -72,7 +74,7 @@ public class Tile {
     }
 
     public void setState() {
-        if(militaryUnits.size() > 0) {
+        if (militaryUnits.size() > 0) {
             state = 'S';
             return;
         }
@@ -90,12 +92,13 @@ public class Tile {
         //  todo : if (texture == harchi) state = yechi;
     }
 
-    public void addPerson(Person person){
+    public void addPerson(Person person) {
         this.people.add(person);
     }
 
-    public void addMilitaryUnit(MilitaryUnit unit){
-        this.militaryUnits.add(unit);
+    public void addMilitaryUnit(MilitaryUnit troop, int count) {
+        for (int i = 0; i < count; i++)
+            militaryUnits.add(troop);
     }
 
     public ArrayList<Person> getPeople() {

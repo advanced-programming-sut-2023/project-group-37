@@ -1,9 +1,16 @@
 package controller;
 
+import model.buildings.Building;
+import model.buildings.BuildingType;
 import model.game.Game;
 import model.game.Government;
+import model.game.Tile;
+import model.people.MilitaryUnit;
+import model.people.Troop;
+import model.people.TroopType;
 import view.enums.Message;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class GameMenuController {
@@ -98,12 +105,51 @@ public class GameMenuController {
         return null;
     }
 
-    public String  selectUnit(Matcher matcher) {
-        return null;
+    public String  selectUnit(int x, int y) {
+        Tile tile = game.getMap().getTileByLocation(x,y);
+
+        if (tile == null)
+            return Message.ADDRESS_OUT_OF_BOUNDS.toString();
+
+        ArrayList<MilitaryUnit> unit = tile.getMilitaryUnits();
+        ArrayList<MilitaryUnit> myUnit = new ArrayList<>();
+        for (MilitaryUnit militaryUnit : unit) {
+            if (militaryUnit.getLoyalty() == government)
+                myUnit.add(militaryUnit);
+        }
+
+        if (myUnit.size() == 0)
+            return Message.UNIT_NOT_EXISTS.toString();
+
+        unitMenuController.setUnit(myUnit, tile);
+        return Message.UNIT_SELECTED.toString();
     }
 
-    public Message createUnit(Matcher matcher) {
-        return null;
+    public String  createUnit(String type, int count) {
+        TroopType troopType = TroopType.getTroopTypeByName(type);
+        if (troopType == null)
+            return Message.TYPE_NOT_EXISTS.toString();
+
+        Building building;
+        if (troopType.getTrainingCamp() == BuildingType.BARRACKS) {
+            building = government.getUnicBuilding(BuildingType.BARRACKS);
+            if (building == null)
+                return Message.BARRACKS_NOT_EXISTS.toString();
+        }
+        else {
+            building = government.getUnicBuilding(BuildingType.MERCENARY_POST);
+            if (building == null)
+                return Message.MERCENARY_POST_NOT_EXISTS.toString();
+        }
+
+
+        Troop troop = new Troop(government, troopType, MultiMenuFunctions.getNearestPassableTile(building.getLocation(), game.getMap()));
+
+        if (count < 0)
+            return Message.INVALID_AMOUNT.toString();
+
+        government.addTroops(troop, count);
+        return Message.CREATE_UNIT_SUCCESSFUL.toString();
     }
 
     public Message setTexture(Matcher matcher) {

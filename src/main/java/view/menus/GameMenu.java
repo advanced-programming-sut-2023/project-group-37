@@ -49,8 +49,11 @@ public class GameMenu {
                     System.out.println(this.controller.showFearRate());
                 else if ((matcher = Command.DROP_BUILDING.getMatcher(command)) != null)
                     System.out.println(this.controller.dropBuilding(matcher));
+
                 else if ((matcher = Command.CREATE_UNIT.getMatcher(command)) != null)
-                    System.out.println(this.controller.createUnit(matcher));
+                    System.out.println(this.controller.createUnit(matcher.group("type"),
+                            Integer.parseInt(matcher.group("count"))));
+
                 else if ((matcher = Command.SELECT_BUILDING.getMatcher(command)) != null) {
                     if (selectBuilding(matcher))
                         return Result.ENTER_BUILDING_MENU;
@@ -100,7 +103,8 @@ public class GameMenu {
     }
 
     private boolean selectUnit(Matcher matcher) {
-        this.message = this.controller.selectUnit(matcher);
+        this.message = this.controller.selectUnit(Integer.parseInt(matcher.group("x")),
+                Integer.parseInt(matcher.group("y")));
         System.out.println(this.message);
 
         return Message.ENTERED_UNIT_MENU.equals(message);

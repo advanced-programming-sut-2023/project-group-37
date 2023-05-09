@@ -3,20 +3,21 @@ package model.game;
 import model.buildings.Building;
 import model.buildings.BuildingType;
 import model.buildings.Storage;
-import model.people.MilitaryUnit;
 import model.people.Troop;
+
 import model.people.TroopType;
 import model.user.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Government {
     private final User user;
     private final int territory;
     private final Color color;
     private int gold;
+    private HashMap<Troop, Integer> troops;
     private final Troop lord;
-    private final ArrayList<MilitaryUnit> militaryUnits;
     private final ArrayList<Building> buildings;
     private boolean hasMarket;
     private final ArrayList<Storage> stockpile;
@@ -27,20 +28,20 @@ public class Government {
     private double taxRate;
     private double fearRate;
 
-    public Government(User user,  Color color, int territory) {
+    public Government(User user, Color color, int territory) {
         this.user = user;
         this.territory = territory;
         this.color = color;
         // TODO: set default value for gold!
         this.gold = 0;
         this.lord = new Troop(this, TroopType.LORD);
-        this.militaryUnits = new ArrayList<>();
         this.buildings = new ArrayList<>();
         this.hasMarket = false;
         // TODO: set default resources!
         this.stockpile = new ArrayList<>();
         this.granary = new ArrayList<>();
         this.armory = new ArrayList<>();
+        // TODO: set default popularity!
         this.popularity = 100;
         this.foodRate = 1;
         this.taxRate = 0;
@@ -51,6 +52,11 @@ public class Government {
         return this.user;
     }
 
+    public void addTroops(Troop troop, int count) {
+        troops.put(troop, count + troops.getOrDefault(troop, 0));
+        troop.getLocation().addMilitaryUnit(troop, count);
+    }
+
     public int getTerritory() {
         return territory;
     }
@@ -58,17 +64,19 @@ public class Government {
     public Color getColor() {
         return this.color;
     }
-
+    public Building getUnicBuilding(BuildingType type) {
+        for (Building building : buildings) {
+            if (building.getType() == type)
+                return building;
+        }
+        return null;
+    }
     public int getGold() {
         return this.gold;
     }
 
     public Troop getLord() {
         return this.lord;
-    }
-
-    public ArrayList<MilitaryUnit> getMilitaryUnits() {
-        return this.militaryUnits;
     }
 
     public ArrayList<Building> getBuildings() {
@@ -177,5 +185,9 @@ public class Government {
         int score = 0; // todo : handle score
         if (this.user.getHighScore() < score)
             this.user.setHighScore(score);
+    }
+
+    public String getUserName() {
+        return user.getUsername();
     }
 }
