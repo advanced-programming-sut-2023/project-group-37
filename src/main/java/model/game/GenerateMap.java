@@ -1,10 +1,5 @@
 package model.game;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.Color;
-import java.io.Console;
-
 public class GenerateMap {
     private static Map map;
 
@@ -19,7 +14,6 @@ public class GenerateMap {
             for (int j = 0; j < 200; j++) {
                 map.getMap()[i][j].changeTexture(Texture.GROUND);
                 map.getMap()[i][j].setPassability(Texture.GROUND.canHaveBuildingAndUnit());
-
             }
         }
         // river in the middle
@@ -48,7 +42,7 @@ public class GenerateMap {
                 }
             }
         }
-        //10 * 10 rocks (can be mined)
+        //20 * 10 rocks (can be mined)
         for (int j = 90; j < 110 ; j++) {
             for (int i = 60; i < 140; i++) {
                 if(i < 70 || 130 < i){
@@ -60,15 +54,36 @@ public class GenerateMap {
         //trees
         for (int i = 65; i < 135; i++) {
             for (int j = 0; j < 200; j++) {
-                if(!(75 < j && j < 125) && (i < 75 || i >= 125)){
+                if(!(75 < j && j < 125) && (i < 75 || i >= 125) && !((60 <= j && j < 70) || (130 <= j && j < 140))){
                     map.getMap()[i][j].changeTexture(Texture.OLIVE_TREE);
                     map.getMap()[i][j].setPassability(Texture.OLIVE_TREE.canHaveBuildingAndUnit());
                 }
             }
         }
-        //grass
-
-        //10 * 10 iron
+        //grass and dense meadow
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 200; j++) {
+                if(j < 100) {
+                    map.getMap()[i][j].changeTexture(Texture.DENSE_MEADOW);
+                    map.getMap()[i][j].setPassability(Texture.DENSE_MEADOW.canHaveBuildingAndUnit());
+                }else {
+                    map.getMap()[i][j].changeTexture(Texture.GRASS);
+                    map.getMap()[i][j].setPassability(Texture.GRASS.canHaveBuildingAndUnit());
+                }
+            }
+        }
+        for (int i = 190; i < 200; i++) {
+            for (int j = 0; j < 200; j++) {
+                if(j < 100) {
+                    map.getMap()[i][j].changeTexture(Texture.DENSE_MEADOW);
+                    map.getMap()[i][j].setPassability(Texture.DENSE_MEADOW.canHaveBuildingAndUnit());
+                }else {
+                    map.getMap()[i][j].changeTexture(Texture.GRASS);
+                    map.getMap()[i][j].setPassability(Texture.GRASS.canHaveBuildingAndUnit());
+                }
+            }
+        }
+        //20 * 10 iron
         for (int j = 90; j < 110 ; j++) {
             for (int i = 30; i < 170 ; i++) {
                 if(i < 40 || 160 < i){
@@ -86,6 +101,7 @@ public class GenerateMap {
         setTerritory(map.getMap()[165][75],6);
         setTerritory(map.getMap()[165][125],7);
         setTerritory(map.getMap()[165][165],8);
+
 
         return map;
     }
