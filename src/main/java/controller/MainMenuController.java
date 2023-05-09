@@ -26,10 +26,13 @@ public class MainMenuController {
         return Message.ENTERED_PROFILE_MENU;
     }
 
-    public String startGame(String[] usernames, String[] numbers, String turns, String size) {
+    public String startGame(String[] usernames, String[] numbers, String turns, String name) {
         int length = numbers.length;
         if (length > 7)
             return Message.USER_NUMBER_LIMIT.toString();
+
+        if(turns == null || name == null)
+            return Message.EMPTY_FIELD.toString();
 
         int[] territories = new int[length];
         try {
@@ -44,7 +47,11 @@ public class MainMenuController {
         ArrayList<Government> governments = new ArrayList<>();
         User user;
 
-        governments.add(new Government(currentUser, Color.RED, territories[0]));
+        Map map = Map.getMapCopyByName(name);
+        if (map == null)
+            return Message.INVALID_MAP_NAME.toString();
+
+        governments.add(new Government(currentUser, Color.RED, territories[0], map.getHeadQuarter(territories[0])));
 
         int index = 1;
         for (String username : usernames) {
@@ -52,14 +59,11 @@ public class MainMenuController {
             if (user == null)
                 return Message.USERNAME_NOT_FOUND.toString();
 
-            governments.add(new Government(user, Color.values()[index], territories[index-1]));
+            governments.add(new Government(user, Color.values()[index], territories[index-1], map.getHeadQuarter(territories[index-1])));
             index++;
         }
 
-        if(turns == null || size == null)
-            return Message.EMPTY_FIELD.toString();
-
-        Game game = new Game(gameMenuController, new Map(Integer.parseInt(size)) , Integer.parseInt(turns), governments);
+        Game game = new Game(gameMenuController, map , Integer.parseInt(turns), governments);
         GameMenuController.setGame(game);
 
         return Message.GAME_STARTED.toString();

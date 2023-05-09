@@ -20,9 +20,9 @@ public class Map {
 
     // TODO: handle headquarters illegible on page 29!
 
-    public Map(String name, int size) {
+    public Map(String name) {
         this.name = name;
-        this.size = size;
+        this.size = 200;
         this.map = new Tile[size][size];
         this.tilesPassability = new boolean[size][size];
         this.initializeTiles();
@@ -109,7 +109,7 @@ public class Map {
                 this.map[i][j] = new Tile(i, j);
     }
 
-    public Tile getTileBySafeLocation(int x, int y) {
-        return this.map[x][y];
+    public Tile getHeadQuarter(int territory) {
+        return headQuarters.get(territory);
     }
 }

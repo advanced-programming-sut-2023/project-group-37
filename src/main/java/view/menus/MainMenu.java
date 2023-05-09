@@ -64,7 +64,7 @@ public class MainMenu {
             }
         }
 
-        String message = this.controller.startGame(usernames, numbers, matcher.group("turns"), matcher.group("size"));
+        String message = this.controller.startGame(usernames, numbers, matcher.group("turns"), matcher.group("mapName"));
         System.out.println(message);
 
         return message.equals(Message.GAME_STARTED.toString());

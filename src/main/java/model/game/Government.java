@@ -14,6 +14,7 @@ import java.util.HashMap;
 public class Government {
     private final User user;
     private final int territory;
+    private final Tile territoryLocation;
     private final Color color;
     private int gold;
     private HashMap<Troop, Integer> troops;
@@ -28,13 +29,14 @@ public class Government {
     private double taxRate;
     private double fearRate;
 
-    public Government(User user, Color color, int territory) {
+    public Government(User user, Color color, int territory, Tile territoryLocation) {
         this.user = user;
         this.territory = territory;
+        this.territoryLocation = territoryLocation;
         this.color = color;
         // TODO: set default value for gold!
         this.gold = 0;
-        this.lord = new Troop(this, TroopType.LORD);
+        this.lord = new Troop(this, TroopType.LORD, territoryLocation);
         this.buildings = new ArrayList<>();
         this.hasMarket = false;
         // TODO: set default resources!

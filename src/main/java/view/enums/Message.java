@@ -44,7 +44,8 @@ public enum Message {
     TERRITORY_NOT_ASSIGNED("Please assign territory for each user!"),
     USER_NUMBER_LIMIT("You can only choose 7 users to start the game!"),
     USERNAME_NOT_FOUND("Some usernames dont exist!"),
-    GAME_STARTED("Game started successfully!"), // todo : is message correct ?
+    INVALID_MAP_NAME("Invalid map name!"),
+    GAME_STARTED("Game started successfully!"),
     LOGOUT_SUCCESSFUL("User logged out successfully!"),
 
     // ProfileMenu:

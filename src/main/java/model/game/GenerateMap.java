@@ -1,7 +1,7 @@
 package model.game;
 
 public class GenerateMap {
-    private static final Map map = new Map(200);
+    private static final Map map = new Map("North VS South");
 
     /*public static void main(String[] args) {
         createMap1();
