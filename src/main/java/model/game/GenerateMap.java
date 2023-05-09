@@ -3,10 +3,10 @@ package model.game;
 public class GenerateMap {
     private static Map map;
 
-    public static void main(String[] args) {
-        createMap1();
-        printMap();
-    }
+//    public static void main(String[] args) {
+//        createMap1();
+//        printMap();
+//    }
     public static Map createMap1() {
         map = new Map("North vs South");
         //set ground
