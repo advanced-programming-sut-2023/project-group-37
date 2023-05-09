@@ -1,9 +1,13 @@
 package model.game;
 
+import java.util.HashMap;
+
 public class Map {
     private final int size;
     private final Tile[][] map;
     private final boolean[][] tilesPassability;
+
+    private HashMap<Integer, Tile> headQuarters;
 
     // TODO: handle headquarters illegible on page 29!
 
@@ -23,41 +27,41 @@ public class Map {
     }
 
     public boolean[][] getTilesPassability() {
-        return tilesPassability;
+        return this.tilesPassability;
     }
 
     public void setTilesState() {
-        for (int i =0; i < size; i++) {
-            for (int j=0; j<size; j++)
-                map[i][j].setState();
+        for (int i = 0; i < this.size; i++) {
+            for (int j = 0; j < this.size; j++)
+                this.map[i][j].setState();
         }
     }
 
     public void resetNumbers() {
-        for (int i =0; i < size; i++) {
-            for (int j=0; j<size; j++)
-                map[i][j].number = 0;
+        for (int i = 0; i < this.size; i++) {
+            for (int j = 0; j < this.size; j++)
+                this.map[i][j].number = 0;
         }
     }
 
     public Tile getTileByLocation(int x, int y) {
-        if (x >= size || y >= size || x < 0 || y < 0)
+        if (x >= this.size || y >= this.size || x < 0 || y < 0)
             return null;
 
-        return map[x][y];
+        return this.map[x][y];
     }
-    public boolean getPassabilitybyLocation(int x,int y){
+
+    public boolean getPassabilityByLocation(int x, int y) {
         return this.map[x][y].isPassable();
     }
-    private void initializeTiles(){
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                this.map[i][j] = new Tile(i,j);
-            }
-        }
+
+    private void initializeTiles() {
+        for (int i = 0; i < this.size; i++)
+            for (int j = 0; j < this.size; j++)
+                this.map[i][j] = new Tile(i, j);
     }
 
     public Tile getTileBySafeLocation(int x, int y) {
-        return map[x][y];
+        return this.map[x][y];
     }
 }

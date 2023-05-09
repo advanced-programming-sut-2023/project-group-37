@@ -30,7 +30,7 @@ public class GameMenuController {
         tradeMenuController.setGovernment(government);
         mapMenuController.setGovernment(government);
         unitMenuController.setGovernment(government);
-        buildingMenuController.setGovernment(government);
+        buildingMenuController.setCurrentBuilingLoyalty(government);
     }
 
     public static void setGame(Game game) {
@@ -49,7 +49,7 @@ public class GameMenuController {
     }
 
     public String enterShopMenu() {
-        if (government.hasShop())
+        if (government.hasMarket())
             return Message.ENTERED_SHOP_MENU.toString();
         return Message.MARKET_NOT_EXISTS.toString();
     }

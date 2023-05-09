@@ -79,7 +79,7 @@ public class Tile {
             return;
         }
 
-//  todo :       if (texture == harchi) state = yechi;
+        //  todo : if (texture == harchi) state = yechi;
     }
 
     public void addPerson(Person person){

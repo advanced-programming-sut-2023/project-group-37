@@ -3,17 +3,21 @@ package model.game;
 import model.buildings.Building;
 import model.buildings.BuildingType;
 import model.buildings.Storage;
+import model.people.MilitaryUnit;
+import model.people.Troop;
+import model.people.TroopType;
 import model.user.User;
 
 import java.util.ArrayList;
 
 public class Government {
     private final User user;
-    private final String username;
     private final int territory;
     private final Color color;
     private int gold;
-    private ArrayList<Building> buildings;
+    private final Troop lord;
+    private final ArrayList<MilitaryUnit> militaryUnits;
+    private final ArrayList<Building> buildings;
     private boolean hasMarket;
     private final ArrayList<Storage> stockpile;
     private final ArrayList<Storage> granary;
@@ -22,24 +26,30 @@ public class Government {
 
     public Government(User user, Color color, int territory) {
         this.user = user;
-        this.username = user.getUsername();
         this.territory = territory;
         this.color = color;
         // TODO: set default value for gold!
         this.gold = 0;
+        this.lord = new Troop(this, TroopType.LORD);
+        this.militaryUnits = new ArrayList<>();
+        this.buildings = new ArrayList<>();
+        this.hasMarket = false;
         // TODO: set default resources!
         this.stockpile = new ArrayList<>();
         this.granary = new ArrayList<>();
         this.armory = new ArrayList<>();
         // TODO: set default popularity!
         this.popularity = 100;
-        this.buildings = new ArrayList<>();
-        this.hasMarket = false;
+    }
+
+    public User getUser() {
+        return this.user;
     }
 
     public int getTerritory() {
         return territory;
     }
+
     public Color getColor() {
         return this.color;
     }
@@ -48,9 +58,22 @@ public class Government {
         return this.gold;
     }
 
-    public boolean hasShop() {
+    public Troop getLord() {
+        return this.lord;
+    }
+
+    public ArrayList<MilitaryUnit> getMilitaryUnits() {
+        return this.militaryUnits;
+    }
+
+    public ArrayList<Building> getBuildings() {
+        return this.buildings;
+    }
+
+    public boolean hasMarket() {
         return hasMarket;
     }
+
     public ArrayList<Storage> getStockpile() {
         return this.stockpile;
     }
@@ -107,7 +130,7 @@ public class Government {
         if (getFreeSpace(repository) < amount)
             return false;
 
-        gold -= amount * item.getBuyCost();
+        this.gold -= amount * item.getBuyCost();
 
         for (Storage storage : repository) {
             if (amount < 1)
@@ -122,7 +145,7 @@ public class Government {
         if (getItemAmount(item, repository) < amount)
             return false;
 
-        gold += amount * item.getSellCost();
+        this.gold += amount * item.getSellCost();
 
         for (Storage storage : repository) {
             if (amount < 1)
@@ -133,13 +156,9 @@ public class Government {
         return true;
     }
 
-    public void checkForHighScore() {
+    public void modifyHighScore() {
         int score = 0; // todo : handle score
-        if (user.getHighScore() < score)
-            user.setHighScore(score);
-    }
-
-    public String getUsername() {
-        return username;
+        if (this.user.getHighScore() < score)
+            this.user.setHighScore(score);
     }
 }
