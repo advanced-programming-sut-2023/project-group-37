@@ -6,7 +6,7 @@ public enum Message {
     // MultiMenu:
     WEAK_PASSWORD("Weak password!"),
     INCOMPATIBLE_PASSWORDS("Incompatible passwords!"),
-    BACK_GAME_MENU("Returned to game menu"),
+    BACK_GAME_MENU("Returned to game menu!"),
     INVALID_ITEM_NAME("There are no item with this name!"),
     INVALID_AMOUNT("Invalid amount!"),
     BACK_MAIN_MENU("Returned to main menu"),
@@ -21,7 +21,7 @@ public enum Message {
     INCORRECT_EMAIL_FORM("Incorrect email format!"),
     ENTERED_LOGIN_MENU("Entered login menu!"),
     REENTER_AGAIN("Please re-enter your password again:"),
-    ASK_FOR_SECURITY_QUESTION("Pick your security question: " +SecurityQuestion.getAllQuestions()),
+    ASK_FOR_SECURITY_QUESTION("Pick your security question: " + SecurityQuestion.getAllQuestions()),
     INCORRECT_QUESTION_NUMBER("Please select question-number between 1,2,3:"),
     INCOMPATIBLE_ANSWERS("Incompatible answers!"),
     REGISTER_SUCCESSFUL("User created successfully!"),
@@ -40,7 +40,7 @@ public enum Message {
     // MainMenu:
     ENTERED_PROFILE_MENU("Entered profile menu successfully!"),
     TERRITORY_NOT_ASSIGNED("Please assign territory for each user!"),
-    USER_NUMBER_LIMIT("You can only choose 7 users to start the game"),
+    USER_NUMBER_LIMIT("You can only choose 7 users to start the game!"),
     USERNAME_NOT_FOUND("Some usernames dont exist!"),
     GAME_STARTED("Game started successfully!"), // todo : is message correct ?
     LOGOUT_SUCCESSFUL("User logged out successfully!"),
@@ -83,24 +83,27 @@ public enum Message {
 
     //TODO : is message correct ?
     NOT_ENOUGH_GOLD("Not enough gold!"),
-    NOT_ENOUGH_SPACE("Not enough space"),
+    NOT_ENOUGH_SPACE("Not enough space!"),
     NOT_ENOUGH_AMOUNT("Not enough amount!"),
     BOUGHT_SUCCESSFUL("Items bought successfully"),
     SOLD_SUCCESSFUL("Items sold successfully!"),
 
     // TradeMenu:
     INVALID_PRICE("Invalid price!"),
-    REQUEST_SENT("Request sent successful"),
+    REQUEST_SENT("Request sent successful!"),
     INVALID_ID("Invalid id!"),
     TRADE_FAILED("This trade can't be done!"),
-    TRADE_SUCCESS("The trade was successfully completed"),
+    TRADE_SUCCESS("The trade was successfully completed!"),
 
     // UnitMenu:
     ADDRESS_OUT_OF_BOUNDS("Address out of bounds!"),
-    CURRENT_LOCATION("Address equals current location"),
+    CURRENT_LOCATION("Address equals current location!"),
     NO_ROUTS_FOUND("Cant move to the address!"),
 
-    // BuildingMenu:
+    // BuildingMenu:,
+    TILE_IS_NOT_YOURS("The tile is not in your territory!"),
+    BUILDING_NOT_YOURS("Building is not yours!"),
+    NO_BUILDING_IN_TILE("No building in the tile!")
     ;
     private final String message;
 

@@ -12,6 +12,7 @@ public enum Command {
     BACK_GAME_MENU("\\s*back\\s+to\\s+game\\s*"),
 
     // SignupMenu:
+    // SignupMenu:
     REGISTER("\\s*user\\s+create(\\s+((-u\\s+(?<username>\".+\"|\\S+))|" +
             "(-p\\s+(?<password>\".+\"|\\S+)\\s+(?<passwordConfirm>\".+\"|\\S+))|" +
             "(-e\\s+(?<email>\".+\"|\\S+))|(-s\\s+(?<slogan>\".+\"|\\S+))|" +

@@ -95,6 +95,18 @@ public class Government {
         return this.popularity;
     }
 
+    public double getFoodRate() {
+        return this.foodRate;
+    }
+
+    public double getTaxRate() {
+        return this.taxRate;
+    }
+
+    public double getFearRate() {
+        return this.fearRate;
+    }
+
     public void addBuilding(Building building) {
         if(building.getType() == BuildingType.STOCKPILE)
             this.stockpile.add((Storage) building);

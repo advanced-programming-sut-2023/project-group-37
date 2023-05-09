@@ -63,6 +63,14 @@ public class Tile {
         return isPassable;
     }
 
+    public Government getTerritory() {
+        return this.territory;
+    }
+
+    public void setTerritory(Government territory) {
+        this.territory = territory;
+    }
+
     public void setState() {
         if(militaryUnits.size() > 0) {
             state = 'S';

@@ -30,7 +30,7 @@ public class GameMenuController {
         tradeMenuController.setGovernment(government);
         mapMenuController.setGovernment(government);
         unitMenuController.setGovernment(government);
-        buildingMenuController.setCurrentBuilingLoyalty(government);
+        buildingMenuController.setCurrentGovernment(government);
     }
 
     public static void setGame(Game game) {
