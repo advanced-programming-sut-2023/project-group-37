@@ -23,8 +23,11 @@ public class Government {
     private final ArrayList<Storage> granary;
     private final ArrayList<Storage> armory;
     private int popularity;
+    private double foodRate;
+    private double taxRate;
+    private double fearRate;
 
-    public Government(User user, Color color, int territory) {
+    public Government(User user,  Color color, int territory) {
         this.user = user;
         this.territory = territory;
         this.color = color;
@@ -38,8 +41,10 @@ public class Government {
         this.stockpile = new ArrayList<>();
         this.granary = new ArrayList<>();
         this.armory = new ArrayList<>();
-        // TODO: set default popularity!
         this.popularity = 100;
+        this.foodRate = 1;
+        this.taxRate = 0;
+        this.fearRate = 0;
     }
 
     public User getUser() {
