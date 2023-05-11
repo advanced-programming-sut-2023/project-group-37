@@ -68,7 +68,7 @@ public class User implements Serializable {
 
     public static User getUserByUsername(String username) {
         for (User user : users) {
-            if (user.getUsername().equals(username))
+            if (user.getUsername().equals(username.toLowerCase()))
                 return user;
         }
 
@@ -77,7 +77,7 @@ public class User implements Serializable {
 
     public static User getUserByEmail(String email) {
         for (User user : users) {
-            if (user.getEmail().equals(email))
+            if (user.getEmail().equals(email.toLowerCase()))
                 return user;
         }
 

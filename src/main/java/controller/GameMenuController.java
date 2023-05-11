@@ -71,22 +71,23 @@ public class GameMenuController {
     }
 
     public String showPopularityFactors() {
-        return "There are four popularity factors as below:\n" +
-                "1.Food you give!\n" +
-                "2.Tax you take!\n" +
-                "3.Religion you propagate!\n" +
-                "4.Fear you create!";
+        return """
+                There are four popularity factors as below:
+                1.Food you give!
+                2.Tax you take!
+                3.Religion you propagate!
+                4.Fear you create!""";
     }
 
     public String showFoodList() {
-        String list = "";
+        StringBuilder list = new StringBuilder();
         int counter = 1;
         for (Storage storage : currentGovernment.getGranary()) {
-            list += "Foods in storage number " + counter + ":\n";
-            list += storage.getFoodNames() + "\n";
+            list.append("Foods in storage number ").append(counter).append(":\n");
+            list.append(storage.getFoodNames()).append("\n");
             counter++;
         }
-        return list.trim();
+        return list.toString().trim();
     }
 
     public String setFoodRate(Matcher matcher) {
@@ -131,7 +132,7 @@ public class GameMenuController {
         return "Fear rate: " + this.currentGovernment.getTaxRate();
     }
 
-    public String dropBuilding(Matcher matcher) {
+    public String dropBuilding(Matcher matcher) { //TODO : decrease
 
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
@@ -180,6 +181,7 @@ public class GameMenuController {
             }
         }
         // TODO: handle situation if building needs more workers!
+        tile.setPassability(type == BuildingType.KILLING_PIT);
         return Message.DROP_BUILDING_SUCCESS.toString();
     }
 
@@ -229,7 +231,15 @@ public class GameMenuController {
         return Message.UNIT_SELECTED.toString();
     }
 
-    public String createUnit(String type, int count) {
+    public String dropUnit(Matcher matcher) { // TODO : decrease
+        String type = matcher.group("type");
+        int count = Integer.parseInt(matcher.group("count"));
+        int x = Integer.parseInt(matcher.group("x")), y = Integer.parseInt(matcher.group("y"));
+
+        Tile tile;
+        if ((tile = currentGame.getMap().getTileByLocation(x,y)) == null)
+            return Message.ADDRESS_OUT_OF_BOUNDS.toString();
+
         TroopType troopType = TroopType.getTroopTypeByName(type);
         if (troopType == null)
             return Message.TYPE_NOT_EXISTS.toString();
@@ -239,20 +249,28 @@ public class GameMenuController {
             building = currentGovernment.getUniqueBuilding(BuildingType.BARRACKS);
             if (building == null)
                 return Message.BARRACKS_NOT_EXISTS.toString();
-        } else {
+        } else if (troopType.getTrainingCamp() == BuildingType.MERCENARY_POST) {
             building = currentGovernment.getUniqueBuilding(BuildingType.MERCENARY_POST);
             if (building == null)
                 return Message.MERCENARY_POST_NOT_EXISTS.toString();
+        } else if (troopType.getTrainingCamp() == BuildingType.ENGINEER_GUILD) {
+            building = currentGovernment.getUniqueBuilding(BuildingType.ENGINEER_GUILD);
+            if (building == null)
+                return Message.ENGINEER_GUILD_NOT_EXISTS.toString();
+        }
+        else {
+            building = currentGovernment.getUniqueBuilding(BuildingType.TUNNELER_GUILD);
+            if (building == null)
+                return Message.TUNNELER_GUILD_NOT_EXISTS.toString();
         }
 
-
-        Troop troop = new Troop(currentGovernment, troopType, MultiMenuFunctions.getNearestPassableTile(building.getLocation(), currentGame.getMap()));
+        Troop troop = new Troop(currentGovernment, troopType, tile);
 
         if (count < 0)
             return Message.INVALID_AMOUNT.toString();
 
         currentGovernment.addTroops(troop, count);
-        return Message.CREATE_UNIT_SUCCESSFUL.toString();
+        return Message.DROP_UNIT_SUCCESSFUL.toString();
     }
 
     public String setTexture(Matcher matcher) {

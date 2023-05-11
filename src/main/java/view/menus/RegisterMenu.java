@@ -31,10 +31,14 @@ public class RegisterMenu {
                     || (matcher = Command.REGISTER_RANDOM_PASSWORD.getMatcher(this.command)) != null) {
                 if (register(matcher))
                     return Result.USER_CREATED;
-            } else if (Command.ENTER_LOGIN_MENU.getMatcher(this.command) != null) {
+            }
+
+            else if (command.matches(Command.ENTER_LOGIN_MENU.toString())) {
                 System.out.println(Message.ENTERED_LOGIN_MENU);
                 return Result.ENTER_LOGIN_MENU;
-            } else if (Command.EXIT.getMatcher(this.command) != null)
+            }
+
+            else if (command.matches(Command.EXIT.toString()))
                 return Result.EXIT;
 
             else

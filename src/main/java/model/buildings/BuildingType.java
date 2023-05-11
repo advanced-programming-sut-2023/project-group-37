@@ -77,7 +77,8 @@ public enum BuildingType {
     // TODO: I set a dummy hp of 1 not to be removed!
     KILLING_PIT("killingpit", 1, Item.WOOD, 6, true, true,
             false),
-    //    OIL_SMELTER("oilsmelter", 100, Item.IRON, 10, 1),
+    OIL_SMELTER("oilsmelter", 100, Item.IRON, 10, 1, true,
+            false, false),
     // TODO: I set a dummy hp of 1 not to be removed!
     // pitchditch seems not to be in doc
 //    PITCH_DITCH("pitchditch", 1, Item.PITCH, 1),

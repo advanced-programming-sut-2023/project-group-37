@@ -150,23 +150,23 @@ public class UnitMenuController {
         }
     }
 
-    public Message pourOil(Matcher matcher) {
+    public String pourOil(Matcher matcher) {
         return null;
     }
 
-    public Message digTunnel(Matcher matcher) {
+    public String digTunnel(Matcher matcher) {
         return null;
     }
 
-    public Message buildEquipment(Matcher matcher) {
+    public String buildEquipment(Matcher matcher) {
         return null;
     }
 
-    public Message disbandUnit() {
+    public String disbandUnit() {
         return null;
     }
 
-    public Message digMoat(Matcher matcher) {
+    public String digMoat(Matcher matcher) {
         return null;
     }
 }

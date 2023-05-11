@@ -24,17 +24,17 @@ public class MainMenu {
         while (true) {
             command = scanner.nextLine();
 
-            if (Command.ENTER_PROFILE_MENU.getMatcher(command) != null) {
+            if (command.matches(Command.ENTER_PROFILE_MENU.toString())) {
                 System.out.println(this.controller.enterProfileMenu());
                 return Result.ENTER_PROFILE_MENU;
             } else if ((matcher = Command.START_GAME.getMatcher(command)) != null) {
                 if (startGame(matcher))
                     return Result.ENTER_GAME_MENU;
                 System.out.println(Message.TERRITORY_NOT_ASSIGNED);
-            } else if (Command.LOGOUT.getMatcher(command) != null) {
+            } else if (command.matches(Command.LOGOUT.toString())) {
                 System.out.println(this.controller.logout());
                 return Result.ENTER_LOGIN_MENU;
-            } else if (Command.EXIT.getMatcher(command) != null) {
+            } else if (command.matches(Command.EXIT.toString())) {
                 return Result.EXIT;
             } else
                 System.out.println(Message.INVALID_COMMAND);

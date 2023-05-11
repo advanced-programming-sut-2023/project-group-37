@@ -34,18 +34,17 @@ public class ProfileMenu {
                 System.out.println(this.controller.changeEmail(matcher.group("email")));
             } else if ((matcher = Command.CHANGE_SLOGAN.getMatcher(command)) != null) {
                 System.out.println(this.controller.changeSlogan(matcher.group("slogan")));
-            } else if (Command.REMOVE_SLOGAN.getMatcher(command) != null) {
+            } else if (command.matches(Command.REMOVE_SLOGAN.toString())) {
                 System.out.println(this.controller.removeSlogan());
-            } else if (Command.DISPLAY_HIGHSCORE.getMatcher(command) != null) {
+            } else if (command.matches(Command.DISPLAY_HIGHSCORE.toString())) {
                 System.out.println(this.controller.showScore());
-            } else if (Command.DISPLAY_RANK.getMatcher(command) != null) {
+            } else if (command.matches(Command.DISPLAY_RANK.toString())) {
                 System.out.println(this.controller.showRank());
-            } else if (Command.DISPLAY_SLOGAN.getMatcher(command) != null) {
+            } else if (command.matches(Command.DISPLAY_SLOGAN.toString())) {
                 System.out.println(this.controller.showSlogan());
-            } else if (Command.DISPLAY_PROFILE.getMatcher(command) != null) {
+            } else if (command.matches(Command.DISPLAY_PROFILE.toString())) {
                 System.out.println(this.controller.showProfile());
-                //TODO: hardcode:
-            } else if (Command.BACK.getMatcher(command) != null) {
+            } else if (command.matches(Command.BACK.toString())) {
                 System.out.println(Message.BACK_MAIN_MENU);
                 return Result.ENTER_MAIN_MENU;
             } else

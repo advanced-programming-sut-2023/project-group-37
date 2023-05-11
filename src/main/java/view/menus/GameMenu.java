@@ -29,31 +29,29 @@ public class GameMenu {
             if ((matcher = Command.SHOW_MAP.getMatcher(command)) != null)
                 if (showMap(matcher))
                     return Result.ENTER_MAP_MENU;
-                else if (Command.SHOW_POPULARITY.getMatcher(command) != null)
+                else if (command.matches(Command.SHOW_POPULARITY.toString()))
                     System.out.println(this.controller.showPopularity());
-                else if (Command.SHOW_POPULARITY_FACTORS.getMatcher(command) != null)
+                else if (command.matches(Command.SHOW_POPULARITY_FACTORS.toString()))
                     System.out.println(this.controller.showPopularityFactors());
-                else if (Command.SHOW_FOOD_LIST.getMatcher(command) != null)
+                else if (command.matches(Command.SHOW_FOOD_LIST.toString()))
                     System.out.println(this.controller.showFoodList());
                 else if ((matcher = Command.FOOD_RATE.getMatcher(command)) != null)
                     System.out.println(this.controller.setFoodRate(matcher));
-                else if (Command.FOOD_RATE_SHOW.getMatcher(command) != null)
+                else if (command.matches(Command.FOOD_RATE.toString()))
                     System.out.println(this.controller.showFoodRate());
                 else if ((matcher = Command.TAX_RATE.getMatcher(command)) != null)
                     System.out.println(this.controller.setTaxRate(matcher));
-                else if (Command.TAX_RATE_SHOW.getMatcher(command) != null)
+                else if (command.matches(Command.TAX_RATE_SHOW.toString()))
                     System.out.println(this.controller.showTaxRate());
                 else if ((matcher = Command.FEAR_RATE.getMatcher(command)) != null)
                     System.out.println(this.controller.setFearRate(matcher));
-                else if (Command.SHOW_FEAR_RATE.getMatcher(command) != null)
+                else if (command.matches(Command.SHOW_FEAR_RATE.toString()))
                     System.out.println(this.controller.showFearRate());
                 else if ((matcher = Command.DROP_BUILDING.getMatcher(command)) != null)
                     System.out.println(this.controller.dropBuilding(matcher));
-
-                else if ((matcher = Command.CREATE_UNIT.getMatcher(command)) != null)
-                    System.out.println(this.controller.createUnit(matcher.group("type"),
-                            Integer.parseInt(matcher.group("count"))));
-
+                else if ((matcher = Command.DROP_UNIT.getMatcher(command)) != null) {
+                    System.out.println(controller.dropUnit(matcher));
+                }
                 else if ((matcher = Command.SELECT_BUILDING.getMatcher(command)) != null) {
                     if (selectBuilding(matcher))
                         return Result.ENTER_BUILDING_MENU;
@@ -61,11 +59,11 @@ public class GameMenu {
                     if (selectUnit(matcher))
                         return Result.ENTER_UNIT_MENU;
 
-                } else if (Command.ENTER_SHOP_MENU.getMatcher(command) != null) {
+                } else if (command.matches(Command.ENTER_SHOP_MENU.toString())) {
                     System.out.println(controller.enterShopMenu());
                     return Result.ENTER_SHOP_MENU;
 
-                } else if (Command.ENTER_TRADE_MENU.getMatcher(command) != null) {
+                } else if (command.matches(Command.ENTER_TRADE_MENU.toString())) {
                     System.out.println(Message.ENTERED_TRADE_MENU);
                     return Result.ENTER_TRADE_MENU;
 
@@ -79,7 +77,7 @@ public class GameMenu {
                     System.out.println(this.controller.dropRock(matcher));
                 else if ((matcher = Command.DROP_TREE.getMatcher(command)) != null)
                     System.out.println(this.controller.dropTree(matcher));
-                else if (Command.END_GAME.getMatcher(command) != null)
+                else if (command.matches(Command.END_GAME.toString()))
                     return Result.END_GAME;
                 else
                     System.out.println(Message.INVALID_COMMAND);

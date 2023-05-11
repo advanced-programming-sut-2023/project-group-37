@@ -33,12 +33,11 @@ public class BuildingMenu {
                 return;
             } else if (command.matches(Command.REPAIR.toString()) && this.controller.getCurrentBuilding() != null)
                 System.out.println(this.controller.repair());
-            else if (Command.BACK_GAME_MENU.getMatcher(command) != null) {
+            else if (command.matches(Command.BACK_GAME_MENU.toString())) {
                 System.out.println(Message.BACK_GAME_MENU);
                 return;
             } else System.out.println(Message.INVALID_COMMAND);
 
-            // TODO: createUnit!
         }
     }
 }

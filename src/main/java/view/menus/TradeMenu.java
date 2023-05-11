@@ -26,16 +26,16 @@ public class TradeMenu {
             if ((matcher = Command.REQUEST_TRADE.getMatcher(command)) != null)
                 System.out.println(controller.requestTrade(matcher));
 
-            else if (Command.SHOW_TRADE_LIST.getMatcher(command) != null)
+            else if (command.matches(Command.SHOW_TRADE_LIST.toString()))
                 System.out.println(controller.showTradeList());
 
             else if ((matcher = Command.ACCEPT_TRADE.getMatcher(command)) != null)
                 System.out.println(controller.acceptTrade(matcher));
 
-            else if (Command.SHOW_TRADE_HISTORY.getMatcher(command) != null)
+            else if (command.matches(Command.SHOW_TRADE_LIST.toString()))
                 System.out.println(controller.showTradeHistory());
 
-            else if (Command.BACK_GAME_MENU.getMatcher(command) != null) {
+            else if (command.matches(Command.BACK_GAME_MENU.toString())) {
                 System.out.println(Message.BACK_GAME_MENU);
                 return;
             } else System.out.println(Message.INVALID_COMMAND);

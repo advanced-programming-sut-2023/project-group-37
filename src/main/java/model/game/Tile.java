@@ -16,7 +16,7 @@ public class Tile {
     private final ArrayList<MilitaryUnit> militaryUnits;
     private Building building;
     private Character state;
-    private boolean isPassable = true;
+    private boolean isPassable;
     private Government territory;
     private int territoryNumber;
     public int number; // it is just for rootFinder
@@ -29,6 +29,7 @@ public class Tile {
         this.people = new ArrayList<>();
         this.militaryUnits = new ArrayList<>();
         this.building = null;
+        this.isPassable = true;
     }
 
     public int getX() {

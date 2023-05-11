@@ -28,7 +28,7 @@ public class MapMenu {
                 System.out.println(this.controller.moveMap(matcher));
             else if ((matcher = Command.SHOW_DETAILS.getMatcher(command)) != null)
                 System.out.println(this.controller.showDetails(matcher));
-            else if (Command.BACK_GAME_MENU.getMatcher(command) != null) {
+            else if (command.matches(Command.BACK_GAME_MENU.toString())) {
                 System.out.println(Message.BACK_GAME_MENU);
                 return;
             } else System.out.println(Message.INVALID_COMMAND);

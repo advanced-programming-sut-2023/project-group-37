@@ -56,6 +56,7 @@ public class RegisterMenuController {
             randomChar = UPPER_CHARACTERS.charAt(randomIndex);
             password.append(randomChar);
         }
+
         randomIndex = random.nextInt(OTHER_CHARACTERS.length());
         randomChar = OTHER_CHARACTERS.charAt(randomIndex);
         password.append(randomChar);
@@ -114,7 +115,7 @@ public class RegisterMenuController {
                 return Message.INCOMPATIBLE_PASSWORDS.toString();
         } else {
             generateRandomPassword();
-            this.user = new User(username, randomPassword, email, slogan, nickName);
+            this.user = new User(username.toLowerCase(), randomPassword, email, slogan, nickName);
             randomMessages += "Your random password is: " + randomPassword + "\nPlease re-enter your password here:";
             return randomMessages;
         }
