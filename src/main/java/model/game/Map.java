@@ -62,6 +62,7 @@ public class Map {
                 return map;
         return null;
     }
+
     public static ArrayList<Map> getMaps() {
         return maps;
     }
@@ -76,25 +77,25 @@ public class Map {
     }
 
 
-    public static void loadMaps(){
-            String filePath = "src/main/resources/sampleMaps.json";
-            try {
-                String json = new String(Files.readAllBytes(Paths.get(filePath)));
-                ArrayList<Map> sampleMaps = gson.fromJson(json, new TypeToken<List<Map>>() {
-                }.getType());
-                if (sampleMaps != null) {
-                    Map.maps = sampleMaps;
-                }
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+    public static void loadMaps() {
+        String filePath = "src/main/resources/sampleMaps.json";
+        try {
+            String json = new String(Files.readAllBytes(Paths.get(filePath)));
+            ArrayList<Map> sampleMaps = gson.fromJson(json, new TypeToken<List<Map>>() {
+            }.getType());
+            if (sampleMaps != null) {
+                Map.maps = sampleMaps;
             }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
 
-//    public static void main(String[] args) {
-//        writeMapsToFile();
-//    }
-    public static void writeMapsToFile(){
+        public static void main(String[] args) {
+        writeMapsToFile();
+    }
+    public static void writeMapsToFile() {
         maps.add(GenerateMap.createMap1());
         //maps.add(GenerateMap.createMap2());
         String filePath = "src/main/resources/sampleMaps.json";
@@ -140,6 +141,13 @@ public class Map {
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++)
                 this.map[i][j].setState();
+        }
+    }
+
+    public void setTilesPassability() {
+        for (int i = 0; i < this.size; i++) {
+            for (int j = 0; j < this.size; j++)
+                tilesPassability[i][j] = this.map[i][j].isPassable();
         }
     }
 

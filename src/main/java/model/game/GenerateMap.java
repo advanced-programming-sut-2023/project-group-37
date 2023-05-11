@@ -102,7 +102,7 @@ public class GenerateMap {
         setTerritory(map.getMap()[165][125],7);
         setTerritory(map.getMap()[165][165],8);
 
-
+        map.setTilesPassability();
         return map;
     }
 
