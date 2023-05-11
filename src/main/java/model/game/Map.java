@@ -71,7 +71,7 @@ public class Map {
     public static Map getMapCopyByName(String name) {
         for (Map map : maps)
             if (map.getName().equals(name))
-                return new Map(name, map.size, map.getMap(), map.getTilesPassability(),
+                return new Map(name, map.size, map.getField(), map.getTilesPassability(),
                         map.getTerritories(), map.getHeadQuarters());
         return null;
     }

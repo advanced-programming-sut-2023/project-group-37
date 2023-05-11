@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class GameMenuController {
-    private Game game;
     private Game currentGame;
     private final MapMenuController mapMenuController;
     private final ShopMenuController shopMenuController;
@@ -34,7 +33,7 @@ public class GameMenuController {
         this.buildingMenuController = buildingMenuController;
         this.unitMenuController = unitMenuController;
     }
-    public void setGovernment(Government government) {
+    public void setCurrentGovernment(Government government) {
         this.currentGovernment = government;
         this.shopMenuController.setGovernment(government);
         this.tradeMenuController.setGovernment(government);
@@ -43,12 +42,12 @@ public class GameMenuController {
         this.buildingMenuController.setCurrentGovernment(government);
     }
 
-    public void setGame(Game game) {
-        this.game = game;
+    public void setCurrentGame(Game game) {
+        this.currentGame = game;
         tradeMenuController.setGame(game);
         mapMenuController.setGame(game);
         unitMenuController.setGame(game);
-        buildingMenuController.setGame(game);
+        buildingMenuController.setCurrentGame(game);
     }
 
     public String showMap(int x, int y) {
