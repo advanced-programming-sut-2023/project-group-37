@@ -50,7 +50,7 @@ public enum Command {
     DISPLAY_PROFILE("\\s*profile\\s+display\\s*"),
 
     // GameMenu:
-    SHOW_MAP("\\s*show\\s+map(\\s+((-x(?<x>\\d+))|(-y(?<y>\\d+))))+\\s*"),
+    SHOW_MAP("\\s*show\\s+map(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
     SHOW_POPULARITY("\\s*show\\s+popularity\\s*"),
     SHOW_POPULARITY_FACTORS("\\s*show\\s+popularity\\s+factors\\s*"),
     SHOW_FOOD_LIST("\\s*show\\s+food\\s+list\\s*"),

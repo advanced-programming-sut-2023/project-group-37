@@ -11,14 +11,14 @@ import java.util.regex.Matcher;
 
 public class TradeMenuController {
     private Government government;
-    private static Game game;
+    private Game game;
 
     public void setGovernment(Government government) {
         this.government = government;
     }
 
-    public static void setGame(Game game) {
-        TradeMenuController.game = game;
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     public String requestTrade(Matcher matcher) {

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class GameMenuController {
+    private Game game;
     private Game currentGame;
     private final MapMenuController mapMenuController;
     private final ShopMenuController shopMenuController;
@@ -33,24 +34,21 @@ public class GameMenuController {
         this.buildingMenuController = buildingMenuController;
         this.unitMenuController = unitMenuController;
     }
-
-    public void setCurrentGovernment(Government currentGovernment) {
-        this.currentGovernment = currentGovernment;
-        shopMenuController.setGovernment(currentGovernment);
-        tradeMenuController.setGovernment(currentGovernment);
-        mapMenuController.setGovernment(currentGovernment);
-        unitMenuController.setGovernment(currentGovernment);
-        buildingMenuController.setCurrentGovernment(currentGovernment);
+    public void setGovernment(Government government) {
+        this.currentGovernment = government;
+        this.shopMenuController.setGovernment(government);
+        this.tradeMenuController.setGovernment(government);
+        this.mapMenuController.setGovernment(government);
+        this.unitMenuController.setGovernment(government);
+        this.buildingMenuController.setCurrentGovernment(government);
     }
 
-    public void setCurrentGame(Game currentGame) {
-        // TODO: it was static!
-        this.currentGame = currentGame;
-        TradeMenuController.setGame(currentGame);
-        MapMenuController.setGame(currentGame);
-        UnitMenuController.setGame(currentGame);
-        // TODO: it was static!
-        this.buildingMenuController.setCurrentGame(currentGame);
+    public void setGame(Game game) {
+        this.game = game;
+        tradeMenuController.setGame(game);
+        mapMenuController.setGame(game);
+        unitMenuController.setGame(game);
+        buildingMenuController.setGame(game);
     }
 
     public String showMap(int x, int y) {

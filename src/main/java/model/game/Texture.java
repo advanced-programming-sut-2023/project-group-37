@@ -4,9 +4,9 @@ public enum Texture {
     GROUND(Color.YELLOW, true, true),
     PEBBLE(Color.WHITE, false, true),
     // Rock is resource of stone!
-    ROCK(Color.BROWN, false, true),
+    ROCK(Color.WHITE, false, true),
     STONE(Color.BROWN, false, false),
-    IRON(Color.BLUE, false, true),
+    IRON(Color.RED, false, true),
     GRASS(Color.GREEN, true, true),
     MEADOW(Color.GREEN, true, true),
     DENSE_MEADOW(Color.GREEN, true, true),

@@ -3,6 +3,7 @@ package model.game;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import model.user.User;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -70,27 +71,32 @@ public class Map {
     public static Map getMapCopyByName(String name) {
         for (Map map : maps)
             if (map.getName().equals(name))
-                return new Map(name, map.size, map.getField(), map.getTilesPassability(),
+                return new Map(name, map.size, map.getMap(), map.getTilesPassability(),
                         map.getTerritories(), map.getHeadQuarters());
         return null;
     }
 
 
+//    public static void loadMaps() {
+//        String filePath = "src/main/resources/sampleMaps.json";
+//        try {
+//            String json = new String(Files.readAllBytes(Paths.get(filePath)));
+//            ArrayList<Map> sampleMaps = gson.fromJson(json, new TypeToken<List<Map>>() {
+//            }.getType());
+//            if (sampleMaps != null) {
+//                Map.maps = sampleMaps;
+//            }
+//        } catch (Exception ex) {
+//            System.out.println(ex.getMessage());
+//        }
+//    }
+
     public static void loadMaps() {
-        String filePath = "src/main/resources/sampleMaps.json";
-        try {
-            String json = new String(Files.readAllBytes(Paths.get(filePath)));
-            ArrayList<Map> sampleMaps = gson.fromJson(json, new TypeToken<List<Map>>() {
-            }.getType());
-            if (sampleMaps != null) {
-                Map.maps = sampleMaps;
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
+        maps.add(GenerateMap.createMap1());
     }
 
-    //        public static void main(String[] args) {
+
+//        public static void main(String[] args) {
 //        writeMapsToFile();
 //    }
     public static void writeMapsToFile() {

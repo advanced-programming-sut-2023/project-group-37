@@ -10,7 +10,7 @@ public class BuildingMenuController {
 
     // TODO: I couldn't understand why they was static so I turned to non static!
 
-    private static Game currentGame;
+    private Game currentGame;
     private Building currentBuilding;
     private Government currentGovernment;
 

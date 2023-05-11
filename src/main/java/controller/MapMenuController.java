@@ -8,8 +8,8 @@ import view.enums.Message;
 import java.util.regex.Matcher;
 
 public class MapMenuController {
-    private static Game game;
-    private static Map map;
+    private Game game;
+    private Map map;
     private Government government;
 
 
@@ -17,9 +17,9 @@ public class MapMenuController {
         this.government = government;
     }
 
-    public static void setGame(Game game) {
-        MapMenuController.game = game;
-        MapMenuController.map = game.getMap();
+    public void setGame(Game game) {
+        this.game = game;
+        this.map = game.getMap();
     }
 
     public String showMap(int x, int y) {
@@ -43,7 +43,7 @@ public class MapMenuController {
 
         for (int i = minY; i < maxY; i++) {
             for (int j = minX; j < maxX; j++) {
-                message.append(map.getTileByLocation(i, j).getState());
+                message.append(map.getTileByLocation(i, j).getState()).append(" ");
             }
             message.append("\n");
         }

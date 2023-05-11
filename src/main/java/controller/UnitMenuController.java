@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 
 public class UnitMenuController {
-    private static Game game;
+    private Game game;
     private Government government;
     private ArrayList<MilitaryUnit> unit;
     private Tile location;
@@ -25,8 +25,8 @@ public class UnitMenuController {
         this.location = location;
     }
 
-    public static void setGame(Game game) {
-        UnitMenuController.game = game;
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     public String moveUnit(int x, int y) {
