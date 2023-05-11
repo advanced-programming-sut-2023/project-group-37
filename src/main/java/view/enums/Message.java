@@ -79,6 +79,9 @@ public enum Message {
     MARKET_NOT_EXISTS("Market not exists!"),
     ENTERED_SHOP_MENU("Entered shop menu!"),
     ENTERED_TRADE_MENU("Entered trade menu!"),
+    INVALID_TEXTURE_NAME("There is no texture with this name!"),
+    TEXTURE_CHANGE_ERROR("You can't change the texture : there is something in this place!"),
+    TEXTURE_CHANGED_SUCCESSFULLY("Texture changed successfully!"),
 
     // MapMenu:
 

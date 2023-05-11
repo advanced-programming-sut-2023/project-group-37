@@ -3,7 +3,6 @@ package model.game;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import model.user.User;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -20,7 +19,7 @@ public class Map {
     private static ArrayList<Map> maps;
     private final String name;
     private final int size;
-    private final Tile[][] map;
+    private final Tile[][] field;
     private final boolean[][] tilesPassability;
     private HashMap<Integer, Government> territories;
     private HashMap<Integer, Tile> headQuarters;
@@ -35,10 +34,10 @@ public class Map {
     public Map(String name) {
         this.name = name;
         this.size = 200;
-        this.map = new Tile[size][size];
+        this.field = new Tile[size][size];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++)
-                map[i][j] = new Tile(i, j);
+                field[i][j] = new Tile(i, j);
         }
         this.tilesPassability = new boolean[size][size];
         this.initializeTiles();
@@ -49,7 +48,7 @@ public class Map {
                HashMap<Integer, Government> territories, HashMap<Integer, Tile> headQuarters) {
         this.name = name;
         this.size = size;
-        this.map = map;
+        this.field = map;
         this.tilesPassability = tilesPassability;
         this.territories = territories;
         this.headQuarters = headQuarters;
@@ -71,7 +70,7 @@ public class Map {
     public static Map getMapCopyByName(String name) {
         for (Map map : maps)
             if (map.getName().equals(name))
-                return new Map(name, map.size, map.getMap(), map.getTilesPassability(),
+                return new Map(name, map.size, map.getField(), map.getTilesPassability(),
                         map.getTerritories(), map.getHeadQuarters());
         return null;
     }
@@ -120,8 +119,8 @@ public class Map {
         return this.size;
     }
 
-    public Tile[][] getMap() {
-        return this.map;
+    public Tile[][] getField() {
+        return this.field;
     }
 
     public boolean[][] getTilesPassability() {
@@ -139,21 +138,21 @@ public class Map {
     public void setTilesState() {
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++)
-                this.map[i][j].setState();
+                this.field[i][j].setState();
         }
     }
 
     public void setTilesPassability() {
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++)
-                tilesPassability[i][j] = this.map[i][j].isPassable();
+                tilesPassability[i][j] = this.field[i][j].isPassable();
         }
     }
 
     public void resetNumbers() {
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++)
-                this.map[i][j].number = 0;
+                this.field[i][j].number = 0;
         }
     }
 
@@ -161,17 +160,17 @@ public class Map {
         if (x >= this.size || y >= this.size || x < 0 || y < 0)
             return null;
 
-        return this.map[x][y];
+        return this.field[x][y];
     }
 
     public boolean getPassabilityByLocation(int x, int y) {
-        return this.map[x][y].isPassable();
+        return this.field[x][y].isPassable();
     }
 
     private void initializeTiles() {
         for (int i = 0; i < this.size; i++)
             for (int j = 0; j < this.size; j++)
-                this.map[i][j] = new Tile(i, j);
+                this.field[i][j] = new Tile(i, j);
     }
 
     public Tile getHeadQuarter(int territory) {

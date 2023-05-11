@@ -2,9 +2,7 @@ package controller;
 
 import model.buildings.Building;
 import model.buildings.BuildingType;
-import model.game.Game;
-import model.game.Government;
-import model.game.Tile;
+import model.game.*;
 import model.people.MilitaryUnit;
 import model.people.Troop;
 import model.people.TroopType;
@@ -153,7 +151,19 @@ public class GameMenuController {
     }
 
     public Message setTexture(Matcher matcher) {
-        return null;
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+        if (game.getMap().getTileByLocation(x,y) == null) {
+            return Message.ADDRESS_OUT_OF_BOUNDS;
+        }
+        if (Texture.getTextureByName(MultiMenuFunctions.deleteQuotations(matcher.group("type"))) == null) {
+            return Message.INVALID_TEXTURE_NAME;
+        }
+        if (game.getMap().getField()[x][y].getBuilding() != null || game.getMap().getField()[x][y].getPeople().size() != 0) {
+            return Message.TEXTURE_CHANGE_ERROR;
+        }
+        game.getMap().getField()[x][y].changeTexture(Texture.getTextureByName(MultiMenuFunctions.deleteQuotations(matcher.group("type"))));
+        return Message.TEXTURE_CHANGED_SUCCESSFULLY;
     }
 
     public Message setRectangleTextures(Matcher matcher) {
