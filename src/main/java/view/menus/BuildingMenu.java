@@ -24,8 +24,11 @@ public class BuildingMenu {
 
             if ((matcher = Command.DROP_BUILDING.getMatcher(command)) != null)
                 System.out.println(this.controller.selectBuilding(matcher));
-
-            else if (Command.REPAIR.getMatcher(command) != null)
+            else if (command.matches(Command.CANCEL.toString())) {
+                Message result = this.controller.deselectBuilding();
+                if (result != null)
+                    System.out.println(result);
+            } else if (Command.REPAIR.getMatcher(command) != null)
                 this.controller.repair();
             else if (Command.BACK_GAME_MENU.getMatcher(command) != null) {
                 System.out.println(Message.BACK_GAME_MENU);

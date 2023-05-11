@@ -118,4 +118,9 @@ public enum Command {
         Matcher matcher = Pattern.compile(this.regex).matcher(input);
         return matcher.matches() ? matcher : null;
     }
+
+    @Override
+    public String toString() {
+        return this.regex;
+    }
 }

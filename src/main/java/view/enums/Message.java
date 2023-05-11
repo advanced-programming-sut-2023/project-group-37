@@ -103,7 +103,12 @@ public enum Message {
     // BuildingMenu:,
     TILE_IS_NOT_YOURS("The tile is not in your territory!"),
     BUILDING_NOT_YOURS("Building is not yours!"),
-    NO_BUILDING_IN_TILE("No building in the tile!")
+    NO_BUILDING_IN_TILE("No building in the tile!"),
+    NO_BUILDING_SELECTED("No building has been selected!"),
+    INVALID_BUILDING_TYPE("Invalid building type!"),
+    CANNOT_PLACE_BUILDING_ON_TEXTURE("Cannot place the building on this texture!"),
+    TILE_ALREADY_HAS_BUILDING("Tile already has a building!"),
+    DROP_BUILDING_SUCCESS("Building has been dropped successfully!"),
     ;
     private final String message;
 

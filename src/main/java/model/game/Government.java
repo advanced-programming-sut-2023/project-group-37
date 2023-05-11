@@ -4,6 +4,7 @@ import model.buildings.Building;
 import model.buildings.BuildingType;
 import model.buildings.Storage;
 import model.people.MilitaryUnit;
+import model.people.Person;
 import model.people.Troop;
 import model.people.TroopType;
 import model.user.User;
@@ -16,6 +17,7 @@ public class Government {
     private final Color color;
     private int gold;
     private final Troop lord;
+    private final ArrayList<Person> people;
     private final ArrayList<MilitaryUnit> militaryUnits;
     private final ArrayList<Building> buildings;
     private boolean hasMarket;
@@ -34,6 +36,7 @@ public class Government {
         // TODO: set default value for gold!
         this.gold = 0;
         this.lord = new Troop(this, TroopType.LORD);
+        this.people = new ArrayList<>();
         this.militaryUnits = new ArrayList<>();
         this.buildings = new ArrayList<>();
         this.hasMarket = false;
@@ -65,6 +68,10 @@ public class Government {
 
     public Troop getLord() {
         return this.lord;
+    }
+
+    public ArrayList<Person> getPeople() {
+        return this.people;
     }
 
     public ArrayList<MilitaryUnit> getMilitaryUnits() {

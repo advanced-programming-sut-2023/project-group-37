@@ -155,10 +155,14 @@ public enum BuildingType {
         this.oprtators = new ArrayList<>();
     }
 
-    public static BuildingType getBuildingTypeByName(String name) {
+    public static Object getBuildingTypeByName(String name) {
         for (BuildingType type : values())
             if (type.getName().equals(name))
                 return type;
+        for (DefensiveBuildingType type : DefensiveBuildingType.values()) {
+            if(type.getName().equals(name))
+                return type;
+        }
         return null;
     }
 
