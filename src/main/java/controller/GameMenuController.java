@@ -193,7 +193,17 @@ public class GameMenuController {
     }
 
     public String clearTexture(Matcher matcher) {
-        return null;
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+
+        if (game.getMap().getTileByLocation(x, y) == null)
+            return Message.ADDRESS_OUT_OF_BOUNDS.toString();
+
+        game.getMap().getTileByLocation(x,y).changeTexture(Texture.GROUND);//default
+        game.getMap().getTileByLocation(x,y).getPeople().clear();
+        game.getMap().getTileByLocation(x,y).removeBuilding();
+
+        return Message.CLEAR_SUCCESSFUL.toString();
     }
 
     public String dropTree(Matcher matcher) {

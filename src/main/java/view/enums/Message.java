@@ -123,7 +123,9 @@ public enum Message {
     DO_CAPTCHA("For the last thing enter captcha!"),
     WRONG_CAPTCHA("Captcha is wrong try again!"),
     AREA_NOT_EMPTY("You can't change texture : Area is not empty!"),
+    CLEAR_SUCCESSFUL("Block cleared successfully!"),
     ;
+
     private final String message;
 
     Message(String message){

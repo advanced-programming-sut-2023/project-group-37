@@ -55,6 +55,9 @@ public class Tile {
     public Building getBuilding() {
         return building;
     }
+    public void removeBuilding(){
+        this.building = null;
+    }
 
     public void setBuilding(Building building) {
         this.building = building;

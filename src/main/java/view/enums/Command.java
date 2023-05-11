@@ -69,7 +69,7 @@ public enum Command {
     SET_TEXTURE("\\s*set texture(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t\\s+(?<type>\".+\"|\\S+))))+\\s*"),
     SET_RECTANGLE_TEXTURES("\\s*set texture(\\s+((-x1\\s+(?<x1>\\d+))|(-y1\\s+(?<y1>\\d+))|(-x2\\s+(?<x2>\\d+))|" +
             "(-y2\\s+(?<y2>\\d+))|(-t\\s+(?<type>\".+\"|\\S+))))+\\s*"),
-    CLEAR_TEXTURE("\\s*clear(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s*"),
+    CLEAR_TEXTURE("\\s*clear\\s+texture(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
     DROP_ROCK("\\s*drop\\s+rock\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-d(?<direction>\".+\"|\\S+)))+\\s*"),
     DROP_TREE("\\s*drop tree(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t(?<type>\".+\"|\\S+)))+\\s*"),
     // TODO: fill
