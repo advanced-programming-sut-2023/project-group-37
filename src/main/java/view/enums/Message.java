@@ -124,6 +124,10 @@ public enum Message {
     WRONG_CAPTCHA("Captcha is wrong try again!"),
     AREA_NOT_EMPTY("You can't change texture : Area is not empty!"),
     CLEAR_SUCCESSFUL("Block cleared successfully!"),
+    DROP_ROCK("You dropped rock here!"),
+    DROP_ROCK_ERROR("You can't drop rock here!"),
+    DROP_TREE("You dropped tree here!"),
+    DROP_TREE_ERROR("You can't drop tree here!"),
     ;
 
     private final String message;

@@ -43,6 +43,7 @@ public enum Texture {
         }
     }
 
+
     public Color getColor() {
         return this.color;
     }

@@ -151,8 +151,8 @@ public class GameMenuController {
     }
 
     public String setTexture(Matcher matcher) {
-        int x = Integer.parseInt(matcher.group("x"));
-        int y = Integer.parseInt(matcher.group("y"));
+        int x = Integer.parseInt(matcher.group("y"));//reverse because of the array!!
+        int y = Integer.parseInt(matcher.group("x"));
         if (game.getMap().getTileByLocation(x, y) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
@@ -168,10 +168,10 @@ public class GameMenuController {
     }
 
     public String setRectangleTextures(Matcher matcher) {
-        int x1 = Integer.parseInt(matcher.group("x1"));
-        int y1 = Integer.parseInt(matcher.group("y1"));
-        int x2 = Integer.parseInt(matcher.group("x2"));
-        int y2 = Integer.parseInt(matcher.group("y2"));
+        int x1 = Integer.parseInt(matcher.group("y1"));
+        int y1 = Integer.parseInt(matcher.group("x1"));
+        int x2 = Integer.parseInt(matcher.group("y2"));
+        int y2 = Integer.parseInt(matcher.group("x2"));
 
         if (game.getMap().getTileByLocation(x1, y1) == null || game.getMap().getTileByLocation(x2, y2) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
@@ -193,8 +193,8 @@ public class GameMenuController {
     }
 
     public String clearTexture(Matcher matcher) {
-        int x = Integer.parseInt(matcher.group("x"));
-        int y = Integer.parseInt(matcher.group("y"));
+        int x = Integer.parseInt(matcher.group("y"));
+        int y = Integer.parseInt(matcher.group("x"));
 
         if (game.getMap().getTileByLocation(x, y) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
@@ -207,11 +207,32 @@ public class GameMenuController {
     }
 
     public String dropTree(Matcher matcher) {
-        return null;
+        int x = Integer.parseInt(matcher.group("y"));
+        int y = Integer.parseInt(matcher.group("x"));
+
+        if (game.getMap().getTileByLocation(x, y) == null)
+            return Message.ADDRESS_OUT_OF_BOUNDS.toString();
+
+        if (game.getMap().getField()[x][y].getBuilding() != null || game.getMap().getField()[x][y].getPeople().size() != 0
+        || !game.getMap().getField()[x][y].getTexture().canHaveTree())
+            return Message.DROP_TREE_ERROR.toString();
+        game.getMap().getField()[x][y].changeTexture(Texture.getTextureByName
+                (MultiMenuFunctions.deleteQuotations(matcher.group("type"))));
+        return Message.DROP_TREE.toString();
     }
 
     public String dropRock(Matcher matcher) {
-        return null;
+        int x = Integer.parseInt(matcher.group("y"));
+        int y = Integer.parseInt(matcher.group("x"));
+
+        if (game.getMap().getTileByLocation(x, y) == null)
+            return Message.ADDRESS_OUT_OF_BOUNDS.toString();
+
+        if (game.getMap().getField()[x][y].getBuilding() != null || game.getMap().getField()[x][y].getPeople().size() != 0)
+            return Message.DROP_ROCK_ERROR.toString();
+
+        game.getMap().getField()[x][y].changeTexture(Texture.ROCK);
+        return Message.DROP_ROCK.toString();
     }
 
 }

@@ -71,7 +71,7 @@ public enum Command {
             "(-y2\\s+(?<y2>\\d+))|(-t\\s+(?<type>\".+\"|\\S+))))+\\s*"),
     CLEAR_TEXTURE("\\s*clear\\s+texture(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
     DROP_ROCK("\\s*drop\\s+rock\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-d(?<direction>\".+\"|\\S+)))+\\s*"),
-    DROP_TREE("\\s*drop tree(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t(?<type>\".+\"|\\S+)))+\\s*"),
+    DROP_TREE("\\s*drop tree(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t\\s+(?<type>\".+\"|\\S+))))+\\s*"),
     // TODO: fill
     END_GAME(""),
 
