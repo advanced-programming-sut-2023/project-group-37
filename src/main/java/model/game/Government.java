@@ -25,8 +25,8 @@ public class Government {
     private final ArrayList<Storage> granary;
     private final ArrayList<Storage> armory;
     private int popularity;
-    private double foodRate;
-    private double taxRate;
+    private int foodRate;
+    private int taxRate;
     private double fearRate;
 
     public Government(User user, Color color, int territory, Tile territoryLocation) {
@@ -76,6 +76,25 @@ public class Government {
     public int getGold() {
         return this.gold;
     }
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
+    }
+
+    public void setFoodRate(int foodRate) {
+        this.foodRate = foodRate;
+    }
+
+    public void setTaxRate(int taxRate) {
+        this.taxRate = taxRate;
+    }
+
+    public void setFearRate(double fearRate) {
+        this.fearRate = fearRate;
+    }
 
     public Troop getLord() {
         return this.lord;
@@ -105,11 +124,11 @@ public class Government {
         return this.popularity;
     }
 
-    public double getFoodRate() {
+    public int getFoodRate() {
         return this.foodRate;
     }
 
-    public double getTaxRate() {
+    public int getTaxRate() {
         return this.taxRate;
     }
 

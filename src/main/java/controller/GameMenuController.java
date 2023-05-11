@@ -85,19 +85,32 @@ public class GameMenuController {
     }
 
     public String setFoodRate(Matcher matcher) {
-        return null;
+        if (!(-2 <= Integer.parseInt(matcher.group("rateNumber")) &&
+                Integer.parseInt(matcher.group("rateNumber")) <= 2)) {
+            return Message.INVALID_FOOD_RATE.toString();
+        }
+        government.setFoodRate(Integer.parseInt(matcher.group("rateNumber")));
+        //TODO : changes in popularity
+        return Message.FOOD_RATE_CHANGED.toString();
     }
 
     public String showFoodRate() {
-        return null;
+        return Integer.toString(government.getFoodRate());
     }
 
     public String setTaxRate(Matcher matcher) {
-        return null;
+        if (!(-3 <= Integer.parseInt(matcher.group("rateNumber")) &&
+                Integer.parseInt(matcher.group("rateNumber")) <= 8)) {
+            return Message.INVALID_TAX_RATE.toString();
+        }
+        government.setTaxRate(Integer.parseInt(matcher.group("rateNumber")));
+        //TODO : changes in popularity
+
+        return Message.TAX_RATE_CHANGED.toString();
     }
 
     public String showTaxRate() {
-        return null;
+        return Integer.toString(government.getTaxRate());
     }
 
     public String setFearRate(Matcher matcher) {

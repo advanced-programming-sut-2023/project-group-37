@@ -82,6 +82,10 @@ public enum Message {
     INVALID_TEXTURE_NAME("There is no texture with this name!"),
     TEXTURE_CHANGE_ERROR("You can't change the texture : there is something in this place!"),
     TEXTURE_CHANGED_SUCCESSFULLY("Texture changed successfully!"),
+    INVALID_FOOD_RATE("Enter a valid number for food rate!"),
+    FOOD_RATE_CHANGED("You changed your food rate!"),
+    INVALID_TAX_RATE("Enter a valid number for tax rate!"),
+    TAX_RATE_CHANGED("You changed your tax rate!"),
 
     // MapMenu:
 
