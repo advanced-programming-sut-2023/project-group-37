@@ -221,7 +221,7 @@ public class GameMenuController {
         ArrayList<MilitaryUnit> unit = tile.getMilitaryUnits();
         ArrayList<MilitaryUnit> myUnit = new ArrayList<>();
         for (MilitaryUnit militaryUnit : unit) {
-            if (militaryUnit.getLoyalty() == government)
+            if (militaryUnit.getLoyalty() == currentGovernment)
                 myUnit.add(militaryUnit);
         }
 
@@ -336,7 +336,7 @@ public class GameMenuController {
         if (currentGame.getMap().getTileByLocation(x, y) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        if (currentGame.getMap().getField()[x][y].getBuilding() != null || game.getMap().getField()[x][y].getPeople().size() != 0)
+        if (currentGame.getMap().getField()[x][y].getBuilding() != null || currentGame.getMap().getField()[x][y].getPeople().size() != 0)
             return Message.DROP_ROCK_ERROR.toString();
 
         currentGame.getMap().getField()[x][y].changeTexture(Texture.ROCK);
