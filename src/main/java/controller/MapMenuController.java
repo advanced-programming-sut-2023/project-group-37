@@ -44,7 +44,7 @@ public class MapMenuController {
 
         for (int i = minY; i < maxY; i++) {
             for (int j = minX; j < maxX; j++) {
-                message.append(map.getTileByLocation(i, j).getState());
+                message.append(map.getTileByLocation(i, j).getState()).append(" ");
             }
             message.append("\n");
         }

@@ -50,7 +50,7 @@ public enum Command {
     DISPLAY_PROFILE("\\s*profile\\s+display\\s*"),
 
     // GameMenu:
-    SHOW_MAP("\\s*show\\s+map(\\s+((-x(?<x>\\d+))|(-y(?<y>\\d+))))+\\s*"),
+    SHOW_MAP("\\s*show\\s+map(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
     SHOW_POPULARITY("\\s*show\\s+popularity\\s*"),
     SHOW_POPULARITY_FACTORS("\\s*show\\s+popularity\\s+factors\\s*"),
     SHOW_FOOD_LIST("\\s*show\\s+food\\s+list\\s*"),
@@ -60,19 +60,19 @@ public enum Command {
     TAX_RATE_SHOW("\\s*tax\\s+rate\\s+show\\s*"),
     FEAR_RATE("\\s*fear\\s+rate\\s+-r\\s+(?<rateNumber>\\d+)\\s*"),
     SHOW_FEAR_RATE("\\s*show\\s+fear\\s+rate\\s*"),
-    DROP_BUILDING("\\s*dropbuilding(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s+-type\\s+(?<type>.+)\\s*"),
-    CREATE_UNIT("\\s*createunit(\\s+((-t\\s+(?<type>/\".+\"|\\S+))|(-c\\s+(?<count>\\d+)))\\s*"),
-    SELECT_BUILDING("\\s*select\\s+building(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s*"),
-    SELECT_UNIT("\\s*select\\s+unit(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s*"),
+    DROP_BUILDING("\\s*drop building(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s+-type\\s+(?<type>.+)\\s*"),
+    CREATE_UNIT("\\s*create unit(\\s+((-t\\s+(?<type>/\".+\"|\\S+))|(-c\\s+(?<count>\\d+))))+\\s*"),
+    SELECT_BUILDING("\\s*select\\s+building(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
+    SELECT_UNIT("\\s*select\\s+unit(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
     ENTER_TRADE_MENU("\\s*enter\\s+trade\\s+menu\\s*"),
     ENTER_SHOP_MENU("\\s*enter\\s+shop\\s+menu\\s*"),
 
-    SET_TEXTURE("\\s*settexture\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t\\s+(?<type>\".+\"|\\S+)))+\\s*"),
+    SET_TEXTURE("\\s*settexture\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t\\s+(?<type>\".+\"|\\S+))))+\\s*"),
     SET_RECTANGLE_TEXTURES("\\s*settexture\\s+(\\s+((-x1\\s+(?<x1>\\d+))|(-y1\\s+(?<y1>\\d+))|" +
-            "(-x2\\s+(?<x2>\\d+))|(-y2\\s+(?<y2>\\d+))|(-t\\s+(?<type>\".+\"|\\S+)))+\\s*"),
-    CLEAR_TEXTURE("\\s*clear(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s*"),
-    DROP_ROCK("\\s*drop\\s+rock\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-d(?<direction>\".+\"|\\S+)))+\\s*"),
-    DROP_TREE("\\s*droptree(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t(?<type>\".+\"|\\S+)))+\\s*"),
+            "(-x2\\s+(?<x2>\\d+))|(-y2\\s+(?<y2>\\d+))|(-t\\s+(?<type>\".+\"|\\S+))))+\\s*"),
+    CLEAR_TEXTURE("\\s*clear(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
+    DROP_ROCK("\\s*drop\\s+rock\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-d(?<direction>\".+\"|\\S+))))+\\s*"),
+    DROP_TREE("\\s*drop tree(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t(?<type>\".+\"|\\S+))))+\\s*"),
     // TODO: fill
     END_GAME(""),
 
