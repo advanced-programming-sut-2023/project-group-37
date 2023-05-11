@@ -33,8 +33,8 @@ public enum Command {
 
     // MainMenu:
     ENTER_PROFILE_MENU("\\s*enter\\s+profile\\s+menu\\s*"),
-    START_GAME("\\s*start\\s+game(\\s+((-t\\s+(?<turns>\\d+))|(-m\\s+(?<mapName>\\d+))|" +
-            "(-u\\s+(?<users>\"(\\s+\\S+\\s+\\d+\\s*&)+\\s*\"))))\\s*"), // TODO: check
+    START_GAME("\\s*start\\s+game(\\s+((-t\\s+(?<turns>\\d+))|(-m\\s+(?<mapName>\"[^\"]+\"+))|" +
+            "(-u\\s+(?<users>\"[^\"]+\"))))+\\s*"), // TODO: check
     LOGOUT("\\s*logout\\s*"),
 
     // ProfileMenu:
