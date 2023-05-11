@@ -23,6 +23,7 @@ public enum DefensiveBuildingType {
     private final int damage;
     private final int range;
     private final int capacity;
+    private final boolean isRepairable;
 
     DefensiveBuildingType(String name, int cost, int maxHitpoints, int stoneAmount, int damage, int range, int capacity) {
         this.name = name;
@@ -32,6 +33,7 @@ public enum DefensiveBuildingType {
         this.damage = damage;
         this.range = range;
         this.capacity = capacity;
+        this.isRepairable = true;
     }
 
     public static DefensiveBuildingType getDefensiveBuildingTypeByName(String name) {
@@ -42,30 +44,34 @@ public enum DefensiveBuildingType {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public int getCost() {
-        return cost;
+        return this.cost;
     }
 
     public int getMaxHitpoints() {
-        return maxHitpoints;
+        return this.maxHitpoints;
     }
 
     public int getStoneAmount() {
-        return stoneAmount;
+        return this.stoneAmount;
     }
 
     public int getDamage() {
-        return damage;
+        return this.damage;
     }
 
     public int getRange() {
-        return range;
+        return this.range;
     }
 
     public int getCapacity() {
-        return capacity;
+        return this.capacity;
+    }
+
+    public boolean isRepairable() {
+        return this.isRepairable;
     }
 }

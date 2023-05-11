@@ -109,6 +109,9 @@ public enum Message {
     CANNOT_PLACE_BUILDING_ON_TEXTURE("Cannot place the building on this texture!"),
     TILE_ALREADY_HAS_BUILDING("Tile already has a building!"),
     DROP_BUILDING_SUCCESS("Building has been dropped successfully!"),
+    BUILDING_NOT_REPAIRABLE("Building is not repairable!"),
+    STONE_NOT_ENOUGH("Stone not enough!"),
+    REPAIR_SUCCESS("Repaired successfully!")
     ;
     private final String message;
 

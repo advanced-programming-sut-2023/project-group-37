@@ -61,7 +61,7 @@ public class MainMenuController {
             return Message.EMPTY_FIELD.toString();
 
         Game game = new Game(gameMenuController, new Map(Integer.parseInt(size)) , Integer.parseInt(turns), governments);
-        GameMenuController.setGame(game);
+        gameMenuController.setCurrentGame(game);
 
         return Message.GAME_STARTED.toString();
     }
