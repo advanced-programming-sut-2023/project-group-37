@@ -13,6 +13,7 @@ public class MainMenuController {
     private static User currentUser;
 
     private final GameMenuController gameMenuController;
+
     public MainMenuController(GameMenuController gameMenuController) {
         this.gameMenuController = gameMenuController;
     }
@@ -64,7 +65,7 @@ public class MainMenuController {
         }
 
         Game game = new Game(gameMenuController, map , Integer.parseInt(turns), governments);
-        GameMenuController.setGame(game);
+        gameMenuController.setCurrentGame(game);
 
         return Message.GAME_STARTED.toString();
     }

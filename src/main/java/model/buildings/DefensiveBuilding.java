@@ -2,10 +2,31 @@ package model.buildings;
 
 import model.game.Government;
 import model.game.Tile;
+import model.people.MilitaryUnit;
+import model.people.Troop;
 
-public class DefensiveBuilding extends Building{
+import java.util.ArrayList;
 
-    public DefensiveBuilding(Government loyalty, Tile location, BuildingType type) {
-        super(loyalty, location, type);
+public class DefensiveBuilding extends Building {
+
+    private final DefensiveBuildingType type;
+
+    // TODO: How about catapult?
+    private final ArrayList<MilitaryUnit> troops;
+
+    public DefensiveBuilding(Government loyalty, Tile location, DefensiveBuildingType type) {
+        super(loyalty, location);
+        this.type = type;
+        super.setHitpoints(type.getMaxHitpoints());
+        this.troops = new ArrayList<>();
+    }
+
+    public boolean isFull(){
+        return this.troops.size() == this.type.getCapacity();
+    }
+
+    @Override
+    public int getHitpoints() {
+        return super.getHitpoints();
     }
 }

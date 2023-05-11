@@ -18,7 +18,7 @@ public class Game {
         this.governments = governments;
         this.currentTurnGovernment = governments.get(0);
         this.gameMenuController = gameMenuController;
-        gameMenuController.setGovernment(currentTurnGovernment);
+        gameMenuController.setCurrentGovernment(currentTurnGovernment);
         index = 0;
     }
 
@@ -58,6 +58,6 @@ public class Game {
 
         index = (index+1) % governments.size();
         currentTurnGovernment = governments.get(index);
-        gameMenuController.setGovernment(currentTurnGovernment);
+        gameMenuController.setCurrentGovernment(currentTurnGovernment);
     }
 }

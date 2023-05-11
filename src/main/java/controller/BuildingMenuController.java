@@ -3,10 +3,8 @@ package controller;
 import model.buildings.Building;
 import model.game.Game;
 import model.game.Government;
-import model.game.Tile;
+import model.game.Item;
 import view.enums.Message;
-
-import java.util.regex.Matcher;
 
 public class BuildingMenuController {
 
@@ -20,35 +18,40 @@ public class BuildingMenuController {
         this.currentGovernment = currentGovernment;
     }
 
-    public static void setGame(Game game) {
+    public Building getCurrentBuilding() {
+        return this.currentBuilding;
+    }
+
+    public void setCurrentBuilding(Building currentBuilding) {
+        this.currentBuilding = currentBuilding;
+    }
+
+    public void setCurrentGame(Game game) {
         currentGame = game;
     }
 
-    public String selectBuilding(Matcher matcher) {
-
-        int x = Integer.parseInt(matcher.group("x"));
-        int y = Integer.parseInt(matcher.group("y"));
-        Tile tile;
-
-        if ((tile = currentGame.getMap().getTileByLocation(x, y)) == null)
-            return Message.ADDRESS_OUT_OF_BOUNDS.toString();
-
-        if (tile.getTerritory() != this.currentGovernment)
-            return Message.TILE_IS_NOT_YOURS.toString();
-
-        Building building;
-
-        if ((building = tile.getBuilding()) == null)
-            return Message.NO_BUILDING_IN_TILE.toString();
-
-        if (building.getLoyalty() != this.currentGovernment)
-            return Message.BUILDING_NOT_YOURS.toString();
-
-        this.currentBuilding = currentGame.getMap().getTileByLocation(x, y).getBuilding();
-        return building.getType().toString() + " selected!";
+    public Message deselectBuilding() {
+        if (this.currentBuilding != null) {
+            this.currentBuilding = null;
+            return null;
+        } else
+            return Message.NO_BUILDING_SELECTED;
     }
 
     public Message repair() {
-        return null;
+
+        if (!this.currentBuilding.getType().isRepairable())
+            return Message.BUILDING_NOT_REPAIRABLE;
+
+        int stoneNeededToRepair = (int)
+                (1 - (double) (this.currentBuilding.getHitpoints() / this.getCurrentBuilding().getMaxHitpoints())) *
+                this.currentBuilding.getType().getRawMaterialUsesForSecond();
+
+        if (!this.currentGovernment.removeFromTargetRepository(this.currentGovernment.getStockpile(), Item.STONE,
+                stoneNeededToRepair))
+            return Message.STONE_NOT_ENOUGH;
+
+        this.currentBuilding.setHitpoints(this.currentBuilding.getMaxHitpoints());
+        return Message.REPAIR_SUCCESS;
     }
 }

@@ -128,6 +128,20 @@ public enum Message {
     DROP_ROCK_ERROR("You can't drop rock here!"),
     DROP_TREE("You dropped tree here!"),
     DROP_TREE_ERROR("You can't drop tree here!"),
+    NO_BUILDING_SELECTED("No building has been selected!"),
+    INVALID_BUILDING_TYPE("Invalid building type!"),
+    CANNOT_PLACE_BUILDING_ON_TEXTURE("Cannot place the building on this texture!"),
+    TILE_ALREADY_HAS_BUILDING("Tile already has a building!"),
+    DROP_BUILDING_SUCCESS("Building has been dropped successfully!"),
+    BUILDING_NOT_REPAIRABLE("Building is not repairable!"),
+    STONE_NOT_ENOUGH("Stone not enough!"),
+    REPAIR_SUCCESS("Repaired successfully!"),
+    INVALID_FOOD_RATE("You have to enter a rate between -2 to 2!"),
+    FOOD_RATE_SET("Food rate has been set to"),
+    INVALID_TAX_RATE("You have to enter a rate between -3 to 8"),
+    TAX_RATE_SET("Tax rate has been set to"),
+    INVALID_FEAR_RATE("You have to enter a rate between -5 to 5"),
+    FEAR_RATE_SET("Fear rate has been set to")
     ;
 
     private final String message;

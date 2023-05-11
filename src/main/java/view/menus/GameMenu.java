@@ -57,7 +57,6 @@ public class GameMenu {
                 else if ((matcher = Command.SELECT_BUILDING.getMatcher(command)) != null) {
                     if (selectBuilding(matcher))
                         return Result.ENTER_BUILDING_MENU;
-
                 } else if ((matcher = Command.SELECT_UNIT.getMatcher(command)) != null) {
                     if (selectUnit(matcher))
                         return Result.ENTER_UNIT_MENU;
@@ -98,8 +97,7 @@ public class GameMenu {
     private boolean selectBuilding(Matcher matcher) {
         this.message = this.controller.selectBuilding(matcher);
         System.out.println(this.message);
-
-        return Message.ENTERED_BUILDING_MENU.equals(message);
+        return message.contains(Message.ENTERED_BUILDING_MENU.toString());
     }
 
     private boolean selectUnit(Matcher matcher) {

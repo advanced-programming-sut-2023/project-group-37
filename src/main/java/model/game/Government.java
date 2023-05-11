@@ -3,6 +3,8 @@ package model.game;
 import model.buildings.Building;
 import model.buildings.BuildingType;
 import model.buildings.Storage;
+import model.people.MilitaryUnit;
+import model.people.Person;
 import model.people.Troop;
 
 import model.people.TroopType;
@@ -17,17 +19,19 @@ public class Government {
     private final Tile territoryLocation;
     private final Color color;
     private int gold;
-    private HashMap<Troop, Integer> troops;
     private final Troop lord;
+    private final ArrayList<Person> people;
+    private final HashMap<Troop, Integer> troops;
+    private final ArrayList<MilitaryUnit> militaryUnits;
     private final ArrayList<Building> buildings;
     private boolean hasMarket;
     private final ArrayList<Storage> stockpile;
     private final ArrayList<Storage> granary;
     private final ArrayList<Storage> armory;
     private int popularity;
-    private double foodRate;
-    private double taxRate;
-    private double fearRate;
+    private int foodRate;
+    private int taxRate;
+    private int fearRate;
 
     public Government(User user, Color color, int territory, Tile territoryLocation) {
         this.user = user;
@@ -37,6 +41,8 @@ public class Government {
         // TODO: set default value for gold!
         this.gold = 0;
         this.lord = new Troop(this, TroopType.LORD, territoryLocation);
+        this.people = new ArrayList<>();
+        this.militaryUnits = new ArrayList<>();
         this.buildings = new ArrayList<>();
         this.hasMarket = false;
         // TODO: set default resources!
@@ -48,6 +54,7 @@ public class Government {
         this.foodRate = 1;
         this.taxRate = 0;
         this.fearRate = 0;
+        this.troops = new HashMap<>();
     }
 
     public User getUser() {
@@ -55,6 +62,7 @@ public class Government {
     }
 
     public void addTroops(Troop troop, int count) {
+        // TODO : fix it in ArrayList
         troops.put(troop, count + troops.getOrDefault(troop, 0));
         troop.getLocation().addMilitaryUnit(troop, count);
     }
@@ -81,6 +89,14 @@ public class Government {
         return this.lord;
     }
 
+    public ArrayList<Person> getPeople() {
+        return this.people;
+    }
+
+    public ArrayList<MilitaryUnit> getMilitaryUnits() {
+        return this.militaryUnits;
+    }
+
     public ArrayList<Building> getBuildings() {
         return this.buildings;
     }
@@ -105,16 +121,28 @@ public class Government {
         return this.popularity;
     }
 
-    public double getFoodRate() {
+    public int getFoodRate() {
         return this.foodRate;
     }
 
-    public double getTaxRate() {
+    public void setFearRate(int fearRate) {
+        this.fearRate = fearRate;
+    }
+
+    public int getTaxRate() {
         return this.taxRate;
     }
 
-    public double getFearRate() {
+    public void setTaxRate(int taxRate) {
+        this.taxRate = taxRate;
+    }
+
+    public int getFearRate() {
         return this.fearRate;
+    }
+
+    public void setFoodRate(int foodRate) {
+        this.foodRate = foodRate;
     }
 
     public void addBuilding(Building building) {
@@ -144,7 +172,7 @@ public class Government {
         return freeSpace;
     }
 
-    private int getItemAmount(Item item, ArrayList<Storage> repository) {
+    public int getItemAmount(Item item, ArrayList<Storage> repository) {
         int itemAmount = 0;
         for (Storage storage : repository) {
             itemAmount += storage.getItemAmount(item);

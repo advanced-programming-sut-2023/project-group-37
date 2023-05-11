@@ -3,18 +3,35 @@ package model.buildings;
 import model.game.Government;
 import model.game.Item;
 import model.game.Tile;
+import model.people.Person;
+
+import java.util.ArrayList;
 
 public class Building {
     private final Government loyalty;
     private final Tile location;
     private final BuildingType type;
     private int hitpoints;
+    private final ArrayList<Person> operators;
+
+    // This ctor is for other classes of building!
+    public Building(Government loyalty, Tile location) {
+        this.loyalty = loyalty;
+        this.location = location;
+        this.type = null;
+        this.hitpoints = 0;
+        this.operators = null;
+    }
 
     public Building(Government loyalty, Tile location, BuildingType type) {
         this.loyalty = loyalty;
         this.location = location;
         this.type = type;
         this.hitpoints = type.getMaxHitpoints();
+        if (type.getWorkersNeeded() != 0)
+            this.operators = new ArrayList<>();
+        else
+            this.operators = null;
     }
 
     public Government getLoyalty() {
@@ -41,12 +58,32 @@ public class Building {
         return this.hitpoints;
     }
 
+    public void setHitpoints(int hitpoints) {
+        this.hitpoints = hitpoints;
+    }
+
     public Item getBuildingMaterial() {
         return this.type.getBuildingMaterial();
     }
 
     public int getBuildingMaterialAmount() {
         return this.type.getBuildingMaterialAmount();
+    }
+
+    public ArrayList<Person> getOperators() {
+        return this.operators;
+    }
+
+    public void assignOperator(Person operator) {
+        this.operators.add(operator);
+    }
+
+    public boolean isFull() {
+        try {
+            return this.operators.size() == this.type.getWorkersNeeded();
+        } catch (Exception ignored) {
+            return false;
+        }
     }
 
     public void takeDamage(int amount) {

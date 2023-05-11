@@ -7,20 +7,16 @@ import model.game.Tile;
 public class Person implements Movable {
 
     private int hitpoints;
-    private boolean isWorking;
     private Building workplace;
     private int speed;
-
     private Tile location;
 
     public Person(){
         // TODO: set default hitpoints!
-        this.isWorking = false;
         this.workplace = null;
     }
 
     public Person(int speed){
-        this.isWorking = false;
         this.workplace = null;
         // TODO: handle default people speed
         this.speed = 10;
@@ -30,12 +26,13 @@ public class Person implements Movable {
         return this.hitpoints;
     }
 
-    public boolean isWorking() {
-        return this.isWorking;
-    }
-
     public Building getWorkplace() {
         return this.workplace;
+    }
+
+    public void setWorkplace(Building workplace) {
+        this.workplace = workplace;
+
     }
 
     public int getSpeed() {

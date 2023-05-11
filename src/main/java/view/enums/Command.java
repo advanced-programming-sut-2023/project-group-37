@@ -54,11 +54,11 @@ public enum Command {
     SHOW_POPULARITY("\\s*show\\s+popularity\\s*"),
     SHOW_POPULARITY_FACTORS("\\s*show\\s+popularity\\s+factors\\s*"),
     SHOW_FOOD_LIST("\\s*show\\s+food\\s+list\\s*"),
-    FOOD_RATE("\\s*food\\s+rate\\s+-r\\s+(?<rateNumber>\\d+)\\s*"),
+    FOOD_RATE("\\s*food\\s+rate\\s+-r\\s+(?<rateNumber>-?\\d+)\\s*"),
     FOOD_RATE_SHOW("\\s*food\\s+rate\\s+show\\s*"),
-    TAX_RATE("\\s*tax\\s+rate\\s+-r\\s+(?<rateNumber>\\d+)\\s*"),
+    TAX_RATE("\\s*tax\\s+rate\\s+-r\\s+(?<rateNumber>-?\\d+)\\s*"),
     TAX_RATE_SHOW("\\s*tax\\s+rate\\s+show\\s*"),
-    FEAR_RATE("\\s*fear\\s+rate\\s+-r\\s+(?<rateNumber>\\d+)\\s*"),
+    FEAR_RATE("\\s*fear\\s+rate\\s+-r\\s+(?<rateNumber>-?\\d+)\\s*"),
     SHOW_FEAR_RATE("\\s*show\\s+fear\\s+rate\\s*"),
     DROP_BUILDING("\\s*dropbuilding(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s+-type\\s+(?<type>.+)\\s*"),
     CREATE_UNIT("\\s*createunit(\\s+((-t\\s+(?<type>/\".+\"|\\S+))|(-c\\s+(?<count>\\d+)))\\s*"),
@@ -115,5 +115,10 @@ public enum Command {
     public Matcher getMatcher(String input){
         Matcher matcher = Pattern.compile(this.regex).matcher(input);
         return matcher.matches() ? matcher : null;
+    }
+
+    @Override
+    public String toString() {
+        return this.regex;
     }
 }
