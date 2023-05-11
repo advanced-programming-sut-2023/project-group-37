@@ -66,7 +66,7 @@ public class Government {
     public Color getColor() {
         return this.color;
     }
-    public Building getUnicBuilding(BuildingType type) {
+    public Building getUniqueBuilding(BuildingType type) {
         for (Building building : buildings) {
             if (building.getType() == type)
                 return building;

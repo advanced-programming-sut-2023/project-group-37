@@ -53,7 +53,7 @@ public class Game {
     public void goNextTurn() {
         if (index == governments.size()-1)
         {
-            //todo : do all changes
+            //TODO : do changes
         }
 
         index = (index+1) % governments.size();

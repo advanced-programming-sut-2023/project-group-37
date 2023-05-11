@@ -132,12 +132,12 @@ public class GameMenuController {
 
         Building building;
         if (troopType.getTrainingCamp() == BuildingType.BARRACKS) {
-            building = government.getUnicBuilding(BuildingType.BARRACKS);
+            building = government.getUniqueBuilding(BuildingType.BARRACKS);
             if (building == null)
                 return Message.BARRACKS_NOT_EXISTS.toString();
         }
         else {
-            building = government.getUnicBuilding(BuildingType.MERCENARY_POST);
+            building = government.getUniqueBuilding(BuildingType.MERCENARY_POST);
             if (building == null)
                 return Message.MERCENARY_POST_NOT_EXISTS.toString();
         }

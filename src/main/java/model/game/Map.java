@@ -91,10 +91,9 @@ public class Map {
         }
     }
 
-
-        public static void main(String[] args) {
-        writeMapsToFile();
-    }
+//        public static void main(String[] args) {
+//        writeMapsToFile();
+//    }
     public static void writeMapsToFile() {
         maps.add(GenerateMap.createMap1());
         //maps.add(GenerateMap.createMap2());
