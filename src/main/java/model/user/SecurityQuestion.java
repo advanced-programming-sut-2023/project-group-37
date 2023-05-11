@@ -6,7 +6,7 @@ public enum SecurityQuestion {
     Q2("What was my first pet's name?"),
     Q3("What is my mother's last name?");
 
-    public static String getAllQuestions(){
+    public static String getAllQuestions() {
         StringBuilder result = new StringBuilder();
 
         int index = 1;

@@ -15,26 +15,39 @@ public class ShopMenuController {
 
     public boolean addItem(Item item, int amount) {
         switch (item.getCategory()) {
-            case FOODS -> {return government.addToTargetRepository(government.getGranary(), item, amount);}
-            case WEAPONS -> {return government.addToTargetRepository(government.getArmory(), item, amount);}
-            case RESOURCES -> {return government.addToTargetRepository(government.getStockpile(), item, amount);}
+            case FOODS -> {
+                return government.addToTargetRepository(government.getGranary(), item, amount);
+            }
+            case WEAPONS -> {
+                return government.addToTargetRepository(government.getArmory(), item, amount);
+            }
+            case RESOURCES -> {
+                return government.addToTargetRepository(government.getStockpile(), item, amount);
+            }
         }
         return false;
     }
 
     public boolean removeItem(Item item, int amount) {
         switch (item.getCategory()) {
-            case FOODS -> {return government.removeFromTargetRepository(government.getGranary(), item, amount);}
-            case WEAPONS -> {return government.removeFromTargetRepository(government.getArmory(), item, amount);}
-            case RESOURCES -> {return government.removeFromTargetRepository(government.getStockpile(), item, amount);}
+            case FOODS -> {
+                return government.removeFromTargetRepository(government.getGranary(), item, amount);
+            }
+            case WEAPONS -> {
+                return government.removeFromTargetRepository(government.getArmory(), item, amount);
+            }
+            case RESOURCES -> {
+                return government.removeFromTargetRepository(government.getStockpile(), item, amount);
+            }
         }
         return false;
     }
 
-    public String showPriceList(){
+    public String showPriceList() {
         return null;
     }
-    public String buy(Matcher matcher){
+
+    public String buy(Matcher matcher) {
         int amount = Integer.parseInt(matcher.group("itemAmount"));
         Item item = Item.getItemByName(matcher.group("itemName"));
 
@@ -44,7 +57,7 @@ public class ShopMenuController {
         if (amount < 1)
             return Message.INVALID_AMOUNT.toString();
 
-        if(government.getGold() < amount * item.getBuyCost())
+        if (government.getGold() < amount * item.getBuyCost())
             return Message.NOT_ENOUGH_GOLD.toString();
 
         if (!addItem(item, amount))
@@ -54,7 +67,7 @@ public class ShopMenuController {
 
     }
 
-    public String sell(Matcher matcher){
+    public String sell(Matcher matcher) {
         int amount = Integer.parseInt(matcher.group("itemAmount"));
         Item item = Item.getItemByName(matcher.group("ItemName"));
 

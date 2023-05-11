@@ -27,22 +27,16 @@ public class MainMenu {
             if (Command.ENTER_PROFILE_MENU.getMatcher(command) != null) {
                 System.out.println(this.controller.enterProfileMenu());
                 return Result.ENTER_PROFILE_MENU;
-            }
-            else if ((matcher = Command.START_GAME.getMatcher(command)) != null) {
+            } else if ((matcher = Command.START_GAME.getMatcher(command)) != null) {
                 if (startGame(matcher))
                     return Result.ENTER_GAME_MENU;
                 System.out.println(Message.TERRITORY_NOT_ASSIGNED);
-            }
-            else if (Command.LOGOUT.getMatcher(command) != null) {
+            } else if (Command.LOGOUT.getMatcher(command) != null) {
                 System.out.println(this.controller.logout());
                 return Result.ENTER_LOGIN_MENU;
-            }
-
-            else if (Command.EXIT.getMatcher(command) != null) {
+            } else if (Command.EXIT.getMatcher(command) != null) {
                 return Result.EXIT;
-            }
-
-            else
+            } else
                 System.out.println(Message.INVALID_COMMAND);
         }
     }
@@ -58,8 +52,7 @@ public class MainMenu {
                 split = parts[index].split("\\s+");
                 usernames[index] = split[0];
                 numbers[index] = split[1];
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 return false;
             }
         }

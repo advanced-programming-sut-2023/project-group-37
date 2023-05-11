@@ -3,7 +3,6 @@ package controller;
 import model.user.SecurityQuestion;
 import model.user.Slogan;
 import model.user.User;
-import model.utils.Captcha;
 import view.enums.Message;
 
 import java.security.SecureRandom;

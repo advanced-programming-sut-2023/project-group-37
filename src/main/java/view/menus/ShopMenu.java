@@ -23,7 +23,7 @@ public class ShopMenu {
         while (true) {
             command = scanner.nextLine();
 
-            if(Command.SHOW_PRICE_LIST.getMatcher(command) != null)
+            if (Command.SHOW_PRICE_LIST.getMatcher(command) != null)
                 System.out.println(this.controller.showPriceList());
 
             else if ((matcher = Command.BUY_ITEM.getMatcher(command)) != null)
@@ -35,9 +35,7 @@ public class ShopMenu {
             else if (Command.BACK_GAME_MENU.getMatcher(command) != null) {
                 System.out.println(Message.BACK_GAME_MENU);
                 return;
-            }
-
-            else System.out.println(Message.INVALID_COMMAND);
+            } else System.out.println(Message.INVALID_COMMAND);
         }
     }
 }

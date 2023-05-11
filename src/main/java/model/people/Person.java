@@ -11,12 +11,12 @@ public class Person implements Movable {
     private int speed;
     private Tile location;
 
-    public Person(){
+    public Person() {
         // TODO: set default hitpoints!
         this.workplace = null;
     }
 
-    public Person(int speed){
+    public Person(int speed) {
         this.workplace = null;
         // TODO: handle default people speed
         this.speed = 10;
@@ -48,7 +48,7 @@ public class Person implements Movable {
     }
 
     // TODO: it's a dummy teleport! has to move according to speed!
-    public void move(Tile destination){
+    public void move(Tile destination) {
         this.location = destination;
         destination.addPerson(this);
     }

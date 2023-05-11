@@ -4,7 +4,6 @@ import model.game.Government;
 import model.game.Movable;
 import model.game.Tile;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public abstract class MilitaryUnit implements Movable {
@@ -85,6 +84,7 @@ public abstract class MilitaryUnit implements Movable {
     public void setRoute(LinkedList<Tile> route) {
         this.route = route;
     }
+
     public void setPatrol(LinkedList<Tile> patrolRoute) {
         this.patrolRoute = patrolRoute;
     }

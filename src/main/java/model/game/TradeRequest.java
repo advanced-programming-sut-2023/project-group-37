@@ -29,7 +29,7 @@ public class TradeRequest {
         requests.add(this);
     }
 
-    public Item getItem(){
+    public Item getItem() {
         return this.item;
     }
 

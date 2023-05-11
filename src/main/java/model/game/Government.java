@@ -74,6 +74,7 @@ public class Government {
     public Color getColor() {
         return this.color;
     }
+
     public Building getUniqueBuilding(BuildingType type) {
         for (Building building : buildings) {
             if (building.getType() == type)
@@ -81,6 +82,7 @@ public class Government {
         }
         return null;
     }
+
     public int getGold() {
         return this.gold;
     }
@@ -146,13 +148,13 @@ public class Government {
     }
 
     public void addBuilding(Building building) {
-        if(building.getType() == BuildingType.STOCKPILE)
+        if (building.getType() == BuildingType.STOCKPILE)
             this.stockpile.add((Storage) building);
         else if (building.getType() == BuildingType.GRANARY)
             this.granary.add((Storage) building);
         else if (building.getType() == BuildingType.ARMORY)
             this.armory.add((Storage) building);
-        // todo : unComment these :
+            // todo : unComment these :
 //        else if (building.getType() == BuildingType.MARKET) {
 //            this.hasMarket = true;
 //            this.buildings.add(building);

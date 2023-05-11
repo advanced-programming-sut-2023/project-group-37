@@ -7,7 +7,6 @@ import model.people.*;
 import view.enums.Message;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 
@@ -16,9 +15,11 @@ public class UnitMenuController {
     private Government government;
     private ArrayList<MilitaryUnit> unit;
     private Tile location;
+
     public void setGovernment(Government government) {
         this.government = government;
     }
+
     public void setUnit(ArrayList<MilitaryUnit> unit, Tile location) {
         this.unit = unit;
         this.location = location;
@@ -48,6 +49,7 @@ public class UnitMenuController {
 
         return Message.SUCCESS.toString();
     }
+
     public Message patrolUnit(int x1, int y1, int x2, int y2) {
         Tile tile1 = game.getMap().getTileByLocation(x1, y1), tile2 = game.getMap().getTileByLocation(x2, y2);
         if (tile1 == null || tile2 == null)
@@ -69,13 +71,15 @@ public class UnitMenuController {
 
         return Message.SUCCESS;
     }
-    public String setUnitState(String state){
+
+    public String setUnitState(String state) {
         for (MilitaryUnit militaryUnit : unit) {
             militaryUnit.setStance(MilitaryUnitStance.getByState(state));
         }
         return Message.STATE_IS_SET.toString();
     }
-    public String attack(int x, int y, boolean isEarth){
+
+    public String attack(int x, int y, boolean isEarth) {
         Tile target = game.getMap().getTileByLocation(x, y);
         if (target == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
@@ -128,8 +132,7 @@ public class UnitMenuController {
                 militaryUnit.setTarget(target);
 
             return Message.SUCCESS.toString();
-        }
-        else {
+        } else {
             ArrayList<MilitaryUnit> mealyUnits = new ArrayList<>();
 
             for (MilitaryUnit militaryUnit : unit) {
@@ -146,19 +149,24 @@ public class UnitMenuController {
             return Message.SUCCESS.toString();
         }
     }
-    public Message pourOil(Matcher matcher){
+
+    public Message pourOil(Matcher matcher) {
         return null;
     }
-    public Message digTunnel(Matcher matcher){
+
+    public Message digTunnel(Matcher matcher) {
         return null;
     }
-    public Message buildEquipment(Matcher matcher){
+
+    public Message buildEquipment(Matcher matcher) {
         return null;
     }
-    public Message disbandUnit(){
+
+    public Message disbandUnit() {
         return null;
     }
-    public Message digMoat(Matcher matcher){
+
+    public Message digMoat(Matcher matcher) {
         return null;
     }
 }

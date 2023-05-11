@@ -141,12 +141,11 @@ public enum Message {
     INVALID_TAX_RATE("You have to enter a rate between -3 to 8"),
     TAX_RATE_SET("Tax rate has been set to"),
     INVALID_FEAR_RATE("You have to enter a rate between -5 to 5"),
-    FEAR_RATE_SET("Fear rate has been set to")
-    ;
+    FEAR_RATE_SET("Fear rate has been set to");
 
     private final String message;
 
-    Message(String message){
+    Message(String message) {
         this.message = message;
     }
 

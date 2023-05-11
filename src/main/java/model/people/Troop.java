@@ -4,7 +4,6 @@ import model.game.Government;
 import model.game.Item;
 import model.game.Tile;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Troop extends MilitaryUnit {

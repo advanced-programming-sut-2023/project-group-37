@@ -9,8 +9,8 @@ public enum Item {
     WOOD("Wood", ItemCategory.RESOURCES, 4, 1),
     STONE("Stone", ItemCategory.RESOURCES, 14, 7),
     IRON("Iron", ItemCategory.RESOURCES, 45, 23),
-    HOPS("Hops",ItemCategory.RESOURCES, 15, 8),
-    WHEAT("Wheat",ItemCategory.RESOURCES, 23, 8),
+    HOPS("Hops", ItemCategory.RESOURCES, 15, 8),
+    WHEAT("Wheat", ItemCategory.RESOURCES, 23, 8),
     FLOUR("Flour", ItemCategory.RESOURCES, 32, 10),
     ALE("Ale", ItemCategory.RESOURCES, 20, 10),
     PITCH("Pitch", ItemCategory.RESOURCES, 20, 10),
@@ -19,7 +19,7 @@ public enum Item {
     APPLE("Apple", ItemCategory.FOODS, 8, 4),
     CHEESE("Cheese", ItemCategory.FOODS, 8, 4),
     //TODO: check bread price!
-    BREAD("Bread", ItemCategory.FOODS, 8,4),
+    BREAD("Bread", ItemCategory.FOODS, 8, 4),
     MEAT("Meat", ItemCategory.FOODS, 8, 4),
 
     // WEAPONS

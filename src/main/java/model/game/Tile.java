@@ -22,7 +22,6 @@ public class Tile {
     public int number; // it is just for rootFinder
 
 
-
     public Tile(int x, int y) {
         this.x = x;
         this.y = y;
@@ -55,7 +54,8 @@ public class Tile {
     public Building getBuilding() {
         return building;
     }
-    public void removeBuilding(){
+
+    public void removeBuilding() {
         this.building = null;
     }
 
@@ -74,6 +74,7 @@ public class Tile {
     public Government getTerritory() {
         return this.territory;
     }
+
     public int getTerritoryNumber() {
         return territoryNumber;
     }
@@ -81,6 +82,7 @@ public class Tile {
     public void setTerritory(Government territory) {
         this.territory = territory;
     }
+
     public void setTerritoryNumber(int territoryNumber) {
         this.territoryNumber = territoryNumber;
     }

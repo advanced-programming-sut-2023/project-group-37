@@ -32,6 +32,7 @@ public enum MilitaryMachineType {
             return null;
         }
     }
+
     public int getCost() {
         return this.cost;
     }

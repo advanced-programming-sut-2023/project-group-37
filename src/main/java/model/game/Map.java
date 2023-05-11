@@ -90,7 +90,7 @@ public class Map {
         }
     }
 
-//        public static void main(String[] args) {
+    //        public static void main(String[] args) {
 //        writeMapsToFile();
 //    }
     public static void writeMapsToFile() {
@@ -162,9 +162,10 @@ public class Map {
 
         return this.field[x][y];
     }
-    public boolean AreaContainsSomething(int x1,int y1,int x2,int y2){
+
+    public boolean AreaContainsSomething(int x1, int y1, int x2, int y2) {
         for (int i = y1; i <= y2; i++) {
-            for (int j = x1; j <= x2 ; j++) {
+            for (int j = x1; j <= x2; j++) {
                 if (field[i][j].getBuilding() != null || field[i][j].getPeople().size() != 0) {
                     return true;
                 }

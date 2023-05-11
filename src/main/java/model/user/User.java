@@ -84,7 +84,7 @@ public class User implements Serializable {
         return null;
     }
 
-    public static Gson getGson(){
+    public static Gson getGson() {
         return User.gson;
     }
 

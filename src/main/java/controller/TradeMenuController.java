@@ -68,7 +68,7 @@ public class TradeMenuController {
         if (requests.size() < id || id < 1)
             return Message.INVALID_ID.toString();
 
-        TradeRequest request = requests.get(id-1);
+        TradeRequest request = requests.get(id - 1);
         if (!request.doTrade(matcher.group("message")))
             return Message.TRADE_FAILED.toString();
 

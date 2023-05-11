@@ -34,8 +34,7 @@ public class LoginMenu {
             else if (Command.ENTER_REGISTER_MENU.getMatcher(this.command) != null) {
                 System.out.println(Message.ENTERED_REGISTER_MENU);
                 return Result.ENTER_REGISTER_MENU;
-            }
-            else if (Command.EXIT.getMatcher(this.command) != null)
+            } else if (Command.EXIT.getMatcher(this.command) != null)
                 return Result.EXIT;
             else
                 System.out.println(Message.INVALID_COMMAND);

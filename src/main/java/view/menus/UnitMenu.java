@@ -11,7 +11,7 @@ public class UnitMenu {
     private final UnitMenuController controller;
     private final Scanner scanner;
 
-    public UnitMenu(Scanner scanner,  UnitMenuController unitMenuController) {
+    public UnitMenu(Scanner scanner, UnitMenuController unitMenuController) {
         this.scanner = scanner;
         this.controller = unitMenuController;
     }
@@ -47,8 +47,7 @@ public class UnitMenu {
             else if (Command.BACK_GAME_MENU.getMatcher(command) != null) {
                 System.out.println(Message.BACK_GAME_MENU);
                 return;
-            }
-            else
+            } else
                 System.out.println(Message.INVALID_COMMAND);
         }
     }

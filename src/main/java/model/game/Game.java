@@ -46,17 +46,16 @@ public class Game {
         return this.currentTurnGovernment;
     }
 
-    public void addGovernment(Government government){
+    public void addGovernment(Government government) {
         this.governments.add(government);
     }
 
     public void goNextTurn() {
-        if (index == governments.size()-1)
-        {
+        if (index == governments.size() - 1) {
             //TODO : do changes
         }
 
-        index = (index+1) % governments.size();
+        index = (index + 1) % governments.size();
         currentTurnGovernment = governments.get(index);
         gameMenuController.setCurrentGovernment(currentTurnGovernment);
     }

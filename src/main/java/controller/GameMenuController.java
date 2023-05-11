@@ -7,11 +7,8 @@ import model.game.*;
 import model.people.MilitaryUnit;
 import model.people.Troop;
 import model.people.TroopType;
-import model.buildings.Building;
-import model.buildings.BuildingType;
 import model.buildings.DefensiveBuilding;
 import model.buildings.DefensiveBuildingType;
-import model.game.*;
 import model.people.Person;
 import view.enums.Message;
 

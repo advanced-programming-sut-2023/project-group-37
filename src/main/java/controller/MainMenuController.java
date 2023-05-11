@@ -32,16 +32,15 @@ public class MainMenuController {
         if (length > 7)
             return Message.USER_NUMBER_LIMIT.toString();
 
-        if(turns == null || name == null)
+        if (turns == null || name == null)
             return Message.EMPTY_FIELD.toString();
 
         int[] territories = new int[length];
         try {
-            for (int index = 0; index < length; index ++) {
+            for (int index = 0; index < length; index++) {
                 territories[index] = Integer.parseInt(numbers[index]);
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             return Message.TERRITORY_NOT_ASSIGNED.toString();
         }
 
@@ -60,11 +59,11 @@ public class MainMenuController {
             if (user == null)
                 return Message.USERNAME_NOT_FOUND.toString();
 
-            governments.add(new Government(user, Color.values()[index], territories[index-1], map.getHeadQuarter(territories[index-1])));
+            governments.add(new Government(user, Color.values()[index], territories[index - 1], map.getHeadQuarter(territories[index - 1])));
             index++;
         }
 
-        Game game = new Game(gameMenuController, map , Integer.parseInt(turns), governments);
+        Game game = new Game(gameMenuController, map, Integer.parseInt(turns), governments);
         gameMenuController.setCurrentGame(game);
 
         return Message.GAME_STARTED.toString();

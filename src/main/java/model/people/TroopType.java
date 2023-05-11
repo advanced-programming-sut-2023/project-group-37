@@ -6,7 +6,7 @@ import model.game.Item;
 public enum TroopType {
 
     //LORD:
-    LORD(null, 0, 100, 100, 55, 1, null,null,false,false),
+    LORD(null, 0, 100, 100, 55, 1, null, null, false, false),
 
     // Barracks:
     ARCHER(BuildingType.BARRACKS, 12, 45, 40, 90, 10,

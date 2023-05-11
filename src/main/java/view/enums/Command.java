@@ -108,11 +108,11 @@ public enum Command {
 
     private final String regex;
 
-    Command(String regex){
+    Command(String regex) {
         this.regex = regex;
     }
 
-    public Matcher getMatcher(String input){
+    public Matcher getMatcher(String input) {
         Matcher matcher = Pattern.compile(this.regex).matcher(input);
         return matcher.matches() ? matcher : null;
     }

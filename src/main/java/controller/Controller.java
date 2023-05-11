@@ -1,6 +1,5 @@
 package controller;
 
-import model.game.Map;
 import model.user.User;
 import view.enums.Result;
 import view.menus.*;

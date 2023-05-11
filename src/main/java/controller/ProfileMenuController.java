@@ -4,9 +4,6 @@ import model.user.User;
 import view.enums.Command;
 import view.enums.Message;
 
-import java.util.regex.Matcher;
-
-import static controller.RegisterMenuController.checkUsernameNotOK;
 
 public class ProfileMenuController {
     private static User currentUser;
@@ -46,7 +43,7 @@ public class ProfileMenuController {
         return Message.CHANGE_NICKNAME;
     }
 
-    public Message changePassword(String oldPass,String newPass) {
+    public Message changePassword(String oldPass, String newPass) {
         if (oldPass == null || newPass == null) {
             return Message.CHANGE_PASSWORD_ERROR1;
         }
@@ -60,11 +57,11 @@ public class ProfileMenuController {
         return Message.ENTER_PASSWORD_AGAIN;
     }
 
-    public Message checkPasswordAgain(String newPassword){
+    public Message checkPasswordAgain(String newPassword) {
         if (Command.CANCEL.getMatcher(newPassword) != null)
             return Message.CANCEL;
 
-        if(!newPassword.equals(password))
+        if (!newPassword.equals(password))
             return Message.CHANGE_PASSWORD_ERROR5;
 
         currentUser.changePassword(newPassword);
