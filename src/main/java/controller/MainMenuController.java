@@ -64,7 +64,7 @@ public class MainMenuController {
         }
 
         Game game = new Game(gameMenuController, map , Integer.parseInt(turns), governments);
-        GameMenuController.setGame(game);
+        gameMenuController.setGame(game);
 
         return Message.GAME_STARTED.toString();
     }
