@@ -82,12 +82,17 @@ public class GameMenu {
                     System.out.println(this.controller.dropTree(matcher));
                 else if (Command.END_GAME.getMatcher(command) != null)
                     return Result.END_GAME;
+
                 else
                     System.out.println(Message.INVALID_COMMAND);
         }
     }
 
     private boolean showMap(Matcher matcher) {
+
+        if (matcher.group("x") == null || matcher.group("y") == null)
+            System.out.println(Message.EMPTY_FIELD);
+
         this.message = this.controller.showMap(Integer.parseInt(matcher.group("x")),
                 Integer.parseInt(matcher.group("y")));
 
