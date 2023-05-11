@@ -5,7 +5,11 @@ import model.game.Item;
 import model.game.ItemCategory;
 import model.game.Tile;
 
+import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Storage extends Building {
     private BuildingType type;
@@ -37,6 +41,16 @@ public class Storage extends Building {
             totalStock += count;
 
         return capacity - totalStock;
+    }
+
+    public String getFoodNames() {
+        String foodList = "";
+        Set<Item> foods = stock.keySet();
+        for (Item food : foods) {
+            foodList += food.getName() + "\n";
+        }
+
+        return foodList.trim();
     }
 
     public int getItemAmount(Item item) {

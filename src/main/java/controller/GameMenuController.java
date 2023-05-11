@@ -2,6 +2,7 @@ package controller;
 
 import model.buildings.Building;
 import model.buildings.BuildingType;
+import model.buildings.Storage;
 import model.game.*;
 import model.people.MilitaryUnit;
 import model.people.Troop;
@@ -61,15 +62,26 @@ public class GameMenuController {
     }
 
     public String showPopularity() {
-        return null;
+        return Integer.toString(government.getPopularity());
     }
 
     public String showPopularityFactors() {
-        return null;
+        return "There are four popularity factors as below:\n" +
+                "1.Food you give!\n" +
+                "2.Tax you take!\n" +
+                "3.Religion you propagate!\n" +
+                "4.Fear you create!";
     }
 
     public String showFoodList() {
-        return null;
+        String list = "";
+        int counter = 1;
+        for (Storage storage : government.getGranary()) {
+            list += "Foods in storage number " + counter + ":\n";
+            list += storage.getFoodNames() + "\n";
+            counter++;
+        }
+        return list.trim();
     }
 
     public String setFoodRate(Matcher matcher) {
@@ -199,9 +211,9 @@ public class GameMenuController {
         if (game.getMap().getTileByLocation(x, y) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        game.getMap().getTileByLocation(x,y).changeTexture(Texture.GROUND);//default
-        game.getMap().getTileByLocation(x,y).getPeople().clear();
-        game.getMap().getTileByLocation(x,y).removeBuilding();
+        game.getMap().getTileByLocation(x, y).changeTexture(Texture.GROUND);//default
+        game.getMap().getTileByLocation(x, y).getPeople().clear();
+        game.getMap().getTileByLocation(x, y).removeBuilding();
 
         return Message.CLEAR_SUCCESSFUL.toString();
     }
@@ -214,7 +226,7 @@ public class GameMenuController {
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
         if (game.getMap().getField()[x][y].getBuilding() != null || game.getMap().getField()[x][y].getPeople().size() != 0
-        || !game.getMap().getField()[x][y].getTexture().canHaveTree())
+                || !game.getMap().getField()[x][y].getTexture().canHaveTree())
             return Message.DROP_TREE_ERROR.toString();
         game.getMap().getField()[x][y].changeTexture(Texture.getTextureByName
                 (MultiMenuFunctions.deleteQuotations(matcher.group("type"))));
