@@ -29,6 +29,7 @@ public class GameMenuController {
         this.buildingMenuController = buildingMenuController;
         this.unitMenuController = unitMenuController;
     }
+
     public void setGovernment(Government government) {
         this.government = government;
         shopMenuController.setGovernment(government);
@@ -50,7 +51,7 @@ public class GameMenuController {
         if (x >= game.getMap().getSize() || x < 0 || y >= game.getMap().getSize() || y < 0)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        return mapMenuController.showMap(x,y);
+        return mapMenuController.showMap(x, y);
     }
 
     public String enterShopMenu() {
@@ -91,7 +92,7 @@ public class GameMenuController {
         return null;
     }
 
-    public String  showFearRate() {
+    public String showFearRate() {
         return null;
     }
 
@@ -103,8 +104,8 @@ public class GameMenuController {
         return null;
     }
 
-    public String  selectUnit(int x, int y) {
-        Tile tile = game.getMap().getTileByLocation(x,y);
+    public String selectUnit(int x, int y) {
+        Tile tile = game.getMap().getTileByLocation(x, y);
 
         if (tile == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
@@ -123,7 +124,7 @@ public class GameMenuController {
         return Message.UNIT_SELECTED.toString();
     }
 
-    public String  createUnit(String type, int count) {
+    public String createUnit(String type, int count) {
         TroopType troopType = TroopType.getTroopTypeByName(type);
         if (troopType == null)
             return Message.TYPE_NOT_EXISTS.toString();
@@ -133,8 +134,7 @@ public class GameMenuController {
             building = government.getUniqueBuilding(BuildingType.BARRACKS);
             if (building == null)
                 return Message.BARRACKS_NOT_EXISTS.toString();
-        }
-        else {
+        } else {
             building = government.getUniqueBuilding(BuildingType.MERCENARY_POST);
             if (building == null)
                 return Message.MERCENARY_POST_NOT_EXISTS.toString();
@@ -150,35 +150,57 @@ public class GameMenuController {
         return Message.CREATE_UNIT_SUCCESSFUL.toString();
     }
 
-    public Message setTexture(Matcher matcher) {
+    public String setTexture(Matcher matcher) {
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
-        if (game.getMap().getTileByLocation(x,y) == null) {
-            return Message.ADDRESS_OUT_OF_BOUNDS;
-        }
-        if (Texture.getTextureByName(MultiMenuFunctions.deleteQuotations(matcher.group("type"))) == null) {
-            return Message.INVALID_TEXTURE_NAME;
-        }
-        if (game.getMap().getField()[x][y].getBuilding() != null || game.getMap().getField()[x][y].getPeople().size() != 0) {
-            return Message.TEXTURE_CHANGE_ERROR;
-        }
-        game.getMap().getField()[x][y].changeTexture(Texture.getTextureByName(MultiMenuFunctions.deleteQuotations(matcher.group("type"))));
-        return Message.TEXTURE_CHANGED_SUCCESSFULLY;
+        if (game.getMap().getTileByLocation(x, y) == null)
+            return Message.ADDRESS_OUT_OF_BOUNDS.toString();
+
+        if (Texture.getTextureByName(MultiMenuFunctions.deleteQuotations(matcher.group("type"))) == null)
+            return Message.INVALID_TEXTURE_NAME.toString();
+
+        if (game.getMap().getField()[x][y].getBuilding() != null || game.getMap().getField()[x][y].getPeople().size() != 0)
+            return Message.TEXTURE_CHANGE_ERROR.toString();
+
+        game.getMap().getField()[x][y].changeTexture(Texture.getTextureByName
+                (MultiMenuFunctions.deleteQuotations(matcher.group("type"))));
+        return Message.TEXTURE_CHANGED_SUCCESSFULLY.toString();
     }
 
-    public Message setRectangleTextures(Matcher matcher) {
+    public String setRectangleTextures(Matcher matcher) {
+        int x1 = Integer.parseInt(matcher.group("x1"));
+        int y1 = Integer.parseInt(matcher.group("y1"));
+        int x2 = Integer.parseInt(matcher.group("x2"));
+        int y2 = Integer.parseInt(matcher.group("y2"));
+
+        if (game.getMap().getTileByLocation(x1, y1) == null || game.getMap().getTileByLocation(x2, y2) == null)
+            return Message.ADDRESS_OUT_OF_BOUNDS.toString();
+
+        if (game.getMap().AreaContainsSomething(x1, y1, x2, y2))
+            return Message.AREA_NOT_EMPTY.toString();
+
+        if (Texture.getTextureByName(MultiMenuFunctions.deleteQuotations(matcher.group("type"))) == null)
+            return Message.INVALID_TEXTURE_NAME.toString();
+
+        for (int i = y1; i <= y2; i++) {
+            for (int j = x1; j <= x2; j++) {
+                game.getMap().getField()[i][j].changeTexture(Texture.getTextureByName
+                        (MultiMenuFunctions.deleteQuotations(matcher.group("type"))));
+            }
+        }
+
+        return Message.TEXTURE_CHANGED_SUCCESSFULLY.toString();
+    }
+
+    public String clearTexture(Matcher matcher) {
         return null;
     }
 
-    public Message clearTexture(Matcher matcher) {
+    public String dropTree(Matcher matcher) {
         return null;
     }
 
-    public Message dropTree(Matcher matcher) {
-        return null;
-    }
-
-    public Message dropRock(Matcher matcher) {
+    public String dropRock(Matcher matcher) {
         return null;
     }
 

@@ -121,7 +121,9 @@ public enum Message {
     BUILDING_NOT_YOURS("Building is not yours!"),
     NO_BUILDING_IN_TILE("No building in the tile!"),
     DO_CAPTCHA("For the last thing enter captcha!"),
-    WRONG_CAPTCHA("Captcha is wrong try again!");
+    WRONG_CAPTCHA("Captcha is wrong try again!"),
+    AREA_NOT_EMPTY("You can't change texture : Area is not empty!"),
+    ;
     private final String message;
 
     Message(String message){
