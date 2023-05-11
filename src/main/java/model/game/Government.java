@@ -25,9 +25,9 @@ public class Government {
     private final ArrayList<Storage> granary;
     private final ArrayList<Storage> armory;
     private int popularity;
-    private double foodRate;
-    private double taxRate;
-    private double fearRate;
+    private int foodRate;
+    private int taxRate;
+    private int fearRate;
 
     public Government(User user,  Color color, int territory) {
         this.user = user;
@@ -102,16 +102,28 @@ public class Government {
         return this.popularity;
     }
 
-    public double getFoodRate() {
+    public int getFoodRate() {
         return this.foodRate;
     }
 
-    public double getTaxRate() {
+    public void setFearRate(int fearRate) {
+        this.fearRate = fearRate;
+    }
+
+    public int getTaxRate() {
         return this.taxRate;
     }
 
-    public double getFearRate() {
+    public void setTaxRate(int taxRate) {
+        this.taxRate = taxRate;
+    }
+
+    public int getFearRate() {
         return this.fearRate;
+    }
+
+    public void setFoodRate(int foodRate) {
+        this.foodRate = foodRate;
     }
 
     public void addBuilding(Building building) {
@@ -141,7 +153,7 @@ public class Government {
         return freeSpace;
     }
 
-    private int getItemAmount(Item item, ArrayList<Storage> repository) {
+    public int getItemAmount(Item item, ArrayList<Storage> repository) {
         int itemAmount = 0;
         for (Storage storage : repository) {
             itemAmount += storage.getItemAmount(item);

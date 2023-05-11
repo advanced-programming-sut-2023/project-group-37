@@ -18,6 +18,8 @@ public enum Item {
     // FOODS
     APPLE("Apple", ItemCategory.FOODS, 8, 4),
     CHEESE("Cheese", ItemCategory.FOODS, 8, 4),
+    //TODO: check bread price!
+    BREAD("Bread", ItemCategory.FOODS, 8,4),
     MEAT("Meat", ItemCategory.FOODS, 8, 4),
 
     // WEAPONS

@@ -4,10 +4,7 @@ import model.buildings.Building;
 import model.buildings.BuildingType;
 import model.buildings.DefensiveBuilding;
 import model.buildings.DefensiveBuildingType;
-import model.game.Game;
-import model.game.Government;
-import model.game.Texture;
-import model.game.Tile;
+import model.game.*;
 import model.people.Person;
 import view.enums.Message;
 
@@ -31,6 +28,7 @@ public class GameMenuController {
         this.buildingMenuController = buildingMenuController;
         this.unitMenuController = unitMenuController;
     }
+
     public void setCurrentGovernment(Government currentGovernment) {
         this.currentGovernment = currentGovernment;
         shopMenuController.setGovernment(currentGovernment);
@@ -54,7 +52,7 @@ public class GameMenuController {
         if (x >= currentGame.getMap().getSize() || x < 0 || y >= currentGame.getMap().getSize() || y < 0)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        return mapMenuController.showMap(x,y);
+        return mapMenuController.showMap(x, y);
     }
 
     public String enterShopMenu() {
@@ -63,8 +61,8 @@ public class GameMenuController {
         return Message.MARKET_NOT_EXISTS.toString();
     }
 
-    public String showPopularity() {
-        return null;
+    public int showPopularity() {
+        return currentGovernment.getPopularity();
     }
 
     public String showPopularityFactors() {
@@ -72,31 +70,57 @@ public class GameMenuController {
     }
 
     public String showFoodList() {
-        return null;
+        StringBuilder result = new StringBuilder();
+
+        for (Item item : Item.values())
+            if (item.getCategory() == ItemCategory.FOODS)
+                result.append(item.getName()).append(": ")
+                        .append(this.currentGovernment.getItemAmount(item, this.currentGovernment.getGranary()))
+                        .append("\n");
+
+        return result.toString().trim();
     }
 
     public String setFoodRate(Matcher matcher) {
-        return null;
+        int rate = Integer.parseInt(matcher.group("rateNumber"));
+
+        if (rate < -2 || rate > 2)
+            return Message.INVALID_FOOD_RATE.toString();
+
+        this.currentGovernment.setFoodRate(rate);
+        return Message.FOOD_RATE_SET + " " + rate;
     }
 
     public String showFoodRate() {
-        return null;
+        return "Food rate: " + this.currentGovernment.getFoodRate();
     }
 
     public String setTaxRate(Matcher matcher) {
-        return null;
+        int rate = Integer.parseInt(matcher.group("rateNumber"));
+
+        if (rate < -3 || rate > 8)
+            return Message.INVALID_TAX_RATE.toString();
+
+        this.currentGovernment.setTaxRate(rate);
+        return Message.TAX_RATE_SET + " " + rate;
     }
 
     public String showTaxRate() {
-        return null;
+        return "Tax rate: " + this.currentGovernment.getTaxRate();
     }
 
     public String setFearRate(Matcher matcher) {
-        return null;
+        int rate = Integer.parseInt(matcher.group("rateNumber"));
+
+        if (rate < -5 || rate > 5)
+            return Message.INVALID_FEAR_RATE.toString();
+
+        this.currentGovernment.setFearRate(rate);
+        return Message.FEAR_RATE_SET + " " + rate;
     }
 
-    public String  showFearRate() {
-        return null;
+    public String showFearRate() {
+        return "Fear rate: " + this.currentGovernment.getTaxRate();
     }
 
     public String dropBuilding(Matcher matcher) {
@@ -178,7 +202,7 @@ public class GameMenuController {
         return building.getType().toString() + " selected!\n" + Message.ENTERED_BUILDING_MENU;
     }
 
-    public String  selectUnit(Matcher matcher) {
+    public String selectUnit(Matcher matcher) {
         return null;
     }
 
@@ -205,5 +229,4 @@ public class GameMenuController {
     public Message dropRock(Matcher matcher) {
         return null;
     }
-
 }

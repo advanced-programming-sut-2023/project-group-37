@@ -111,7 +111,13 @@ public enum Message {
     DROP_BUILDING_SUCCESS("Building has been dropped successfully!"),
     BUILDING_NOT_REPAIRABLE("Building is not repairable!"),
     STONE_NOT_ENOUGH("Stone not enough!"),
-    REPAIR_SUCCESS("Repaired successfully!")
+    REPAIR_SUCCESS("Repaired successfully!"),
+    INVALID_FOOD_RATE("You have to enter a rate between -2 to 2!"),
+    FOOD_RATE_SET("Food rate has been set to"),
+    INVALID_TAX_RATE("You have to enter a rate between -3 to 8"),
+    TAX_RATE_SET("Tax rate has been set to"),
+    INVALID_FEAR_RATE("You have to enter a rate between -5 to 5"),
+    FEAR_RATE_SET("Fear rate has been set to")
     ;
     private final String message;
 

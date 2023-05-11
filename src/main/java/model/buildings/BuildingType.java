@@ -23,7 +23,7 @@ public enum BuildingType {
             1, false, false, false),
     WHEAT_FARMER("wheatfarmer", 150, Item.WOOD, 15, Item.WHEAT, 2,
             1, false, false, false),
-    BAKERY("bakery", 150, Item.WOOD, 10, Item.WHEAT, 4, Item.FLOUR,
+    BAKERY("bakery", 150, Item.WOOD, 10, Item.FLOUR, 4, Item.BREAD,
             1, 1, false, false, false),
     BREWER("brewer", 150, Item.WOOD, 10, Item.HOPS, 1, Item.ALE,
             2, 1, false, false, false),
