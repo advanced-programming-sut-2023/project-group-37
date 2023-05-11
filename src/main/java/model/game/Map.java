@@ -3,6 +3,7 @@ package model.game;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import model.user.User;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -80,13 +81,8 @@ public class Map {
                 if (sampleMaps != null) {
                     Map.maps = sampleMaps;
                 }
-            } catch (IOException ignored) {
-                File file = new File(filePath);
-                try {
-                    file.createNewFile();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
             }
     }
 
@@ -96,7 +92,7 @@ public class Map {
 //    }
     public static void writeMapsToFile(){
         maps.add(GenerateMap.createMap1());
-        //Map.maps.add(GenerateMap.createMap2());
+        //maps.add(GenerateMap.createMap2());
         String filePath = "src/main/resources/sampleMaps.json";
         try {
             FileWriter fileWriter = new FileWriter(filePath);

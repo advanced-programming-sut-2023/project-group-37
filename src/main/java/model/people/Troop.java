@@ -34,11 +34,11 @@ public class Troop extends MilitaryUnit {
         return this.type;
     }
 
-    public boolean canClimbLadder(){
+    public boolean canClimbLadder() {
         return this.canClimbLadder;
     }
 
-    public boolean canDigMoat(){
+    public boolean canDigMoat() {
         return this.canDigMoat;
     }
 

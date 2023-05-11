@@ -1,6 +1,7 @@
 package view.menus;
 
 import controller.RegisterMenuController;
+import model.utils.Captcha;
 import view.enums.Message;
 import view.enums.Result;
 import view.enums.Command;
@@ -14,7 +15,7 @@ public class RegisterMenu {
     private String command;
     private String message;
 
-    public RegisterMenu(Scanner scanner, RegisterMenuController registerMenuController){
+    public RegisterMenu(Scanner scanner, RegisterMenuController registerMenuController) {
         this.scanner = scanner;
         this.controller = registerMenuController;
     }
@@ -30,14 +31,10 @@ public class RegisterMenu {
                     || (matcher = Command.REGISTER_RANDOM_PASSWORD.getMatcher(this.command)) != null) {
                 if (register(matcher))
                     return Result.USER_CREATED;
-            }
-
-            else if (Command.ENTER_LOGIN_MENU.getMatcher(this.command) != null) {
+            } else if (Command.ENTER_LOGIN_MENU.getMatcher(this.command) != null) {
                 System.out.println(Message.ENTERED_LOGIN_MENU);
                 return Result.ENTER_LOGIN_MENU;
-            }
-
-            else if (Command.EXIT.getMatcher(this.command) != null)
+            } else if (Command.EXIT.getMatcher(this.command) != null)
                 return Result.EXIT;
 
             else
@@ -55,16 +52,25 @@ public class RegisterMenu {
                 this.message = this.controller.pickQuestion(matcher);
                 System.out.println(this.message);
 
-                if (Message.REGISTER_SUCCESSFUL.equals(this.message))
-                    return true;
-            }
-
-            else if (Command.CANCEL.getMatcher(this.command) != null) {
+                if (Message.DO_CAPTCHA.equals(this.message)) {
+                    Captcha captcha = new Captcha();
+                    captcha.createCaptcha();
+                    while (!command.equals("cancel")) {
+                        this.command = scanner.nextLine();
+                        if (command.equals(captcha.getCaptchaNumber())) {
+                            System.out.println(controller.captcha());
+                            return true;
+                        } else if (!command.equals("cancel")) {
+                            System.out.println(Message.WRONG_CAPTCHA);
+                        }
+                    }
+                    System.out.println(Message.CANCEL);
+                    return false;
+                }
+            } else if (Command.CANCEL.getMatcher(this.command) != null) {
                 System.out.println(Message.CANCEL);
                 return false;
-            }
-
-            else
+            } else
                 System.out.println(Message.INVALID_COMMAND);
         }
     }
@@ -73,7 +79,7 @@ public class RegisterMenu {
         this.message = this.controller.register(matcher);
         System.out.println(message);
 
-        if(this.message.contains("re-enter")) {
+        if (this.message.contains("re-enter")) {
             do {
                 this.command = this.scanner.nextLine();
 
@@ -84,9 +90,7 @@ public class RegisterMenu {
 
             if (Message.ASK_FOR_SECURITY_QUESTION.equals(this.message))
                 return pickQuestion();
-        }
-
-        else if(this.message.contains("Pick"))
+        } else if (this.message.contains("Pick"))
             return pickQuestion();
 
 

@@ -3,7 +3,9 @@ package controller;
 import model.user.SecurityQuestion;
 import model.user.Slogan;
 import model.user.User;
+import model.utils.Captcha;
 import view.enums.Message;
+
 import java.security.SecureRandom;
 import java.util.regex.Matcher;
 
@@ -111,8 +113,7 @@ public class RegisterMenuController {
                 return Message.EMPTY_FIELD.toString();
             if (!passwordConfirm.equals(password))
                 return Message.INCOMPATIBLE_PASSWORDS.toString();
-        }
-        else {
+        } else {
             generateRandomPassword();
             this.user = new User(username, randomPassword, email, slogan, nickName);
             randomMessages += "Your random password is: " + randomPassword + "\nPlease re-enter your password here:";
@@ -144,9 +145,7 @@ public class RegisterMenuController {
 
         user.setSecurityQuestion(questionNumber);
         user.setSecurityQuestionAnswer(answer);
-
-        saveUser();
-        return Message.REGISTER_SUCCESSFUL.toString();
+        return Message.DO_CAPTCHA.toString();
     }
 
     public String checkPasswordConfirm(String passwordConfirm) {
@@ -160,5 +159,10 @@ public class RegisterMenuController {
         }
 
         return Message.REENTER_AGAIN.toString();
+    }
+
+    public Message captcha() {
+        saveUser();
+        return Message.REGISTER_SUCCESSFUL;
     }
 }

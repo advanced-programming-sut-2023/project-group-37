@@ -116,8 +116,9 @@ public enum Message {
     // BuildingMenu:,
     TILE_IS_NOT_YOURS("The tile is not in your territory!"),
     BUILDING_NOT_YOURS("Building is not yours!"),
-    NO_BUILDING_IN_TILE("No building in the tile!")
-    ;
+    NO_BUILDING_IN_TILE("No building in the tile!"),
+    DO_CAPTCHA("For the last thing enter captcha!"),
+    WRONG_CAPTCHA("Captcha is wrong try again!");
     private final String message;
 
     Message(String message){
