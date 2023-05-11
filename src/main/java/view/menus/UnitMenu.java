@@ -16,7 +16,7 @@ public class UnitMenu {
         this.controller = unitMenuController;
     }
 
-    public void run(Scanner scanner) {
+    public void run() {
         String command;
         Matcher matcher;
 

@@ -9,12 +9,14 @@ import java.util.regex.Matcher;
 
 public class BuildingMenu {
     private final BuildingMenuController controller;
+    private final Scanner scanner;
 
-    public BuildingMenu(BuildingMenuController buildingMenuController) {
+    public BuildingMenu(Scanner scanner, BuildingMenuController buildingMenuController) {
+        this.scanner = scanner;
         this.controller = buildingMenuController;
     }
 
-    public void run(Scanner scanner) {
+    public void run() {
 
         String command;
         Matcher matcher;

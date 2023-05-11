@@ -16,7 +16,7 @@ public class TradeMenu {
         this.controller = tradeMenuController;
     }
 
-    public void run(Scanner scanner) {
+    public void run() {
         String command;
         Matcher matcher;
 

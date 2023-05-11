@@ -48,7 +48,7 @@ public class UnitMenuController {
 
         return Message.SUCCESS.toString();
     }
-    public Message patrolUnit(int x1, int y1, int x2, int y2){
+    public Message patrolUnit(int x1, int y1, int x2, int y2) {
         Tile tile1 = game.getMap().getTileByLocation(x1, y1), tile2 = game.getMap().getTileByLocation(x2, y2);
         if (tile1 == null || tile2 == null)
             return Message.ADDRESS_OUT_OF_BOUNDS;

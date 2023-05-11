@@ -17,7 +17,7 @@ public class MapMenu {
         this.controller = mapMenuController;
     }
 
-    public void run(Scanner scanner) {
+    public void run() {
         String command;
         Matcher matcher;
 

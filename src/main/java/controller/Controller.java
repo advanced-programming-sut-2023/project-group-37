@@ -105,11 +105,11 @@ public class Controller {
         while (true) {
             result = this.gameMenu.run();
             switch (result) {
-                case ENTER_BUILDING_MENU -> this.buildingMenu.run(scanner);
-                case ENTER_MAP_MENU -> this.mapMenu.run(scanner);
-                case ENTER_SHOP_MENU -> this.shopMenu.run(scanner);
-                case ENTER_TRADE_MENU -> this.tradeMenu.run(scanner);
-                case ENTER_UNIT_MENU -> this.unitMenu.run(scanner);
+                case ENTER_BUILDING_MENU -> this.buildingMenu.run();
+                case ENTER_MAP_MENU -> this.mapMenu.run();
+                case ENTER_SHOP_MENU -> this.shopMenu.run();
+                case ENTER_TRADE_MENU -> this.tradeMenu.run();
+                case ENTER_UNIT_MENU -> this.unitMenu.run();
                 case END_GAME -> {
                     return;
                 }

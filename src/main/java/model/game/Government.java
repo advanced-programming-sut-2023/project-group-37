@@ -189,7 +189,7 @@ public class Government {
             this.user.setHighScore(score);
     }
 
-    public String getUserName() {
+    public String getUsername() {
         return user.getUsername();
     }
 }
