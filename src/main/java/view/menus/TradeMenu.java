@@ -32,8 +32,11 @@ public class TradeMenu {
             else if ((matcher = Command.ACCEPT_TRADE.getMatcher(command)) != null)
                 System.out.println(controller.acceptTrade(matcher));
 
-            else if (command.matches(Command.SHOW_TRADE_LIST.toString()))
+            else if (command.matches(Command.SHOW_TRADE_HISTORY.toString()))
                 System.out.println(controller.showTradeHistory());
+
+            else if (command.matches(Command.SHOW_NEW_TRADES.toString()))
+                System.out.println(controller.showNewTrades());
 
             else if (command.matches(Command.BACK_GAME_MENU.toString())) {
                 System.out.println(Message.BACK_GAME_MENU);

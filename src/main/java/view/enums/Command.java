@@ -91,6 +91,8 @@ public enum Command {
     SHOW_TRADE_LIST("\\s*trade\\s+list\\s*"),
     ACCEPT_TRADE("\\s*trade\\s+accept(\\s+((-i(?<id>\\d+))|(-m(?<message>\".+\"|\\S+))))+\\s*"),
     SHOW_TRADE_HISTORY("\\s*trade\\s+history\\s*"),
+    SHOW_NEW_TRADES("\\s*show\\s+new\\s+trades\\s*"),
+
 
     // UnitMenu:
     MOVE_UNIT("\\s*move\\s+unit\\s+to(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s*"),
@@ -104,8 +106,8 @@ public enum Command {
     DISBAND_UNIT("\\s*disband\\s*"),
 
     // BuildingMenu:
-    REPAIR("\\s*repair\\s*");
-
+    REPAIR("\\s*repair\\s*"),
+    ;
     private final String regex;
 
     Command(String regex) {

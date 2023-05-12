@@ -67,7 +67,7 @@ public class TradeMenuController {
         int id = 1;
         for (TradeRequest request : TradeRequest.getRequestsByReceiver(government)) {
             if (request.getTime() == game.getIndex() && !request.isDone()) {
-                newTrades.append(", Sender: ").append(request.getSender().getUser().getUsername())
+                newTrades.append("id: ").append(id).append(", Sender: ").append(request.getSender().getUser().getUsername())
                         .append(", Type: ").append(request.getItem().getName()).append(", Amount: ")
                         .append(request.getItemAmount())
                         .append(", Price: ").append(request.getPrice()).append("\n").append("Their Message: ")
