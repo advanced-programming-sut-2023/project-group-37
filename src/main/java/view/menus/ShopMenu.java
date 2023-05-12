@@ -23,14 +23,14 @@ public class ShopMenu {
         while (true) {
             command = scanner.nextLine();
 
-            if (command.matches(Command.SHOW_PRICE_LIST.toString()))
-                System.out.println(this.controller.showPriceList());
-
-            else if ((matcher = Command.BUY_ITEM.getMatcher(command)) != null)
+            if ((matcher = Command.BUY_ITEM.getMatcher(command)) != null)
                 System.out.println(this.controller.buy(matcher));
 
             else if ((matcher = Command.SELL_ITEM.getMatcher(command)) != null)
                 System.out.println(this.controller.sell(matcher));
+
+            else if (command.matches(Command.SHOW_ALL_ITEMS.toString()))
+                System.out.println(controller.showAllItems());
 
             else if (command.matches(Command.BACK_GAME_MENU.toString())) {
                 System.out.println(Message.BACK_GAME_MENU);

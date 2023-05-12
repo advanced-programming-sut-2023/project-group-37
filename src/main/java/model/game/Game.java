@@ -16,6 +16,7 @@ public class Game {
     private final ArrayList<Government> governments;
     private Government currentTurnGovernment;
     private int index;
+    private int turnNumber;
 
     public Game(GameMenuController gameMenuController, Map map, int turns, ArrayList<Government> governments) {
         this.map = map;
@@ -23,8 +24,10 @@ public class Game {
         this.governments = governments;
         this.currentTurnGovernment = governments.get(0);
         this.gameMenuController = gameMenuController;
+        this.turnNumber = 1;
         gameMenuController.setCurrentGovernment(currentTurnGovernment);
         index = 0;
+
     }
 
     public Government getGovernmentByUsername(String username) {
@@ -37,6 +40,10 @@ public class Game {
 
     public int getIndex() {
         return index;
+    }
+
+    public int getTurnNumber() {
+        return turnNumber;
     }
 
     public Map getMap() {
@@ -137,5 +144,6 @@ public class Game {
         index = (index + 1) % governments.size();
         currentTurnGovernment = governments.get(index);
         gameMenuController.setCurrentGovernment(currentTurnGovernment);
+        turnNumber++;
     }
 }

@@ -81,16 +81,17 @@ public enum Command {
     SHOW_DETAILS("\\s*show\\s+details(\\s+((-x(?<x>\\d+))|(-y(?<y>\\d+))))+\\s*"),
 
     // ShopMenu:
-    SHOW_PRICE_LIST("\\s*show\\s+price\\s+list\\s*"),
     BUY_ITEM("\\s*buy(\\s+((-i(?<itemName>\".+\"|\\S+))|(-a(?<itemAmount>\\d+))))+\\s*"),
     SELL_ITEM("\\s*sell(\\s+((-i(?<itemName>\".+\"|\\S+))|(-a(?<itemAmount>\\d+))))+\\s*"),
+    SHOW_ALL_ITEMS("\\s*show\\s+all\\s+items\\s*"),
+
 
     // TradeMenu:
     REQUEST_TRADE("\\s*trade(\\s+((-t(?<resourceType>\".+\"|\\S+))|(-u(?<receiverUsername>\".+\"|\\S+))|(-a(?<resourceAmount>\\d+))|" +
             "(-p(?<price>\\d+))|(-m(?<message>\".+\"|\\S+))))+\\s*"),
-    SHOW_TRADE_LIST("\\s*trade\\s+list\\s*"),
+    SHOW_TRADE_LIST("\\s*show\\s+trade\\s+list\\s*"),
     ACCEPT_TRADE("\\s*trade\\s+accept(\\s+((-i(?<id>\\d+))|(-m(?<message>\".+\"|\\S+))))+\\s*"),
-    SHOW_TRADE_HISTORY("\\s*trade\\s+history\\s*"),
+    SHOW_TRADE_HISTORY("\\s*show\\s+trade\\s+history\\s*"),
     SHOW_NEW_TRADES("\\s*show\\s+new\\s+trades\\s*"),
 
 

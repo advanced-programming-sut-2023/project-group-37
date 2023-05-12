@@ -43,10 +43,6 @@ public class ShopMenuController {
         return false;
     }
 
-    public String showPriceList() {
-        return null;
-    }
-
     public String buy(Matcher matcher) {
         int amount = Integer.parseInt(matcher.group("itemAmount"));
         Item item = Item.getItemByName(matcher.group("itemName"));
