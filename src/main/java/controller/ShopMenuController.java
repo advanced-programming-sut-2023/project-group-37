@@ -81,4 +81,13 @@ public class ShopMenuController {
             return Message.NOT_ENOUGH_AMOUNT.toString();
         return Message.SOLD_SUCCESSFUL.toString();
     }
+
+    public String showAllItems(){
+        StringBuilder list = new StringBuilder("Here's all things you can buy :");
+        for (Item item : Item.getAllItems()) {
+            list.append(item.getName()).append("price :").append(item.getBuyCost()).append("(sell price :")
+                    .append(item.getSellCost()).append(")\n");
+        }
+        return list.toString().trim();
+    }
 }

@@ -1,6 +1,11 @@
 package model.game;
 
 
+import model.user.Slogan;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public enum Item {
 
     // TODO: handle prices!
@@ -38,6 +43,11 @@ public enum Item {
     private final ItemCategory category;
     private final int buyCost;
     private final int sellCost;
+    private static final ArrayList<Item> allItems = new ArrayList<>();
+
+    static {
+        allItems.addAll(Arrays.asList(Item.values()));
+    }
 
     Item(String name, ItemCategory category, int buyCost, int sellCost) {
         this.name = name;
@@ -53,7 +63,9 @@ public enum Item {
             return null;
         }
     }
-
+    public static ArrayList<Item> getAllItems(){
+        return allItems;
+    }
     public String getName() {
         return this.name;
     }
