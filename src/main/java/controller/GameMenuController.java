@@ -50,10 +50,11 @@ public class GameMenuController {
         buildingMenuController.setCurrentGame(game);
     }
 
-    public String showMap(int x, int y) {
-        if (x >= currentGame.getMap().getSize() || x < 0 || y >= currentGame.getMap().getSize() || y < 0)
-            return Message.ADDRESS_OUT_OF_BOUNDS.toString();
+    public Map getMap() {
+        return currentGame.getMap();
+    }
 
+    public Tile[][] showMap(int x, int y) {
         return mapMenuController.showMap(x, y);
     }
 

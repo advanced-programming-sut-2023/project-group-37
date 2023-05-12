@@ -14,8 +14,6 @@ public class UnitMenuController {
     private Game game;
     private Government government;
     private ArrayList<MilitaryUnit> unit;
-    private ArrayList<Troop> typeSelectedTroops;
-    private ArrayList<MilitaryMachine> typeSelectedMachine;
     private Tile location;
 
     public void setGovernment(Government government) {
@@ -25,12 +23,71 @@ public class UnitMenuController {
     public void setUnit(ArrayList<MilitaryUnit> unit, Tile location) {
         this.unit = unit;
         this.location = location;
-        this.typeSelectedTroops = null;
-        this.typeSelectedMachine = null;
+
     }
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public String selectUnitWithType(String type) {
+        TroopType troopType = TroopType.getTroopTypeByName(type);
+        if (troopType != null) {
+            ArrayList<Troop> troops = new ArrayList<>();
+            for (MilitaryUnit militaryUnit : this.unit) {
+                if (militaryUnit instanceof Troop troop) {
+                    if (troop.getType() == troopType)
+                        troops.add(troop);
+                }
+            }
+
+            if (troops.size() == 0)
+                return Message.NO_UNIT_WITH_THIS_TYPE.toString();
+
+            this.unit = new ArrayList<>();
+            unit.addAll(troops);
+        }
+        else {
+            MilitaryMachineType militaryMachineType = MilitaryMachineType.getByName(type);
+            if (militaryMachineType == null)
+                return Message.TYPE_NOT_EXISTS.toString();
+
+            ArrayList<MilitaryMachine> militaryMachines = new ArrayList<>();
+            for (MilitaryUnit militaryUnit : unit) {
+                if (militaryUnit instanceof MilitaryMachine militaryMachine) {
+                    if (militaryMachine.getType() == militaryMachineType)
+                        militaryMachines.add(militaryMachine);
+                }
+            }
+            if (militaryMachines.size() == 0)
+                return Message.NO_UNIT_WITH_THIS_TYPE.toString();
+
+            this.unit = new ArrayList<>();
+            unit.addAll(militaryMachines);
+        }
+        return Message.SUCCESS.toString();
+    }
+
+    private boolean checkUnitType(TroopType troopType) {
+        for (MilitaryUnit militaryUnit : this.unit) {
+            if (militaryUnit instanceof Troop troop) {
+                if (troop.getType() != troopType)
+                    return false;
+            }
+            else return false;
+        }
+        return true;
+    }
+
+    private boolean checkUnitType(MilitaryMachineType militaryMachineType) {
+        for (MilitaryUnit militaryUnit : this.unit) {
+            if (militaryUnit instanceof MilitaryMachine militaryMachine) {
+                if (militaryMachine.getType() != militaryMachineType)
+                    return false;
+            }
+            else return false;
+        }
+        return true;
     }
 
     public String moveUnit(int x, int y) {
@@ -85,42 +142,6 @@ public class UnitMenuController {
             militaryUnit.setStance(stance);
         }
         return Message.STANCE_IS_SET.toString();
-    }
-
-    public String selectUnitWithType(String type) {
-        TroopType troopType = TroopType.getTroopTypeByName(type);
-        if (troopType != null) {
-            ArrayList<Troop> troops = new ArrayList<>();
-            for (MilitaryUnit militaryUnit : this.unit) {
-                if (militaryUnit instanceof Troop troop) {
-                    if (troop.getType() == troopType)
-                        troops.add(troop);
-                }
-            }
-
-            if (troops.size() == 0)
-                return Message.NO_UNIT_WITH_THIS_TYPE.toString();
-
-            this.typeSelectedTroops = troops;
-        }
-        else {
-            MilitaryMachineType militaryMachineType = MilitaryMachineType.getByName(type);
-            if (militaryMachineType == null)
-                return Message.TYPE_NOT_EXISTS.toString();
-
-            ArrayList<MilitaryMachine> militaryMachines = new ArrayList<>();
-            for (MilitaryUnit militaryUnit : unit) {
-                if (militaryUnit instanceof MilitaryMachine militaryMachine) {
-                    if (militaryMachine.getType() == militaryMachineType)
-                        militaryMachines.add(militaryMachine);
-                }
-            }
-            if (militaryMachines.size() == 0)
-                return Message.NO_UNIT_WITH_THIS_TYPE.toString();
-
-            this.typeSelectedMachine = militaryMachines;
-        }
-        return Message.SUCCESS.toString();
     }
 
     public String attack(int x, int y, boolean isEarth) {

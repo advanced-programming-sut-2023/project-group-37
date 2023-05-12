@@ -169,7 +169,7 @@ public class User implements Serializable {
 
 
     public boolean isWrongPassword(String password) {
-        return !PasswordHashing.checkPassword(password,this.hashedPassword);
+        return !PasswordHashing.checkPassword(password, this.hashedPassword);
     }
 
     public boolean isCorrectAnswer(String answer) {

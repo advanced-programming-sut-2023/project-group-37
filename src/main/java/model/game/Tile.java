@@ -101,20 +101,25 @@ public class Tile {
 
 
     public void setState() {
-        if (militaryUnits.size() > 0) {
+        if (this.militaryUnits.size() > 0) {
+            for (MilitaryUnit militaryUnit : this.militaryUnits) {
+                if (militaryUnit.isOnMove()) {
+                    state = 'M';
+                    return;
+                }
+            }
             state = 'S';
         }
 
-        else if (building != null) {
-            state = 'B';
+        else if (this.building != null) {
+            this.state = 'B';
         }
         //todo : W for wall
-        else if (texture == Texture.OLIVE_TREE || texture == Texture.DESERT_TREE) {
-            state = 'T';
+        else if (this.texture == Texture.OLIVE_TREE || texture == Texture.DESERT_TREE) {
+            this.state = 'T';
         }
 
-        //  todo : if (texture == harchi) state = yechi;
-        else state = 'N';
+        else this.state = 'N';
     }
 
     public void addPerson(Person person) {

@@ -3,6 +3,7 @@ package controller;
 import model.game.Game;
 import model.game.Government;
 import model.game.Map;
+import model.game.Tile;
 import view.enums.Message;
 
 import java.util.regex.Matcher;
@@ -11,7 +12,6 @@ public class MapMenuController {
     private Game game;
     private Map map;
     private Government government;
-
 
     public void setGovernment(Government government) {
         this.government = government;
@@ -22,10 +22,9 @@ public class MapMenuController {
         this.map = game.getMap();
     }
 
-    public String showMap(int x, int y) {
+    public Tile[][] showMap(int x, int y) {
         map.setTilesState();
         int size = map.getSize();
-        StringBuilder message = new StringBuilder();
 
         int minX = x - 30;
         int maxX = x + 30;
@@ -41,18 +40,17 @@ public class MapMenuController {
         if (maxY > size - 1)
             maxY = size - 1;
 
-        for (int i = minY; i < maxY; i++) {
-            for (int j = minX; j < maxX; j++) {
-                message.append(map.getTileByLocation(i, j).getState()).append(" ");
-            }
-            message.append("\n");
-        }
+        Tile[][] result = new Tile[maxX - minX][maxY - minY];
 
-        return message.toString().trim();
+        for (int i = minX; i < maxX; i++) {
+            for (int j = minY; j < maxY; j++) {
+                result[i-minX][j-minY] = map.getTileByLocation(i, j);
+            }
+        }
+        return result;
     }
 
     public Message moveMap(Matcher matcher) {
-        map.setTilesState();
         return null;
     }
 

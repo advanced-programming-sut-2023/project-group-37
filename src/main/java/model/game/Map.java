@@ -23,7 +23,7 @@ public class Map {
     private final Tile[][] field;
     private final boolean[][] tilesPassability;
     private HashMap<Integer, Government> territories;
-    private HashMap<Integer, Tile> headQuarters;
+    private final HashMap<Integer, Tile> headQuarters;
     private static final Gson gson = new Gson();
 
     static {
@@ -49,7 +49,7 @@ public class Map {
         this.tilesPassability = tilesPassability;
         this.territories = territories;
         this.headQuarters = headQuarters;
-        this.initializeTiles();
+
     }
 
     public static Map getMapByName(String name) {
