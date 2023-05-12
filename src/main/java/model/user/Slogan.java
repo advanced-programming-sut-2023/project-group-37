@@ -11,10 +11,10 @@ public enum Slogan {
     SLOGAN_4("Nothing is impossible, it just a matter of perspective"),
     SLOGAN_5("I most hung soon for souls"),
     SLOGAN_6("In every universe, there is a hero and a villain"),
-    SLOGAN_7("I'm the best ; F the rest..."),
+    SLOGAN_7("I'm the best ; F... the rest."),
     SLOGAN_8("Now, Who thinks his arms are long enough to slap box?"),
-    SLOGAN_9(""),
-    SLOGAN_10("");
+    SLOGAN_9("There is a short way to victory,keep attacking"),
+    SLOGAN_10("I'm here to teach how to play this game!");
 
     private final String slogan;
     private static final ArrayList<Slogan> allSlogans = new ArrayList<>();
