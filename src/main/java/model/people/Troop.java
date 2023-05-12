@@ -41,16 +41,6 @@ public class Troop extends MilitaryUnit {
         return this.canDigMoat;
     }
 
-    public void move() {
-        LinkedList<Tile> route = this.getRoute();
-        int speed = this.getSpeed(); //todo : handle speed if its high
-        if (route.size() - 1 < speed)
-            speed = route.size() - 1;
-
-        this.move(route.get(speed));
-
-        route.subList(0, speed).clear();
-    }
 
     // TODO: implement drop ladder!
 }

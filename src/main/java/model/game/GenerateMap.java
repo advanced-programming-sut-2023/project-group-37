@@ -7,28 +7,28 @@ public class GenerateMap {
 //        createMap1();
 //        printMap();
 //    }
-    public static Map createMap1() {
+    public static Map createMap1() { // all i,j changes
         map = new Map("North vs South");
         //set ground
         for (int i = 0; i < 200; i++) {
             for (int j = 0; j < 200; j++) {
-                map.getField()[i][j].changeTexture(Texture.GROUND);
-                map.getField()[i][j].setPassability(Texture.GROUND.canHaveBuildingAndUnit());
+                map.getField()[j][i].changeTexture(Texture.GROUND);
+                map.getField()[j][i].setPassability(Texture.GROUND.canHaveBuildingAndUnit());
             }
         }
         // river in the middle
         for (int i = 75; i < 125; i++) {
             for (int j = 0; j < 200; j++) {
-                map.getField()[i][j].changeTexture(Texture.RIVER);
-                map.getField()[i][j].setPassability(Texture.RIVER.canHaveBuildingAndUnit());
+                map.getField()[j][i].changeTexture(Texture.RIVER);
+                map.getField()[j][i].setPassability(Texture.RIVER.canHaveBuildingAndUnit());
             }
         }
         // passable ways in river
         for (int i = 75; i < 125; i++) {
             for (int j = 60; j < 140; j++) {
                 if (j < 70 || (90 < j && j < 110) || 130 < j) {
-                    map.getField()[i][j].changeTexture(Texture.SHALLOW_POND);
-                    map.getField()[i][j].setPassability(Texture.SHALLOW_POND.canHaveBuildingAndUnit());
+                    map.getField()[j][i].changeTexture(Texture.SHALLOW_POND);
+                    map.getField()[j][i].setPassability(Texture.SHALLOW_POND.canHaveBuildingAndUnit());
                 }
             }
         }
@@ -37,8 +37,8 @@ public class GenerateMap {
             for (int j = 0; j < 200; j++) {
                 if (!((75 <= i && i < 125) || (30 < i && i < 50) || (150 < i && i < 170)) && ((55 < j && j < 60) ||
                         (140 < j && j < 145))) {
-                    map.getField()[i][j].changeTexture(Texture.STONE);
-                    map.getField()[i][j].setPassability(Texture.STONE.canHaveBuildingAndUnit());
+                    map.getField()[j][i].changeTexture(Texture.STONE);
+                    map.getField()[j][i].setPassability(Texture.STONE.canHaveBuildingAndUnit());
                 }
             }
         }
@@ -46,8 +46,8 @@ public class GenerateMap {
         for (int j = 90; j < 110; j++) {
             for (int i = 60; i < 140; i++) {
                 if (i < 70 || 130 < i) {
-                    map.getField()[i][j].changeTexture(Texture.ROCK);
-                    map.getField()[i][j].setPassability(Texture.ROCK.canHaveBuildingAndUnit());
+                    map.getField()[j][i].changeTexture(Texture.ROCK);
+                    map.getField()[j][i].setPassability(Texture.ROCK.canHaveBuildingAndUnit());
                 }
             }
         }
@@ -55,8 +55,8 @@ public class GenerateMap {
         for (int i = 65; i < 135; i++) {
             for (int j = 0; j < 200; j++) {
                 if (!(75 < j && j < 125) && (i < 75 || i >= 125) && !((60 <= j && j < 70) || (130 <= j && j < 140))) {
-                    map.getField()[i][j].changeTexture(Texture.OLIVE_TREE);
-                    map.getField()[i][j].setPassability(Texture.OLIVE_TREE.canHaveBuildingAndUnit());
+                    map.getField()[j][i].changeTexture(Texture.OLIVE_TREE);
+                    map.getField()[j][i].setPassability(Texture.OLIVE_TREE.canHaveBuildingAndUnit());
                 }
             }
         }
@@ -64,22 +64,22 @@ public class GenerateMap {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 200; j++) {
                 if (j < 100) {
-                    map.getField()[i][j].changeTexture(Texture.DENSE_MEADOW);
-                    map.getField()[i][j].setPassability(Texture.DENSE_MEADOW.canHaveBuildingAndUnit());
+                    map.getField()[j][i].changeTexture(Texture.DENSE_MEADOW);
+                    map.getField()[j][i].setPassability(Texture.DENSE_MEADOW.canHaveBuildingAndUnit());
                 } else {
-                    map.getField()[i][j].changeTexture(Texture.GRASS);
-                    map.getField()[i][j].setPassability(Texture.GRASS.canHaveBuildingAndUnit());
+                    map.getField()[j][i].changeTexture(Texture.GRASS);
+                    map.getField()[j][i].setPassability(Texture.GRASS.canHaveBuildingAndUnit());
                 }
             }
         }
         for (int i = 190; i < 200; i++) {
             for (int j = 0; j < 200; j++) {
                 if (j < 100) {
-                    map.getField()[i][j].changeTexture(Texture.DENSE_MEADOW);
-                    map.getField()[i][j].setPassability(Texture.DENSE_MEADOW.canHaveBuildingAndUnit());
+                    map.getField()[j][i].changeTexture(Texture.DENSE_MEADOW);
+                    map.getField()[j][i].setPassability(Texture.DENSE_MEADOW.canHaveBuildingAndUnit());
                 } else {
-                    map.getField()[i][j].changeTexture(Texture.GRASS);
-                    map.getField()[i][j].setPassability(Texture.GRASS.canHaveBuildingAndUnit());
+                    map.getField()[j][i].changeTexture(Texture.GRASS);
+                    map.getField()[j][i].setPassability(Texture.GRASS.canHaveBuildingAndUnit());
                 }
             }
         }
@@ -87,8 +87,8 @@ public class GenerateMap {
         for (int j = 90; j < 110; j++) {
             for (int i = 30; i < 170; i++) {
                 if (i < 40 || 160 < i) {
-                    map.getField()[i][j].changeTexture(Texture.IRON);
-                    map.getField()[i][j].setPassability(Texture.IRON.canHaveBuildingAndUnit());
+                    map.getField()[j][i].changeTexture(Texture.IRON);
+                    map.getField()[j][i].setPassability(Texture.IRON.canHaveBuildingAndUnit());
                 }
             }
         }

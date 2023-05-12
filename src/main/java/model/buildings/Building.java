@@ -87,6 +87,7 @@ public class Building {
     }
 
     public void takeDamage(int amount) {
-        this.hitpoints -= amount;
+        int damage = Math.min(amount, this.hitpoints);
+        this.hitpoints -= damage;
     }
 }

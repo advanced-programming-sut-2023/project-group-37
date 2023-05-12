@@ -3,10 +3,8 @@ package model.game;
 import model.buildings.Building;
 import model.people.MilitaryUnit;
 import model.people.Person;
-import model.people.Troop;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Tile {
     private final int x;
@@ -66,13 +64,18 @@ public class Tile {
 
     public void receiveDamage() {
         for (MilitaryUnit militaryUnit : militaryUnits) {
-            receivedDamageInTurn -= militaryUnit.receiveDamage(receivedDamageInTurn);
+            receivedDamageInTurn -= militaryUnit.takeDamage(receivedDamageInTurn);
             if (receivedDamageInTurn < 1)
                 break;
         }
         for (MilitaryUnit militaryUnit : militaryUnits) {
             militaryUnit.dieAndRemove();
         }
+
+        if (receivedDamageInTurn > 0 && this.building != null) {
+            this.building.takeDamage(receivedDamageInTurn);
+        }
+        receivedDamageInTurn = 0;
     }
 
     public void removeBuilding() {
@@ -142,6 +145,13 @@ public class Tile {
         return people;
     }
 
+    public boolean hasEnemy(Government government) {
+        for (MilitaryUnit militaryUnit : this.militaryUnits) {
+            if (militaryUnit.getLoyalty() != government)
+                return true;
+        }
+        return false;
+    }
 
     public boolean equals(Tile tile) {
         return (this.x == tile.x && this.y == tile.y);

@@ -36,10 +36,6 @@ public class Map {
         this.name = name;
         this.size = 200;
         this.field = new Tile[size][size];
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++)
-                field[i][j] = new Tile(i, j);
-        }
         this.tilesPassability = new boolean[size][size];
         this.initializeTiles();
         headQuarters = new HashMap<>();

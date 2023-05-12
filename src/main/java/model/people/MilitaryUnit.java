@@ -1,12 +1,11 @@
 package model.people;
 
 import model.game.Government;
-import model.game.Movable;
 import model.game.Tile;
 
 import java.util.LinkedList;
 
-public abstract class MilitaryUnit implements Movable {
+public abstract class MilitaryUnit {
 
     private final Government loyalty;
     private int hitpoints;
@@ -57,7 +56,7 @@ public abstract class MilitaryUnit implements Movable {
         target.addReceivedDamageInTurn(this.damage);
     }
 
-    public int receiveDamage(int damage) {
+    public int takeDamage(int damage) {
         int receivedDamage = Math.min(damage, this.hitpoints);
         hitpoints -= receivedDamage;
 
@@ -91,9 +90,20 @@ public abstract class MilitaryUnit implements Movable {
             this.reaction_range = this.range;
     }
 
-    public void move(Tile destination) {
-        this.location = destination;
-        destination.addMilitaryUnit(this, 1);
+    public void move() {
+        if (route.size() > 1) {
+            LinkedList<Tile> route = this.getRoute();
+            int speed = this.getSpeed();
+            if (route.size() - 1 < speed)
+                speed = route.size() - 1;
+
+            this.location.getMilitaryUnits().remove(this);
+            this.location = route.get(speed);
+            this.location.addMilitaryUnit(this, 1);
+
+            if (speed > 0)
+                route.subList(0, speed).clear();
+        }
     }
 
     public void setRoute(LinkedList<Tile> route) {
@@ -110,5 +120,20 @@ public abstract class MilitaryUnit implements Movable {
 
     protected LinkedList<Tile> getRoute() {
         return this.route;
+    }
+
+    public boolean isOnMove() {
+        return this.route.size() > 1;
+    }
+
+    public boolean isOnPatrol() {
+        if (isOnMove())
+            return false;
+
+        return this.patrolRoute.size() > 1;
+    }
+
+    public void patrol() {
+
     }
 }

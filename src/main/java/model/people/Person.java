@@ -1,10 +1,9 @@
 package model.people;
 
 import model.buildings.Building;
-import model.game.Movable;
 import model.game.Tile;
 
-public class Person implements Movable {
+public class Person {
 
     private int hitpoints;
     private Building workplace;
@@ -14,12 +13,6 @@ public class Person implements Movable {
     public Person() {
         // TODO: set default hitpoints!
         this.workplace = null;
-    }
-
-    public Person(int speed) {
-        this.workplace = null;
-        // TODO: handle default people speed
-        this.speed = 10;
     }
 
     public int getHitpoints() {
@@ -47,9 +40,4 @@ public class Person implements Movable {
         this.hitpoints = hitpoints;
     }
 
-    // TODO: it's a dummy teleport! has to move according to speed!
-    public void move(Tile destination) {
-        this.location = destination;
-        destination.addPerson(this);
-    }
 }
