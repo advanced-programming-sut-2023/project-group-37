@@ -18,6 +18,7 @@ public abstract class MilitaryUnit {
     private Tile location;
     private LinkedList<Tile> route;
     private LinkedList<Tile> patrolRoute;
+    private int patrolTile;
     private Tile target;
     private MilitaryUnitStance stance;
 
@@ -104,6 +105,7 @@ public abstract class MilitaryUnit {
 
     public void setPatrol(LinkedList<Tile> patrolRoute) {
         this.patrolRoute = patrolRoute;
+        patrolTile = 1;
     }
 
     public void setTarget(Tile target) {
@@ -125,7 +127,48 @@ public abstract class MilitaryUnit {
         return this.patrolRoute.size() > 1;
     }
 
-    public void patrol() {
+    public void cancelPatrol() {
+        this.patrolRoute = null;
+        this.patrolTile = -1;
+    }
 
+    public void cancelMove() {
+        this.route = null;
+    }
+
+    private int getIndexByTile(Tile tile) {
+        Tile target;
+        for (int i = 0; i < patrolRoute.size(); i++) {
+            target = patrolRoute.get(i);
+            if (target.equals(tile))
+                return i;
+        }
+        return 0;
+    }
+
+    public void patrol() {
+        int speed = this.speed;
+        int index = getIndexByTile(location);
+
+        if (patrolTile == 1) {
+            if (speed > patrolRoute.size() - 1 - index)
+                speed = patrolRoute.size() - 1 - index;
+
+            index += speed;
+            this.location = patrolRoute.get(index);
+
+            if (index == patrolRoute.size()-1)
+                patrolTile = 0;
+        }
+        else if (patrolTile == 0) {
+            if (speed > index)
+                speed = index;
+
+            index -= speed;
+            this.location = patrolRoute.get(index);
+
+            if (index == 0)
+                patrolTile = 1;
+        }
     }
 }
