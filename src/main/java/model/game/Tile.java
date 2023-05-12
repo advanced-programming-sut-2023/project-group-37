@@ -18,7 +18,6 @@ public class Tile {
     private Government territory;
     private int territoryNumber;
     public int number; // it is just for rootFinder
-    private int receivedDamageInTurn;
 
     public Tile(int x, int y) {
         this.x = x;
@@ -54,28 +53,18 @@ public class Tile {
         return building;
     }
 
-    public int getReceivedDamageInTurn() {
-        return receivedDamageInTurn;
-    }
-
-    public void addReceivedDamageInTurn(int damage) {
-        this.receivedDamageInTurn += damage;
-    }
-
-    public void receiveDamage() {
+    public void receiveDamage(int damage, Government government) {
         for (MilitaryUnit militaryUnit : militaryUnits) {
-            receivedDamageInTurn -= militaryUnit.takeDamage(receivedDamageInTurn);
-            if (receivedDamageInTurn < 1)
-                break;
-        }
-        for (MilitaryUnit militaryUnit : militaryUnits) {
-            militaryUnit.dieAndRemove();
+            if (militaryUnit.getLoyalty() != government) {
+                damage -= militaryUnit.takeDamage(damage);
+                if (damage < 1)
+                    break;
+            }
         }
 
-        if (receivedDamageInTurn > 0 && this.building != null) {
-            this.building.takeDamage(receivedDamageInTurn);
+        if (damage > 0 && this.building != null ) { // todo : buildingType
+            this.building.takeDamage(damage);
         }
-        receivedDamageInTurn = 0;
     }
 
     public void removeBuilding() {

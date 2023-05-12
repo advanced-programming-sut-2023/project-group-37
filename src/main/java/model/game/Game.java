@@ -126,8 +126,6 @@ public class Game {
                         tileToAttack.add(militaryUnit.getLocation());
                 }
             }
-            for (Tile tile : tileToAttack)
-                tile.receiveDamage();
         }
 
         index = (index + 1) % governments.size();

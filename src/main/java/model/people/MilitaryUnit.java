@@ -53,14 +53,14 @@ public abstract class MilitaryUnit {
     }
 
     public void attack() {
-        target.addReceivedDamageInTurn(this.damage);
+        target.receiveDamage(this.damage, this.loyalty); // todo : mahchines dont attack units
     }
 
     public int takeDamage(int damage) {
         int receivedDamage = Math.min(damage, this.hitpoints);
         hitpoints -= receivedDamage;
 
-        return damage - receivedDamage;
+        return receivedDamage;
     }
 
     public void dieAndRemove() {
