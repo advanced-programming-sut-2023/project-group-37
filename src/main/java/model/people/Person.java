@@ -32,8 +32,10 @@ public class Person implements Movable {
 
     public void setWorkplace(Building workplace) {
         this.workplace = workplace;
-
+        this.location = workplace.getLocation();
     }
+
+    // TODO: handle workSpace destruction!
 
     public int getSpeed() {
         return this.speed;

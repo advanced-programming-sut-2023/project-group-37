@@ -20,12 +20,12 @@ public class Game {
         this.governments = governments;
         this.currentTurnGovernment = governments.get(0);
         this.gameMenuController = gameMenuController;
-        gameMenuController.setCurrentGovernment(currentTurnGovernment);
-        index = 0;
+        this.gameMenuController.setCurrentGovernment(this.currentTurnGovernment);
+        this.index = 0;
     }
 
     public Government getGovernmentByUsername(String username) {
-        for (Government government : governments) {
+        for (Government government : this.governments) {
             if (government.getUser().getUsername().equals(username))
                 return government;
         }
@@ -52,26 +52,33 @@ public class Game {
         this.governments.add(government);
     }
 
-    public void goNextTurn() {
-        if (index == governments.size() - 1) {
+    public void goToNextTurn() {
+        if (this.index == this.governments.size() - 1) {
             //TODO : do changes
-            for (Government government : governments) {
+            for (Government government : this.governments) {
                 government.distributeFood();
                 government.receiveTax();
                 government.setPopularity(government.getPopularity() + government.getFearRate());
                 int innCount = 0;
                 for (Building building : government.getBuildings()) {
-                    if (building.getType() == BuildingType.HOVEL)
+
+                    BuildingType type = building.getType();
+
+                    if (type == BuildingType.HOVEL)
                         government.addPeasant(8);
                     else {
-                        if (building.getType() == BuildingType.INN)
+                        if (type == BuildingType.INN)
                             innCount++;
-                        // I decrease sum of rawMaterials!
-                        government.removeItem(building.getType().getRawMaterial(),
-                                building.getType().getRawMaterialUses() +
-                                        building.getType().getRawMaterialUsesForSecond());
-                        government.addItem(building.getType().getProduct(), building.getType().getProductProvides());
-                        government.addItem(building.getType().getSecondProduct(), 1);
+                        if (type.getRawMaterial() == null)
+                            government.addItem(type.getProduct(), (int) (type.getProductProvides() *
+                                    (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1);
+                        else {
+                            government.removeItem(type.getRawMaterial(), type.getRawMaterialUses() +
+                                    type.getRawMaterialUsesForSecond());
+                            government.addItem(type.getProduct(), type.getProductProvides());
+                            government.addItem(type.getSecondProduct(), 1);
+                        }
+
                         // TODO: check for storage being fulled!
                     }
                 }
@@ -79,9 +86,20 @@ public class Game {
                 government.setPopularity(government.getPopularity() > 100 ? 100 : Math.max(government.getPopularity(), 0));
             }
         }
-
-        index = (index + 1) % governments.size();
-        currentTurnGovernment = governments.get(index);
-        gameMenuController.setCurrentGovernment(currentTurnGovernment);
+        this.index = (this.index + 1) % this.governments.size();
+        this.currentTurnGovernment = this.governments.get(this.index);
+        this.gameMenuController.setCurrentGovernment(this.currentTurnGovernment);
     }
 }
+
+// Some bullshit:
+//if (type.getProductProvides() >= 3) {
+//                            government.removeItem(type.getRawMaterial(),
+//                                    (int) (((type.getRawMaterialUses() + type.getRawMaterialUsesForSecond())) *
+//                                            (1 + (double) this.currentTurnGovernment.getFearRate() / 6)) + 1);
+//                            government.addItem(type.getProduct(), (int) ((type.getProductProvides()) *
+//                                    (1 + (double) this.currentTurnGovernment.getFearRate() / 6)) + 1);
+//                            government.addItem(type.getSecondProduct(),
+//                                    (int) ((double) (this.currentTurnGovernment.getFearRate() / 6) + 1));
+//                        } else {
+//                        }

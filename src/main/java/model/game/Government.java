@@ -192,6 +192,7 @@ public class Government {
 
         int totalFoodNeeded = (int) (this.people.size() * foodPerPerson), foodToDistribute;
 
+
         OUTER:
         for (int i = this.granary.size() - 1; i >= 0; i--) {
             for (Map.Entry<Item, Integer> entry : granary.get(i).getStock().entrySet()) {
@@ -203,6 +204,9 @@ public class Government {
                 totalFoodNeeded -= foodToDistribute;
             }
         }
+
+        if (totalFoodNeeded != 0)
+            this.foodRate = -2;
 
         this.popularity += 4 * this.foodRate;
     }

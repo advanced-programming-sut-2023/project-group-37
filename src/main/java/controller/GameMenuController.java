@@ -159,6 +159,11 @@ public class GameMenuController {
         if (tile.getBuilding() != null)
             return Message.TILE_ALREADY_HAS_BUILDING.toString();
 
+        // Check territory for defensiveBuildings
+        if (type instanceof DefensiveBuildingType &&
+                this.currentGame.getMap().getTerritories().get(this.currentGovernment.getTerritory()) != tile.getTerritory())
+            return Message.NOT_IN_TERRITORY.toString();
+
         // Check enough gold and resource:
         if (type instanceof BuildingType) {
             if (((BuildingType) type).getCost() > this.currentGovernment.getGold())
@@ -177,6 +182,20 @@ public class GameMenuController {
         if (type instanceof BuildingType && this.currentGovernment.getPeasantCount() <
                 ((BuildingType) type).getWorkersNeeded())
             return Message.NOT_ENOUGH_PEASANT.toString();
+
+        // Check if unique and available!
+        if ((type == BuildingType.BARRACKS || type == BuildingType.MERCENARY_POST ||
+                type == BuildingType.ENGINEER_GUILD || type == BuildingType.TUNNELER_GUILD ||
+                type == BuildingType.MARKET) && this.currentGovernment.getUniqueBuilding((BuildingType) type) != null)
+            return Message.BUILDING_IS_UNIQUE.toString();
+
+        // Check if storage is not near the others!
+        if ((type == BuildingType.STOCKPILE || type == BuildingType.GRANARY || type == BuildingType.ARMORY) &&
+                this.currentGame.getMap().getTileByLocation(tile.getX() - 1, tile.getY()).getBuilding().getType() != type &&
+                this.currentGame.getMap().getTileByLocation(tile.getX() + 1, tile.getY()).getBuilding().getType() != type &&
+                this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() - 1).getBuilding().getType() != type &&
+                this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() + 1).getBuilding().getType() != type)
+            return Message.STORAGE_NOT_NEIGHBOR.toString();
 
         // Decrease gold and resource:
         if (type instanceof BuildingType) {
@@ -223,12 +242,7 @@ public class GameMenuController {
         if ((tile = this.currentGame.getMap().getTileByLocation(x, y)) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        // TODO: decide on it!
-//        if (tile.getTerritory() != this.currentGovernment)
-//            return Message.TILE_IS_NOT_YOURS.toString();
-
         Building building;
-
         if ((building = tile.getBuilding()) == null)
             return Message.NO_BUILDING_IN_TILE.toString();
 
@@ -311,9 +325,7 @@ public class GameMenuController {
         if (Texture.getTextureByName(MultiMenuFunctions.deleteQuotations(matcher.group("type"))) == null)
             return Message.INVALID_TEXTURE_NAME.toString();
 
-        if (this.currentGame.getMap().getField()[x][y].getBuilding() != null ||
-                this.currentGame.getMap().getField()[x][y].getPeople().size() != 0 ||
-                this.currentGame.getMap().getField()[x][y].getMilitaryUnits().size() != 0)
+        if (!this.currentGame.getMap().getField()[x][y].isTotallyEmpty())
             return Message.TEXTURE_CHANGE_ERROR.toString();
 
         this.currentGame.getMap().getField()[x][y].changeTexture(Texture.getTextureByName(
@@ -331,8 +343,10 @@ public class GameMenuController {
                 this.currentGame.getMap().getTileByLocation(x2, y2) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        if (this.currentGame.getMap().areaContainsSomething(x1, y1, x2, y2))
-            return Message.AREA_NOT_EMPTY.toString();
+        for (int i = x1; i <= x2; i++)
+            for (int j = y1; j <= y2; j++)
+                if (!this.currentGame.getMap().getField()[i][j].isTotallyEmpty())
+                    return Message.AREA_NOT_EMPTY.toString();
 
         if (Texture.getTextureByName(MultiMenuFunctions.deleteQuotations(matcher.group("type"))) == null)
             return Message.INVALID_TEXTURE_NAME.toString();
@@ -354,7 +368,7 @@ public class GameMenuController {
 
         Tile tile = this.currentGame.getMap().getTileByLocation(x, y);
 
-        tile.changeTexture(Texture.GROUND); //default
+        tile.changeTexture(Texture.GROUND);
         for (Person person : this.currentGame.getMap().getTileByLocation(x, y).getPeople())
             this.currentGovernment.getPeople().remove(person);
         tile.getPeople().clear();
@@ -374,8 +388,7 @@ public class GameMenuController {
         if (this.currentGame.getMap().getTileByLocation(x, y) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        if (this.currentGame.getMap().getField()[x][y].getBuilding() != null ||
-                this.currentGame.getMap().getField()[x][y].getPeople().size() != 0 ||
+        if (!this.currentGame.getMap().getField()[x][y].isTotallyEmpty() ||
                 !this.currentGame.getMap().getField()[x][y].getTexture().canHaveTree())
             return Message.DROP_TREE_ERROR.toString();
         this.currentGame.getMap().getField()[x][y].changeTexture(Texture.getTextureByName(
@@ -390,13 +403,10 @@ public class GameMenuController {
         if (this.currentGame.getMap().getTileByLocation(x, y) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        if (this.currentGame.getMap().getField()[x][y].getBuilding() != null ||
-                this.currentGame.getMap().getField()[x][y].getPeople().size() != 0 ||
-                this.currentGame.getMap().getField()[x][y].getMilitaryUnits().size() != 0)
+        if (!this.currentGame.getMap().getField()[x][y].isTotallyEmpty())
             return Message.DROP_ROCK_ERROR.toString();
 
         this.currentGame.getMap().getField()[x][y].changeTexture(Texture.ROCK);
         return Message.DROP_ROCK.toString();
     }
-
 }

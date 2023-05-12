@@ -21,7 +21,6 @@ public class Tile {
     private int territoryNumber;
     public int number; // it is just for rootFinder
 
-
     public Tile(int x, int y) {
         this.x = x;
         this.y = y;
@@ -88,13 +87,10 @@ public class Tile {
         this.territoryNumber = territoryNumber;
     }
 
-
     public void setState() {
         if (militaryUnits.size() > 0) {
             state = 'S';
-        }
-
-        else if (building != null) {
+        } else if (building != null) {
             state = 'B';
         }
         //todo : W for wall
@@ -104,6 +100,10 @@ public class Tile {
 
         //  todo : if (texture == harchi) state = yechi;
         else state = 'N';
+    }
+
+    public ArrayList<Person> getPeople() {
+        return this.people;
     }
 
     public void addPerson(Person person) {
@@ -119,8 +119,8 @@ public class Tile {
         isPassable = passability;
     }
 
-    public ArrayList<Person> getPeople() {
-        return this.people;
+    public boolean isTotallyEmpty() {
+        return this.people.isEmpty() && this.militaryUnits.isEmpty() && this.getBuilding() == null;
     }
 
     public String showDetails() {
