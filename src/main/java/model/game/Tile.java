@@ -120,7 +120,7 @@ public class Tile {
     }
 
     public ArrayList<Person> getPeople() {
-        return people;
+        return this.people;
     }
 
     public String showDetails() {
