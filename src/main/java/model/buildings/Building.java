@@ -90,4 +90,5 @@ public class Building {
         int damage = Math.min(amount, this.hitpoints);
         this.hitpoints -= damage;
     }
+
 }

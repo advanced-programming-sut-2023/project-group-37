@@ -213,6 +213,32 @@ public class Government {
         return true;
     }
 
+    public void removeDiedUnits() {
+        int index = 0;
+        MilitaryUnit militaryUnit;
+        while (index < this.militaryUnits.size()) {
+            militaryUnit = this.militaryUnits.get(index);
+            if (militaryUnit.getHitpoints() < 1) {
+                this.militaryUnits.remove(index);
+                militaryUnit.getLocation().getMilitaryUnits().remove(militaryUnit);
+            }
+            else index++;
+        }
+    }
+
+    public void removeDestroyedBuildings() {
+        int index = 0;
+        Building building;
+        while (index < this.buildings.size()) {
+            building = this.buildings.get(index);
+            if (building.getHitpoints() < 1) {
+                this.buildings.remove(index);
+                building.getLocation().setBuilding(null);
+            }
+            else index++;
+        }
+    }
+
     public void modifyHighScore() {
         int score = 0; // todo : handle score
         if (this.user.getHighScore() < score)

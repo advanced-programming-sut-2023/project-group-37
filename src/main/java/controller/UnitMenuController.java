@@ -102,7 +102,6 @@ public class UnitMenuController {
                 return Message.NO_UNIT_WITH_THIS_TYPE.toString();
 
             this.typeSelectedTroops = troops;
-            return Message.SUCCESS.toString();
         }
         else {
             MilitaryMachineType militaryMachineType = MilitaryMachineType.getByName(type);
@@ -120,8 +119,8 @@ public class UnitMenuController {
                 return Message.NO_UNIT_WITH_THIS_TYPE.toString();
 
             this.typeSelectedMachine = militaryMachines;
-            return Message.SUCCESS.toString();
         }
+        return Message.SUCCESS.toString();
     }
 
     public String attack(int x, int y, boolean isEarth) {

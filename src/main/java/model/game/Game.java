@@ -2,6 +2,7 @@ package model.game;
 
 import controller.GameMenuController;
 import controller.MultiMenuFunctions;
+import model.buildings.Building;
 import model.people.MilitaryMachine;
 import model.people.MilitaryUnit;
 import model.people.MilitaryUnitStance;
@@ -118,13 +119,14 @@ public class Game {
             }
 
             // FIGHT :
-            ArrayList<Tile> tileToAttack = new ArrayList<>();
             for (Government government : governments) {
                 for (MilitaryUnit militaryUnit : government.getMilitaryUnits()) {
                     militaryUnit.attack();
-                    if (!tileToAttack.contains(militaryUnit.getLocation()))
-                        tileToAttack.add(militaryUnit.getLocation());
                 }
+            }
+            for (Government government : governments) {
+                government.removeDiedUnits();
+                government.removeDestroyedBuildings();
             }
         }
 

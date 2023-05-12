@@ -63,14 +63,6 @@ public abstract class MilitaryUnit {
         return receivedDamage;
     }
 
-    public void dieAndRemove() {
-        if (this.hitpoints < 1)
-        {
-            this.loyalty.getMilitaryUnits().remove(this);
-            this.location.getMilitaryUnits().remove(this);
-        }
-    }
-
     public Tile getLocation() {
         return this.location;
     }
