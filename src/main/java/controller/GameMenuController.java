@@ -355,4 +355,10 @@ public class GameMenuController {
         return Message.DROP_ROCK.toString();
     }
 
+    public String showInfo(){
+        String info = "All Info:\n";
+
+        return info;
+    }
+
 }

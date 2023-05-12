@@ -47,17 +47,17 @@ public class TradeMenuController {
 
     public String showTradeList() {
         StringBuilder message = new StringBuilder();
+        message.append("Here's the trades you received but haven't replied yet:\n");
         int id = 1;
         for (TradeRequest request : TradeRequest.getRequestsByReceiver(government)) {
-            message.append("Id: ").append(id).append(", Sender: ").append(request.getSender().getUser().getUsername())
-                    .append(", Type: ").append(request.getItem().getName()).append(", Amount: ").append(request.getItemAmount())
-                    .append(", Price: ").append(request.getPrice()).append("\n").append("Message: ")
-                    .append(request.getSenderMessage()).append("\n");
-
-            if (request.isDone())
-                message.append("--isDone ").append("Your message: ").append(request.getReceiverMessage()).append("\n");
+            if (!request.isDone()) {
+                message.append("id: ").append(id).append(", Sender: ").append(request.getSender().getUser().getUsername())
+                        .append(", Type: ").append(request.getItem().getName()).append(", Amount: ").append(request.getItemAmount())
+                        .append(", Price: ").append(request.getPrice()).append("\n").append("Their Message: ")
+                        .append(request.getSenderMessage()).append("\n");
+            }
+            id++;
         }
-
         return message.toString().trim();
     }
 
@@ -75,7 +75,32 @@ public class TradeMenuController {
         return Message.TRADE_SUCCESS.toString();
     }
 
-    public Message showTradeHistory() {
-        return null;
+    public String showTradeHistory() {
+        StringBuilder message = new StringBuilder();
+        message.append("Here's the trades you received and replied:\n");
+        for (TradeRequest request : TradeRequest.getRequestsByReceiver(government)) {
+            if (request.isDone()) {
+                message.append(", Sender: ").append(request.getSender().getUser().getUsername())
+                        .append(", Type: ").append(request.getItem().getName()).append(", Amount: ")
+                        .append(request.getItemAmount())
+                        .append(", Price: ").append(request.getPrice()).append("\n").append("Their Message: ")
+                        .append(request.getSenderMessage()).append("You replied: ")
+                        .append(request.getReceiverMessage()).append("\n");
+            }
+
+        }
+
+        message.append("Here's the trades you've sent:\n");
+        for (TradeRequest request : TradeRequest.getRequestsBySender(government)) {
+            message.append(", Receiver: ").append(request.getReceiver().getUser().getUsername())
+                    .append(", Type: ").append(request.getItem().getName()).append(", Amount: ")
+                    .append(request.getItemAmount())
+                    .append(", Price: ").append(request.getPrice()).append("\n").append("Your Message: ")
+                    .append(request.getSenderMessage()).append("\n");
+
+            if (request.isDone())
+                message.append("--isDone ").append("Their reply: ").append(request.getReceiverMessage()).append("\n");
+        }
+        return message.toString().trim();
     }
 }

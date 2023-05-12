@@ -57,12 +57,23 @@ public class TradeRequest {
         ArrayList<TradeRequest> requests = new ArrayList<>();
 
         for (TradeRequest request : TradeRequest.requests) {
-            if (request.receiver == receiver && !request.isDone)
+            if (request.receiver == receiver)
                 requests.add(request);
         }
 
         return requests;
     }
+
+    public static ArrayList<TradeRequest> getRequestsBySender(Government sender) {
+        ArrayList<TradeRequest> requests = new ArrayList<>();
+
+        for (TradeRequest request : TradeRequest.requests) {
+            if (request.sender == sender)
+                requests.add(request);
+        }
+        return requests;
+    }
+
 
     public boolean doTrade(String receiverMessage) {
         this.receiverMessage = receiverMessage;
