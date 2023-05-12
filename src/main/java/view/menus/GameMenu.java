@@ -64,17 +64,25 @@ public class GameMenu {
 
             } else if (command.matches(Command.ENTER_TRADE_MENU.toString())) {
                 System.out.println(Message.ENTERED_TRADE_MENU);
+                System.out.println(controller.enterTradeMenu());
                 return Result.ENTER_TRADE_MENU;
             } else if ((matcher = Command.SET_TEXTURE.getMatcher(command)) != null)
                 System.out.println(this.controller.setTexture(matcher));
             else if ((matcher = Command.SET_RECTANGLE_TEXTURES.getMatcher(command)) != null)
                 System.out.println(this.controller.setRectangleTextures(matcher));
+
             else if ((matcher = Command.CLEAR_TEXTURE.getMatcher(command)) != null)
                 System.out.println(this.controller.clearTexture(matcher));
+
             else if ((matcher = Command.DROP_ROCK.getMatcher(command)) != null)
                 System.out.println(this.controller.dropRock(matcher));
+
             else if ((matcher = Command.DROP_TREE.getMatcher(command)) != null)
                 System.out.println(this.controller.dropTree(matcher));
+
+            else if (command.matches(Command.SHOW_INFO.toString()))
+                System.out.println(controller.showInfo());
+
             else if (command.matches(Command.END_GAME.toString()))
                 return Result.END_GAME;
             else

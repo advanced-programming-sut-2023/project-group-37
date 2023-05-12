@@ -356,9 +356,18 @@ public class GameMenuController {
     }
 
     public String showInfo(){
-        String info = "All Info:\n";
-
-        return info;
+        StringBuilder info = new StringBuilder("All Info:\n");
+        info.append("Username:").append(currentGovernment.getUsername()).append("\n");
+        info.append("Gold amount:").append(currentGovernment.getGold()).append("\n");
+        info.append("Tax--Food--Fear rate:").append(currentGovernment.getTaxRate())
+                .append("--").append(currentGovernment.getFoodRate()).append(currentGovernment.getFearRate()).append("\n");
+        info.append("Popularity:").append(currentGovernment.getPopularity()).append("\n");
+        info.append("Population:").append(currentGovernment.getPeople().size()).append("\n");
+        info.append("Number of buildings:").append(currentGovernment.getBuildings().size()).append("\n");
+        return info.toString().trim();
     }
 
+    public String enterTradeMenu() {
+        return tradeMenuController.showNewTrades();
+    }
 }
