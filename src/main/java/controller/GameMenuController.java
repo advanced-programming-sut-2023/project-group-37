@@ -50,10 +50,7 @@ public class GameMenuController {
         buildingMenuController.setCurrentGame(game);
     }
 
-    public String showMap(int x, int y) {
-        if (x >= currentGame.getMap().getSize() || x < 0 || y >= currentGame.getMap().getSize() || y < 0)
-            return Message.ADDRESS_OUT_OF_BOUNDS.toString();
-
+    public Tile[][] showMap(int x, int y) {
         return mapMenuController.showMap(x, y);
     }
 
@@ -353,6 +350,10 @@ public class GameMenuController {
 
         currentGame.getMap().getField()[x][y].changeTexture(Texture.ROCK);
         return Message.DROP_ROCK.toString();
+    }
+
+    public Map getMap() {
+        return currentGame.getMap();
     }
 
 }

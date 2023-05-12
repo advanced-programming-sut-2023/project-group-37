@@ -2,6 +2,7 @@ package view.menus;
 
 import controller.GameMenuController;
 import view.enums.Result;
+import model.game.Tile;
 import view.enums.Command;
 import view.enums.Message;
 
@@ -87,11 +88,30 @@ public class GameMenu {
         if (matcher.group("x") == null || matcher.group("y") == null)
             System.out.println(Message.EMPTY_FIELD);
 
-        this.message = this.controller.showMap(Integer.parseInt(matcher.group("x")),
+        if (controller.getMap().getTileByLocation(Integer.parseInt(matcher.group("x")),
+                Integer.parseInt(matcher.group("y"))) == null) {
+            System.out.println(Message.ADDRESS_OUT_OF_BOUNDS);
+            return false;
+        }
+
+        Tile[][] tiles = this.controller.showMap(Integer.parseInt(matcher.group("x")),
                 Integer.parseInt(matcher.group("y")));
 
-        System.out.println(this.message);
-        return Message.ENTERED_MAP_MENU.equals(message);
+        int rowLength = tiles.length;
+        int columnLength = tiles[0].length;
+        Tile tile;
+
+        for (int j = 0; j < columnLength; j++) {
+            for (Tile[] value : tiles) {
+                tile = value[j];
+                System.out.print(tile.getTexture().getColor().toString() + " " + tile.getState());
+            }
+            System.out.print(" ");
+            System.out.println("\033[0m");
+        }
+
+        System.out.println(Message.ENTERED_MAP_MENU);
+        return true;
     }
 
     private boolean selectBuilding(Matcher matcher) {
