@@ -40,7 +40,7 @@ public class TradeMenuController {
         if (price < 0)
             return Message.INVALID_PRICE.toString();
 
-        new TradeRequest(item, amount, price, message, government, receiver);
+        new TradeRequest(item, amount, price, message, government, receiver,game.getIndex());
 
         return Message.REQUEST_SENT.toString();
     }
@@ -59,6 +59,24 @@ public class TradeMenuController {
             id++;
         }
         return message.toString().trim();
+    }
+
+    public String showNewTrades(){
+        StringBuilder newTrades = new StringBuilder();
+        newTrades.append("Here's the trades you have received in this turn:\n");
+        int id = 1;
+        for (TradeRequest request : TradeRequest.getRequestsByReceiver(government)) {
+            if (request.getTime() == game.getIndex() && !request.isDone()) {
+                newTrades.append(", Sender: ").append(request.getSender().getUser().getUsername())
+                        .append(", Type: ").append(request.getItem().getName()).append(", Amount: ")
+                        .append(request.getItemAmount())
+                        .append(", Price: ").append(request.getPrice()).append("\n").append("Their Message: ")
+                        .append(request.getSenderMessage()).append("\n");
+            }
+            id++;
+        }
+
+        return newTrades.toString().trim();
     }
 
     public String acceptTrade(Matcher matcher) {

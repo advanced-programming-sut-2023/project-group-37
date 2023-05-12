@@ -13,12 +13,14 @@ public class TradeRequest {
     private String receiverMessage;
     private final Government sender;
     private final Government receiver;
+    private final int time;//It's the number of turn in which the trade is sent!
 
     static {
         requests = new ArrayList<>();
     }
 
-    public TradeRequest(Item item, int itemAmount, int price, String senderMessage, Government sender, Government receiver) {
+    public TradeRequest(Item item, int itemAmount, int price, String senderMessage, Government sender,
+                        Government receiver, int time) {
         this.item = item;
         this.itemAmount = itemAmount;
         this.price = price;
@@ -26,7 +28,12 @@ public class TradeRequest {
         this.sender = sender;
         this.receiver = receiver;
         this.isDone = false;
+        this.time = time;
         requests.add(this);
+    }
+
+    public int getTime() {
+        return time;
     }
 
     public Item getItem() {

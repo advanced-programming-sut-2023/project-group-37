@@ -35,6 +35,10 @@ public class Game {
         return null;
     }
 
+    public int getIndex() {
+        return index;
+    }
+
     public Map getMap() {
         return this.map;
     }
