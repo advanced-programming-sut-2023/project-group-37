@@ -30,4 +30,5 @@ public class MilitaryMachine extends MilitaryUnit {
         if (this.operators.size() < this.type.getOperatorsNeeded())
             this.operators.add(operator);
     }
+
 }

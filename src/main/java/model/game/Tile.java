@@ -3,6 +3,7 @@ package model.game;
 import model.buildings.Building;
 import model.people.MilitaryUnit;
 import model.people.Person;
+import model.people.Troop;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +12,6 @@ public class Tile {
     private final int x;
     private final int y;
     private Texture texture;
-
     private final ArrayList<Person> people;
     private final ArrayList<MilitaryUnit> militaryUnits;
     private Building building;
@@ -20,7 +20,7 @@ public class Tile {
     private Government territory;
     private int territoryNumber;
     public int number; // it is just for rootFinder
-
+    private int receivedDamageInTurn;
 
     public Tile(int x, int y) {
         this.x = x;
@@ -54,6 +54,25 @@ public class Tile {
 
     public Building getBuilding() {
         return building;
+    }
+
+    public int getReceivedDamageInTurn() {
+        return receivedDamageInTurn;
+    }
+
+    public void addReceivedDamageInTurn(int damage) {
+        this.receivedDamageInTurn += damage;
+    }
+
+    public void receiveDamage() {
+        for (MilitaryUnit militaryUnit : militaryUnits) {
+            receivedDamageInTurn -= militaryUnit.receiveDamage(receivedDamageInTurn);
+            if (receivedDamageInTurn < 1)
+                break;
+        }
+        for (MilitaryUnit militaryUnit : militaryUnits) {
+            militaryUnit.dieAndRemove();
+        }
     }
 
     public void removeBuilding() {
@@ -123,13 +142,6 @@ public class Tile {
         return people;
     }
 
-    public String showDetails() {
-        StringBuilder message = new StringBuilder();
-        message.append("");
-
-
-        return message.toString().trim();
-    }
 
     public boolean equals(Tile tile) {
         return (this.x == tile.x && this.y == tile.y);

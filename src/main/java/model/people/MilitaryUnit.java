@@ -45,16 +45,31 @@ public abstract class MilitaryUnit implements Movable {
         this.hitpoints = hitpoints;
     }
 
-    public int getDamage() {
-        return this.damage;
-    }
-
     public int getRange() {
         return this.range;
     }
 
     public int getSpeed() {
         return this.speed;
+    }
+
+    public void attack() {
+        target.addReceivedDamageInTurn(this.damage);
+    }
+
+    public int receiveDamage(int damage) {
+        int receivedDamage = Math.min(damage, this.hitpoints);
+        hitpoints -= receivedDamage;
+
+        return damage - receivedDamage;
+    }
+
+    public void dieAndRemove() {
+        if (this.hitpoints < 1)
+        {
+            this.loyalty.getMilitaryUnits().remove(this);
+            this.location.getMilitaryUnits().remove(this);
+        }
     }
 
     public Tile getLocation() {

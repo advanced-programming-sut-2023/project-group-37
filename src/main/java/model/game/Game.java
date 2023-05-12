@@ -1,6 +1,8 @@
 package model.game;
 
 import controller.GameMenuController;
+import model.people.MilitaryMachine;
+import model.people.MilitaryUnit;
 
 import java.util.ArrayList;
 
@@ -52,10 +54,18 @@ public class Game {
 
     public void goNextTurn() {
         if (index == governments.size() - 1) {
-            //TODO : do changes
-            for (Government government : governments) {
 
+            // FIGHT :
+            ArrayList<Tile> tileToAttack = new ArrayList<>();
+            for (Government government : governments) {
+                for (MilitaryUnit militaryUnit : government.getMilitaryUnits()) {
+                    militaryUnit.attack();
+                    if (!tileToAttack.contains(militaryUnit.getLocation()))
+                        tileToAttack.add(militaryUnit.getLocation());
+                }
             }
+            for (Tile tile : tileToAttack)
+                tile.receiveDamage();
         }
 
         index = (index + 1) % governments.size();
