@@ -110,6 +110,8 @@ public enum Message {
     UNIT_SELECTED("Unit selected and entered unitMenu!"),
     TYPE_NOT_EXISTS("There are no troop with this type!"),
     NO_UNIT_WITH_THIS_TYPE("There are no unit with this type in the place!"),
+    NO_MOVER("There are no mover in this place"),
+    NO_PATROL("There are no patroller in this place"),
     BARRACKS_NOT_EXISTS("Barracks not exists!"),
     MERCENARY_POST_NOT_EXISTS("Mercenary Post not exists!"),
     DROP_UNIT_SUCCESSFUL("Drop unit successful!"),

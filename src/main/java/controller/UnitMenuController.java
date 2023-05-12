@@ -133,6 +133,32 @@ public class UnitMenuController {
         return Message.SUCCESS;
     }
 
+    public String cancelMove() {
+        boolean isOnMove = false;
+        for (MilitaryUnit militaryUnit : this.unit) {
+            if (militaryUnit.isOnMove()) {
+                isOnMove = true;
+                militaryUnit.cancelMove();
+            }
+        }
+        if (isOnMove)
+            return Message.SUCCESS.toString();
+        return Message.NO_MOVER.toString();
+    }
+
+    public String cancelPatrol() {
+        boolean isOnPatrol = false;
+        for (MilitaryUnit militaryUnit : this.unit) {
+            if (militaryUnit.isOnPatrol()) {
+                isOnPatrol = true;
+                militaryUnit.cancelPatrol();
+            }
+        }
+        if (isOnPatrol)
+            return Message.SUCCESS.toString();
+        return Message.NO_PATROL.toString();
+    }
+
     public String setUnitState(String state) {
         MilitaryUnitStance stance = MilitaryUnitStance.getByState(state);
         if (stance == null)

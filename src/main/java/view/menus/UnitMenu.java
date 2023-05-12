@@ -42,6 +42,13 @@ public class UnitMenu {
                 System.out.println(this.controller.digTunnel(matcher));
             else if ((matcher = Command.BUILD_EQUIPMENT.getMatcher(command)) != null)
                 System.out.println(this.controller.buildEquipment(matcher));
+
+            else if (command.matches(Command.CANCEL_MOVE.toString()))
+                System.out.println(this.controller.cancelMove());
+
+            else if (command.matches(Command.CANCEL_PATROL.toString()))
+                System.out.println(this.controller.cancelPatrol());
+
             else if (command.matches(Command.DISBAND_UNIT.toString()))
                 System.out.println(this.controller.disbandUnit());
             else if (command.matches(Command.BACK_GAME_MENU.toString())) {

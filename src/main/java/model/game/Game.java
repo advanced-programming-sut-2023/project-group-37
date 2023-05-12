@@ -1,9 +1,6 @@
 package model.game;
 
 import controller.GameMenuController;
-import controller.MultiMenuFunctions;
-import model.buildings.Building;
-import model.people.MilitaryMachine;
 import model.people.MilitaryUnit;
 import model.people.MilitaryUnitStance;
 
