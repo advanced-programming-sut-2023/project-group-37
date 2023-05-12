@@ -2,6 +2,7 @@ package model.user;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import model.utils.PasswordHashing;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -16,7 +17,7 @@ public class User implements Serializable {
 
     private static User currentUser;
     private String username;
-    private String password;
+    private String hashedPassword;
     private String nickname;
     private String slogan;
     private String email;
@@ -38,7 +39,7 @@ public class User implements Serializable {
 
     public User(String username, String password, String email, String slogan, String nickname) {
         this.username = username;
-        this.password = password;
+        this.hashedPassword = password;
         this.email = email;
         this.slogan = slogan;
         this.nickname = nickname;
@@ -95,7 +96,7 @@ public class User implements Serializable {
     public User(String username, String password, String nickname, String slogan, String email, int questionNumber,
                 String answer) {
         this.username = username;
-        this.password = password;
+        this.hashedPassword = password;
         this.nickname = nickname;
         this.slogan = slogan;
         this.email = email;
@@ -138,7 +139,7 @@ public class User implements Serializable {
     }
 
     public void changePassword(String newPassword) {
-        this.password = newPassword;
+        this.hashedPassword = PasswordHashing.encode(newPassword);
     }
 
     public void setNickName(String nickname) {
@@ -166,8 +167,9 @@ public class User implements Serializable {
         setRanks();
     }
 
+
     public boolean isWrongPassword(String password) {
-        return !this.password.equals(password);
+        return !PasswordHashing.checkPassword(password,this.hashedPassword);
     }
 
     public boolean isCorrectAnswer(String answer) {

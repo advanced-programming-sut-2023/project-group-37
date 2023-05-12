@@ -1,6 +1,7 @@
 package controller;
 
 import model.user.User;
+import model.utils.PasswordHashing;
 import view.enums.Command;
 import view.enums.Message;
 
@@ -66,8 +67,8 @@ public class LoginMenuController {
 
         if (RegisterMenuController.checkPasswordNotOK(newPassword))
             return Message.WEAK_PASSWORD.toString();
-
-        password = newPassword;
+        //save hashed password
+        password = PasswordHashing.encode(newPassword);
         return Message.ENTER_NEW_PASSWORD_AGAIN.toString();
     }
 
@@ -75,7 +76,7 @@ public class LoginMenuController {
         if (Command.CANCEL.getMatcher(newPassword) != null)
             return Message.CANCEL.toString();
 
-        if (!newPassword.equals(password))
+        if (!PasswordHashing.checkPassword(newPassword,password))
             return Message.INCOMPATIBLE_PASSWORDS.toString();
 
         user.changePassword(newPassword);

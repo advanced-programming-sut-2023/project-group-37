@@ -3,6 +3,7 @@ package controller;
 import model.user.SecurityQuestion;
 import model.user.Slogan;
 import model.user.User;
+import model.utils.PasswordHashing;
 import view.enums.Message;
 
 import java.security.SecureRandom;
@@ -13,7 +14,7 @@ public class RegisterMenuController {
     // TODO: why these fields?
 
     private User user;
-    private String randomPassword;
+    //private String randomPassword;
 
     // TODO: handle countdown!
 //    private int delayTime = 0;
@@ -39,7 +40,7 @@ public class RegisterMenuController {
         return !email.matches("[A-Za-z0-9_.]+@[a-zA-Z0-9_]+\\.[A-Za-z0-9_.]+");
     }
 
-    private void generateRandomPassword() {
+    private String generateRandomPassword() {
         SecureRandom random = new SecureRandom();
 
         String LOWER_CHARACTERS = "abcdefghijklmnopqrstuvwxyz";
@@ -72,8 +73,7 @@ public class RegisterMenuController {
             randomChar = NUMBERS.charAt(randomIndex);
             password.append(randomChar);
         }
-
-        randomPassword = password.toString();
+       return password.toString();
     }
 
     public User getUser() {
@@ -114,16 +114,17 @@ public class RegisterMenuController {
             if (!passwordConfirm.equals(password))
                 return Message.INCOMPATIBLE_PASSWORDS.toString();
         } else {
-            generateRandomPassword();
-            this.user = new User(username.toLowerCase(), randomPassword, email, slogan, nickName);
+            String randomPassword = generateRandomPassword();
+            //save hashed password
+            this.user = new User(username.toLowerCase(), PasswordHashing.encode(randomPassword), email, slogan, nickName);
             randomMessages += "Your random password is: " + randomPassword + "\nPlease re-enter your password here:";
             return randomMessages;
         }
 
         if (checkEmailNotOK(email))
             return Message.INCORRECT_EMAIL_FORM.toString();
-
-        this.user = new User(username, password, email, slogan, nickName);
+        //save hashed password
+        this.user = new User(username, PasswordHashing.encode(password), email, slogan, nickName);
 
         return randomMessages + Message.ASK_FOR_SECURITY_QUESTION;
     }
@@ -154,7 +155,7 @@ public class RegisterMenuController {
             return Message.CANCEL.toString();
         }
 
-        if (passwordConfirm.equals(randomPassword)) {
+        if (!user.isWrongPassword(passwordConfirm)) {
             return Message.ASK_FOR_SECURITY_QUESTION.toString();
         }
 
