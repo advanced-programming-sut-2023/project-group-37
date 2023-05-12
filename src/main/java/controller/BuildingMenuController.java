@@ -38,20 +38,19 @@ public class BuildingMenuController {
             return Message.NO_BUILDING_SELECTED;
     }
 
-    public Message repair() {
+    public String repair() {
 
         if (!this.currentBuilding.getType().isRepairable())
-            return Message.BUILDING_NOT_REPAIRABLE;
+            return Message.BUILDING_NOT_REPAIRABLE.toString();
 
         int stoneNeededToRepair = (int)
                 (1 - (double) (this.currentBuilding.getHitpoints() / this.getCurrentBuilding().getMaxHitpoints())) *
                 this.currentBuilding.getType().getRawMaterialUsesForSecond();
 
-        if (!this.currentGovernment.removeFromTargetRepository(this.currentGovernment.getStockpile(), Item.STONE,
-                stoneNeededToRepair))
-            return Message.STONE_NOT_ENOUGH;
+        if (!this.currentGovernment.sellItem(Item.STONE, stoneNeededToRepair))
+            return "Stone" + Message.NOT_ENOUGH_RESOURCE;
 
         this.currentBuilding.setHitpoints(this.currentBuilding.getMaxHitpoints());
-        return Message.REPAIR_SUCCESS;
+        return Message.REPAIR_SUCCESS.toString();
     }
 }

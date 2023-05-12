@@ -12,6 +12,7 @@ import model.user.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Government {
     private final User user;
@@ -24,7 +25,7 @@ public class Government {
     private final HashMap<Troop, Integer> troops;
     private final ArrayList<MilitaryUnit> militaryUnits;
     private final ArrayList<Building> buildings;
-    private boolean hasMarket;
+    private final boolean hasMarket;
     private final ArrayList<Storage> stockpile;
     private final ArrayList<Storage> granary;
     private final ArrayList<Storage> armory;
@@ -87,12 +88,24 @@ public class Government {
         return this.gold;
     }
 
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+
     public Troop getLord() {
         return this.lord;
     }
 
     public ArrayList<Person> getPeople() {
         return this.people;
+    }
+
+    public int getPeasantCount() {
+        int count = 0;
+        for (Person person : this.people)
+            if (person.getWorkplace() == null)
+                count++;
+        return count;
     }
 
     public ArrayList<MilitaryUnit> getMilitaryUnits() {
@@ -123,6 +136,10 @@ public class Government {
         return this.popularity;
     }
 
+    public void setPopularity(int amount) {
+        this.popularity = amount;
+    }
+
     public int getFoodRate() {
         return this.foodRate;
     }
@@ -147,6 +164,11 @@ public class Government {
         this.foodRate = foodRate;
     }
 
+    public void addPeasant(int count) {
+        for (int i = 0; i < count; i++)
+            this.people.add(new Person());
+    }
+
     public void addBuilding(Building building) {
         if (building.getType() == BuildingType.STOCKPILE)
             this.stockpile.add((Storage) building);
@@ -163,6 +185,45 @@ public class Government {
             this.buildings.add(building);
     }
 
+    public void distributeFood() {
+        double foodPerPerson = 0;
+        if (this.foodRate > -2)
+            foodPerPerson = (double) (this.foodRate / 2) + 1;
+
+        int totalFoodNeeded = (int) (this.people.size() * foodPerPerson), foodToDistribute;
+
+        OUTER:
+        for (int i = this.granary.size() - 1; i >= 0; i--) {
+            for (Map.Entry<Item, Integer> entry : granary.get(i).getStock().entrySet()) {
+                if (totalFoodNeeded == 0)
+                    break OUTER;
+
+                foodToDistribute = Math.min(entry.getValue(), totalFoodNeeded);
+                entry.setValue(entry.getValue() - foodToDistribute);
+                totalFoodNeeded -= foodToDistribute;
+            }
+        }
+
+        this.popularity += 4 * this.foodRate;
+    }
+
+    public void receiveTax() {
+        double taxPerPerson = 0;
+        if (this.taxRate != 0)
+            taxPerPerson = (this.taxRate > 0 ? 1 : -1) * (0.2 * taxRate + 0.4);
+
+        this.gold += this.people.size() * taxPerPerson;
+        this.popularity += -2 * this.taxRate + (this.taxRate > 0 ? 0 : 1);
+    }
+
+    private ArrayList<Storage> getTargetRepository(Item item){
+        return switch (item.getCategory()) {
+            case RESOURCES -> this.stockpile;
+            case FOODS -> this.granary;
+            case WEAPONS -> this.armory;
+        };
+    }
+
     // Shop Menu Methods :
 
     private int getFreeSpace(ArrayList<Storage> repository) {
@@ -174,16 +235,17 @@ public class Government {
         return freeSpace;
     }
 
-    public int getItemAmount(Item item, ArrayList<Storage> repository) {
+    public int getItemAmount(Item item) {
         int itemAmount = 0;
-        for (Storage storage : repository) {
+        for (Storage storage : getTargetRepository(item)) {
             itemAmount += storage.getItemAmount(item);
         }
 
         return itemAmount;
     }
 
-    public boolean addToTargetRepository(ArrayList<Storage> repository, Item item, int amount) {
+    public boolean addItem(Item item, int amount) {
+        ArrayList<Storage> repository = getTargetRepository(item);
         if (getFreeSpace(repository) < amount)
             return false;
 
@@ -198,11 +260,10 @@ public class Government {
         return true;
     }
 
-    public boolean removeFromTargetRepository(ArrayList<Storage> repository, Item item, int amount) {
-        if (getItemAmount(item, repository) < amount)
+    public boolean removeItem(Item item, int amount) {
+        ArrayList<Storage> repository = getTargetRepository(item);
+        if (getItemAmount(item) < amount)
             return false;
-
-        this.gold += amount * item.getSellCost();
 
         for (Storage storage : repository) {
             if (amount < 1)
@@ -210,6 +271,14 @@ public class Government {
 
             amount = storage.decreaseStock(item, amount);
         }
+        return true;
+    }
+
+    public boolean sellItem(Item item, int amount) {
+        if (removeItem(item, amount))
+            return false;
+
+        this.gold += amount * item.getSellCost();
         return true;
     }
 

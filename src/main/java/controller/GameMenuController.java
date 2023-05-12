@@ -33,6 +33,7 @@ public class GameMenuController {
         this.buildingMenuController = buildingMenuController;
         this.unitMenuController = unitMenuController;
     }
+
     public void setCurrentGovernment(Government government) {
         this.currentGovernment = government;
         this.shopMenuController.setGovernment(government);
@@ -76,6 +77,7 @@ public class GameMenuController {
                 4.Fear you create!""";
     }
 
+    // TODO: این چه کسشریه؟
     public String showFoodList() {
         StringBuilder list = new StringBuilder();
         int counter = 1;
@@ -146,6 +148,7 @@ public class GameMenuController {
         if (!tile.getTexture().canHaveBuildingAndUnit())
             return Message.CANNOT_PLACE_BUILDING_ON_TEXTURE.toString();
 
+        // Check texture:
         if (type instanceof BuildingType) {
             if ((type == BuildingType.APPLE_ORCHARD || type == BuildingType.DIARY_FARMER ||
                     type == BuildingType.HOPS_FARMER || type == BuildingType.WHEAT_FARMER) &&
@@ -161,8 +164,43 @@ public class GameMenuController {
         if (tile.getBuilding() != null)
             return Message.TILE_ALREADY_HAS_BUILDING.toString();
 
-        tile.setBuilding(type instanceof BuildingType ? new Building(this.currentGovernment, tile, (BuildingType) type) :
-                new DefensiveBuilding(this.currentGovernment, tile, (DefensiveBuildingType) type));
+        // Check enough gold and resource:
+        if (type instanceof BuildingType) {
+            if (((BuildingType) type).getCost() > this.currentGovernment.getGold())
+                return Message.NOT_ENOUGH_GOLD.toString();
+            if (((BuildingType) type).getBuildingMaterialAmount() >
+                    this.currentGovernment.getItemAmount(((BuildingType) type).getBuildingMaterial()))
+                return ((BuildingType) type).getBuildingMaterial().getName() + Message.NOT_ENOUGH_RESOURCE;
+        } else if (type instanceof DefensiveBuildingType) {
+            if (((DefensiveBuildingType) type).getCost() > this.currentGovernment.getGold())
+                return Message.NOT_ENOUGH_GOLD.toString();
+            if (((DefensiveBuildingType) type).getStoneAmount() > this.currentGovernment.getItemAmount(Item.STONE))
+                return "Stone" + Message.NOT_ENOUGH_RESOURCE;
+        }
+
+        // Check enough peasants:
+        if (type instanceof BuildingType && this.currentGovernment.getPeasantCount() <
+                ((BuildingType) type).getWorkersNeeded())
+            return Message.NOT_ENOUGH_PEASANT.toString();
+
+        // Decrease gold and resource:
+        if (type instanceof BuildingType) {
+            this.currentGovernment.setGold(this.currentGovernment.getGold() - ((BuildingType) type).getCost());
+            this.currentGovernment.removeItem(((BuildingType) type).getBuildingMaterial(),
+                    ((BuildingType) type).getBuildingMaterialAmount());
+        } else if (type instanceof DefensiveBuildingType) {
+            this.currentGovernment.setGold(this.currentGovernment.getGold() - ((DefensiveBuildingType) type).getCost());
+            this.currentGovernment.removeItem(Item.STONE, ((DefensiveBuildingType) type).getStoneAmount());
+        }
+
+        // TODO: storage location should be checked in coming statement!
+        if (type instanceof BuildingType) {
+            if (type == BuildingType.STOCKPILE || type == BuildingType.GRANARY || type == BuildingType.ARMORY)
+                tile.setBuilding(new Storage(this.currentGovernment, tile, (BuildingType) type));
+            else
+                tile.setBuilding(new Building(this.currentGovernment, tile, (BuildingType) type));
+        } else if (type instanceof DefensiveBuildingType)
+            tile.setBuilding(new DefensiveBuilding(this.currentGovernment, tile, (DefensiveBuildingType) type));
 
         int workersNeeded;
         if (type instanceof BuildingType && (workersNeeded = ((BuildingType) type).getWorkersNeeded()) > 0) {
@@ -177,7 +215,6 @@ public class GameMenuController {
                 }
             }
         }
-        // TODO: handle situation if building needs more workers!
         tile.setPassability(type == BuildingType.KILLING_PIT);
         return Message.DROP_BUILDING_SUCCESS.toString();
     }
@@ -234,7 +271,7 @@ public class GameMenuController {
         int x = Integer.parseInt(matcher.group("x")), y = Integer.parseInt(matcher.group("y"));
 
         Tile tile;
-        if ((tile = currentGame.getMap().getTileByLocation(x,y)) == null)
+        if ((tile = currentGame.getMap().getTileByLocation(x, y)) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
         TroopType troopType = TroopType.getTroopTypeByName(type);
@@ -254,8 +291,7 @@ public class GameMenuController {
             building = currentGovernment.getUniqueBuilding(BuildingType.ENGINEER_GUILD);
             if (building == null)
                 return Message.ENGINEER_GUILD_NOT_EXISTS.toString();
-        }
-        else {
+        } else {
             building = currentGovernment.getUniqueBuilding(BuildingType.TUNNELER_GUILD);
             if (building == null)
                 return Message.TUNNELER_GUILD_NOT_EXISTS.toString();

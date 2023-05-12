@@ -1,6 +1,8 @@
 package model.game;
 
 import controller.GameMenuController;
+import model.buildings.Building;
+import model.buildings.BuildingType;
 
 import java.util.ArrayList;
 
@@ -54,7 +56,27 @@ public class Game {
         if (index == governments.size() - 1) {
             //TODO : do changes
             for (Government government : governments) {
-
+                government.distributeFood();
+                government.receiveTax();
+                government.setPopularity(government.getPopularity() + government.getFearRate());
+                int innCount = 0;
+                for (Building building : government.getBuildings()) {
+                    if (building.getType() == BuildingType.HOVEL)
+                        government.addPeasant(8);
+                    else {
+                        if (building.getType() == BuildingType.INN)
+                            innCount++;
+                        // I decrease sum of rawMaterials!
+                        government.removeItem(building.getType().getRawMaterial(),
+                                building.getType().getRawMaterialUses() +
+                                        building.getType().getRawMaterialUsesForSecond());
+                        government.addItem(building.getType().getProduct(), building.getType().getProductProvides());
+                        government.addItem(building.getType().getSecondProduct(), 1);
+                        // TODO: check for storage being fulled!
+                    }
+                }
+                government.setPopularity(government.getPopularity() + Math.min(4, innCount) * 2);
+                government.setPopularity(government.getPopularity() > 100 ? 100 : Math.max(government.getPopularity(), 0));
             }
         }
 

@@ -12,14 +12,12 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class Storage extends Building {
-    private BuildingType type;
-    private final int capacity;
+    private final BuildingType type;
     private final HashMap<Item, Integer> stock;
 
-    public Storage(Government loyalty, Tile location, BuildingType type, int capacity) {
+    public Storage(Government loyalty, Tile location, BuildingType type) {
         super(loyalty, location, type);
         this.type = type;
-        this.capacity = capacity;
 
         //TODO: add items to stock based on type!
         this.stock = new HashMap<>();
@@ -35,22 +33,26 @@ public class Storage extends Building {
         //TODO: set defaults!
     }
 
+    public HashMap<Item, Integer> getStock() {
+        return this.stock;
+    }
+
     public int getFreeSpace() {
         int totalStock = 0;
         for (Integer count : this.stock.values())
             totalStock += count;
 
-        return capacity - totalStock;
+        return this.type.getCapacity() - totalStock;
     }
 
     public String getFoodNames() {
-        String foodList = "";
+        StringBuilder foodList = new StringBuilder();
         Set<Item> foods = stock.keySet();
         for (Item food : foods) {
-            foodList += food.getName() + "\n";
+            foodList.append(food.getName()).append("\n");
         }
 
-        return foodList.trim();
+        return foodList.toString().trim();
     }
 
     public int getItemAmount(Item item) {
