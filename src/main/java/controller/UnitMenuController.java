@@ -7,6 +7,7 @@ import model.game.Tile;
 import model.people.*;
 import view.enums.Message;
 
+import javax.ws.rs.core.Link;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
@@ -343,13 +344,15 @@ public class UnitMenuController {
             if (unit instanceof MilitaryMachine || !((Troop) unit).getType().canDigMoat())
                 return Message.UNIT_CANNOT_DIG_MOAT;
 
+        LinkedList<Tile> route;
+        if ((route = MultiMenuFunctions.routeFinder(this.currentLocation, destination, this.currentGame.getMap())) == null)
+            return Message.NO_ROUTS_FOUND;
         for (MilitaryUnit unit : this.currentUnit) {
-            unit.setRoute(MultiMenuFunctions.routeFinder(this.currentLocation, destination, this.currentGame.getMap()));
+            unit.setRoute(route);
             unit.setMoatTarget(destination);
         }
 
-        // TODO: erfan go on + correct message!
-        return null;
+        return Message.SUCCESS;
     }
 
     public Message cancelDigMoat(Matcher matcher) {
@@ -370,5 +373,32 @@ public class UnitMenuController {
             }
 
         return Message.CANCEL_DIG_MOAT_SUCCESS;
+    }
+
+    public Message fillMoat(Matcher matcher) {
+        if (matcher.group("x") == null || matcher.group("y") == null)
+            return Message.EMPTY_FIELD;
+
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+
+        Tile destination = this.currentGame.getMap().getTileByLocation(x, y);
+        if (destination == null)
+            return Message.ADDRESS_OUT_OF_BOUNDS;
+
+        for (MilitaryUnit unit : this.currentUnit)
+            if (unit instanceof MilitaryMachine || !((Troop) unit).getType().canDigMoat())
+                return Message.UNIT_CANNOT_DIG_MOAT;
+
+        LinkedList<Tile> route;
+        if ((route = MultiMenuFunctions.routeFinder(this.currentLocation, destination, this.currentGame.getMap())) == null)
+            return Message.NO_ROUTS_FOUND;
+
+        for (MilitaryUnit unit : this.currentUnit) {
+            unit.setRoute(route);
+            unit.setMoatTarget(MultiMenuFunctions.getNearestPassableTileByLocation(destination, this.currentGame.getMap()));
+        }
+
+        return Message.SUCCESS;
     }
 }

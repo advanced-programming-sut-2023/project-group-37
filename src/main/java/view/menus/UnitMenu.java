@@ -60,6 +60,8 @@ public class UnitMenu {
                 System.out.println(this.controller.digMoat(matcher));
             else if ((matcher = Command.CANCEL_DIG_MOAT.getMatcher(command)) != null)
                 System.out.println(this.controller.cancelDigMoat(matcher));
+            else if ((matcher = Command.FILL_MOAT.getMatcher(command)) != null)
+                System.out.println(this.controller.fillMoat(matcher));
             else if (command.matches(Command.CANCEL_MOVE.toString()))
                 System.out.println(this.controller.cancelMove());
             else if (command.matches(Command.CANCEL_PATROL.toString()))
