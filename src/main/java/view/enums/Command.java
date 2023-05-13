@@ -79,7 +79,7 @@ public enum Command {
     // MapMenu:
     MOVE_THE_MAP("map(\\s+(((?<up>up)(\\s+(?<upDistance>\\d+))?)|((?<down>down)(\\s+(?<downDistance>\\d+))?)|" +
             "((?<left>left)(\\s+(?<leftDistance>\\d+))?)|((?<right>right)(\\s+(?<rightDistance>\\d+))?)))+\\s*"),
-    SHOW_DETAILS("\\s*show\\s+details(\\s+((-x(?<x>\\d+))|(-y(?<y>\\d+))))+\\s*"),
+    SHOW_DETAILS("\\s*show\\s+details(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
 
     // ShopMenu:
     BUY_ITEM("\\s*buy(\\s+((-i(?<itemName>\"[^\"]+\"|\\S+))|(-a(?<itemAmount>\\d+))))+\\s*"),

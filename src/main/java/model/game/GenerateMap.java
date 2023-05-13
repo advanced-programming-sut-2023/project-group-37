@@ -3,7 +3,7 @@ package model.game;
 public class GenerateMap {
     private static Map map;
 
-    //    public static void main(String[] args) {
+//        public static void main(String[] args) {
 //        createMap1();
 //        printMap();
 //    }

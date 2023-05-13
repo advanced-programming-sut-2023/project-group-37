@@ -4,8 +4,10 @@ import model.game.Game;
 import model.game.Government;
 import model.game.Map;
 import model.game.Tile;
+import model.people.MilitaryMachine;
+import model.people.MilitaryUnit;
+import model.people.Troop;
 import view.enums.Message;
-import view.menus.GameMenu;
 
 import java.util.regex.Matcher;
 
@@ -15,6 +17,7 @@ public class MapMenuController {
     private Government government;
     private int currentX;
     private int currentY;
+
     public void setGovernment(Government government) {
         this.government = government;
     }
@@ -48,7 +51,7 @@ public class MapMenuController {
 
         for (int i = minX; i < maxX; i++) {
             for (int j = minY; j < maxY; j++) {
-                result[i-minX][j-minY] = map.getTileByLocation(i, j);
+                result[i - minX][j - minY] = map.getTileByLocation(i, j);
             }
         }
         return result;
@@ -83,8 +86,44 @@ public class MapMenuController {
         return showMap(x, y);
     }
 
-    public Message showDetails(Matcher matcher) {
-        return null;
+    public String showDetails(Matcher matcher) {
+        if (matcher.group("x") == null || matcher.group("y") == null)
+            return Message.EMPTY_FIELD.toString();
+
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+        Tile tile;
+
+        if ((tile = map.getTileByLocation(x, y)) == null)
+            return Message.ADDRESS_OUT_OF_BOUNDS.toString();
+
+        StringBuilder details = new StringBuilder();
+        details.append("The texture: ").append(tile.getTexture().name()).append("\n");
+
+        if(tile.getBuilding() != null)
+            details.append("You have the building (").append(tile.getBuilding().getType().getName()).append(") here!\n");
+        else
+            details.append("You have no buildings here!\n");
+
+        if(tile.getMilitaryUnits().size() == 0)
+            details.append("You have no troops here!\n");
+        else{
+            int troopCounter = 1;
+            int machineCounter = 1;
+            for (MilitaryUnit militaryUnit : tile.getMilitaryUnits()) {
+                if(militaryUnit instanceof Troop) {
+                    details.append("Troop ").append(troopCounter).append(": ").append(((Troop) militaryUnit).getType().name()).append("\n");
+                    troopCounter++;
+                }
+                else if(militaryUnit instanceof MilitaryMachine){
+                    details.append("Machine ").append(machineCounter).append(": ").append(((MilitaryMachine) militaryUnit).getType().name()).append("\n");
+                    machineCounter++;
+                }
+            }
+        }
+
+        return details.toString().trim();
+
     }
 
 }

@@ -251,14 +251,20 @@ public class Government {
         if (getFreeSpace(repository) < amount)
             return false;
 
-        this.gold -= amount * item.getBuyCost();
-
         for (Storage storage : repository) {
             if (amount < 1)
                 break;
 
             amount = storage.increaseStock(item, amount);
         }
+        return true;
+    }
+
+    public boolean buyItem(Item item, int amount) {
+        if (!addItem(item, amount))
+            return false;
+
+        this.gold -= amount * item.getBuyCost();
         return true;
     }
 
@@ -277,7 +283,7 @@ public class Government {
     }
 
     public boolean sellItem(Item item, int amount) {
-        if (removeItem(item, amount))
+        if (!removeItem(item, amount))
             return false;
 
         this.gold += amount * item.getSellCost();

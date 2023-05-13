@@ -14,7 +14,7 @@ public class ShopMenuController {
     }
 
     public boolean addItem(Item item, int amount) {
-        return government.addItem(item, amount);
+        return government.buyItem(item, amount);
     }
 
     public boolean removeItem(Item item, int amount) {
