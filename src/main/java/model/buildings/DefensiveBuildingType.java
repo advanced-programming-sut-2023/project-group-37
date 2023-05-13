@@ -1,23 +1,22 @@
 package model.buildings;
 
-import model.game.Item;
-
 public enum DefensiveBuildingType {
 
     // TODO: set real capacity for them!
     // TODO: set real damage & range for them!
     // TODO: these should only be placed in own territory!
 
+    KEEP(null, 1, 0, 0, 0, 16),
     WALL("wall", 250, 1, 0, 0, 1),
     STAIRS("stairs", 150, 1, 0, 0, 1),
-    SMALL_GATEHOUSE("smallgatehouse", 350, 10, 0, 0, 8),
-    LARGE_GATEHOUSE("largegatehouse", 450, 20, 0, 0, 12),
+    SMALL_GATEHOUSE("small gatehouse", 350, 10, 0, 0, 8),
+    LARGE_GATEHOUSE("large gatehouse", 450, 20, 0, 0, 12),
     // TODO: decide if they need a seperated class or category field or else!
-    LOOKOUT_TOWER("lookouttower", 250, 10, -1, -1, -1),
-    PERIMETER_TOWER("perimetertower", 350, 10, -1, -1, -1),
-    DEFENCE_TOWER("defencetower", 350, 15, -1, -1, -1),
-    SQUARE_TOWER("squaretower", 450, 35, -1, -1, -1),
-    ROUND_TOWER("roundtower", 450, 40, -1, -1, -1),
+    LOOKOUT_TOWER("lookout tower", 250, 10, -1, -1, -1),
+    PERIMETER_TOWER("perimeter tower", 350, 10, -1, -1, -1),
+    DEFENCE_TOWER("defence tower", 350, 15, -1, -1, -1),
+    SQUARE_TOWER("square tower", 450, 35, -1, -1, -1),
+    ROUND_TOWER("round tower", 450, 40, -1, -1, -1),
     ;
     private final String name;
     private final int cost;

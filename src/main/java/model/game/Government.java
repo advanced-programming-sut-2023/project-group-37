@@ -1,8 +1,6 @@
 package model.game;
 
-import model.buildings.Building;
-import model.buildings.BuildingType;
-import model.buildings.Storage;
+import model.buildings.*;
 import model.people.MilitaryUnit;
 import model.people.Person;
 import model.people.Troop;
@@ -11,7 +9,6 @@ import model.people.TroopType;
 import model.user.User;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Government {
     private final User user;
@@ -20,7 +17,6 @@ public class Government {
     private int gold;
     private final Troop lord;
     private final ArrayList<Person> people;
-    private final ArrayList<Troop> troops;
     private final ArrayList<MilitaryUnit> militaryUnits;
     private final ArrayList<Building> buildings;
     private final ArrayList<Storage> stockpile;
@@ -32,14 +28,16 @@ public class Government {
     private int fearRate;
     private int religionPopularityRate;
 
-    public Government(User user, Color color, model.game.Map map, int territoryNumber) {
+    public Government(User user, Color color, Map map, int territoryNumber) {
         this.user = user;
         this.territory = map.getCopyKeepByNumber(this, territoryNumber);
         this.color = color;
         // TODO: set default value for gold!
         this.gold = 2000;
         this.lord = new Troop(this, TroopType.LORD, territory.getKeep());
-        this.territory.getKeep().addMilitaryUnit(lord, 1);
+        this.territory.getKeep().setBuilding(new DefensiveBuilding(this, this.territory.getKeep(),
+                DefensiveBuildingType.KEEP));
+        this.territory.getKeep().addMilitaryUnit(this.lord);
         this.people = new ArrayList<>();
         this.militaryUnits = new ArrayList<>();
         this.buildings = new ArrayList<>();
@@ -55,18 +53,10 @@ public class Government {
         this.foodRate = 1;
         this.taxRate = 0;
         this.fearRate = 0;
-        this.troops = new ArrayList<>();
     }
 
     public User getUser() {
         return this.user;
-    }
-
-
-    public void addTroops(Troop troop, int count) {
-        for (int i=0; i < count; i++)
-            troops.add(troop);
-        troop.getLocation().addMilitaryUnit(troop, count);
     }
 
     public Territory getTerritory() {
@@ -195,7 +185,7 @@ public class Government {
 
         OUTER:
         for (int i = this.granary.size() - 1; i >= 0; i--) {
-            for (Map.Entry<Item, Integer> entry : granary.get(i).getStock().entrySet()) {
+            for (java.util.Map.Entry<Item, Integer> entry : granary.get(i).getStock().entrySet()) {
                 if (totalFoodNeeded == 0)
                     break OUTER;
 
@@ -226,7 +216,7 @@ public class Government {
             this.popularity += -4 * this.taxRate + 8;
     }
 
-    private ArrayList<Storage> getTargetRepository(Item item) {
+    public ArrayList<Storage> getTargetRepository(Item item) {
         return switch (item.getCategory()) {
             case RESOURCES -> this.stockpile;
             case FOODS -> this.granary;
@@ -236,12 +226,11 @@ public class Government {
 
     // Shop Menu Methods :
 
-    private int getFreeSpace(ArrayList<Storage> repository) {
+    public int getFreeSpace(ArrayList<Storage> repository) {
         int freeSpace = 0;
         for (Storage storage : repository) {
             freeSpace += storage.getFreeSpace();
         }
-
         return freeSpace;
     }
 
@@ -312,8 +301,7 @@ public class Government {
             if (building.getHitpoints() < 1) {
                 building.destroy();
                 this.buildings.remove(index);
-            }
-            else index++;
+            } else index++;
         }
     }
 

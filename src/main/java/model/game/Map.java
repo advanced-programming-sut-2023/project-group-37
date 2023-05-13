@@ -116,7 +116,7 @@ public class Map {
     }
 
     public Territory getCopyKeepByNumber(Government owner, int territoryNumber) {
-        return this.territories.get(territoryNumber).getCopYTerritory(owner);
+        return this.territories.get(territoryNumber).getCopyTerritory(owner);
     }
 
     public HashMap<Integer, Territory> getKeeps() {

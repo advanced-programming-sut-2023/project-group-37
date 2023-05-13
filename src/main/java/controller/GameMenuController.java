@@ -14,7 +14,6 @@ import model.user.User;
 import view.enums.Message;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.regex.Matcher;
 
 public class GameMenuController {
@@ -41,7 +40,7 @@ public class GameMenuController {
         this.shopMenuController.setGovernment(government);
         this.tradeMenuController.setGovernment(government);
         this.mapMenuController.setGovernment(government);
-        this.unitMenuController.setGovernment(government);
+        this.unitMenuController.setCurrentGovernment(government);
         this.buildingMenuController.setCurrentGovernment(government);
     }
 
@@ -49,7 +48,7 @@ public class GameMenuController {
         this.currentGame = game;
         tradeMenuController.setGame(game);
         mapMenuController.setGame(game);
-        unitMenuController.setGame(game);
+        unitMenuController.setCurrentGame(game);
         buildingMenuController.setCurrentGame(game);
     }
 
@@ -217,8 +216,27 @@ public class GameMenuController {
                 building = new Storage(this.currentGovernment, tile, (BuildingType) type);
             else
                 building = new Building(this.currentGovernment, tile, (BuildingType) type);
-        } else if (type instanceof DefensiveBuildingType)
+        } else if (type instanceof DefensiveBuildingType) {
             building = new DefensiveBuilding(this.currentGovernment, tile, (DefensiveBuildingType) type);
+
+            Building[] neighborBuildings = {
+                    this.currentGame.getMap().getTileByLocation(tile.getX() - 1, tile.getY()).getBuilding(),
+                    this.currentGame.getMap().getTileByLocation(tile.getX() + 1, tile.getY()).getBuilding(),
+                    this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() - 1).getBuilding(),
+                    this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() + 1).getBuilding(),
+            };
+
+            for (Building neighborBuilding : neighborBuildings)
+                if (neighborBuilding instanceof DefensiveBuilding) {
+                    ((DefensiveBuilding) building).addDefensiveNeighbor((DefensiveBuilding) neighborBuilding);
+                    for (DefensiveBuilding neighbor : ((DefensiveBuilding) neighborBuilding).getDefensiveNeighbors())
+                        ((DefensiveBuilding) building).addDefensiveNeighbor(neighbor);
+                    ((DefensiveBuilding) neighborBuilding).addDefensiveNeighbor((DefensiveBuilding) building);
+                    for (DefensiveBuilding neighbor : ((DefensiveBuilding) building).getDefensiveNeighbors())
+                        if (!neighbor.getDefensiveNeighbors().contains(neighborBuilding))
+                            neighbor.addDefensiveNeighbor((DefensiveBuilding) neighborBuilding);
+                }
+        }
 
         assert building != null;
         tile.setBuilding(building);
@@ -339,9 +357,12 @@ public class GameMenuController {
         currentGovernment.removeItem(weapon, count);
         currentGovernment.setGold(currentGovernment.getGold() - goldCost);
 
-        Troop troop = new Troop(this.currentGovernment, troopType, tile);
-
-        this.currentGovernment.addTroops(troop, count);
+        Troop troop;
+        for (int i = 0; i < count; i++) {
+            troop = new Troop(this.currentGovernment, troopType, tile);
+            this.currentGovernment.getMilitaryUnits().add(troop);
+            tile.addMilitaryUnit(troop);
+        }
         return Message.DROP_UNIT_SUCCESSFUL.toString();
     }
 
