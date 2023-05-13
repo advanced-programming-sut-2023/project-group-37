@@ -128,6 +128,8 @@ public enum Message {
     CANNOT_BUILD_MACHINE_HERE("Cannot build this military machine here!"),
     CONSTRUCTING_SIEGE_EQUIPMENT("Constructing siege equipment"),
     UNIT_NOT_TUNNELER("You can dig tunnel only by tunneler units!"),
+    CANNOT_DIG_TUNNEL_THERE("Cannot dig tunnel on that location!"),
+    TUNNEL_TOO_FAR_FROM_ENEMY("Tunnel cannot be too far from enemy!"),
     NO_OIL_SMELTER("You have to build an oil smelter first!"),
 
     // BuildingMenu:,

@@ -228,7 +228,7 @@ public class UnitMenuController {
         }
     }
 
-    public Message fillContainer(Matcher matcher){
+    public Message fillContainer(Matcher matcher) {
         if (!this.isUnitOfType(TroopType.ENGINEER))
             return Message.UNIT_NOT_ENGINEER;
 
@@ -259,7 +259,20 @@ public class UnitMenuController {
         if (!this.isUnitOfType(TroopType.TUNNELER))
             return Message.UNIT_NOT_TUNNELER;
 
-        // TODO: complete! range!
+        // TODO: exclude killing pit later
+        Tile location = this.currentGame.getMap().getTileByLocation(x, y);
+        if (((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.WALL &&
+                ((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.LOOKOUT_TOWER &&
+                ((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.PERIMETER_TOWER &&
+                ((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.DEFENCE_TOWER)
+            return Message.CANNOT_DIG_TUNNEL_THERE;
+
+        if (MultiMenuFunctions.distance(this.currentLocation, location) > TroopType.TUNNELER.getRange() + 0.2)
+            return Message.TUNNEL_TOO_FAR_FROM_ENEMY;
+
+        for (MilitaryUnit unit : this.currentUnit)
+            unit.setTarget(location);
+
         return null;
     }
 
