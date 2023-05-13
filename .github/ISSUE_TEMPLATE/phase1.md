@@ -111,7 +111,17 @@ assignees: Arman17Babaei
   </div>
 </details>
   <details>
-  <summary> بخشی از توابع trade menu و shop mneu</summary>
+  <summary> بخشی از توابع trade menu و shop menu</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
+  <details>
+  <summary> بخشی از توابع game menu</summary>
 
   <div dir="ltr" align='right'>
 
