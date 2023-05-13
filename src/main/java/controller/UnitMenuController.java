@@ -261,7 +261,7 @@ public class UnitMenuController {
 
         // TODO: exclude killing pit later
         Tile location = this.currentGame.getMap().getTileByLocation(x, y);
-        if (((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.WALL &&
+        if (this.currentLocation.getBuilding() != null || ((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.WALL &&
                 ((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.LOOKOUT_TOWER &&
                 ((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.PERIMETER_TOWER &&
                 ((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.DEFENCE_TOWER)
