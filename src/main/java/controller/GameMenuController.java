@@ -10,6 +10,7 @@ import model.people.TroopType;
 import model.buildings.DefensiveBuilding;
 import model.buildings.DefensiveBuildingType;
 import model.people.Person;
+import model.user.User;
 import view.enums.Message;
 
 import java.util.ArrayList;
@@ -461,9 +462,11 @@ public class GameMenuController {
         }
         if (liveGovernments.size() > 1)
             return null;
+
+        setGovernmentsRank();
         if (liveGovernments.size() == 0)
             return "Game ended; All governments died!";
-        else return "Game ended; Winner: " + liveGovernments.get(0).getUsername();
+        else return "Game ended; Winner: " + liveGovernments.get(0).getUser().getUsername();
     }
 
     public String endGame() {
@@ -476,6 +479,12 @@ public class GameMenuController {
                 winner = government;
             }
         }
-        return "Game ended, Winner: " + winner.getUsername();
+        setGovernmentsRank();
+        return "Game ended, Winner: " + winner.getUser().getUsername();
+    }
+
+    private void setGovernmentsRank() {
+        for (Government government : currentGame.getGovernments())
+            User.setRankByHyScore(government.getUser());
     }
 }

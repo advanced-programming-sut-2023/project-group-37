@@ -317,7 +317,8 @@ public class Government {
     }
 
     public int modifyScore() {
-        int score = 0; // todo : handle score
+        int score = 0;
+
         if (this.user.getHighScore() < score)
             this.user.setHighScore(score);
 
