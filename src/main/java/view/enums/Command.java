@@ -67,7 +67,7 @@ public enum Command {
     ENTER_TRADE_MENU("\\s*enter\\s+trade\\s+menu\\s*"),
     ENTER_SHOP_MENU("\\s*enter\\s+shop\\s+menu\\s*"),
     SET_TEXTURE("\\s*set\\s+texture(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t\\s+(?<type>\"[^\"]+\"|\\S+))))+\\s*"),//fixed
-    SET_RECTANGLE_TEXTURES("\\s*set\\s+texture(\\s+((-x1\\s+(?<x1>\\d+))|(-y1\\s+(?<y1>\\d+))|(-x2\\s+(?<x2>\\d+))|" +//fixed
+    SET_RECTANGLE_TEXTURES("\\s*set\\s+rectangle\\s+texture(\\s+((-x1\\s+(?<x1>\\d+))|(-y1\\s+(?<y1>\\d+))|(-x2\\s+(?<x2>\\d+))|" +//fixed
             "(-y2\\s+(?<y2>\\d+))|(-t\\s+(?<type>\"[^\"]+\"|\\S+))))+\\s*"),
     CLEAR_TEXTURE("\\s*clear\\s+texture(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
     DROP_ROCK("\\s*drop\\s+rock\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-d(?<direction>\"[^\"]+\"|\\S+))))+\\s*"),
