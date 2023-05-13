@@ -126,11 +126,17 @@ public abstract class MilitaryUnit {
     }
 
     public boolean isOnMove() {
+        if (route == null)
+            return false;
+
         return this.route.size() > 1;
     }
 
     public boolean isOnPatrol() {
         if (isOnMove())
+            return false;
+
+        if (patrolRoute == null)
             return false;
 
         return this.patrolRoute.size() > 1;
