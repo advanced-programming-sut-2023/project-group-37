@@ -228,19 +228,43 @@ public class UnitMenuController {
         }
     }
 
-    public String pourOil(Matcher matcher) {
-        return null;
+    public Message fillContainer(Matcher matcher){
+        if (!this.isUnitOfType(TroopType.ENGINEER))
+            return Message.UNIT_NOT_ENGINEER;
+
+        Building building;
+        if ((building = this.currentGovernment.getUniqueBuilding(BuildingType.OIL_SMELTER)) == null)
+            return Message.NO_OIL_SMELTER;
+
+        // TODO:
+
     }
 
-    public String digTunnel(Matcher matcher) {
-        return null;
+    public String pourOil(Matcher matcher) {
+
+    }
+
+    public Message digTunnel(Matcher matcher) {
+        if (matcher.group("x") == null || matcher.group("y") == null)
+            return Message.EMPTY_FIELD;
+
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+
+        if (this.currentGame.getMap().getTileByLocation(x, y) == null)
+            return Message.ADDRESS_OUT_OF_BOUNDS;
+
+        if (!this.isUnitOfType(TroopType.TUNNELER))
+            return Message.UNIT_NOT_TUNNELER;
+
+        // TODO: complete! range!
     }
 
     public Message buildEquipment(Matcher matcher) {
         // TODO: handle quotation erfan
 
         if (!this.isUnitOfType(TroopType.ENGINEER))
-            return Message.NOT_APPROPRIATE_UNIT;
+            return Message.UNIT_NOT_ENGINEER;
 
         MilitaryMachineType type;
         if ((type = MilitaryMachineType.getMilitaryMachineTypeByName(matcher.group("type"))) == null)
@@ -285,7 +309,16 @@ public class UnitMenuController {
         return Message.DISBAND_SUCCESSFUL;
     }
 
-    public String digMoat(Matcher matcher) {
-        return null;
+    public Message digMoat(Matcher matcher) {
+        if (matcher.group("x") == null || matcher.group("y") == null)
+            return Message.EMPTY_FIELD;
+
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+
+        if (this.currentGame.getMap().getTileByLocation(x, y) == null)
+            return Message.ADDRESS_OUT_OF_BOUNDS;
+
+        // TODO: check unity of unit and canDigMoat!
     }
 }

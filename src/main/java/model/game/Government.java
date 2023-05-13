@@ -32,13 +32,13 @@ public class Government {
         this.user = user;
         this.territory = map.getCopyKeepByNumber(this, territoryNumber);
         this.color = color;
-        // TODO: set default value for gold!
         this.gold = 2000;
         this.lord = new Troop(this, TroopType.LORD, territory.getKeep());
         this.territory.getKeep().setBuilding(new DefensiveBuilding(this, this.territory.getKeep(),
                 DefensiveBuildingType.KEEP));
         this.territory.getKeep().addMilitaryUnit(this.lord);
         this.people = new ArrayList<>();
+        this.addPeasant(10);
         this.militaryUnits = new ArrayList<>();
         this.buildings = new ArrayList<>();
         // TODO: set default resources!
@@ -53,7 +53,7 @@ public class Government {
         this.armory = new ArrayList<>();
         // TODO: set default popularity!
         this.popularity = 100;
-        this.foodRate = 1;
+        this.foodRate = 0;
         this.taxRate = 0;
         this.fearRate = 0;
     }

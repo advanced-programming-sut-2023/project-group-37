@@ -71,18 +71,18 @@ public class GameMenuController {
     }
 
     public String showPopularityFactors() {
-        return "Popularity factors:\n" + "Food: " + (this.currentGovernment.getFoodRate() / 2 + 1) + "\n" +
-                "Tax: " + (this.currentGovernment.getTaxRate() == 0 ? 0 :
-                0.2 * this.currentGovernment.getTaxRate() + 0.4) + "\n" +
-                "Fear: " + this.currentGovernment.getFearRate() + "\n" +
-                "Religion: " + this.currentGovernment.getReligionPopularityRate();
+        return "Popularity factors:\n" + "Food: " + (this.currentGovernment.getFoodRate() / 2 + 1) +
+                "\nTax: " + (this.currentGovernment.getTaxRate() == 0 ? 0 :
+                0.2 * this.currentGovernment.getTaxRate() + 0.4) +
+                "\nFear: " + this.currentGovernment.getFearRate() +
+                "\nReligion: " + this.currentGovernment.getReligionPopularityRate();
     }
 
     public String showFoodList() {
-        return "Apple: " + this.currentGovernment.getItemAmount(Item.APPLE) + "\n" +
-                "Cheese: " + this.currentGovernment.getItemAmount(Item.CHEESE) + "\n" +
-                "Bread: " + this.currentGovernment.getItemAmount(Item.BREAD) + "\n" +
-                "Meat: " + this.currentGovernment.getItemAmount(Item.MEAT);
+        return "Apple: " + this.currentGovernment.getItemAmount(Item.APPLE) +
+                "\nCheese: " + this.currentGovernment.getItemAmount(Item.CHEESE) +
+                "\nBread: " + this.currentGovernment.getItemAmount(Item.BREAD) +
+                "\nMeat: " + this.currentGovernment.getItemAmount(Item.MEAT);
     }
 
     public String setFoodRate(Matcher matcher) {
@@ -188,7 +188,8 @@ public class GameMenuController {
         // Check if unique and available!
         if ((type == BuildingType.BARRACKS || type == BuildingType.MERCENARY_POST ||
                 type == BuildingType.ENGINEER_GUILD || type == BuildingType.TUNNELER_GUILD ||
-                type == BuildingType.MARKET) && this.currentGovernment.getUniqueBuilding((BuildingType) type) != null)
+                type == BuildingType.MARKET || type == BuildingType.OIL_SMELTER) &&
+                this.currentGovernment.getUniqueBuilding((BuildingType) type) != null)
             return Message.BUILDING_IS_UNIQUE.toString();
 
         // Check if non-first storage is not near the others!
@@ -210,6 +211,13 @@ public class GameMenuController {
             this.currentGovernment.removeItem(Item.STONE, ((DefensiveBuildingType) type).getStoneAmount());
         }
 
+        Building[] neighborBuildings = {
+                this.currentGame.getMap().getTileByLocation(tile.getX() - 1, tile.getY()).getBuilding(),
+                this.currentGame.getMap().getTileByLocation(tile.getX() + 1, tile.getY()).getBuilding(),
+                this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() - 1).getBuilding(),
+                this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() + 1).getBuilding(),
+        };
+
         Building building = null;
         if (type instanceof BuildingType) {
             if (type == BuildingType.STOCKPILE || type == BuildingType.GRANARY || type == BuildingType.ARMORY)
@@ -219,12 +227,6 @@ public class GameMenuController {
         } else if (type instanceof DefensiveBuildingType) {
             building = new DefensiveBuilding(this.currentGovernment, tile, (DefensiveBuildingType) type);
 
-            Building[] neighborBuildings = {
-                    this.currentGame.getMap().getTileByLocation(tile.getX() - 1, tile.getY()).getBuilding(),
-                    this.currentGame.getMap().getTileByLocation(tile.getX() + 1, tile.getY()).getBuilding(),
-                    this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() - 1).getBuilding(),
-                    this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() + 1).getBuilding(),
-            };
 
             for (Building neighborBuilding : neighborBuildings)
                 if (neighborBuilding instanceof DefensiveBuilding) {
@@ -241,6 +243,12 @@ public class GameMenuController {
         assert building != null;
         tile.setBuilding(building);
         this.currentGovernment.addBuilding(building);
+        if (building instanceof Storage)
+            switch (building.getType()) {
+                case STOCKPILE -> this.currentGovernment.getStockpile().add((Storage) building);
+                case GRANARY -> this.currentGovernment.getGranary().add((Storage) building);
+                case ARMORY -> this.currentGovernment.getArmory().add((Storage) building);
+            }
 
         int workersNeeded;
         if (type instanceof BuildingType && (workersNeeded = ((BuildingType) type).getWorkersNeeded()) > 0) {
@@ -255,7 +263,17 @@ public class GameMenuController {
                 }
             }
         }
-        tile.setPassability(type == BuildingType.KILLING_PIT);
+        if (type == DefensiveBuildingType.STAIRS) {
+            for (Building neighbor : neighborBuildings) {
+                if (neighbor instanceof DefensiveBuilding) {
+                    ((DefensiveBuilding) neighbor).setHasLadderAttached(true);
+                    ((DefensiveBuilding) neighbor).setCanBeReached(true);
+                    for (DefensiveBuilding defensiveNeighbor : ((DefensiveBuilding) neighbor).getDefensiveNeighbors())
+                        defensiveNeighbor.setCanBeReached(true);
+                }
+            }
+        }
+        tile.setPassability(type == BuildingType.KILLING_PIT || type == DefensiveBuildingType.STAIRS);
         return Message.DROP_BUILDING_SUCCESS.toString();
     }
 
@@ -304,12 +322,12 @@ public class GameMenuController {
 
     public String dropUnit(Matcher matcher) {
         String type = MultiMenuFunctions.deleteQuotations(matcher.group("type"));
-        int x,y,count;
+        int x, y, count;
         try {
             count = Integer.parseInt(matcher.group("count"));
-            x = Integer.parseInt(matcher.group("x")); y = Integer.parseInt(matcher.group("y"));
-        }
-        catch (Exception ex) {
+            x = Integer.parseInt(matcher.group("x"));
+            y = Integer.parseInt(matcher.group("y"));
+        } catch (Exception ex) {
             return Message.EMPTY_FIELD.toString();
         }
 
@@ -394,8 +412,7 @@ public class GameMenuController {
             y1 = Integer.parseInt(matcher.group("y1"));
             x2 = Integer.parseInt(matcher.group("x2"));
             y2 = Integer.parseInt(matcher.group("y2"));
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             return Message.EMPTY_FIELD.toString();
         }
 
@@ -484,23 +501,22 @@ public class GameMenuController {
     }
 
     public String showInfo() {
-        StringBuilder info = new StringBuilder("All Info:\n");
-        info.append("Username:").append(currentGovernment.getUser().getUsername()).append("\n");
-        info.append("Gold amount:").append(currentGovernment.getGold()).append("\n");
-        info.append("Tax--Food--Fear rate:").append(currentGovernment.getTaxRate())
-                .append("--").append(currentGovernment.getFoodRate()).append(currentGovernment.getFearRate()).append("\n");
-        info.append("Popularity:").append(currentGovernment.getPopularity()).append("\n");
-        info.append("Population:").append(currentGovernment.getPeople().size()).append("\n");
-        info.append("Number of buildings:").append(currentGovernment.getBuildings().size()).append("\n");
-        return info.toString().trim();
+        return "All Info:\n" + "Username: " + this.currentGovernment.getUser().getUsername() +
+                "\nGold amount:" + this.currentGovernment.getGold() +
+                "\nFood rate: " + this.currentGovernment.getFearRate() +
+                "\nTax rate: " + this.currentGovernment.getTaxRate() +
+                "\nFear rate:" + this.currentGovernment.getFearRate() +
+                "\nPopularity:" + this.currentGovernment.getPopularity() +
+                "\nPopulation:" + this.currentGovernment.getPeople().size() +
+                "\nNumber of buildings:" + this.currentGovernment.getBuildings().size();
     }
 
     public String enterTradeMenu() {
-        return tradeMenuController.showNewTrades();
+        return this.tradeMenuController.showNewTrades();
     }
 
     public String goNextTurn() {
-        currentGame.goToNextTurn();
+        this.currentGame.goToNextTurn();
         if (gameEndMessage() != null)
             return gameEndMessage();
 
@@ -509,37 +525,38 @@ public class GameMenuController {
 
     private String gameEndMessage() {
         ArrayList<Government> remainingGovernments = new ArrayList<>();
-        for (Government government : currentGame.getGovernments()) {
+        for (Government government : this.currentGame.getGovernments()) {
             if (government.getLord().getHitpoints() > 0)
                 remainingGovernments.add(government);
             else government.destroy();
         }
 
-        if (remainingGovernments.size() > 1 && currentGame.getTurnNumber() < currentGame.getTurns())
+        if (remainingGovernments.size() > 1 && this.currentGame.getTurnNumber() < this.currentGame.getTurns())
             return null;
 
-        setGovernmentsRank();
+        this.setGovernmentsRank();
         if (remainingGovernments.size() == 0)
-            return "Game ended; All governments died!";
-        else return "Game ended; Winner: " + remainingGovernments.get(0).getUser().getUsername();
+            return Message.GAME_END_ALL_DESTROYED.toString();
+        else
+            return Message.GAME_END_WITH_WINNER + remainingGovernments.get(0).getUser().getUsername();
     }
 
     public String endGame() {
-        Government winner = currentGame.getGovernments().get(0);
+        Government winner = this.currentGame.getGovernments().get(0);
         int maxScore = 0;
         int score;
-        for (Government government : currentGame.getGovernments()) {
+        for (Government government : this.currentGame.getGovernments()) {
             if ((score = government.modifyScore()) > maxScore) {
                 maxScore = score;
                 winner = government;
             }
         }
         setGovernmentsRank();
-        return "Game ended, Winner: " + winner.getUser().getUsername();
+        return Message.GAME_END_WITH_WINNER + winner.getUser().getUsername();
     }
 
     private void setGovernmentsRank() {
-        for (Government government : currentGame.getGovernments())
+        for (Government government : this.currentGame.getGovernments())
             User.setRankByHyScore(government.getUser());
     }
 }

@@ -14,6 +14,9 @@ public class DefensiveBuilding extends Building {
 
     private final ArrayList<DefensiveBuilding> defensiveNeighbors;
 
+    private boolean hasLadderAttached;
+    private boolean canBeReached;
+
     public DefensiveBuilding(Government loyalty, Tile location, DefensiveBuildingType type) {
         super(loyalty, location);
         this.type = type;
@@ -27,6 +30,22 @@ public class DefensiveBuilding extends Building {
 
     public ArrayList<DefensiveBuilding> getDefensiveNeighbors() {
         return this.defensiveNeighbors;
+    }
+
+    public boolean hasLadderAttached() {
+        return this.hasLadderAttached;
+    }
+
+    public void setHasLadderAttached(boolean hasLadderAttached) {
+        this.hasLadderAttached = hasLadderAttached;
+    }
+
+    public boolean canBeReached() {
+        return this.canBeReached;
+    }
+
+    public void setCanBeReached(boolean canBeReached) {
+        this.canBeReached = canBeReached;
     }
 
     public void addDefensiveNeighbor(DefensiveBuilding building){

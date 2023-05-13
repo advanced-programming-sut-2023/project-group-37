@@ -85,6 +85,8 @@ public enum Message {
     INVALID_TEXTURE_NAME("There is no texture with this name!"),
     TEXTURE_CHANGE_ERROR("You can't change the texture : there is something in this place!"),
     TEXTURE_CHANGED_SUCCESSFULLY("Texture changed successfully!"),
+    GAME_END_ALL_DESTROYED("Game ended; All governments are destroyed!"),
+    GAME_END_WITH_WINNER("Game ended; winner: "),
 
     // MapMenu:
 
@@ -121,10 +123,12 @@ public enum Message {
     OUT_OF_RANGE("Out of range!"),
     NO_MEALY_UNIT("You dont have any mealy unit in this place!"),
     DISBAND_SUCCESSFUL("Unit disbanded successfully!"),
-    NOT_APPROPRIATE_UNIT("This unit is unable to create siege equipment!"),
+    UNIT_NOT_ENGINEER("You can build siege equipments only by engineer units!"),
     INVALID_MACHINE_TYPE("Invalid military machine type!"),
     CANNOT_BUILD_MACHINE_HERE("Cannot build this military machine here!"),
     CONSTRUCTING_SIEGE_EQUIPMENT("Constructing siege equipment"),
+    UNIT_NOT_TUNNELER("You can dig tunnel only by tunneler units!"),
+    NO_OIL_SMELTER("You have to build an oil smelter first!"),
 
     // BuildingMenu:,
     TILE_IS_NOT_YOURS("The tile is not in your territory!"),

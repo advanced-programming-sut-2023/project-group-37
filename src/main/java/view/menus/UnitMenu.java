@@ -65,7 +65,8 @@ public class UnitMenu {
                 System.out.println(this.controller.digTunnel(matcher));
             else if ((matcher = Command.BUILD_EQUIPMENT.getMatcher(command)) != null)
                 System.out.println(this.controller.buildEquipment(matcher));
-
+            else if ((matcher = Command.DIG_MOAT.getMatcher(command)) != null)
+                System.out.println(this.controller.digMoat(matcher));
             else if (command.matches(Command.CANCEL_MOVE.toString()))
                 System.out.println(this.controller.cancelMove());
 

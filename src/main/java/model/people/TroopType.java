@@ -47,7 +47,11 @@ public enum TroopType {
     ENGINEER(BuildingType.ENGINEER_GUILD, 30, 10, 0, 60, 1,
             null, null, false, false),
     LADDERMAN(BuildingType.ENGINEER_GUILD, 4, 5, 0, 60, 1,
-            null, null, false, false);
+            null, null, false, false),
+
+    // Tunneler guild:
+    TUNNELER(BuildingType.TUNNELER_GUILD, 30, 20, 0, 60, 20,
+            null,null,false,false);
 
     // TODO: implement monk!
 
