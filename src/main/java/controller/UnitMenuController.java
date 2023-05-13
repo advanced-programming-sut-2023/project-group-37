@@ -335,10 +335,20 @@ public class UnitMenuController {
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
 
-        if (this.currentGame.getMap().getTileByLocation(x, y) == null)
+        Tile destination = this.currentGame.getMap().getTileByLocation(x, y);
+        if (destination == null)
             return Message.ADDRESS_OUT_OF_BOUNDS;
 
-        // TODO: check unity of unit and canDigMoat!
+        for (MilitaryUnit unit : this.currentUnit)
+            if (unit instanceof MilitaryMachine || !((Troop) unit).getType().canDigMoat())
+                return Message.UNIT_CANNOT_DIG_MOAT;
+
+        for (MilitaryUnit unit : this.currentUnit) {
+            unit.setRoute(MultiMenuFunctions.routeFinder(this.currentLocation, destination, this.currentGame.getMap()));
+            unit.setMoatTarget(destination);
+        }
+
+        // TODO: erfan go on + correct message!
         return null;
     }
 }
