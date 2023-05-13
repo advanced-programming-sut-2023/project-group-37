@@ -13,36 +13,36 @@ public enum Command {
 
     // SignupMenu:
     // SignupMenu:
-    REGISTER("\\s*user\\s+create(\\s+((-u\\s+(?<username>\".+\"|\\S+))|" +
-            "(-p\\s+(?<password>\".+\"|\\S+)\\s+(?<passwordConfirm>\".+\"|\\S+))|" +
-            "(-e\\s+(?<email>\".+\"|\\S+))|(-s\\s+(?<slogan>\".+\"|\\S+))|" +
-            "(-n\\s+(?<nickName>\".+\"|\\S+))))*\\s*"),
-    REGISTER_RANDOM_PASSWORD("\\s*user\\s+create(\\s+((-u\\s+(?<username>\".+\"|\\S+))|" +
+    REGISTER("\\s*user\\s+create(\\s+((-u\\s+(?<username>\"[^\"]+\"|\\S+))|" +
+            "(-p\\s+(?<password>\"[^\"]+\"|\\S+)\\s+(?<passwordConfirm>\"[^\"]+\"|\\S+))|" +
+            "(-e\\s+(?<email>\"[^\"]+\"|\\S+))|(-s\\s+(?<slogan>\"[^\"]+\"|\\S+))|" +
+            "(-n\\s+(?<nickName>\"[^\"]+\"|\\S+))))*\\s*"),
+    REGISTER_RANDOM_PASSWORD("\\s*user\\s+create(\\s+((-u\\s+(?<username>\"[^\"]+\"|\\S+))|" +
             "(-p\\s+(?<password>random|\"\\s*random\\s*\"))|" +
-            "(-e\\s+(?<email>\".+\"|\\S+))|(-s\\s+(?<slogan>\".+\"|\\S+))|" +
-            "(-n\\s+(?<nickName>\".+\"|\\S+))))*\\s*"),
+            "(-e\\s+(?<email>\"[^\"]+\"|\\S+))|(-s\\s+(?<slogan>\"[^\"]+\"|\\S+))|" +
+            "(-n\\s+(?<nickName>\"[^\"]+\"|\\S+))))*\\s*"),
     PICK_QUESTION("\\s*question\\s+pick(\\s+((-q\\s+(?<questionNumber>\\d+))|" +
-            "(-a\\s+(?<answer>\".+\"|\\S+))|(-c\\s+(?<answerConfirm>\".+\"|\\S+))))*\\s*"),
+            "(-a\\s+(?<answer>\"[^\"]+\"|\\S+))|(-c\\s+(?<answerConfirm>\"[^\"]+\"|\\S+))))*\\s*"),
     ENTER_LOGIN_MENU("\\s*enter\\s+login\\s+menu\\s*"),
 
     // LoginMenu:
-    LOGIN("\\s*user\\s+login(\\s+((-u\\s+(?<username>\".+\"|\\S+))|" +
-            "(-p\\s+(?<password>\".+\"|\\S+))|(?<stayLoggedIn>--stay-logged-in)))*\\s*"),
-    FORGOT_PASSWORD("\\s*forgot\\s+my\\s+password\\s+-u\\s+(?<username>\".+\"|\\S+)\\s*"),
+    LOGIN("\\s*user\\s+login(\\s+((-u\\s+(?<username>\"[^\"]+\"|\\S+))|" +
+            "(-p\\s+(?<password>\"[^\"]+\"|\\S+))|(?<stayLoggedIn>--stay-logged-in)))*\\s*"),
+    FORGOT_PASSWORD("\\s*forgot\\s+my\\s+password\\s+-u\\s+(?<username>\"[^\"]+\"|\\S+)\\s*"),
     ENTER_REGISTER_MENU("\\s*enter\\s+register\\s+menu\\s*"),
 
     // MainMenu:
     ENTER_PROFILE_MENU("\\s*enter\\s+profile\\s+menu\\s*"),
-    START_GAME("\\s*start\\s+game(\\s+((-t\\s+(?<turns>\\d+))|(-m\\s+(?<mapName>\"[^\"]+\"+))|" +
+    START_GAME("\\s*start\\s+game(\\s+((-t\\s+(?<turns>\\d+))|(-m\\s+(?<mapName>\"[^\"]+\"))|" +
             "(-u\\s+(?<users>\"[^\"]+\"))))+\\s*"), // TODO: check
     LOGOUT("\\s*logout\\s*"),
 
     // ProfileMenu:
-    CHANGE_USERNAME("\\s*profile\\s+change\\s+-u\\s+(?<username>\".+\"|\\S+)\\s*"),
-    CHANGE_NICKNAME("\\s*profile\\s+change\\s+-n\\s+(?<nickname>\".+\"|\\S+)\\s*"),
-    CHANGE_PASSWORD("\\s*profile\\s+change\\s+password\\s+-o\\s+(?<oldPassword>\".+\"|\\S+)\\s+-n\\s+(?<newPassword>\".+\"|\\S+)\\s*"),
-    CHANGE_EMAIL("\\s*profile\\s+change\\s+-e\\s+(?<email>\".+\"|\\S+)\\s*"),
-    CHANGE_SLOGAN("\\s*profile\\s+change\\s+slogan\\s+-s\\s+(?<slogan>\".+\"|\\S+)\\s*"),
+    CHANGE_USERNAME("\\s*profile\\s+change\\s+-u\\s+(?<username>\"[^\"]+\"|\\S+)\\s*"),
+    CHANGE_NICKNAME("\\s*profile\\s+change\\s+-n\\s+(?<nickname>\"[^\"]+\"|\\S+)\\s*"),
+    CHANGE_PASSWORD("\\s*profile\\s+change\\s+password\\s+-o\\s+(?<oldPassword>\"[^\"]+\"|\\S+)\\s+-n\\s+(?<newPassword>\"[^\"]+\"|\\S+)\\s*"),
+    CHANGE_EMAIL("\\s*profile\\s+change\\s+-e\\s+(?<email>\"[^\"]+\"|\\S+)\\s*"),
+    CHANGE_SLOGAN("\\s*profile\\s+change\\s+slogan\\s+-s\\s+(?<slogan>\"[^\"]+\"|\\S+)\\s*"),
     REMOVE_SLOGAN("\\s*profile\\s+remove\\s+slogan\\s*"),
     DISPLAY_HIGHSCORE("\\s*profile\\s+display\\s+highscore\\s*"),
     DISPLAY_RANK("\\s*profile\\s+display\\s+rank\\s*"),
@@ -60,18 +60,18 @@ public enum Command {
     TAX_RATE_SHOW("\\s*tax\\s+rate\\s+show\\s*"),
     FEAR_RATE("\\s*fear\\s+rate\\s+-r\\s+(?<rateNumber>-?\\d+)\\s*"),
     SHOW_FEAR_RATE("\\s*show\\s+fear\\s+rate\\s*"),
-    DROP_BUILDING("\\s*drop\\s+building(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s+-type\\s+(?<type>.+)\\s*"),
-    DROP_UNIT("\\s*drop\\s+unit(\\s+((-t\\s+(?<type>/\".+\"|\\S+))|(-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-c\\s+(?<count>\\d+))))+\\s*"),
+    DROP_BUILDING("\\s*drop\\s+building(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s+-type\\s+(?<type>[^\"]+)\\s*"),
+    DROP_UNIT("\\s*drop\\s+unit(\\s+((-t\\s+(?<type>/\"[^\"]+\"|\\S+))|(-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-c\\s+(?<count>\\d+))))+\\s*"),
     SELECT_BUILDING("\\s*select\\s+building(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
     SELECT_UNIT("\\s*select\\s+unit(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
     ENTER_TRADE_MENU("\\s*enter\\s+trade\\s+menu\\s*"),
     ENTER_SHOP_MENU("\\s*enter\\s+shop\\s+menu\\s*"),
-    SET_TEXTURE("\\s*set texture(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t\\s+(?<type>\".+\"|\\S+))))+\\s*"),
+    SET_TEXTURE("\\s*set texture(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t\\s+(?<type>\"[^\"]+\"|\\S+))))+\\s*"),
     SET_RECTANGLE_TEXTURES("\\s*set texture(\\s+((-x1\\s+(?<x1>\\d+))|(-y1\\s+(?<y1>\\d+))|(-x2\\s+(?<x2>\\d+))|" +
-            "(-y2\\s+(?<y2>\\d+))|(-t\\s+(?<type>\".+\"|\\S+))))+\\s*"),
+            "(-y2\\s+(?<y2>\\d+))|(-t\\s+(?<type>\"[^\"]+\"|\\S+))))+\\s*"),
     CLEAR_TEXTURE("\\s*clear\\s+texture(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
-    DROP_ROCK("\\s*drop\\s+rock\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-d(?<direction>\".+\"|\\S+))))+\\s*"),
-    DROP_TREE("\\s*drop tree(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t\\s+(?<type>\".+\"|\\S+))))+\\s*"),
+    DROP_ROCK("\\s*drop\\s+rock\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-d(?<direction>\"[^\"]+\"|\\S+))))+\\s*"),
+    DROP_TREE("\\s*drop tree(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t\\s+(?<type>\"[^\"]+\"|\\S+))))+\\s*"),
     SHOW_INFO("\\s*show\\s+info\\s*"),
 
     // TODO: fill
@@ -83,16 +83,16 @@ public enum Command {
     SHOW_DETAILS("\\s*show\\s+details(\\s+((-x(?<x>\\d+))|(-y(?<y>\\d+))))+\\s*"),
 
     // ShopMenu:
-    BUY_ITEM("\\s*buy(\\s+((-i(?<itemName>\".+\"|\\S+))|(-a(?<itemAmount>\\d+))))+\\s*"),
-    SELL_ITEM("\\s*sell(\\s+((-i(?<itemName>\".+\"|\\S+))|(-a(?<itemAmount>\\d+))))+\\s*"),
+    BUY_ITEM("\\s*buy(\\s+((-i(?<itemName>\"[^\"]+\"|\\S+))|(-a(?<itemAmount>\\d+))))+\\s*"),
+    SELL_ITEM("\\s*sell(\\s+((-i(?<itemName>\"[^\"]+\"|\\S+))|(-a(?<itemAmount>\\d+))))+\\s*"),
     SHOW_ALL_ITEMS("\\s*show\\s+all\\s+items\\s*"),
 
 
     // TradeMenu:
-    REQUEST_TRADE("\\s*trade(\\s+((-t(?<resourceType>\".+\"|\\S+))|(-u(?<receiverUsername>\".+\"|\\S+))|(-a(?<resourceAmount>\\d+))|" +
-            "(-p(?<price>\\d+))|(-m(?<message>\".+\"|\\S+))))+\\s*"),
+    REQUEST_TRADE("\\s*trade(\\s+((-t(?<resourceType>\"[^\"]+\"|\\S+))|(-u(?<receiverUsername>\"[^\"]+\"|\\S+))|(-a(?<resourceAmount>\\d+))|" +
+            "(-p(?<price>\\d+))|(-m(?<message>\"[^\"]+\"|\\S+))))+\\s*"),
     SHOW_TRADE_LIST("\\s*show\\s+trade\\s+list\\s*"),
-    ACCEPT_TRADE("\\s*trade\\s+accept(\\s+((-i(?<id>\\d+))|(-m(?<message>\".+\"|\\S+))))+\\s*"),
+    ACCEPT_TRADE("\\s*trade\\s+accept(\\s+((-i(?<id>\\d+))|(-m(?<message>\"[^\"]+\"|\\S+))))+\\s*"),
     SHOW_TRADE_HISTORY("\\s*show\\s+trade\\s+history\\s*"),
     SHOW_NEW_TRADES("\\s*show\\s+new\\s+trades\\s*"),
 
@@ -103,11 +103,11 @@ public enum Command {
             "(-x2\\s+(?<x2>\\d+))|(-y2\\s+(?<y2>\\d+)))+\\s*"),
     CANCEL_MOVE("\\s*cancel\\s+move\\s*"),
     CANCEL_PATROL("\\s*cancel\\s+patrol\\s*"),
-    SET_UNIT("\\s*set(-s\\s+(?<state>\".+\"|\\S+))\\s*"),
+    SET_UNIT("\\s*set(-s\\s+(?<state>\"[^\"]+\"|\\S+))\\s*"),
     ATTACK("\\s*attack(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(?<isEarth>-e)))+\\s*"),//if isEarth is not null we have earth attack
-    POUR_OIL("\\s*pour\\s+oil\\s+-d\\s+(?<direction>\".+\"|\\S+)\\s*"),
+    POUR_OIL("\\s*pour\\s+oil\\s+-d\\s+(?<direction>\"[^\"]+\"|\\S+)\\s*"),
     DIG_TUNNEL("\\s*dig\\s+tunnel\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s*"),
-    BUILD_EQUIPMENT("\\s*build\\s+-q\\s+(?<equipmentName>\".+\"|\\S+)\\s*"),
+    BUILD_EQUIPMENT("\\s*build\\s+-q\\s+(?<equipmentName>\"[^\"]+\"|\\S+)\\s*"),
     DISBAND_UNIT("\\s*disband\\s*"),
 
     // BuildingMenu:

@@ -103,7 +103,7 @@ public class Tile {
     public void setState() {
         if (this.militaryUnits.size() > 0) {
             for (MilitaryUnit militaryUnit : this.militaryUnits) {
-                if (militaryUnit.isOnMove()) {
+                if (militaryUnit.isOnMove() || militaryUnit.isOnPatrol()) {
                     state = 'M';
                     return;
                 }
