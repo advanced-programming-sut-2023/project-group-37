@@ -74,4 +74,10 @@ public class Building {
         this.hitpoints -= damage;
     }
 
+    public void destroy() {
+        for (Person person : operators) {
+            this.getLoyalty().getPeople().remove(person);
+        }
+    }
+
 }
