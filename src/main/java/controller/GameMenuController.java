@@ -275,7 +275,7 @@ public class GameMenuController {
         return Message.UNIT_SELECTED.toString();
     }
 
-    public String dropUnit(Matcher matcher) { // TODO : decrease
+    public String dropUnit(Matcher matcher) {
         String type = matcher.group("type");
         int count = Integer.parseInt(matcher.group("count"));
         int x = Integer.parseInt(matcher.group("x")), y = Integer.parseInt(matcher.group("y"));
@@ -307,10 +307,24 @@ public class GameMenuController {
                 return Message.TUNNELER_GUILD_NOT_EXISTS.toString();
         }
 
-        Troop troop = new Troop(this.currentGovernment, troopType, tile);
-
         if (count < 0)
             return Message.INVALID_AMOUNT.toString();
+
+        // check amounts
+        int goldCost = troopType.getCost() * count;
+        Item armor = troopType.getArmor(), weapon = troopType.getWeapon();
+
+        if (goldCost < currentGovernment.getGold())
+            return Message.NOT_ENOUGH_GOLD.toString();
+
+        if (count < currentGovernment.getItemAmount(armor) || count < currentGovernment.getItemAmount(weapon))
+            return Message.NOT_ENOUGH_RESOURCE.toString();
+
+        currentGovernment.removeItem(armor, count);
+        currentGovernment.removeItem(weapon, count);
+        currentGovernment.setGold(currentGovernment.getGold() - goldCost);
+
+        Troop troop = new Troop(this.currentGovernment, troopType, tile);
 
         this.currentGovernment.addTroops(troop, count);
         return Message.DROP_UNIT_SUCCESSFUL.toString();

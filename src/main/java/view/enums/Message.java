@@ -89,8 +89,6 @@ public enum Message {
     // MapMenu:
 
     // ShopMenu:
-
-    //TODO : is message correct ?
     NOT_ENOUGH_GOLD("Not enough gold!"),
     NOT_ENOUGH_SPACE("Not enough space!"),
     NOT_ENOUGH_AMOUNT("Not enough amount!"),

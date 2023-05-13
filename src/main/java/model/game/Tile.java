@@ -1,6 +1,8 @@
 package model.game;
 
 import model.buildings.Building;
+import model.buildings.DefensiveBuilding;
+import model.buildings.DefensiveBuildingType;
 import model.people.MilitaryUnit;
 import model.people.Person;
 
@@ -62,9 +64,15 @@ public class Tile {
             }
         }
 
-        if (damage > 0 && this.building != null ) { // todo : buildingType
-            this.building.takeDamage(damage);
+        if (damage > 0 && this.building != null ) {
+            if (!(this.building instanceof DefensiveBuilding) && this.building.getLoyalty() != government)
+                this.building.takeDamage(damage);
         }
+    }
+
+    public void receiveBuildingDamage(int damage, Government government) {
+        if (this.building instanceof DefensiveBuilding && this.building.getLoyalty() != government)
+            this.building.takeDamage(damage);
     }
 
     public void removeBuilding() {

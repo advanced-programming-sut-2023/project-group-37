@@ -8,9 +8,6 @@ import view.enums.Message;
 
 public class BuildingMenuController {
 
-    // TODO: I couldn't understand why they was static so I turned to non static!
-    // TODO: You killed me by GRAMMAR...):
-
     private Game currentGame;
     private Building currentBuilding;
     private Government currentGovernment;

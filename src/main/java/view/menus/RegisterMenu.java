@@ -26,7 +26,6 @@ public class RegisterMenu {
         while (true) {
             this.command = scanner.nextLine();
 
-            // TODO: test if works fine!
             if ((matcher = Command.REGISTER.getMatcher(this.command)) != null
                     || (matcher = Command.REGISTER_RANDOM_PASSWORD.getMatcher(this.command)) != null) {
                 if (register(matcher))

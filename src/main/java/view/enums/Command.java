@@ -73,9 +73,7 @@ public enum Command {
     DROP_ROCK("\\s*drop\\s+rock\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-d(?<direction>\"[^\"]+\"|\\S+))))+\\s*"),
     DROP_TREE("\\s*drop tree(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t\\s+(?<type>\"[^\"]+\"|\\S+))))+\\s*"),
     SHOW_INFO("\\s*show\\s+info\\s*"),
-
-    // TODO: fill
-    END_GAME(""),
+    END_GAME("\\s*End\\s+the\\s+game\\s*"),
 
     // MapMenu:
     MOVE_THE_MAP("map(\\s+(((?<up>up)(\\s+(?<upDistance>\\d+))?)|((?<down>down)(\\s+(?<downDistance>\\d+))?)|" +

@@ -54,7 +54,13 @@ public abstract class MilitaryUnit {
     }
 
     public void attack() {
-        target.receiveDamage(this.damage, this.loyalty); // todo : mahchines dont attack units
+        if (this instanceof MilitaryMachine) {
+            if (((MilitaryMachine) this).getType() == MilitaryMachineType.FIRE_BALLISTA)
+                target.receiveDamage(this.damage, this.loyalty);
+            else
+                target.receiveBuildingDamage(this.damage, this.loyalty);
+        }
+        else target.receiveDamage(this.damage, this.loyalty);
     }
 
     public int takeDamage(int damage) {
