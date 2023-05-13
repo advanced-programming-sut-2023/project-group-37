@@ -150,4 +150,8 @@ public class Tile {
     public boolean equals(Tile tile) {
         return (this.x == tile.x && this.y == tile.y);
     }
+
+    public void setTerritory(Territory territory) {
+        this.territory = territory;
+    }
 }

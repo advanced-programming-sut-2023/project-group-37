@@ -11,7 +11,6 @@ import model.people.TroopType;
 import model.user.User;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Government {
@@ -33,10 +32,9 @@ public class Government {
     private int fearRate;
     private int religionPopularityRate;
 
-    public Government(User user, Color color, Territory territory) {
+    public Government(User user, Color color, model.game.Map map, int territoryNumber) {
         this.user = user;
-        this.territory = territory;
-        this.territoryLocation = territoryLocation;
+        this.territory = map.getCopyKeepByNumber(this, territoryNumber);
         this.color = color;
         // TODO: set default value for gold!
         this.gold = 2000;
@@ -65,8 +63,8 @@ public class Government {
 
 
     public void addTroops(Troop troop, int count) {
-        // TODO : fix it in ArrayList
-        troops.put(troop, count + troops.getOrDefault(troop, 0));
+        for (int i=0; i < count; i++)
+            troops.add(troop);
         troop.getLocation().addMilitaryUnit(troop, count);
     }
 

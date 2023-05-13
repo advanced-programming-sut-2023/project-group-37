@@ -4,19 +4,26 @@ import java.util.ArrayList;
 
 public class Territory {
     private final Map map;
-    private final Government owner;
+    private Government owner;
+    private final int territoryNumber;
     private final ArrayList<Tile> coveredTiles;
     private final Tile keep;
     private final Tile village;
     private final Tile firstStockpileLocation;
 
-    private Territory(Map map, Government owner, ArrayList<Tile> coveredTiles, Tile keep) {
+    public Territory(Map map, int territoryNumber, Tile keep) {
         this.map = map;
-        this.owner = owner;
-        this.coveredTiles = coveredTiles;
+        this.territoryNumber = territoryNumber;
+        this.coveredTiles = new ArrayList<>();
         this.keep = keep;
         this.village = this.map.getTileByLocation(keep.getX(), keep.getY() - 1);
         this.firstStockpileLocation = this.map.getTileByLocation(keep.getX() + 1, keep.getY());
+    }
+
+    public Territory getCopYTerritory(Government owner) {
+        Territory copy =new Territory(this.map, this.territoryNumber, this.keep);
+        copy.setOwner(owner);
+        return copy;
     }
 
     public Map getMap() {
@@ -31,6 +38,10 @@ public class Territory {
         return this.coveredTiles;
     }
 
+    public void addCoveredTile(Tile tile) {
+        this.coveredTiles.add(tile);
+    }
+
     public Tile getKeep() {
         return this.keep;
     }
@@ -43,7 +54,12 @@ public class Territory {
         return this.firstStockpileLocation;
     }
 
+    public void setOwner(Government owner) {
+        this.owner = owner;
+    }
+
     public boolean containsTile(Tile tile) {
         return this.coveredTiles.contains(tile);
     }
+
 }

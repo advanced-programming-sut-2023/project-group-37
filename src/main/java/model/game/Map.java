@@ -113,4 +113,12 @@ public class Map {
             for (int j = 0; j < this.size; j++)
                 this.field[i][j] = new Tile(i, j);
     }
+
+    public Territory getCopyKeepByNumber(Government owner, int territoryNumber) {
+        return this.territories.get(territoryNumber).getCopYTerritory(owner);
+    }
+
+    public HashMap<Integer, Territory> getKeeps() {
+        return this.territories;
+    }
 }
