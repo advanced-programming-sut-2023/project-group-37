@@ -100,6 +100,14 @@ public class UnitMenuController {
         if (route == null)
             return Message.NO_ROUTS_FOUND.toString();
 
+        if (destination.getBuilding() != null) {
+            if (destination.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
+                if (defensiveBuilding.getType().getCapacity() < defensiveBuilding.getLocation().getMilitaryUnits().size()
+                        + currentUnit.size())
+                    return Message.NOT_ENOUGH_SPACE.toString();
+            }
+        }
+
         for (MilitaryUnit militaryUnit : this.currentUnit)
             militaryUnit.setRoute(route);
 
@@ -286,7 +294,7 @@ public class UnitMenuController {
             return Message.UNIT_NOT_ENGINEER;
 
         MilitaryMachineType type;
-        if ((type = MilitaryMachineType.getMilitaryMachineTypeByName(matcher.group("type"))) == null)
+        if ((type = MilitaryMachineType.getMilitaryMachineTypeByName(MultiMenuFunctions.deleteQuotations(matcher.group("type")))) == null)
             return Message.INVALID_MACHINE_TYPE;
 
         if (this.currentLocation.getBuilding() != null &&
