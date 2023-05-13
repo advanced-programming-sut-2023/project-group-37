@@ -114,6 +114,7 @@ public enum Command {
     CANCEL_DIG_MOAT("\\s*cancel\\s+dig\\s+moat\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s*"),
 
     // BuildingMenu:
+    CREATE_UNIT("\\s*create\\s+unit(\\s+((-t(?<type>\"[^\"]+\"))|(-c(?<count>\\d+))))+"),
     REPAIR("\\s*repair\\s*"),
     ;
     private final String regex;
