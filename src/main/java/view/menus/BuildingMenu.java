@@ -26,13 +26,7 @@ public class BuildingMenu {
 
         while (true) {
             command = scanner.nextLine();
-
-            if (command.matches(Command.CANCEL.toString())) {
-                Message result = this.controller.deselectBuilding();
-                if (result != null)
-                    System.out.println(result);
-                return;
-            } else if (command.matches(Command.REPAIR.toString()) && this.controller.getCurrentBuilding() != null)
+            if (command.matches(Command.REPAIR.toString()) && this.controller.getCurrentBuilding() != null)
                 System.out.println(this.controller.repair());
 
             else if ((matcher = Command.CREATE_UNIT.getMatcher(command)) != null)

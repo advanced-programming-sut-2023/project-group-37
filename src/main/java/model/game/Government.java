@@ -22,6 +22,7 @@ public class Government {
     private final ArrayList<Storage> stockpile;
     private final ArrayList<Storage> granary;
     private final ArrayList<Storage> armory;
+    private int horseCount;
     private int popularity;
     private int foodRate;
     private int taxRate;
@@ -37,7 +38,7 @@ public class Government {
         this.gold = 2000;
         this.lord = new Troop(this, TroopType.LORD, territory.getKeep());
         this.territory.getKeep().setBuilding(new DefensiveBuilding(this, this.territory.getKeep(),
-                DefensiveBuildingType.KEEP));
+                DefensiveBuildingType.KEEP, 'v'));
         this.territory.getKeep().addMilitaryUnit(this.lord);
         this.people = new ArrayList<>();
         this.addPeasant(10);
@@ -53,7 +54,7 @@ public class Government {
         this.addItem(Item.STONE, 50);
         this.granary = new ArrayList<>();
         this.armory = new ArrayList<>();
-        // TODO: set default popularity!
+        this.horseCount = 0;
         this.popularity = 100;
         this.foodRate = 0;
         this.taxRate = 0;
@@ -125,6 +126,18 @@ public class Government {
 
     public ArrayList<Storage> getArmory() {
         return this.armory;
+    }
+
+    public int getHorseCount() {
+        return this.horseCount;
+    }
+
+    public void setHorseCount(int horseCount) {
+        this.horseCount = horseCount;
+    }
+
+    public void addHorse(int amount) {
+        this.horseCount += amount;
     }
 
     public int getPopularity() {
@@ -230,6 +243,7 @@ public class Government {
             case RESOURCES -> this.stockpile;
             case FOODS -> this.granary;
             case WEAPONS -> this.armory;
+            default -> null;
         };
     }
 
@@ -322,18 +336,19 @@ public class Government {
             if (building.getHitpoints() < 1) {
                 building.destroy();
                 this.buildings.remove(index);
-            } else index++;
+            } else
+                index++;
         }
     }
 
     public int modifyScore() {
-        score += popularity * 5;
-        score += religionPopularityRate * 3;
+        this.score += this.popularity * 5;
+        this.score += this.religionPopularityRate * 3;
 
-        if (this.user.getHighScore() < score)
-            this.user.setHighScore(score);
+        if (this.user.getHighScore() < this.score)
+            this.user.setHighScore(this.score);
 
-        return score;
+        return this.score;
     }
 
     public void destroy() {
