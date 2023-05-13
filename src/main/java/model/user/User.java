@@ -282,7 +282,7 @@ public class User implements Serializable {
         }
 
         rankUser = getUserByRank(-1);
-        assert rankUser != null;
-        rankUser.rank = rankNumber+1;
+        if (rankUser != null)
+            rankUser.rank = rankNumber + 1;
     }
 }

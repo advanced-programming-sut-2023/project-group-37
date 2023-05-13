@@ -546,14 +546,19 @@ public class GameMenuController {
         Government winner = this.currentGame.getGovernments().get(0);
         int maxScore = 0;
         int score;
+        boolean hasNoWinner = false;
         for (Government government : this.currentGame.getGovernments()) {
-            if ((score = government.modifyScore()) > maxScore) {
+            if ((score = government.modifyScore()) >= maxScore) {
+                hasNoWinner = score == maxScore;
                 maxScore = score;
                 winner = government;
             }
         }
         setGovernmentsRank();
-        return Message.GAME_END_WITH_WINNER + winner.getUser().getUsername();
+        if (!hasNoWinner)
+            return Message.GAME_END_WITH_WINNER + winner.getUser().getUsername();
+
+        return Message.GAME_END_ALL_DESTROYED.toString();
     }
 
     private void setGovernmentsRank() {
