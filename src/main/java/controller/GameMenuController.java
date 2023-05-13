@@ -127,7 +127,7 @@ public class GameMenuController {
         return "Fear rate: " + this.currentGovernment.getTaxRate();
     }
 
-    public String dropBuilding(Matcher matcher) { //TODO : decrease
+    public String dropBuilding(Matcher matcher) {
 
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
@@ -135,7 +135,7 @@ public class GameMenuController {
         if ((tile = this.currentGame.getMap().getTileByLocation(x, y)) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        Object type = BuildingType.getBuildingTypeByName(matcher.group("type"));
+        Object type = BuildingType.getBuildingTypeByName(MultiMenuFunctions.deleteQuotations(matcher.group("type")));
         if (type == null)
             return Message.INVALID_BUILDING_TYPE.toString();
 

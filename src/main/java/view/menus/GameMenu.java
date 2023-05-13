@@ -38,7 +38,7 @@ public class GameMenu {
                 System.out.println(this.controller.showFoodList());
             else if ((matcher = Command.FOOD_RATE.getMatcher(command)) != null)
                 System.out.println(this.controller.setFoodRate(matcher));
-            else if (command.matches(Command.FOOD_RATE.toString()))
+            else if (command.matches(Command.FOOD_RATE_SHOW.toString()))
                 System.out.println(this.controller.showFoodRate());
             else if ((matcher = Command.TAX_RATE.getMatcher(command)) != null)
                 System.out.println(this.controller.setTaxRate(matcher));
@@ -46,7 +46,7 @@ public class GameMenu {
                 System.out.println(this.controller.showTaxRate());
             else if ((matcher = Command.FEAR_RATE.getMatcher(command)) != null)
                 System.out.println(this.controller.setFearRate(matcher));
-            else if (command.matches(Command.SHOW_FEAR_RATE.toString()))
+            else if (command.matches(Command.FEAR_RATE_SHOW.toString()))
                 System.out.println(this.controller.showFearRate());
             else if ((matcher = Command.DROP_BUILDING.getMatcher(command)) != null)
                 System.out.println(this.controller.dropBuilding(matcher));

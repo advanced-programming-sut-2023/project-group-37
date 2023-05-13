@@ -89,7 +89,6 @@ public class Controller {
         switch (this.mainMenu.run()) {
             case ENTER_PROFILE_MENU -> this.profileMenu.run();
             case ENTER_GAME_MENU -> runGameMenu();
-            // TODO: case map edition menu!
             case ENTER_LOGIN_MENU -> {
                 this.run();
                 return true;

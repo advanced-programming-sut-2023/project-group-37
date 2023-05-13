@@ -31,7 +31,6 @@ public class MainMenu {
             } else if ((matcher = Command.START_GAME.getMatcher(command)) != null) {
                 if (startGame(matcher))
                     return Result.ENTER_GAME_MENU;
-                System.out.println(Message.TERRITORY_NOT_ASSIGNED);
             } else if (command.matches(Command.LOGOUT.toString())) {
                 System.out.println(this.controller.logout());
                 return Result.ENTER_LOGIN_MENU;
@@ -53,10 +52,10 @@ public class MainMenu {
                 split = parts[index].split("\\s+");
                 usernames[index] = split[0];
                 numbers[index] = split[1];
-
             }
         }
         catch (Exception ex) {
+            System.out.println(Message.TERRITORY_NOT_ASSIGNED);
             return false;
         }
 

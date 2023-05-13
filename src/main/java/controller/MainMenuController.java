@@ -39,6 +39,8 @@ public class MainMenuController {
         try {
             for (int index = 0; index < length; index++) {
                 territories[index] = Integer.parseInt(numbers[index]);
+                if (territories[index] > 8 || territories[index] == 1)
+                    return Message.INVALID_TERRITORY_NUMBER.toString();
             }
         } catch (Exception ex) {
             return Message.TERRITORY_NOT_ASSIGNED.toString();

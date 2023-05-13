@@ -42,6 +42,7 @@ public enum Message {
     // MainMenu:
     ENTERED_PROFILE_MENU("Entered profile menu successfully!"),
     TERRITORY_NOT_ASSIGNED("Please assign territory for each user!"),
+    INVALID_TERRITORY_NUMBER("Invalid territory number!"),
     USER_NUMBER_LIMIT("You can only choose 7 users to start the game!"),
     USERNAME_NOT_FOUND("Some usernames dont exist!"),
     INVALID_MAP_NAME("Invalid map name!"),

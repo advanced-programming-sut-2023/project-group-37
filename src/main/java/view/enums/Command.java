@@ -34,7 +34,7 @@ public enum Command {
     // MainMenu:
     ENTER_PROFILE_MENU("\\s*enter\\s+profile\\s+menu\\s*"),
     START_GAME("\\s*start\\s+game(\\s+((-t\\s+(?<turns>\\d+))|(-m\\s+(?<mapName>\"[^\"]+\"))|" +
-            "(-u\\s+(?<users>\"[^\"]+\"))))+\\s*"), // TODO: check
+            "(-u\\s+(?<users>\"[^\"]+\"))))+\\s*"),
     LOGOUT("\\s*logout\\s*"),
 
     // ProfileMenu:
@@ -59,8 +59,8 @@ public enum Command {
     TAX_RATE("\\s*tax\\s+rate\\s+-r\\s+(?<rateNumber>-?\\d+)\\s*"),
     TAX_RATE_SHOW("\\s*tax\\s+rate\\s+show\\s*"),
     FEAR_RATE("\\s*fear\\s+rate\\s+-r\\s+(?<rateNumber>-?\\d+)\\s*"),
-    SHOW_FEAR_RATE("\\s*show\\s+fear\\s+rate\\s*"),
-    DROP_BUILDING("\\s*drop\\s+building(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s+-type\\s+(?<type>[^\"]+)\\s*"),
+    FEAR_RATE_SHOW("\\s*fear\\s+rate\\s+show\\s*"),
+    DROP_BUILDING("\\s*drop\\s+building(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t\\s+(?<type>\"[^\"]+\"))))+\\s*"),
     DROP_UNIT("\\s*drop\\s+unit(\\s+((-t\\s+(?<type>/\"[^\"]+\"|\\S+))|(-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-c\\s+(?<count>\\d+))))+\\s*"),
     SELECT_BUILDING("\\s*select\\s+building(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
     SELECT_UNIT("\\s*select\\s+unit(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
