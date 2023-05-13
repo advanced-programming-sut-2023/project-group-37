@@ -530,7 +530,6 @@ public class GameMenuController {
                 remainingGovernments.add(government);
             else government.destroy();
         }
-        this.currentGame.setGovernments(remainingGovernments);
 
         if (remainingGovernments.size() > 1 && this.currentGame.getTurnNumber() < this.currentGame.getTurns())
             return null;

@@ -28,6 +28,7 @@ public class Government {
     private int fearRate;
     private int religionPopularityRate;
     private int score;
+    private boolean isDead;
 
     public Government(User user, Color color, Map map, int territoryNumber) {
         this.user = user;
@@ -58,6 +59,7 @@ public class Government {
         this.taxRate = 0;
         this.fearRate = 0;
         this.score = 0;
+        this.isDead = false;
     }
 
     public User getUser() {
@@ -335,6 +337,18 @@ public class Government {
     }
 
     public void destroy() {
-        // todo
+        for (Building building : buildings) {
+            building.destroy();
+        }
+        for (MilitaryUnit militaryUnit : militaryUnits) {
+            militaryUnit.getLocation().getMilitaryUnits().remove(militaryUnit);
+            militaryUnit.getLoyalty().getMilitaryUnits().remove(militaryUnit);
+        }
+        this.score = 0;
+        this.isDead = true;
+    }
+
+    public boolean isDead() {
+        return isDead;
     }
 }

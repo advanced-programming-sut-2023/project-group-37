@@ -39,10 +39,6 @@ public class Game {
         return null;
     }
 
-    public void setGovernments(ArrayList<Government> governments) {
-        this.governments = governments;
-    }
-
     public int getIndex() {
         return this.index;
     }
@@ -231,7 +227,9 @@ public class Game {
                 government.removeDestroyedBuildings();
             }
         }
-        this.index = (this.index + 1) % this.governments.size();
+        do {
+            this.index = (this.index + 1) % this.governments.size();
+        } while (this.governments.get(index).isDead());
         this.currentTurnGovernment = this.governments.get(this.index);
         this.gameMenuController.setCurrentGovernment(this.currentTurnGovernment);
         turnNumber++;
