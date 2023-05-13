@@ -31,4 +31,8 @@ public class MilitaryMachine extends MilitaryUnit {
             this.operators.add(operator);
     }
 
+    @Override
+    public boolean canGoUp() {
+        return false;
+    }
 }

@@ -25,13 +25,14 @@ public class Troop extends MilitaryUnit {
         return this.type;
     }
 
-    public boolean canClimbLadder() {
-        return this.canClimbLadder;
-    }
-
     public boolean canDigMoat() {
         return this.canDigMoat;
     }
 
     // TODO: implement drop ladder!
+
+    @Override
+    public boolean canGoUp() {
+        return canClimbLadder;
+    }
 }

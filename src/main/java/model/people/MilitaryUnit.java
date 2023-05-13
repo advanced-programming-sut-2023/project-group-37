@@ -186,4 +186,6 @@ public abstract class MilitaryUnit {
                 patrolTile = 1;
         }
     }
+
+    public abstract boolean canGoUp();
 }
