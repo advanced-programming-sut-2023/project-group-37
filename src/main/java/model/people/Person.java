@@ -1,18 +1,23 @@
 package model.people;
 
 import model.buildings.Building;
+import model.game.Government;
 import model.game.Tile;
 
 public class Person {
 
+    private final Government loyalty;
     private int hitpoints;
     private Building workplace;
-    private int speed;
+    private final int speed;
     private Tile location;
 
-    public Person() {
-        // TODO: set default hitpoints!
+    public Person(Government loyalty) {
+        this.loyalty = loyalty;
+        this.hitpoints = 10;
         this.workplace = null;
+        this.speed = 70;
+        this.location = loyalty.getTerritory().getVillage();
     }
 
     public int getHitpoints() {
@@ -41,5 +46,4 @@ public class Person {
     public void setHitpoints(int hitpoints) {
         this.hitpoints = hitpoints;
     }
-
 }
