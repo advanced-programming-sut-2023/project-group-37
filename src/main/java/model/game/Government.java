@@ -11,7 +11,6 @@ import model.people.TroopType;
 import model.user.User;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Government {
@@ -22,7 +21,7 @@ public class Government {
     private int gold;
     private final Troop lord;
     private final ArrayList<Person> people;
-    private final HashMap<Troop, Integer> troops;
+    private final ArrayList<Troop> troops;
     private final ArrayList<MilitaryUnit> militaryUnits;
     private final ArrayList<Building> buildings;
     private final ArrayList<Storage> stockpile;
@@ -53,17 +52,19 @@ public class Government {
         this.foodRate = 1;
         this.taxRate = 0;
         this.fearRate = 0;
-        this.troops = new HashMap<>();
+        this.troops = new ArrayList<>();
     }
 
     public User getUser() {
         return this.user;
     }
 
+
     public void addTroops(Troop troop, int count) {
-        // TODO : fix it in ArrayList
-        troops.put(troop, count + troops.getOrDefault(troop, 0));
-        troop.getLocation().addMilitaryUnit(troop, count);
+        for (int i=0; i < count; i++) {
+            troops.add(troop);
+            troop.getLocation().addMilitaryUnit(troop, count);
+        }
     }
 
     public int getTerritory() {
@@ -307,10 +308,12 @@ public class Government {
         }
     }
 
-    public void modifyHighScore() {
+    public int modifyScore() {
         int score = 0; // todo : handle score
         if (this.user.getHighScore() < score)
             this.user.setHighScore(score);
+
+        return score;
     }
 
     public String getUsername() {

@@ -84,8 +84,15 @@ public class GameMenu {
             else if (command.matches(Command.SHOW_INFO.toString()))
                 System.out.println(controller.showInfo());
 
-            else if (command.matches(Command.END_GAME.toString()))
+            else if (command.matches(Command.NEXT_TURN.toString())) {
+                if (goNextTurn())
+                    return Result.END_GAME;
+            }
+
+            else if (command.matches(Command.END_GAME.toString())) {
+                System.out.println(controller.endGame());
                 return Result.END_GAME;
+            }
             else
                 System.out.println(Message.INVALID_COMMAND);
         }
@@ -134,5 +141,10 @@ public class GameMenu {
         System.out.println(this.message);
 
         return Message.ENTERED_UNIT_MENU.equals(message);
+    }
+
+    private boolean goNextTurn() {
+        String message = controller.goNextTurn();
+        return message.contains("ended");
     }
 }

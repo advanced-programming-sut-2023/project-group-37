@@ -65,7 +65,6 @@ public class Game {
 
     public void goToNextTurn() {
         if (this.index == this.governments.size() - 1) {
-            //TODO : do changes
             for (Government government : this.governments) {
                 government.distributeFood();
                 government.receiveTax();

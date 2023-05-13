@@ -13,6 +13,7 @@ import model.people.Person;
 import view.enums.Message;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.regex.Matcher;
 
 public class GameMenuController {
@@ -439,5 +440,39 @@ public class GameMenuController {
 
     public String enterTradeMenu() {
         return tradeMenuController.showNewTrades();
+    }
+
+    public String goNextTurn() {
+        currentGame.goToNextTurn();
+        if (gameEndMessage() != null)
+            return gameEndMessage();
+
+        return Message.SUCCESS.toString();
+    }
+
+    private String gameEndMessage() {
+        ArrayList<Government> liveGovernments = new ArrayList<>();
+        for (Government government : currentGame.getGovernments()) {
+            if (government.getLord().getHitpoints() > 0)
+                liveGovernments.add(government);
+        }
+        if (liveGovernments.size() > 1)
+            return null;
+        if (liveGovernments.size() == 0)
+            return "Game ended; All governments died!";
+        else return "Game ended; Winner: " + liveGovernments.get(0).getUsername();
+    }
+
+    public String endGame() {
+        Government winner = currentGame.getGovernments().get(0);
+        int maxScore = 0;
+        int score;
+        for (Government government : currentGame.getGovernments()) {
+            if ((score = government.modifyScore()) > maxScore) {
+                maxScore = score;
+                winner = government;
+            }
+        }
+        return "Game ended, Winner: " + winner.getUsername();
     }
 }
