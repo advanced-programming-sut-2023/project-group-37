@@ -86,6 +86,16 @@ assignees: Arman17Babaei
   3. [X] تمام شده
   </div>
 </details>
+  <details>
+  <summary>هندل کردن stance</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
 
 ## تسک‌های نفر دوم
 
@@ -169,6 +179,16 @@ assignees: Arman17Babaei
 </details>
 <details>
   <summary> Building Menu</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
+<details>
+  <summary> constants</summary>
 
   <div dir="ltr" align='right'>
 
