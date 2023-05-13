@@ -96,6 +96,16 @@ assignees: Arman17Babaei
   3. [X] تمام شده
   </div>
 </details>
+  <details>
+  <summary>دستور show map رنگی</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
 
 ## تسک‌های نفر دوم
 
