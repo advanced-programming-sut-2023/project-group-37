@@ -27,6 +27,7 @@ public class Government {
     private int taxRate;
     private int fearRate;
     private int religionPopularityRate;
+    private int score;
 
     public Government(User user, Color color, Map map, int territoryNumber) {
         this.user = user;
@@ -56,6 +57,7 @@ public class Government {
         this.foodRate = 0;
         this.taxRate = 0;
         this.fearRate = 0;
+        this.score = 0;
     }
 
     public User getUser() {
@@ -83,6 +85,7 @@ public class Government {
     }
 
     public void setGold(int gold) {
+        this.score += Math.abs(this.gold - gold);
         this.gold = gold;
     }
 
@@ -176,6 +179,7 @@ public class Government {
             this.armory.add((Storage) building);
         else
             this.buildings.add(building);
+        score += 10;
     }
 
     public void distributeFood() {
@@ -321,7 +325,8 @@ public class Government {
     }
 
     public int modifyScore() {
-        int score = 0;
+        score += popularity * 5;
+        score += religionPopularityRate * 3;
 
         if (this.user.getHighScore() < score)
             this.user.setHighScore(score);
