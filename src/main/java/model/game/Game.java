@@ -1,10 +1,13 @@
 package model.game;
 
 import controller.GameMenuController;
+import model.buildings.SiegeTent;
+import model.people.MilitaryMachine;
 import model.people.MilitaryUnit;
 import model.people.MilitaryUnitStance;
 import model.buildings.Building;
 import model.buildings.BuildingType;
+import model.people.Troop;
 
 import java.util.ArrayList;
 
@@ -36,11 +39,11 @@ public class Game {
     }
 
     public int getIndex() {
-        return index;
+        return this.index;
     }
 
     public int getTurnNumber() {
-        return turnNumber;
+        return this.turnNumber;
     }
 
     public Map getMap() {
@@ -79,21 +82,46 @@ public class Game {
                         churchCount++;
                     else if (type == BuildingType.CATHEDRAL)
                         cathedralCount++;
-                    else {
+                    else if (building instanceof SiegeTent) {
+                        MilitaryMachine machine = new MilitaryMachine(government,
+                                ((SiegeTent) building).getFormingMachine(), building.getLocation());
+                        government.getBuildings().remove(building);
+                        building.getLocation().setBuilding(null);
+                        int operatorsNeeded = ((SiegeTent) building).getFormingMachine().getOperatorsNeeded();
+                        for (int i = building.getLocation().getMilitaryUnits().size() - 1; i >= 0; i--) {
+                            government.getMilitaryUnits().remove(building.getLocation().getMilitaryUnits().get(i));
+                            building.getLocation().getMilitaryUnits().remove(building.getLocation().getMilitaryUnits().get(i));
+                            machine.assignOperator((Troop) building.getLocation().getMilitaryUnits().get(i));
+                            operatorsNeeded--;
+                            if (operatorsNeeded == 0)
+                                break;
+                        }
+                        government.getMilitaryUnits().add(machine);
+                        building.getLocation().addMilitaryUnit(machine);
+                    } else {
                         if (type == BuildingType.INN)
                             innCount++;
 
                         if (type.getRawMaterial() == null)
                             government.addItem(type.getProduct(), (int) (type.getProductProvides() *
                                     (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1);
-                        else {
+                        else if (government.getItemAmount(type.getRawMaterial()) >=
+                                type.getRawMaterialUses() + type.getRawMaterialUsesForSecond()) {
                             government.removeItem(type.getRawMaterial(), type.getRawMaterialUses() +
                                     type.getRawMaterialUsesForSecond());
-                            government.addItem(type.getProduct(), type.getProductProvides());
-                            government.addItem(type.getSecondProduct(), 1);
+                            if ((type.getSecondProduct() == null && this.currentTurnGovernment.getFreeSpace
+                                    (this.currentTurnGovernment.getTargetRepository(type.getProduct())) >=
+                                    type.getProductProvides()) ||
+                                    (type.getSecondProduct() != null && this.currentTurnGovernment.getFreeSpace
+                                            (this.currentTurnGovernment.getTargetRepository(type.getProduct())) >=
+                                            1 + type.getProductProvides())) {
+                                government.addItem(type.getProduct(), type.getProductProvides());
+                                government.addItem(type.getSecondProduct(), 1);
+                            } else {
+                                government.addItem(type.getRawMaterial(), type.getRawMaterialUses() +
+                                        type.getRawMaterialUsesForSecond());
+                            }
                         }
-
-                        // TODO: check for storage being fulled!
                     }
                 }
                 government.setReligionPopularityRate(Math.max(4, (8 * churchCount + 16 * cathedralCount) / 24));

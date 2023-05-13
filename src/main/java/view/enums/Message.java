@@ -120,36 +120,69 @@ public enum Message {
     NO_ARCHER("You dont have any archers in this place"),
     OUT_OF_RANGE("Out of range!"),
     NO_MEALY_UNIT("You dont have any mealy unit in this place!"),
+    DISBAND_SUCCESSFUL("Unit disbanded successfully!"),
+    NOT_APPROPRIATE_UNIT("This unit is unable to create siege equipment!"),
+    INVALID_MACHINE_TYPE("Invalid military machine type!"),
+    CANNOT_BUILD_MACHINE_HERE("Cannot build this military machine here!"),
+    CONSTRUCTING_SIEGE_EQUIPMENT("Constructing siege equipment"),
 
     // BuildingMenu:,
     TILE_IS_NOT_YOURS("The tile is not in your territory!"),
+
     BUILDING_NOT_YOURS("Building is not yours!"),
+
     NO_BUILDING_IN_TILE("No building in the tile!"),
+
     DO_CAPTCHA("For the last thing enter captcha!"),
+
     WRONG_CAPTCHA("Captcha is wrong try again!"),
+
     AREA_NOT_EMPTY("You can't change texture : Area is not empty!"),
+
     CLEAR_SUCCESSFUL("Block cleared successfully!"),
+
     DROP_ROCK("You dropped rock here!"),
+
     DROP_ROCK_ERROR("You can't drop rock here!"),
+
     DROP_TREE("You dropped tree here!"),
+
     DROP_TREE_ERROR("You can't drop tree here!"),
+
     NO_BUILDING_SELECTED("No building has been selected!"),
+
     INVALID_BUILDING_TYPE("Invalid building type!"),
+
     CANNOT_PLACE_BUILDING_ON_TEXTURE("Cannot place the building on this texture!"),
+
     TILE_ALREADY_HAS_BUILDING("Tile already has a building!"),
+
     NOT_IN_TERRITORY("You can place defensive buildings only in your own territory!"),
+
     NOT_ENOUGH_PEASANT("Peasant not enough!"),
+
     NOT_ENOUGH_RESOURCE(" not enough!"),
+
     BUILDING_IS_UNIQUE("This building can be placed once!"),
+
     STORAGE_NOT_NEIGHBOR("You have to place this storage near the other ones!"),
+
     DROP_BUILDING_SUCCESS("Building has been dropped successfully!"),
+
     BUILDING_NOT_REPAIRABLE("Building is not repairable!"),
+
     REPAIR_SUCCESS("Repaired successfully!"),
+
     INVALID_FOOD_RATE("You have to enter a rate between -2 to 2!"),
+
     FOOD_RATE_SET("Food rate has been set to"),
+
     INVALID_TAX_RATE("You have to enter a rate between -3 to 8"),
+
     TAX_RATE_SET("Tax rate has been set to"),
+
     INVALID_FEAR_RATE("You have to enter a rate between -5 to 5"),
+
     FEAR_RATE_SET("Fear rate has been set to");
 
     private final String message;

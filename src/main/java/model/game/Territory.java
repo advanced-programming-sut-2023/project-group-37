@@ -20,7 +20,7 @@ public class Territory {
         this.firstStockpileLocation = this.map.getTileByLocation(keep.getX() + 1, keep.getY());
     }
 
-    public Territory getCopYTerritory(Government owner) {
+    public Territory getCopyTerritory(Government owner) {
         Territory copy =new Territory(this.map, this.territoryNumber, this.keep);
         copy.setOwner(owner);
         return copy;

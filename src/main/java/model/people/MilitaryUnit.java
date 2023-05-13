@@ -93,7 +93,7 @@ public abstract class MilitaryUnit {
     }
 
     public void move() {
-        if (route.size() > 1) {
+        if (this.route.size() > 1) {
             LinkedList<Tile> route = this.getRoute();
             int speed = this.getSpeed();
             if (route.size() - 1 < speed)
@@ -101,7 +101,7 @@ public abstract class MilitaryUnit {
 
             this.location.getMilitaryUnits().remove(this);
             this.location = route.get(speed);
-            this.location.addMilitaryUnit(this, 1);
+            this.location.addMilitaryUnit(this);
 
             if (speed > 0)
                 route.subList(0, speed).clear();
@@ -114,7 +114,7 @@ public abstract class MilitaryUnit {
 
     public void setPatrol(LinkedList<Tile> patrolRoute) {
         this.patrolRoute = patrolRoute;
-        patrolTile = 1;
+        this.patrolTile = 1;
     }
 
     public void setTarget(Tile target) {

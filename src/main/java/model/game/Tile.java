@@ -127,9 +127,8 @@ public class Tile {
         this.people.add(person);
     }
 
-    public void addMilitaryUnit(MilitaryUnit troop, int count) {
-        for (int i = 0; i < count; i++)
-            militaryUnits.add(troop);
+    public void addMilitaryUnit(MilitaryUnit troop){
+        this.militaryUnits.add(troop);
     }
 
     public void setPassability(boolean passability) {
