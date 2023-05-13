@@ -16,7 +16,7 @@ public class Game {
     private final GameMenuController gameMenuController;
     private final Map map;
     private final int turns;
-    private final ArrayList<Government> governments;
+    private ArrayList<Government> governments;
     private Government currentTurnGovernment;
     private int index;
     private int turnNumber;
@@ -37,6 +37,10 @@ public class Game {
                 return government;
         }
         return null;
+    }
+
+    public void setGovernments(ArrayList<Government> governments) {
+        this.governments = governments;
     }
 
     public int getIndex() {

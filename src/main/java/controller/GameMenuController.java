@@ -485,13 +485,13 @@ public class GameMenuController {
 
     public String showInfo() {
         StringBuilder info = new StringBuilder("All Info:\n");
-        info.append("Username:").append(currentGovernment.getUser().getUsername()).append("\n");
-        info.append("Gold amount:").append(currentGovernment.getGold()).append("\n");
-        info.append("Tax--Food--Fear rate:").append(currentGovernment.getTaxRate())
-                .append("--").append(currentGovernment.getFoodRate()).append(currentGovernment.getFearRate()).append("\n");
-        info.append("Popularity:").append(currentGovernment.getPopularity()).append("\n");
-        info.append("Population:").append(currentGovernment.getPeople().size()).append("\n");
-        info.append("Number of buildings:").append(currentGovernment.getBuildings().size()).append("\n");
+        info.append("Username: ").append(currentGovernment.getUser().getUsername()).append("\n");
+        info.append("Gold amount: ").append(currentGovernment.getGold()).append("\n");
+        info.append("Tax--Food--Fear rate: ").append(currentGovernment.getTaxRate())
+                .append(" -- ").append(currentGovernment.getFoodRate()).append(" -- ").append(currentGovernment.getFearRate()).append("\n");
+        info.append("Popularity: ").append(currentGovernment.getPopularity()).append("\n");
+        info.append("Population: ").append(currentGovernment.getPeople().size()).append("\n");
+        info.append("Number of buildings: ").append(currentGovernment.getBuildings().size()).append("\n");
         return info.toString().trim();
     }
 
@@ -514,6 +514,7 @@ public class GameMenuController {
                 remainingGovernments.add(government);
             else government.destroy();
         }
+        this.currentGame.setGovernments(remainingGovernments);
 
         if (remainingGovernments.size() > 1 && currentGame.getTurnNumber() < currentGame.getTurns())
             return null;
