@@ -1,8 +1,8 @@
 package model.game;
 
 import model.buildings.Building;
+import model.buildings.BuildingType;
 import model.buildings.DefensiveBuilding;
-import model.buildings.DefensiveBuildingType;
 import model.people.MilitaryUnit;
 import model.people.Person;
 import model.people.Troop;
@@ -68,13 +68,15 @@ public class Tile {
         }
 
         if (damage == firstDamage && this.building != null ) {
-            if (!(this.building instanceof DefensiveBuilding) && this.building.getLoyalty() != government)
+            if (!(this.building instanceof DefensiveBuilding) && this.building.getType() != BuildingType.KILLING_PIT &&
+                    this.building.getLoyalty() != government)
                 this.building.takeDamage(damage);
         }
     }
 
     public void receiveBuildingDamage(int damage, Government government) {
-        if (this.building instanceof DefensiveBuilding && this.building.getLoyalty() != government)
+        if (this.building instanceof DefensiveBuilding && this.building.getType() != BuildingType.KILLING_PIT &&
+                this.building.getLoyalty() != government)
             this.building.takeDamage(damage);
     }
 
@@ -97,11 +99,6 @@ public class Tile {
     public Territory getTerritory() {
         return this.territory;
     }
-
-    //TODO: erfan
-//    public void setTerritory(int territoryNumber) {
-//        this.territory = this.map.getTerritories().get(territoryNumber);
-//    }
 
     public void setState() {
         boolean hasLord = false;
@@ -173,5 +170,16 @@ public class Tile {
 
     public void removeMilitaryUnits() {
         militaryUnits = new ArrayList<>();
+    }
+
+    public void changeMoat() {
+        if (texture == Texture.MOAT) {
+            texture = Texture.GROUND;
+            this.isPassable = true;
+        }
+        else {
+            texture = Texture.MOAT;
+            this.isPassable = false;
+        }
     }
 }

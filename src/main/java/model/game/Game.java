@@ -147,6 +147,9 @@ public class Game {
                     else if (militaryUnit.isOnPatrol())
                         militaryUnit.patrol();
 
+                    else if (militaryUnit.getMoatTarget() != null)
+                        militaryUnit.getMoatTarget().changeMoat();
+
                     else {
                         if (militaryUnit.getStance() == MilitaryUnitStance.STANDING)
                             range = militaryUnit.getRange();
