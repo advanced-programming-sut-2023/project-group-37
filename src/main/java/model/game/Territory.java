@@ -17,6 +17,7 @@ public class Territory {
         this.coveredTiles = new ArrayList<>();
         this.keep = keep;
         this.village = this.map.getTileByLocation(keep.getX(), keep.getY() - 1);
+        this.village.setPassability(false);
         this.firstStockpileLocation = this.map.getTileByLocation(keep.getX() + 1, keep.getY());
     }
 

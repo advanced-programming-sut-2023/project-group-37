@@ -43,7 +43,10 @@ public class Government {
         this.buildings = new ArrayList<>();
         // TODO: set default resources!
         this.stockpile = new ArrayList<>();
-        this.stockpile.add(new Storage(this, territory.getFirstStockpileLocation(), BuildingType.STOCKPILE));
+        Storage firstStockPlie = new Storage(this, territory.getFirstStockpileLocation(), BuildingType.STOCKPILE);
+        this.stockpile.add(firstStockPlie);
+        firstStockPlie.getLocation().setBuilding(firstStockPlie);
+        this.buildings.add(firstStockPlie);
         this.addItem(Item.WOOD, 100);
         this.addItem(Item.STONE, 50);
         this.granary = new ArrayList<>();

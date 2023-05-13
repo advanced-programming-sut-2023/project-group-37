@@ -138,6 +138,7 @@ public class GameMenu {
 
     private boolean goNextTurn() {
         String message = controller.goNextTurn();
+        System.out.println(message);
         return message.contains("ended");
     }
 }

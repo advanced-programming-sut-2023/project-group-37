@@ -37,7 +37,7 @@ public enum BuildingType {
             false, false, false),
     QUARRY("quarry", 150, Item.WOOD, 20, Item.STONE, 3,
             false, false, false),
-    WOODCUTTER("woodcutter", 150, Item.WOOD, 3, Item.WOOD, 18,
+    WOODCUTTER("wood cutter", 150, Item.WOOD, 3, Item.WOOD, 18,
             1, false, false, false),
     ARMOURER("armourer", 100, 150, Item.WOOD, 20, Item.IRON, 1,
             Item.METAL_ARMOR, 1, 1, false, false, false),
@@ -48,7 +48,7 @@ public enum BuildingType {
     FLETCHER("fletcher", 100, 150, Item.WOOD, 20, Item.WOOD,
             2, 3, Item.BOW, Item.CROSSBOW, 1, 1,
             false, false, false),
-    POLETURNER("poleturner", 100, 150, Item.WOOD, 10, Item.WOOD,
+    POLETURNER("pole turner", 100, 150, Item.WOOD, 10, Item.WOOD,
             1, 2, Item.SPEAR, Item.PIKE, 1, 1,
             false, false, false),
     // TODO: change it after implementing cow!
@@ -80,7 +80,7 @@ public enum BuildingType {
     CAGED_WAR_DOGS("caged war dogs", 100, 150, Item.WOOD, 10, 0,
             false, false, false),
     // TODO: name is null because only we can create it!
-    SIEGE_TENT(null, 150, null, 0, true,
+    SIEGE_TENT("", 150, null, 0, true,
             false, false),
     TUNNEL_ENTRANCE("tunnel entrance", 150, null, 0, true,
             false, false),
