@@ -37,7 +37,7 @@ public class Government {
         this.gold = 2000;
         this.lord = new Troop(this, TroopType.LORD, territory.getKeep());
         this.territory.getKeep().setBuilding(new DefensiveBuilding(this, this.territory.getKeep(),
-                DefensiveBuildingType.KEEP));
+                DefensiveBuildingType.KEEP, 'v'));
         this.territory.getKeep().addMilitaryUnit(this.lord);
         this.people = new ArrayList<>();
         this.addPeasant(10);

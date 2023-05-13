@@ -49,7 +49,9 @@ public abstract class MilitaryUnit {
         this.hitpoints = hitpoints;
     }
 
-    public int getRange() {
+    public double getRange() {
+        if (this.location.getBuilding() instanceof DefensiveBuilding defensiveBuilding)
+            return defensiveBuilding.getDefensiveType().getRangeRate() * this.range;
         return this.range;
     }
 
@@ -66,24 +68,20 @@ public abstract class MilitaryUnit {
                     defensiveBuilding.setCanBeReached(true);
                     defensiveBuilding.setHasLadderAttached(true);
                 }
-            }
-            else if (((MilitaryMachine) this).getType() != MilitaryMachineType.PORTABLE_SHIELD)
+            } else if (((MilitaryMachine) this).getType() != MilitaryMachineType.PORTABLE_SHIELD)
                 target.receiveBuildingDamage(this.damage, this.loyalty);
-        }
-        else {
+        } else {
             Troop troop = (Troop) this;
             if (troop.getType() == TroopType.LADDERMAN) {
                 if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
                     defensiveBuilding.setCanBeReached(true);
                     defensiveBuilding.setHasLadderAttached(true);
                 }
-            }
-            else if (troop.getType() == TroopType.TUNNELER) {
+            } else if (troop.getType() == TroopType.TUNNELER) {
                 if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
                     defensiveBuilding.destroy();
                 }
-            }
-            else target.receiveDamage(this.damage, this.loyalty);
+            } else target.receiveDamage(this.damage, this.loyalty);
         }
     }
 
@@ -201,10 +199,9 @@ public abstract class MilitaryUnit {
             index += speed;
             this.location = patrolRoute.get(index);
 
-            if (index == patrolRoute.size()-1)
+            if (index == patrolRoute.size() - 1)
                 patrolTile = 0;
-        }
-        else if (patrolTile == 0) {
+        } else if (patrolTile == 0) {
             if (speed > index)
                 speed = index;
 

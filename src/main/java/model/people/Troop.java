@@ -1,5 +1,6 @@
 package model.people;
 
+import model.buildings.DefensiveBuilding;
 import model.game.Government;
 import model.game.Item;
 import model.game.Tile;

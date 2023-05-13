@@ -343,11 +343,12 @@ public class UnitMenuController {
             if (unit instanceof MilitaryMachine || !((Troop) unit).getType().canDigMoat())
                 return Message.UNIT_CANNOT_DIG_MOAT;
 
+        Tile target = MultiMenuFunctions.getNearestPassableTileByLocation(destination, this.currentGame.getMap());
         LinkedList<Tile> route;
-        if ((route = MultiMenuFunctions.routeFinder(this.currentLocation, destination, this.currentGame.getMap())) == null)
+        if ((route = MultiMenuFunctions.routeFinder(this.currentLocation, target, this.currentGame.getMap())) == null)
             return Message.NO_ROUTS_FOUND;
         for (MilitaryUnit unit : this.currentUnit) {
-            unit.setRoute(MultiMenuFunctions.getNearestPassableTileByLocation(destination, this.currentGame.getMap()));
+            unit.setRoute(route);
             unit.setMoatTarget(destination);
         }
 
@@ -389,12 +390,13 @@ public class UnitMenuController {
             if (unit instanceof MilitaryMachine || !((Troop) unit).getType().canDigMoat())
                 return Message.UNIT_CANNOT_DIG_MOAT;
 
+        Tile target = MultiMenuFunctions.getNearestPassableTileByLocation(destination, this.currentGame.getMap());
         LinkedList<Tile> route;
-        if ((route = MultiMenuFunctions.routeFinder(this.currentLocation, destination, this.currentGame.getMap())) == null)
+        if ((route = MultiMenuFunctions.routeFinder(this.currentLocation, target, this.currentGame.getMap())) == null)
             return Message.NO_ROUTS_FOUND;
 
         for (MilitaryUnit unit : this.currentUnit) {
-            unit.setRoute(MultiMenuFunctions.getNearestPassableTileByLocation(destination, this.currentGame.getMap()));
+            unit.setRoute(route);
             unit.setMoatTarget(destination);
         }
 

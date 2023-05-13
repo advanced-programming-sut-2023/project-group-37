@@ -281,7 +281,8 @@ public class GameMenuController {
 
         tile.setPassability(type == BuildingType.KILLING_PIT || type == DefensiveBuildingType.STAIRS ||
                 type == BuildingType.BARRACKS || type == BuildingType.MERCENARY_POST ||
-                type == BuildingType.ENGINEER_GUILD || type == BuildingType.TUNNELER_GUILD);
+                type == BuildingType.ENGINEER_GUILD || type == BuildingType.TUNNELER_GUILD ||
+                type == DefensiveBuildingType.SMALL_GATEHOUSE || type == DefensiveBuildingType.LARGE_GATEHOUSE);
         return Message.DROP_BUILDING_SUCCESS.toString();
     }
 
