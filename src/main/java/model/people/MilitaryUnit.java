@@ -1,5 +1,7 @@
 package model.people;
 
+import model.buildings.Building;
+import model.buildings.DefensiveBuilding;
 import model.game.Government;
 import model.game.Tile;
 
@@ -58,12 +60,29 @@ public abstract class MilitaryUnit {
             if (((MilitaryMachine) this).getType() == MilitaryMachineType.FIRE_BALLISTA)
                 target.receiveDamage(this.damage, this.loyalty);
             else if (((MilitaryMachine) this).getType() == MilitaryMachineType.SIEGE_TOWER) {
-                // todo
+                if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
+                    defensiveBuilding.setCanBeReached(true);
+                    defensiveBuilding.setHasLadderAttached(true);
+                }
             }
             else if (((MilitaryMachine) this).getType() != MilitaryMachineType.PORTABLE_SHIELD)
                 target.receiveBuildingDamage(this.damage, this.loyalty);
         }
-        else target.receiveDamage(this.damage, this.loyalty);
+        else {
+            Troop troop = (Troop) this;
+            if (troop.getType() == TroopType.LADDERMAN) {
+                if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
+                    defensiveBuilding.setCanBeReached(true);
+                    defensiveBuilding.setHasLadderAttached(true);
+                }
+            }
+            else if (troop.getType() == TroopType.TUNNELER) {
+                if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
+                    defensiveBuilding.destroy();
+                }
+            }
+            else target.receiveDamage(this.damage, this.loyalty);
+        }
     }
 
     public int takeDamage(int damage) {

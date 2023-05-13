@@ -16,7 +16,7 @@ public class Tile {
     private final int y;
     private Texture texture;
     private final ArrayList<Person> people;
-    private final ArrayList<MilitaryUnit> militaryUnits;
+    private ArrayList<MilitaryUnit> militaryUnits;
     private Building building;
     private Character state;
     private boolean isPassable;
@@ -169,5 +169,9 @@ public class Tile {
 
     public void setTerritory(Territory territory) {
         this.territory = territory;
+    }
+
+    public void removeMilitaryUnits() {
+        militaryUnits = new ArrayList<>();
     }
 }
