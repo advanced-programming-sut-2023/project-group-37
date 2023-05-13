@@ -11,12 +11,12 @@ import model.people.TroopType;
 import model.user.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Government {
     private final User user;
-    private final int territory;
-    private final Tile territoryLocation;
+    private final Territory territory;
     private final Color color;
     private int gold;
     private final Troop lord;
@@ -31,20 +31,24 @@ public class Government {
     private int foodRate;
     private int taxRate;
     private int fearRate;
+    private int religionPopularityRate;
 
-    public Government(User user, Color color, int territory, Tile territoryLocation) {
+    public Government(User user, Color color, Territory territory) {
         this.user = user;
         this.territory = territory;
         this.territoryLocation = territoryLocation;
         this.color = color;
         // TODO: set default value for gold!
-        this.gold = 0;
-        this.lord = new Troop(this, TroopType.LORD, territoryLocation);
+        this.gold = 2000;
+        this.lord = new Troop(this, TroopType.LORD, territory.getKeep());
         this.people = new ArrayList<>();
         this.militaryUnits = new ArrayList<>();
         this.buildings = new ArrayList<>();
         // TODO: set default resources!
         this.stockpile = new ArrayList<>();
+        this.stockpile.add(new Storage(this, territory.getFirstStockpileLocation(), BuildingType.STOCKPILE));
+        this.addItem(Item.WOOD, 100);
+        this.addItem(Item.STONE, 50);
         this.granary = new ArrayList<>();
         this.armory = new ArrayList<>();
         // TODO: set default popularity!
@@ -61,14 +65,13 @@ public class Government {
 
 
     public void addTroops(Troop troop, int count) {
-        for (int i=0; i < count; i++) {
-            troops.add(troop);
-            troop.getLocation().addMilitaryUnit(troop, count);
-        }
+        // TODO : fix it in ArrayList
+        troops.put(troop, count + troops.getOrDefault(troop, 0));
+        troop.getLocation().addMilitaryUnit(troop, count);
     }
 
-    public int getTerritory() {
-        return territory;
+    public Territory getTerritory() {
+        return this.territory;
     }
 
     public Color getColor() {
@@ -76,7 +79,7 @@ public class Government {
     }
 
     public Building getUniqueBuilding(BuildingType type) {
-        for (Building building : buildings) {
+        for (Building building : this.buildings) {
             if (building.getType() == type)
                 return building;
         }
@@ -147,6 +150,10 @@ public class Government {
         return this.taxRate;
     }
 
+    public void setFoodRate(int foodRate) {
+        this.foodRate = foodRate;
+    }
+
     public void setTaxRate(int taxRate) {
         this.taxRate = taxRate;
     }
@@ -155,13 +162,17 @@ public class Government {
         return this.fearRate;
     }
 
-    public void setFoodRate(int foodRate) {
-        this.foodRate = foodRate;
+    public int getReligionPopularityRate() {
+        return this.religionPopularityRate;
+    }
+
+    public void setReligionPopularityRate(int religionPopularityRate) {
+        this.religionPopularityRate = religionPopularityRate;
     }
 
     public void addPeasant(int count) {
         for (int i = 0; i < count; i++)
-            this.people.add(new Person());
+            this.people.add(new Person(this));
     }
 
     public void addBuilding(Building building) {
@@ -171,11 +182,6 @@ public class Government {
             this.granary.add((Storage) building);
         else if (building.getType() == BuildingType.ARMORY)
             this.armory.add((Storage) building);
-            // todo : unComment these :
-//        else if (building.getType() == BuildingType.MARKET) {
-//            this.hasMarket = true;
-//            this.buildings.add(building);
-//        }
         else
             this.buildings.add(building);
     }
@@ -211,11 +217,17 @@ public class Government {
         if (this.taxRate != 0)
             taxPerPerson = (this.taxRate > 0 ? 1 : -1) * (0.2 * taxRate + 0.4);
 
-        this.gold += this.people.size() * taxPerPerson;
-        this.popularity += -2 * this.taxRate + (this.taxRate > 0 ? 0 : 1);
+        if (this.people.size() * taxPerPerson > this.gold)
+            this.taxRate = 0;
+        this.gold = Math.min(0, this.gold + (int) (this.people.size() * taxPerPerson));
+
+        if (Math.abs(this.popularity) <= 4)
+            this.popularity += -2 * this.taxRate + (this.taxRate > 0 ? 0 : 1);
+        else
+            this.popularity += -4 * this.taxRate + 8;
     }
 
-    private ArrayList<Storage> getTargetRepository(Item item){
+    private ArrayList<Storage> getTargetRepository(Item item) {
         return switch (item.getCategory()) {
             case RESOURCES -> this.stockpile;
             case FOODS -> this.granary;
@@ -289,8 +301,7 @@ public class Government {
             if (militaryUnit.getHitpoints() < 1) {
                 this.militaryUnits.remove(index);
                 militaryUnit.getLocation().getMilitaryUnits().remove(militaryUnit);
-            }
-            else index++;
+            } else index++;
         }
     }
 
@@ -313,9 +324,5 @@ public class Government {
             this.user.setHighScore(score);
 
         return score;
-    }
-
-    public String getUsername() {
-        return user.getUsername();
     }
 }

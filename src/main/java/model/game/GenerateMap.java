@@ -106,8 +106,10 @@ public class GenerateMap {
         return map;
     }
 
+    // TODO: هد کواتر همون کیپ هست ، کیپ هم توی کلاس تریتوری تغریف شده
+    // TODO: خودت یجوری درستش کن من سر در نمیارم
     public static void setTerritory(Tile headQuarter, int territory) {
-        map.getHeadQuarters().put(territory, headQuarter);
+        map.getKeeps().put(territory, headQuarter);
         for (int i = headQuarter.getX() - 14; i < headQuarter.getX() + 15; i++) {
             for (int j = headQuarter.getY() - 14; j < headQuarter.getY() + 15; j++) {
                 map.getField()[i][j].setTerritoryNumber(territory);

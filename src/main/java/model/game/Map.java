@@ -1,31 +1,23 @@
 package model.game;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Map {
 
     // TODO: handle load maps!
-    private static ArrayList<Map> maps;
-    private static final Gson gson = new Gson();
+    private static final ArrayList<Map> maps;
     private final String name;
     private final int size;
     private final Tile[][] field;
     private final boolean[][] tilesPassability;
-    private HashMap<Integer, Government> territories;
-    private HashMap<Integer, Tile> headQuarters;
+    private HashMap<Integer, Territory> territories;
+
+    // TODO: should be final?
 
     static {
         maps = new ArrayList<>();
     }
-
-    // TODO: handle headquarters illegible on page 29!
 
     public Map(String name) {
         this.name = name;
@@ -33,18 +25,16 @@ public class Map {
         this.field = new Tile[size][size];
         this.tilesPassability = new boolean[size][size];
         this.initializeTiles();
-        headQuarters = new HashMap<>();
     }
 
     public Map(String name, int size, Tile[][] map, boolean[][] tilesPassability,
-               HashMap<Integer, Government> territories, HashMap<Integer, Tile> headQuarters) {
+               HashMap<Integer, Territory> territories) {
         this.name = name;
         this.size = size;
         this.field = map;
         this.tilesPassability = tilesPassability;
         this.territories = territories;
-        this.headQuarters = headQuarters;
-
+        // TODO: assign territories
     }
 
     public static Map getMapByName(String name) {
@@ -58,54 +48,15 @@ public class Map {
         return maps;
     }
 
-
     public static Map getMapCopyByName(String name) {
         for (Map map : maps)
             if (map.getName().equals(name))
-                return new Map(name, map.size, map.getField(), map.getTilesPassability(),
-                        map.getTerritories(), map.getHeadQuarters());
+                return new Map(name, map.size, map.getField(), map.getTilesPassability(), map.getTerritories());
         return null;
     }
 
-
-//    public static void loadMaps() {
-//        String filePath = "src/main/resources/sampleMaps.json";
-//        try {
-//            String json = new String(Files.readAllBytes(Paths.get(filePath)));
-//            ArrayList<Map> sampleMaps = gson.fromJson(json, new TypeToken<List<Map>>() {
-//            }.getType());
-//            if (sampleMaps != null) {
-//                Map.maps = sampleMaps;
-//            }
-//        } catch (Exception ex) {
-//            System.out.println(ex.getMessage());
-//        }
-//    }
-
     public static void loadMaps() {
         maps.add(GenerateMap.createMap1());
-    }
-
-
-    //        public static void main(String[] args) {
-//        writeMapsToFile();
-//    }
-    public static void writeMapsToFile() {
-        maps.add(GenerateMap.createMap1());
-        //maps.add(GenerateMap.createMap2());
-        String filePath = "src/main/resources/sampleMaps.json";
-        try {
-            FileWriter fileWriter = new FileWriter(filePath);
-            fileWriter.write(new ObjectMapper().writeValueAsString(maps));
-            fileWriter.close();
-        } catch (IOException ignored) {
-            File file = new File(filePath);
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 
     public String getName() {
@@ -124,33 +75,26 @@ public class Map {
         return this.tilesPassability;
     }
 
-    public HashMap<Integer, Government> getTerritories() {
+    public HashMap<Integer, Territory> getTerritories() {
         return this.territories;
     }
 
-    public HashMap<Integer, Tile> getHeadQuarters() {
-        return this.headQuarters;
-    }
-
     public void setTilesState() {
-        for (int i = 0; i < this.size; i++) {
+        for (int i = 0; i < this.size; i++)
             for (int j = 0; j < this.size; j++)
                 this.field[i][j].setState();
-        }
     }
 
     public void setTilesPassability() {
-        for (int i = 0; i < this.size; i++) {
+        for (int i = 0; i < this.size; i++)
             for (int j = 0; j < this.size; j++)
                 tilesPassability[i][j] = this.field[i][j].isPassable();
-        }
     }
 
     public void resetNumbers() {
-        for (int i = 0; i < this.size; i++) {
+        for (int i = 0; i < this.size; i++)
             for (int j = 0; j < this.size; j++)
                 this.field[i][j].number = 0;
-        }
     }
 
     public Tile getTileByLocation(int x, int y) {
@@ -158,15 +102,6 @@ public class Map {
             return null;
 
         return this.field[x][y];
-    }
-
-    public boolean areaContainsSomething(int x1, int y1, int x2, int y2) {
-        for (int i = x1; i <= x2; i++)
-            for (int j = y1; j <= y2; j++)
-                if (field[i][j].getBuilding() != null || field[i][j].getPeople().size() != 0
-                        || field[i][j].getMilitaryUnits().size() != 0)
-                    return true;
-        return false;
     }
 
     public boolean getPassabilityByLocation(int x, int y) {
@@ -177,9 +112,5 @@ public class Map {
         for (int i = 0; i < this.size; i++)
             for (int j = 0; j < this.size; j++)
                 this.field[i][j] = new Tile(i, j);
-    }
-
-    public Tile getHeadQuarter(int territory) {
-        return headQuarters.get(territory);
     }
 }

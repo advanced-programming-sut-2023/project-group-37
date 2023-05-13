@@ -69,16 +69,20 @@ public class Game {
                 government.distributeFood();
                 government.receiveTax();
                 government.setPopularity(government.getPopularity() + government.getFearRate());
-                int innCount = 0;
+                int innCount = 0, churchCount = 0, cathedralCount = 0;
                 for (Building building : government.getBuildings()) {
-
                     BuildingType type = building.getType();
 
                     if (type == BuildingType.HOVEL)
                         government.addPeasant(8);
+                    else if (type == BuildingType.CHURCH)
+                        churchCount++;
+                    else if (type == BuildingType.CATHEDRAL)
+                        cathedralCount++;
                     else {
                         if (type == BuildingType.INN)
                             innCount++;
+
                         if (type.getRawMaterial() == null)
                             government.addItem(type.getProduct(), (int) (type.getProductProvides() *
                                     (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1);
@@ -92,9 +96,10 @@ public class Game {
                         // TODO: check for storage being fulled!
                     }
                 }
+                government.setReligionPopularityRate(Math.max(4, (8 * churchCount + 16 * cathedralCount) / 24));
                 government.setPopularity(government.getPopularity() + Math.min(4, innCount) * 2);
+                government.setPopularity(government.getPopularity() + government.getReligionPopularityRate());
                 government.setPopularity(government.getPopularity() > 100 ? 100 : Math.max(government.getPopularity(), 0));
-
             }
 
             // MOVE AND STANCE:
@@ -114,10 +119,11 @@ public class Game {
                             range = militaryUnit.getRange();
                         else range = 2 * militaryUnit.getRange();
 
-                        firstFor :for (int i = 0; i < range + 1; i++) {
+                        firstFor:
+                        for (int i = 0; i < range + 1; i++) {
                             for (int j = 0; j < range + 1; j++) {
 
-                                if (Math.sqrt(i*i + j*j) < range + 0.2) {
+                                if (Math.sqrt(i * i + j * j) < range + 0.2) {
                                     // i : + AND j : +
                                     target = map.getTileByLocation(militaryUnit.getLocation().getX() + i,
                                             militaryUnit.getLocation().getY() + j);

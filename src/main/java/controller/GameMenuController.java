@@ -71,12 +71,11 @@ public class GameMenuController {
     }
 
     public String showPopularityFactors() {
-        return """
-                There are four popularity factors as below:
-                1. Food you give!
-                2. Tax you take!
-                3. Religion you propagate!
-                4. Fear you create!""";
+        return "Popularity factors:\n" + "Food: " + (this.currentGovernment.getFoodRate() / 2 + 1) + "\n" +
+                "Tax: " + (this.currentGovernment.getTaxRate() == 0 ? 0 :
+                0.2 * this.currentGovernment.getTaxRate() + 0.4) + "\n" +
+                "Fear: " + this.currentGovernment.getFearRate() + "\n" +
+                "Religion: " + this.currentGovernment.getReligionPopularityRate();
     }
 
     public String showFoodList() {
@@ -140,7 +139,6 @@ public class GameMenuController {
         if (type == null)
             return Message.INVALID_BUILDING_TYPE.toString();
 
-        // TODO: check territory if needed!
         // TODO: check if there is moat!
         if (!tile.getTexture().canHaveBuildingAndUnit())
             return Message.CANNOT_PLACE_BUILDING_ON_TEXTURE.toString();
@@ -163,7 +161,7 @@ public class GameMenuController {
 
         // Check territory for defensiveBuildings
         if (type instanceof DefensiveBuildingType &&
-                this.currentGame.getMap().getTerritories().get(this.currentGovernment.getTerritory()) != tile.getTerritory())
+                this.currentGovernment.getTerritory() != tile.getTerritory())
             return Message.NOT_IN_TERRITORY.toString();
 
         // Check enough gold and resource:
@@ -191,8 +189,9 @@ public class GameMenuController {
                 type == BuildingType.MARKET) && this.currentGovernment.getUniqueBuilding((BuildingType) type) != null)
             return Message.BUILDING_IS_UNIQUE.toString();
 
-        // Check if storage is not near the others!
+        // Check if non-first storage is not near the others!
         if ((type == BuildingType.STOCKPILE || type == BuildingType.GRANARY || type == BuildingType.ARMORY) &&
+                this.currentGovernment.getUniqueBuilding((BuildingType) type) != null &&
                 this.currentGame.getMap().getTileByLocation(tile.getX() - 1, tile.getY()).getBuilding().getType() != type &&
                 this.currentGame.getMap().getTileByLocation(tile.getX() + 1, tile.getY()).getBuilding().getType() != type &&
                 this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() - 1).getBuilding().getType() != type &&
@@ -209,14 +208,18 @@ public class GameMenuController {
             this.currentGovernment.removeItem(Item.STONE, ((DefensiveBuildingType) type).getStoneAmount());
         }
 
-        // TODO: storage location should be checked in coming statement!
+        Building building = null;
         if (type instanceof BuildingType) {
             if (type == BuildingType.STOCKPILE || type == BuildingType.GRANARY || type == BuildingType.ARMORY)
-                tile.setBuilding(new Storage(this.currentGovernment, tile, (BuildingType) type));
+                building = new Storage(this.currentGovernment, tile, (BuildingType) type);
             else
-                tile.setBuilding(new Building(this.currentGovernment, tile, (BuildingType) type));
+                building = new Building(this.currentGovernment, tile, (BuildingType) type);
         } else if (type instanceof DefensiveBuildingType)
-            tile.setBuilding(new DefensiveBuilding(this.currentGovernment, tile, (DefensiveBuildingType) type));
+            building = new DefensiveBuilding(this.currentGovernment, tile, (DefensiveBuildingType) type);
+
+        assert building != null;
+        tile.setBuilding(building);
+        this.currentGovernment.addBuilding(building);
 
         int workersNeeded;
         if (type instanceof BuildingType && (workersNeeded = ((BuildingType) type).getWorkersNeeded()) > 0) {
@@ -426,9 +429,9 @@ public class GameMenuController {
         return Message.DROP_ROCK.toString();
     }
 
-    public String showInfo(){
+    public String showInfo() {
         StringBuilder info = new StringBuilder("All Info:\n");
-        info.append("Username:").append(currentGovernment.getUsername()).append("\n");
+        info.append("Username:").append(currentGovernment.getUser().getUsername()).append("\n");
         info.append("Gold amount:").append(currentGovernment.getGold()).append("\n");
         info.append("Tax--Food--Fear rate:").append(currentGovernment.getTaxRate())
                 .append("--").append(currentGovernment.getFoodRate()).append(currentGovernment.getFearRate()).append("\n");

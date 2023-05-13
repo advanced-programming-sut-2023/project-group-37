@@ -9,6 +9,7 @@ import model.people.Person;
 import java.util.ArrayList;
 
 public class Tile {
+
     private final int x;
     private final int y;
     private Texture texture;
@@ -17,9 +18,8 @@ public class Tile {
     private Building building;
     private Character state;
     private boolean isPassable;
-    private Government territory;
-    private int territoryNumber;
-    public int number; // it is just for rootFinder
+    private Territory territory;
+    public int number;
 
     public Tile(int x, int y) {
         this.x = x;
@@ -91,22 +91,14 @@ public class Tile {
         return isPassable;
     }
 
-    public Government getTerritory() {
+    public Territory getTerritory() {
         return this.territory;
     }
 
-    public int getTerritoryNumber() {
-        return territoryNumber;
-    }
-
-    public void setTerritory(Government territory) {
-        this.territory = territory;
-    }
-
-    public void setTerritoryNumber(int territoryNumber) {
-        this.territoryNumber = territoryNumber;
-    }
-
+    //TODO: erfan
+//    public void setTerritory(int territoryNumber) {
+//        this.territory = this.map.getTerritories().get(territoryNumber);
+//    }
 
     public void setState() {
         if (this.militaryUnits.size() > 0) {
@@ -117,17 +109,13 @@ public class Tile {
                 }
             }
             state = 'S';
-        }
-
-        else if (this.building != null) {
+        } else if (this.building != null) {
             this.state = 'B';
         }
         //todo : W for wall
         else if (this.texture == Texture.OLIVE_TREE || texture == Texture.DESERT_TREE) {
             this.state = 'T';
-        }
-
-        else this.state = 'N';
+        } else this.state = 'N';
     }
 
     public ArrayList<Person> getPeople() {
