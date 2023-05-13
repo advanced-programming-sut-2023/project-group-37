@@ -270,10 +270,13 @@ public class UnitMenuController {
         if (MultiMenuFunctions.distance(this.currentLocation, location) > TroopType.TUNNELER.getRange() + 0.2)
             return Message.TUNNEL_TOO_FAR_FROM_ENEMY;
 
+        this.currentLocation.setBuilding(new Building(this.currentGovernment, this.currentLocation,
+                BuildingType.TUNNEL_ENTRANCE));
+
         for (MilitaryUnit unit : this.currentUnit)
             unit.setTarget(location);
 
-        return null;
+        return Message.TUNNEL_DIG_SUCCESSFUL;
     }
 
     public Message buildEquipment(Matcher matcher) {
