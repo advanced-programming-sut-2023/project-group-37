@@ -247,6 +247,9 @@ public class Government {
     }
 
     public boolean addItem(Item item, int amount) {
+        if (item == null)
+            return false;
+
         ArrayList<Storage> repository = getTargetRepository(item);
         if (getFreeSpace(repository) < amount)
             return false;
@@ -269,6 +272,9 @@ public class Government {
     }
 
     public boolean removeItem(Item item, int amount) {
+        if (item == null)
+            return false;
+
         ArrayList<Storage> repository = getTargetRepository(item);
         if (getItemAmount(item) < amount)
             return false;
