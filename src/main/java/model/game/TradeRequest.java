@@ -84,9 +84,28 @@ public class TradeRequest {
 
     public boolean doTrade(String receiverMessage) {
         this.receiverMessage = receiverMessage;
-        //todo : handle
-        isDone = true;
 
+        if (price == 0) {
+            if (sender.getItemAmount(item) < itemAmount)
+                return false;
+
+            sender.removeItem(item, itemAmount);
+            receiver.addItem(item, itemAmount);
+        }
+        else {
+            if (receiver.getItemAmount(item) < itemAmount)
+                return false;
+
+            if (sender.getGold() < price)
+                return false;
+
+            sender.addItem(item, itemAmount);
+            receiver.removeItem(item, itemAmount);
+            sender.setGold(sender.getGold() - price);
+            receiver.setGold(receiver.getGold() + price);
+        }
+
+        isDone = true;
         return true;
     }
 
