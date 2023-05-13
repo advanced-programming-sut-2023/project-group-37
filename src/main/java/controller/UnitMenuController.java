@@ -238,10 +238,12 @@ public class UnitMenuController {
 
         // TODO:
 
+        return null;
     }
 
     public String pourOil(Matcher matcher) {
 
+        return null;
     }
 
     public Message digTunnel(Matcher matcher) {
@@ -258,6 +260,7 @@ public class UnitMenuController {
             return Message.UNIT_NOT_TUNNELER;
 
         // TODO: complete! range!
+        return null;
     }
 
     public Message buildEquipment(Matcher matcher) {
@@ -320,5 +323,6 @@ public class UnitMenuController {
             return Message.ADDRESS_OUT_OF_BOUNDS;
 
         // TODO: check unity of unit and canDigMoat!
+        return null;
     }
 }
