@@ -110,6 +110,7 @@ public enum Command {
     BUILD_EQUIPMENT("\\s*build\\s+-q\\s+(?<equipmentName>\"[^\"]+\"|\\S+)\\s*"),
     DISBAND_UNIT("\\s*disband\\s*"),
     DIG_MOAT("\\s*dig\\s+moat\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s*"),
+    CANCEL_DIG_MOAT("\\s*cancel\\s+dig\\s+moat\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s*"),
 
     // BuildingMenu:
     REPAIR("\\s*repair\\s*"),

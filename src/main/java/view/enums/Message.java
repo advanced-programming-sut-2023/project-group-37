@@ -131,6 +131,7 @@ public enum Message {
     TUNNEL_TOO_FAR_FROM_ENEMY("Tunnel cannot be too far from enemy!"),
     TUNNEL_DIG_SUCCESSFUL("Tunnel dug successfully!"),
     UNIT_CANNOT_DIG_MOAT("At least one member of the unit cannot dig moat!"),
+    CANCEL_DIG_MOAT_SUCCESS("Dig moat canceled successfully!"),
     NO_OIL_SMELTER("You have to build an oil smelter first!"),
 
     // BuildingMenu:,

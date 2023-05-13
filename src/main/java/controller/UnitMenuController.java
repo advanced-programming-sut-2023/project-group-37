@@ -351,4 +351,24 @@ public class UnitMenuController {
         // TODO: erfan go on + correct message!
         return null;
     }
+
+    public Message cancelDigMoat(Matcher matcher) {
+        if (matcher.group("x") == null || matcher.group("y") == null)
+            return Message.EMPTY_FIELD;
+
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+
+        Tile destination = this.currentGame.getMap().getTileByLocation(x, y);
+        if (destination == null)
+            return Message.ADDRESS_OUT_OF_BOUNDS;
+
+        for (MilitaryUnit unit : this.currentUnit)
+            if (unit.getMoatTarget() != null) {
+                unit.setMoatTarget(null);
+                unit.setRoute(null);
+            }
+
+        return Message.CANCEL_DIG_MOAT_SUCCESS;
+    }
 }
