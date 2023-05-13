@@ -61,7 +61,7 @@ public enum Command {
     FEAR_RATE("\\s*fear\\s+rate\\s+-r\\s+(?<rateNumber>-?\\d+)\\s*"),
     FEAR_RATE_SHOW("\\s*fear\\s+rate\\s+show\\s*"),
     DROP_BUILDING("\\s*drop\\s+building(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t\\s+(?<type>\"[^\"]+\"))))+\\s*"),
-    DROP_UNIT("\\s*drop\\s+unit(\\s+((-t\\s+(?<type>/\"[^\"]+\"|\\S+))|(-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-c\\s+(?<count>\\d+))))+\\s*"),
+    DROP_UNIT("\\s*drop\\s+unit(\\s+((-t\\s+(?<type>\"[^\"]+\"|\\S+))|(-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-c\\s+(?<count>\\d+))))+\\s*"),//fixed
     SELECT_BUILDING("\\s*select\\s+building(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
     SELECT_UNIT("\\s*select\\s+unit(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
     ENTER_TRADE_MENU("\\s*enter\\s+trade\\s+menu\\s*"),
