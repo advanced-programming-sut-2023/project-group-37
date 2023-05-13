@@ -23,7 +23,8 @@ public enum Texture {
     SHALLOW_POND(Color.CYAN, false, false),
     DEEP_POND(Color.BLUE, false, false),
     BEACH(Color.YELLOW, true, true),
-    SEA(Color.BLUE, false, false);
+    SEA(Color.BLUE, false, false),
+    MOAT(Color.BLACK, false, false);
 
     private final Color color;
     private final boolean canHaveTree;

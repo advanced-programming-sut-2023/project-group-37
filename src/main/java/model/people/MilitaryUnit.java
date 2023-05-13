@@ -22,6 +22,7 @@ public abstract class MilitaryUnit {
     private LinkedList<Tile> patrolRoute;
     private int patrolTile;
     private Tile target;
+    private Tile moatTarget;
     private MilitaryUnitStance stance;
 
     public MilitaryUnit(Government loyalty, Tile location, int hitpoints, int damage, int range, int speed) {
@@ -32,6 +33,7 @@ public abstract class MilitaryUnit {
         this.range = range;
         this.reaction_range = range;
         this.speed = speed;
+        this.moatTarget = null;
         this.stance = MilitaryUnitStance.STANDING;
     }
 
@@ -109,6 +111,14 @@ public abstract class MilitaryUnit {
             this.reaction_range = 3 * this.range;
         else
             this.reaction_range = this.range;
+    }
+
+    public Tile getMoatTarget() {
+        return this.moatTarget;
+    }
+
+    public void setMoatTarget(Tile moatTarget) {
+        this.moatTarget = moatTarget;
     }
 
     public void move() {
