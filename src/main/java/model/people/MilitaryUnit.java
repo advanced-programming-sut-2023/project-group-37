@@ -1,5 +1,6 @@
 package model.people;
 
+import controller.MultiMenuFunctions;
 import model.buildings.Building;
 import model.buildings.BuildingType;
 import model.buildings.DefensiveBuilding;
@@ -83,7 +84,11 @@ public abstract class MilitaryUnit {
             }
             else if (troop.getType() == TroopType.TUNNELER) {
                 if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
-                    defensiveBuilding.destroy();
+                    if (MultiMenuFunctions.routeFinder(this.location, target, location.getTerritory().getMap()) != null) {
+                        defensiveBuilding.destroy();
+                        this.location.getMilitaryUnits().remove(this);
+                        this.loyalty.getMilitaryUnits().remove(this);
+                    }
                 }
             }
             else target.receiveDamage(this.damage, this.loyalty);
