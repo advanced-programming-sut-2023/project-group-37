@@ -141,7 +141,13 @@ public class GameMenuController {
         if (type == null)
             return Message.INVALID_BUILDING_TYPE.toString();
 
-        // TODO: check if there is moat!
+        char direction;
+        try {
+            direction = matcher.group("direction").charAt(0);
+        } catch (Exception ignored) {
+            direction = 'v';
+        }
+
         if (!tile.getTexture().canHaveBuildingAndUnit())
             return Message.CANNOT_PLACE_BUILDING_ON_TEXTURE.toString();
 
@@ -225,7 +231,7 @@ public class GameMenuController {
             else
                 building = new Building(this.currentGovernment, tile, (BuildingType) type);
         } else if (type instanceof DefensiveBuildingType) {
-            building = new DefensiveBuilding(this.currentGovernment, tile, (DefensiveBuildingType) type);
+            building = new DefensiveBuilding(this.currentGovernment, tile, (DefensiveBuildingType) type, direction);
 
             for (Building neighborBuilding : neighborBuildings)
                 if (neighborBuilding instanceof DefensiveBuilding) {

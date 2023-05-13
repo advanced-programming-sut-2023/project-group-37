@@ -10,18 +10,19 @@ public class DefensiveBuilding extends Building {
 
     private final DefensiveBuildingType type;
 
-    // TODO: How about catapult?
-
     private final ArrayList<DefensiveBuilding> defensiveNeighbors;
 
     private boolean hasLadderAttached;
     private boolean canBeReached;
 
-    public DefensiveBuilding(Government loyalty, Tile location, DefensiveBuildingType type) {
+    private char direction;
+
+    public DefensiveBuilding(Government loyalty, Tile location, DefensiveBuildingType type, char direction) {
         super(loyalty, location);
         this.type = type;
         super.setHitpoints(type.getMaxHitpoints());
         this.defensiveNeighbors = new ArrayList<>();
+        this.direction = direction;
     }
 
     public DefensiveBuildingType getDefensiveType() {
@@ -48,7 +49,15 @@ public class DefensiveBuilding extends Building {
         this.canBeReached = canBeReached;
     }
 
-    public void addDefensiveNeighbor(DefensiveBuilding building){
+    public char getDirection() {
+        return this.direction;
+    }
+
+    public void setDirection(char direction) {
+        this.direction = direction;
+    }
+
+    public void addDefensiveNeighbor(DefensiveBuilding building) {
         this.defensiveNeighbors.add(building);
     }
 

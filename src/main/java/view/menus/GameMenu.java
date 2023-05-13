@@ -58,6 +58,8 @@ public class GameMenu {
                 System.out.println(this.controller.showFearRate());
             else if ((matcher = Command.DROP_BUILDING.getMatcher(command)) != null)
                 System.out.println(this.controller.dropBuilding(matcher));
+            else if ((matcher = Command.DROP_GATEHOUSE.getMatcher(command)) != null)
+                System.out.println(this.controller.dropBuilding(matcher));
             else if ((matcher = Command.DROP_UNIT.getMatcher(command)) != null) {
                 System.out.println(controller.dropUnit(matcher));
             } else if ((matcher = Command.SELECT_BUILDING.getMatcher(command)) != null) {
