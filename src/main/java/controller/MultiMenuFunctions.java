@@ -4,8 +4,11 @@ package controller;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import model.buildings.Building;
+import model.buildings.DefensiveBuilding;
 import model.game.Tile;
 import model.game.Map;
+import model.people.MilitaryUnit;
 
 public class MultiMenuFunctions {
 
@@ -80,8 +83,52 @@ public class MultiMenuFunctions {
             number++;
         }
         if (targets.get(targets.size() - 1).size() == 0)
+            return routeFinder2(origin, destination, map);
+
+        return getFinalRoute(origin, destination, targets, number);
+    }
+
+    private static LinkedList<Tile> routeFinder2(Tile origin, Tile destination, Map map) {
+        boolean canUnitsGoUp = true;
+
+        for (MilitaryUnit militaryUnit : origin.getMilitaryUnits()) {
+            if (!militaryUnit.canGoUp()) {
+                canUnitsGoUp = false;
+                break;
+            }
+        }
+        if (!canUnitsGoUp)
             return null;
 
+        map.resetNumbers();
+        boolean[][] tilePassability = map.getTilesPassability();
+        Building building;
+        for (int i = 0; i < map.getSize(); i++) {
+            for (int j = 0; j < map.getSize(); j++) {
+                if ((building = map.getTileByLocation(i, j).getBuilding()) != null) {
+                    if (building instanceof DefensiveBuilding) {
+                        tilePassability[i][j] = ((DefensiveBuilding) building).canBeReached();
+                    }
+                }
+            }
+        }
+
+        ArrayList<ArrayList<Tile>> targets = new ArrayList<>();
+        targets.add(new ArrayList<>());
+        targets.get(0).add(origin);
+
+        int number = 1;
+        while (targets.size() > 0 && !targets.get(number - 1).contains(destination)) {
+            targets.add(setNextNumber(targets.get(targets.size() - 1), number, tilePassability, map));
+            number++;
+        }
+        if (targets.get(targets.size() - 1).size() == 0)
+            return null;
+
+        return getFinalRoute(origin, destination, targets, number);
+    }
+
+    private static LinkedList<Tile> getFinalRoute(Tile origin, Tile destination, ArrayList<ArrayList<Tile>> targets, int number) {
         LinkedList<Tile> result = new LinkedList<>();
         result.add(0, origin);
         result.add(number, destination);

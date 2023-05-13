@@ -73,6 +73,7 @@ public class Map {
     }
 
     public boolean[][] getTilesPassability() {
+        this.setTilesPassability();
         return this.tilesPassability;
     }
 
