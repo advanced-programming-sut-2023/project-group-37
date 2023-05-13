@@ -302,7 +302,6 @@ public class Government {
             if (building.getHitpoints() < 1) {
                 building.destroy();
                 this.buildings.remove(index);
-                building.getLocation().setBuilding(null);
             }
             else index++;
         }

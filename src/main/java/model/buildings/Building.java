@@ -75,9 +75,8 @@ public class Building {
     }
 
     public void destroy() {
-        for (Person person : operators) {
-            this.getLoyalty().getPeople().remove(person);
-        }
+        this.getLoyalty().addPeasant(this.type.getWorkersNeeded());
+        this.location.setBuilding(null);
     }
 
 }

@@ -21,7 +21,7 @@ public class DefensiveBuilding extends Building {
         this.troops = new ArrayList<>();
     }
 
-    public boolean isFull(){
+    public boolean isFull() {
         return this.troops.size() == this.type.getCapacity();
     }
 
