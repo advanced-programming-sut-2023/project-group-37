@@ -5,6 +5,8 @@ import model.buildings.DefensiveBuilding;
 import model.buildings.DefensiveBuildingType;
 import model.people.MilitaryUnit;
 import model.people.Person;
+import model.people.Troop;
+import model.people.TroopType;
 
 import java.util.ArrayList;
 
@@ -102,18 +104,32 @@ public class Tile {
 //    }
 
     public void setState() {
-        if (this.militaryUnits.size() > 0) {
+        boolean hasLord = false;
+        for (MilitaryUnit militaryUnit : this.militaryUnits) {
+            if (militaryUnit instanceof Troop troop) {
+                if (troop.getType() == TroopType.LORD) {
+                    hasLord = true;
+                    break;
+                }
+            }
+        }
+        if (hasLord)
+            this.state = 'L';
+
+        else if (this.militaryUnits.size() > 0) {
             for (MilitaryUnit militaryUnit : this.militaryUnits) {
                 if (militaryUnit.isOnMove() || militaryUnit.isOnPatrol()) {
-                    state = 'M';
+                    this.state = 'M';
                     return;
                 }
             }
-            state = 'S';
+            this.state = 'S';
         } else if (this.building != null) {
-            this.state = 'B';
+            if (this.building instanceof DefensiveBuilding)
+                this.state = 'W';
+            else this.state = 'B';
         }
-        //todo : W for wall
+
         else if (this.texture == Texture.OLIVE_TREE || texture == Texture.DESERT_TREE) {
             this.state = 'T';
         } else this.state = 'N';

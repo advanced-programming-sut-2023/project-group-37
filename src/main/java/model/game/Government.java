@@ -39,6 +39,7 @@ public class Government {
         // TODO: set default value for gold!
         this.gold = 2000;
         this.lord = new Troop(this, TroopType.LORD, territory.getKeep());
+        this.territory.getKeep().addMilitaryUnit(lord, 1);
         this.people = new ArrayList<>();
         this.militaryUnits = new ArrayList<>();
         this.buildings = new ArrayList<>();

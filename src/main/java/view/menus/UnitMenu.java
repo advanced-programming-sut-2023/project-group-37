@@ -1,5 +1,6 @@
 package view.menus;
 
+import controller.MultiMenuFunctions;
 import controller.UnitMenuController;
 import view.enums.Command;
 import view.enums.Message;
@@ -24,20 +25,39 @@ public class UnitMenu {
             command = scanner.nextLine();
 
             if ((matcher = Command.SELECT_TYPE_UNIT.getMatcher(command)) != null)
-                System.out.println(controller.selectUnitWithType(matcher.group("type")));
+                System.out.println(controller.selectUnitWithType(MultiMenuFunctions.deleteQuotations(matcher.group("type"))));
 
-            else if ((matcher = Command.MOVE_UNIT.getMatcher(command)) != null)
-                System.out.println(this.controller.moveUnit(Integer.parseInt(matcher.group("x")),
-                        Integer.parseInt(matcher.group("y"))));
-            else if ((matcher = Command.PATROL_UNIT.getMatcher(command)) != null)
-                System.out.println(this.controller.patrolUnit(Integer.parseInt(matcher.group("x1")), Integer.parseInt(matcher.group("y1")),
-                        Integer.parseInt(matcher.group("x2")), Integer.parseInt(matcher.group("y2"))));
+            else if ((matcher = Command.MOVE_UNIT.getMatcher(command)) != null) {
+                try {
+                    System.out.println(this.controller.moveUnit(Integer.parseInt(matcher.group("x")),
+                            Integer.parseInt(matcher.group("y"))));
+                }
+                catch (Exception ex) {
+                    System.out.println(Message.EMPTY_FIELD);
+                }
+            }
+            else if ((matcher = Command.PATROL_UNIT.getMatcher(command)) != null) {
+                try {
+                    System.out.println(this.controller.patrolUnit(Integer.parseInt(matcher.group("x1")), Integer.parseInt(matcher.group("y1")),
+                            Integer.parseInt(matcher.group("x2")), Integer.parseInt(matcher.group("y2"))));
+                }
+                catch (Exception ex) {
+                    System.out.println(Message.EMPTY_FIELD);
+                }
+            }
 
             else if ((matcher = Command.SET_UNIT.getMatcher(command)) != null)
-                System.out.println(this.controller.setUnitState(matcher.group("state")));
-            else if ((matcher = Command.ATTACK.getMatcher(command)) != null)
-                System.out.println(this.controller.attack(Integer.parseInt(matcher.group("x")),
-                        Integer.parseInt(matcher.group("y")), matcher.group("isEarth") != null));
+                System.out.println(this.controller.setUnitState(MultiMenuFunctions.deleteQuotations(matcher.group("state"))));
+
+            else if ((matcher = Command.ATTACK.getMatcher(command)) != null) {
+                try {
+                    System.out.println(this.controller.attack(Integer.parseInt(matcher.group("x")),
+                            Integer.parseInt(matcher.group("y")), matcher.group("isEarth") != null));
+                }
+                catch (Exception ex) {
+                    System.out.println(Message.EMPTY_FIELD);
+                }
+            }
 
             else if ((matcher = Command.POUR_OIL.getMatcher(command)) != null)
                 System.out.println(this.controller.pourOil(matcher));
@@ -54,6 +74,7 @@ public class UnitMenu {
 
             else if (command.matches(Command.DISBAND_UNIT.toString()))
                 System.out.println(this.controller.disbandUnit());
+
             else if (command.matches(Command.BACK_GAME_MENU.toString())) {
                 System.out.println(Message.BACK_GAME_MENU);
                 return;

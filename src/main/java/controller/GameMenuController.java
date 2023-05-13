@@ -129,6 +129,8 @@ public class GameMenuController {
     }
 
     public String dropBuilding(Matcher matcher) {
+        if (matcher.group("x") == null || matcher.group("y") == null)
+            return Message.EMPTY_FIELD.toString();
 
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
@@ -240,6 +242,8 @@ public class GameMenuController {
     }
 
     public String selectBuilding(Matcher matcher) {
+        if (matcher.group("x") == null || matcher.group("y") == null)
+            return Message.EMPTY_FIELD.toString();
 
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
@@ -281,9 +285,15 @@ public class GameMenuController {
     }
 
     public String dropUnit(Matcher matcher) {
-        String type = matcher.group("type");
-        int count = Integer.parseInt(matcher.group("count"));
-        int x = Integer.parseInt(matcher.group("x")), y = Integer.parseInt(matcher.group("y"));
+        String type = MultiMenuFunctions.deleteQuotations(matcher.group("type"));
+        int x,y,count;
+        try {
+            count = Integer.parseInt(matcher.group("count"));
+            x = Integer.parseInt(matcher.group("x")); y = Integer.parseInt(matcher.group("y"));
+        }
+        catch (Exception ex) {
+            return Message.EMPTY_FIELD.toString();
+        }
 
         Tile tile;
         if ((tile = this.currentGame.getMap().getTileByLocation(x, y)) == null)
@@ -336,6 +346,9 @@ public class GameMenuController {
     }
 
     public String setTexture(Matcher matcher) {
+        if (matcher.group("x") == null || matcher.group("y") == null || matcher.group("type") == null)
+            return Message.EMPTY_FIELD.toString();
+
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
 
@@ -354,10 +367,16 @@ public class GameMenuController {
     }
 
     public String setRectangleTextures(Matcher matcher) {
-        int x1 = Integer.parseInt(matcher.group("x1"));
-        int y1 = Integer.parseInt(matcher.group("y1"));
-        int x2 = Integer.parseInt(matcher.group("x2"));
-        int y2 = Integer.parseInt(matcher.group("y2"));
+        int x1, y1, x2, y2;
+        try {
+            x1 = Integer.parseInt(matcher.group("x1"));
+            y1 = Integer.parseInt(matcher.group("y1"));
+            x2 = Integer.parseInt(matcher.group("x2"));
+            y2 = Integer.parseInt(matcher.group("y2"));
+        }
+        catch (Exception ex) {
+            return Message.EMPTY_FIELD.toString();
+        }
 
         if (this.currentGame.getMap().getTileByLocation(x1, y1) == null ||
                 this.currentGame.getMap().getTileByLocation(x2, y2) == null)
@@ -380,6 +399,9 @@ public class GameMenuController {
     }
 
     public String clearTexture(Matcher matcher) {
+        if (matcher.group("x") == null || matcher.group("y") == null)
+            return Message.EMPTY_FIELD.toString();
+
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
 
@@ -402,6 +424,9 @@ public class GameMenuController {
     }
 
     public String dropTree(Matcher matcher) {
+        if (matcher.group("x") == null || matcher.group("y") == null || matcher.group("type") == null)
+            return Message.EMPTY_FIELD.toString();
+
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
 
@@ -411,12 +436,19 @@ public class GameMenuController {
         if (!this.currentGame.getMap().getField()[x][y].isTotallyEmpty() ||
                 !this.currentGame.getMap().getField()[x][y].getTexture().canHaveTree())
             return Message.DROP_TREE_ERROR.toString();
-        this.currentGame.getMap().getField()[x][y].changeTexture(Texture.getTextureByName(
-                MultiMenuFunctions.deleteQuotations(matcher.group("type"))));
+
+        Texture texture = Texture.getTextureByName(MultiMenuFunctions.deleteQuotations(matcher.group("type")));
+        if (texture == null)
+            return Message.INVALID_TEXTURE_NAME.toString();
+
+        this.currentGame.getMap().getField()[x][y].changeTexture(texture);
         return Message.DROP_TREE.toString();
     }
 
     public String dropRock(Matcher matcher) {
+        if (matcher.group("x") == null || matcher.group("y") == null)
+            return Message.EMPTY_FIELD.toString();
+
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
 
@@ -462,7 +494,7 @@ public class GameMenuController {
             else government.destroy();
         }
 
-        if (remainingGovernments.size() > 1)
+        if (remainingGovernments.size() > 1 && currentGame.getTurnNumber() < currentGame.getTurns())
             return null;
 
         setGovernmentsRank();

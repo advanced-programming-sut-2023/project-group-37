@@ -75,7 +75,7 @@ public class Building {
     }
 
     public void destroy() {
-        this.getLoyalty().addPeasant(this.type.getWorkersNeeded());
+        this.getLoyalty().addPeasant(operators.size());
         this.location.setBuilding(null);
     }
 

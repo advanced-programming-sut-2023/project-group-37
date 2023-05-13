@@ -53,7 +53,7 @@ public class ProfileMenu {
     }
 
     private void changePassword(Matcher matcher) {
-        Message message = this.controller.changePassword(matcher.group("oldPassword"),matcher.group("newPassword"));
+        Message message = this.controller.changePassword(matcher.group("oldPassword"), matcher.group("newPassword"));
         System.out.println(message);
 
         if (message.equals(Message.ENTER_PASSWORD_AGAIN)) {

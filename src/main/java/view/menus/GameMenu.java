@@ -28,8 +28,15 @@ public class GameMenu {
             command = scanner.nextLine();
 
             if ((matcher = Command.SHOW_MAP.getMatcher(command)) != null) {
-                if (showMap(matcher))
-                    return Result.ENTER_MAP_MENU;
+                if (matcher.group("x") == null || matcher.group("y") == null) {
+                    System.out.println(Message.EMPTY_FIELD);
+                }
+                else {
+                    if (showMap(Integer.parseInt(matcher.group("x")), Integer.parseInt(matcher.group("y")))) {
+                        System.out.println(Message.ENTERED_MAP_MENU);
+                        return Result.ENTER_MAP_MENU;
+                    }
+                }
             } else if (command.matches(Command.SHOW_POPULARITY.toString()))
                 System.out.println(this.controller.showPopularity());
             else if (command.matches(Command.SHOW_POPULARITY_FACTORS.toString()))
@@ -98,21 +105,14 @@ public class GameMenu {
         }
     }
 
-    private boolean showMap(Matcher matcher) {
-
-        if (matcher.group("x") == null || matcher.group("y") == null)
-            System.out.println(Message.EMPTY_FIELD);
-
-        if (controller.getMap().getTileByLocation(Integer.parseInt(matcher.group("x")),
-                Integer.parseInt(matcher.group("y"))) == null) {
+    public boolean showMap(int x, int y) {
+        if (controller.getMap().getTileByLocation(x, y) == null) {
             System.out.println(Message.ADDRESS_OUT_OF_BOUNDS);
             return false;
         }
 
-        Tile[][] tiles = this.controller.showMap(Integer.parseInt(matcher.group("x")),
-                Integer.parseInt(matcher.group("y")));
+        Tile[][] tiles = this.controller.showMap(x, y);
 
-        int rowLength = tiles.length;
         int columnLength = tiles[0].length;
         Tile tile;
 
@@ -125,7 +125,6 @@ public class GameMenu {
             System.out.println("\033[0m");
         }
 
-        System.out.println(Message.ENTERED_MAP_MENU);
         return true;
     }
 
@@ -136,6 +135,11 @@ public class GameMenu {
     }
 
     private boolean selectUnit(Matcher matcher) {
+        if (matcher.group("x") == null || matcher.group("y") == null) {
+            this.message = Message.EMPTY_FIELD.toString();
+            return false;
+        }
+
         this.message = this.controller.selectUnit(Integer.parseInt(matcher.group("x")),
                 Integer.parseInt(matcher.group("y")));
         System.out.println(this.message);

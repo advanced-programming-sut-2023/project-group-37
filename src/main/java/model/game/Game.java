@@ -1,6 +1,7 @@
 package model.game;
 
 import controller.GameMenuController;
+import controller.MultiMenuFunctions;
 import model.people.MilitaryUnit;
 import model.people.MilitaryUnitStance;
 import model.buildings.Building;
@@ -129,6 +130,10 @@ public class Game {
                                             militaryUnit.getLocation().getY() + j);
 
                                     if (target.hasEnemy(government)) {
+                                        if (MultiMenuFunctions.distance(militaryUnit.getLocation(), target) > militaryUnit.getRange() + 0.2) {
+                                            militaryUnit.setRoute(MultiMenuFunctions.routeFinder(militaryUnit.getLocation(),
+                                                    MultiMenuFunctions.getMiddle(militaryUnit.getLocation(), target, map), map));
+                                        }
                                         militaryUnit.setTarget(target);
                                         break firstFor;
                                     }
@@ -137,6 +142,10 @@ public class Game {
                                             militaryUnit.getLocation().getY() + j);
 
                                     if (target.hasEnemy(government)) {
+                                        if (MultiMenuFunctions.distance(militaryUnit.getLocation(), target) > militaryUnit.getRange() + 0.2) {
+                                            militaryUnit.setRoute(MultiMenuFunctions.routeFinder(militaryUnit.getLocation(),
+                                                    MultiMenuFunctions.getMiddle(militaryUnit.getLocation(), target, map), map));
+                                        }
                                         militaryUnit.setTarget(target);
                                         break firstFor;
                                     }
@@ -145,6 +154,10 @@ public class Game {
                                             militaryUnit.getLocation().getY() - j);
 
                                     if (target.hasEnemy(government)) {
+                                        if (MultiMenuFunctions.distance(militaryUnit.getLocation(), target) > militaryUnit.getRange() + 0.2) {
+                                            militaryUnit.setRoute(MultiMenuFunctions.routeFinder(militaryUnit.getLocation(),
+                                                    MultiMenuFunctions.getMiddle(militaryUnit.getLocation(), target, map), map));
+                                        }
                                         militaryUnit.setTarget(target);
                                         break firstFor;
                                     }
@@ -153,6 +166,10 @@ public class Game {
                                             militaryUnit.getLocation().getY() - j);
 
                                     if (target.hasEnemy(government)) {
+                                        if (MultiMenuFunctions.distance(militaryUnit.getLocation(), target) > militaryUnit.getRange() + 0.2) {
+                                            militaryUnit.setRoute(MultiMenuFunctions.routeFinder(militaryUnit.getLocation(),
+                                                    MultiMenuFunctions.getMiddle(militaryUnit.getLocation(), target, map), map));
+                                        }
                                         militaryUnit.setTarget(target);
                                         break firstFor;
                                     }
@@ -160,6 +177,11 @@ public class Game {
                             }
                         }
                     }
+                    if (militaryUnit.isOnMove())
+                        militaryUnit.move();
+
+                    else if (militaryUnit.isOnPatrol())
+                        militaryUnit.patrol();
                 }
             }
 

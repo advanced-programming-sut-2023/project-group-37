@@ -104,17 +104,9 @@ public class MultiMenuFunctions {
         return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
     }
 
-    public static Tile getNearestPassableTile(Tile origin, Map map) {
-        Tile tile;
-        for (int i = -1; i < 2; i++) {
-            for (int j = -1; j < 2; j++) {
-                if (i != 0 || j != 0) {
-                    tile = map.getTileByLocation(origin.getX() + i, origin.getY() + j);
-                    if (tile.isPassable())
-                        return tile;
-                }
-            }
-        }
-        return origin;
+    public static Tile getMiddle(Tile tile1, Tile tile2, Map map) {
+        int x = (tile2.getX() - tile1.getX()) / 2;
+        int y = (tile2.getY() - tile1.getY()) / 2;
+        return map.getTileByLocation(x, y);
     }
 }

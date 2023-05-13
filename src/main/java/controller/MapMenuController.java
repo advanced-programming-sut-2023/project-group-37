@@ -5,6 +5,7 @@ import model.game.Government;
 import model.game.Map;
 import model.game.Tile;
 import view.enums.Message;
+import view.menus.GameMenu;
 
 import java.util.regex.Matcher;
 
@@ -12,7 +13,12 @@ public class MapMenuController {
     private Game game;
     private Map map;
     private Government government;
-
+    private int currentX;
+    private int currentY;
+    private final GameMenu gameMenu;
+    public MapMenuController(GameMenu gameMenu) {
+        this.gameMenu = gameMenu;
+    }
     public void setGovernment(Government government) {
         this.government = government;
     }
@@ -23,6 +29,8 @@ public class MapMenuController {
     }
 
     public Tile[][] showMap(int x, int y) {
+        currentX = x;
+        currentY = y;
         map.setTilesState();
         int size = map.getSize();
 
@@ -50,8 +58,29 @@ public class MapMenuController {
         return result;
     }
 
-    public Message moveMap(Matcher matcher) {
-        return null;
+    public void moveMap(Matcher matcher) {
+        int up = 0, down = 0, left = 0, right = 0;
+        if (matcher.group("up") != null) {
+            if (matcher.group("upDistance") == null)
+                up = 1;
+            else up = Integer.parseInt(matcher.group("upDistance"));
+        }
+        if (matcher.group("down") != null) {
+            if (matcher.group("downDistance") == null)
+                down = 1;
+            else down = Integer.parseInt(matcher.group("downDistance"));
+        }
+        if (matcher.group("left") != null) {
+            if (matcher.group("leftDistance") == null)
+                left = 1;
+            else left = Integer.parseInt(matcher.group("leftDistance"));
+        }
+        if (matcher.group("right") != null) {
+            if (matcher.group("rightDistance") == null)
+                right = 1;
+            else right = Integer.parseInt(matcher.group("rightDistance"));
+        }
+        gameMenu.showMap(up - down,right - left);
     }
 
     public Message showDetails(Matcher matcher) {
