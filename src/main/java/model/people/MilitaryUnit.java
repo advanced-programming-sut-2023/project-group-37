@@ -43,6 +43,10 @@ public abstract class MilitaryUnit {
         return this.loyalty;
     }
 
+    public int getDamage() {
+        return (int) (this.damage * (1 - (double)this.loyalty.getFearRate() / 6)) + 1;
+    }
+
     public int getHitpoints() {
         return hitpoints;
     }
@@ -148,8 +152,7 @@ public abstract class MilitaryUnit {
             if (hasKillingPit) {
                 this.loyalty.getMilitaryUnits().remove(this);
                 this.location.getMilitaryUnits().remove(this);
-            }
-            else {
+            } else {
 
                 this.location.getMilitaryUnits().remove(this);
                 this.location = route.get(speed);
