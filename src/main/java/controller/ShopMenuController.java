@@ -14,33 +14,11 @@ public class ShopMenuController {
     }
 
     public boolean addItem(Item item, int amount) {
-        switch (item.getCategory()) {
-            case FOODS -> {
-                return government.addToTargetRepository(government.getGranary(), item, amount);
-            }
-            case WEAPONS -> {
-                return government.addToTargetRepository(government.getArmory(), item, amount);
-            }
-            case RESOURCES -> {
-                return government.addToTargetRepository(government.getStockpile(), item, amount);
-            }
-        }
-        return false;
+        return government.addItem(item, amount);
     }
 
     public boolean removeItem(Item item, int amount) {
-        switch (item.getCategory()) {
-            case FOODS -> {
-                return government.removeFromTargetRepository(government.getGranary(), item, amount);
-            }
-            case WEAPONS -> {
-                return government.removeFromTargetRepository(government.getArmory(), item, amount);
-            }
-            case RESOURCES -> {
-                return government.removeFromTargetRepository(government.getStockpile(), item, amount);
-            }
-        }
-        return false;
+        return government.sellItem(item, amount);
     }
 
     public String buy(Matcher matcher) {

@@ -2,29 +2,24 @@ package model.game;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import model.user.User;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class Map {
 
     // TODO: handle load maps!
     private static ArrayList<Map> maps;
+    private static final Gson gson = new Gson();
     private final String name;
     private final int size;
     private final Tile[][] field;
     private final boolean[][] tilesPassability;
     private HashMap<Integer, Government> territories;
-    private final HashMap<Integer, Tile> headQuarters;
-    private static final Gson gson = new Gson();
+    private HashMap<Integer, Tile> headQuarters;
 
     static {
         maps = new ArrayList<>();
@@ -92,7 +87,7 @@ public class Map {
     }
 
 
-//        public static void main(String[] args) {
+    //        public static void main(String[] args) {
 //        writeMapsToFile();
 //    }
     public static void writeMapsToFile() {
@@ -165,14 +160,12 @@ public class Map {
         return this.field[x][y];
     }
 
-    public boolean AreaContainsSomething(int x1, int y1, int x2, int y2) {
-        for (int i = y1; i <= y2; i++) {
-            for (int j = x1; j <= x2; j++) {
-                if (field[i][j].getBuilding() != null || field[i][j].getPeople().size() != 0) {
+    public boolean areaContainsSomething(int x1, int y1, int x2, int y2) {
+        for (int i = x1; i <= x2; i++)
+            for (int j = y1; j <= y2; j++)
+                if (field[i][j].getBuilding() != null || field[i][j].getPeople().size() != 0
+                        || field[i][j].getMilitaryUnits().size() != 0)
                     return true;
-                }
-            }
-        }
         return false;
     }
 

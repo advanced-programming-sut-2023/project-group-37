@@ -1,7 +1,6 @@
 package model.buildings;
 
 import model.game.Government;
-import model.game.Item;
 import model.game.Tile;
 import model.people.Person;
 
@@ -46,10 +45,6 @@ public class Building {
         return this.type;
     }
 
-    public int getCost() {
-        return this.type.getCost();
-    }
-
     public int getMaxHitpoints() {
         return this.type.getMaxHitpoints();
     }
@@ -60,18 +55,6 @@ public class Building {
 
     public void setHitpoints(int hitpoints) {
         this.hitpoints = hitpoints;
-    }
-
-    public Item getBuildingMaterial() {
-        return this.type.getBuildingMaterial();
-    }
-
-    public int getBuildingMaterialAmount() {
-        return this.type.getBuildingMaterialAmount();
-    }
-
-    public ArrayList<Person> getOperators() {
-        return this.operators;
     }
 
     public void assignOperator(Person operator) {

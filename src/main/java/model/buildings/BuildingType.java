@@ -90,12 +90,9 @@ public enum BuildingType {
             false, false),
 
     // Our stockpile has hitpoints & can be destroyed!
-    STOCKPILE("stockpile", 250, Item.WOOD, 5, false, false,
-            false),
-    GRANARY("granary", 250, Item.WOOD, 5, false, false,
-            false),
-    ARMORY("armory", 250, Item.WOOD, 5, false, false,
-            false),
+    STOCKPILE("stockpile", 250, 150),
+    GRANARY("granary", 250, 250),
+    ARMORY("armory", 250, 50),
     MERCENARY_POST("mercenarypost", 250, Item.WOOD, 10, true,
             false, false),
     BARRACKS("barracks", 250, Item.STONE, 15, true, false,
@@ -120,7 +117,27 @@ public enum BuildingType {
     private final boolean canHoldTroop;
     private final boolean canHoldMachine;
     private final boolean isRepairable;
-    private final ArrayList<Person> operators;
+    private int capacity;
+
+    // storage:
+    BuildingType(String name, int maxHitpoints, int capacity) {
+        this.name = name;
+        this.cost = 0;
+        this.maxHitpoints = maxHitpoints;
+        this.buildingMaterial = Item.WOOD;
+        this.buildingMaterialAmount = 5;
+        this.rawMaterial = null;
+        this.rawMaterialUsesForFirst = 0;
+        this.rawMaterialUsesForSecond = 0;
+        this.firstProduct = null;
+        this.secondProduct = null;
+        this.productProvides = 0;
+        this.workersNeeded = 0;
+        this.canHoldTroop = false;
+        this.canHoldMachine = false;
+        this.isRepairable = false;
+        this.capacity = capacity;
+    }
 
     // multi item producers:
     BuildingType(String name, int cost, int maxHitpoints, Item buildingMaterial, int buildingMaterialAmount,
@@ -139,7 +156,6 @@ public enum BuildingType {
         this.secondProduct = secondProduct;
         this.productProvides = productProvides;
         this.workersNeeded = workersNeeded;
-        this.operators = null;
         this.canHoldTroop = canHoldTroop;
         this.canHoldMachine = canHoldMachine;
         this.isRepairable = isRepairable;
@@ -208,7 +224,6 @@ public enum BuildingType {
         this.canHoldTroop = canHoldTroop;
         this.canHoldMachine = canHoldMachine;
         this.isRepairable = isRepairable;
-        this.operators = new ArrayList<>();
     }
 
     public static Object getBuildingTypeByName(String name) {
@@ -280,6 +295,10 @@ public enum BuildingType {
 
     public boolean isRepairable() {
         return this.isRepairable;
+    }
+
+    public int getCapacity() {
+        return this.capacity;
     }
 
     @Override

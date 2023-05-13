@@ -33,6 +33,7 @@ public class GameMenuController {
         this.buildingMenuController = buildingMenuController;
         this.unitMenuController = unitMenuController;
     }
+
     public void setCurrentGovernment(Government government) {
         this.currentGovernment = government;
         this.shopMenuController.setGovernment(government);
@@ -59,33 +60,29 @@ public class GameMenuController {
     }
 
     public String enterShopMenu() {
-        if (currentGovernment.hasMarket())
+        if (this.currentGovernment.hasMarket())
             return Message.ENTERED_SHOP_MENU.toString();
         return Message.MARKET_NOT_EXISTS.toString();
     }
 
     public String showPopularity() {
-        return Integer.toString(currentGovernment.getPopularity());
+        return Integer.toString(this.currentGovernment.getPopularity());
     }
 
     public String showPopularityFactors() {
         return """
                 There are four popularity factors as below:
-                1.Food you give!
-                2.Tax you take!
-                3.Religion you propagate!
-                4.Fear you create!""";
+                1. Food you give!
+                2. Tax you take!
+                3. Religion you propagate!
+                4. Fear you create!""";
     }
 
     public String showFoodList() {
-        StringBuilder list = new StringBuilder();
-        int counter = 1;
-        for (Storage storage : currentGovernment.getGranary()) {
-            list.append("Foods in storage number ").append(counter).append(":\n");
-            list.append(storage.getFoodNames()).append("\n");
-            counter++;
-        }
-        return list.toString().trim();
+        return "Apple: " + this.currentGovernment.getItemAmount(Item.APPLE) + "\n" +
+                "Cheese: " + this.currentGovernment.getItemAmount(Item.CHEESE) + "\n" +
+                "Bread: " + this.currentGovernment.getItemAmount(Item.BREAD) + "\n" +
+                "Meat: " + this.currentGovernment.getItemAmount(Item.MEAT);
     }
 
     public String setFoodRate(Matcher matcher) {
@@ -135,7 +132,7 @@ public class GameMenuController {
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
         Tile tile;
-        if ((tile = currentGame.getMap().getTileByLocation(x, y)) == null)
+        if ((tile = this.currentGame.getMap().getTileByLocation(x, y)) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
         Object type = BuildingType.getBuildingTypeByName(matcher.group("type"));
@@ -147,6 +144,7 @@ public class GameMenuController {
         if (!tile.getTexture().canHaveBuildingAndUnit())
             return Message.CANNOT_PLACE_BUILDING_ON_TEXTURE.toString();
 
+        // Check texture:
         if (type instanceof BuildingType) {
             if ((type == BuildingType.APPLE_ORCHARD || type == BuildingType.DIARY_FARMER ||
                     type == BuildingType.HOPS_FARMER || type == BuildingType.WHEAT_FARMER) &&
@@ -162,8 +160,62 @@ public class GameMenuController {
         if (tile.getBuilding() != null)
             return Message.TILE_ALREADY_HAS_BUILDING.toString();
 
-        tile.setBuilding(type instanceof BuildingType ? new Building(this.currentGovernment, tile, (BuildingType) type) :
-                new DefensiveBuilding(this.currentGovernment, tile, (DefensiveBuildingType) type));
+        // Check territory for defensiveBuildings
+        if (type instanceof DefensiveBuildingType &&
+                this.currentGame.getMap().getTerritories().get(this.currentGovernment.getTerritory()) != tile.getTerritory())
+            return Message.NOT_IN_TERRITORY.toString();
+
+        // Check enough gold and resource:
+        if (type instanceof BuildingType) {
+            if (((BuildingType) type).getCost() > this.currentGovernment.getGold())
+                return Message.NOT_ENOUGH_GOLD.toString();
+            if (((BuildingType) type).getBuildingMaterialAmount() >
+                    this.currentGovernment.getItemAmount(((BuildingType) type).getBuildingMaterial()))
+                return ((BuildingType) type).getBuildingMaterial().getName() + Message.NOT_ENOUGH_RESOURCE;
+        } else if (type instanceof DefensiveBuildingType) {
+            if (((DefensiveBuildingType) type).getCost() > this.currentGovernment.getGold())
+                return Message.NOT_ENOUGH_GOLD.toString();
+            if (((DefensiveBuildingType) type).getStoneAmount() > this.currentGovernment.getItemAmount(Item.STONE))
+                return "Stone" + Message.NOT_ENOUGH_RESOURCE;
+        }
+
+        // Check enough peasants:
+        if (type instanceof BuildingType && this.currentGovernment.getPeasantCount() <
+                ((BuildingType) type).getWorkersNeeded())
+            return Message.NOT_ENOUGH_PEASANT.toString();
+
+        // Check if unique and available!
+        if ((type == BuildingType.BARRACKS || type == BuildingType.MERCENARY_POST ||
+                type == BuildingType.ENGINEER_GUILD || type == BuildingType.TUNNELER_GUILD ||
+                type == BuildingType.MARKET) && this.currentGovernment.getUniqueBuilding((BuildingType) type) != null)
+            return Message.BUILDING_IS_UNIQUE.toString();
+
+        // Check if storage is not near the others!
+        if ((type == BuildingType.STOCKPILE || type == BuildingType.GRANARY || type == BuildingType.ARMORY) &&
+                this.currentGame.getMap().getTileByLocation(tile.getX() - 1, tile.getY()).getBuilding().getType() != type &&
+                this.currentGame.getMap().getTileByLocation(tile.getX() + 1, tile.getY()).getBuilding().getType() != type &&
+                this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() - 1).getBuilding().getType() != type &&
+                this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() + 1).getBuilding().getType() != type)
+            return Message.STORAGE_NOT_NEIGHBOR.toString();
+
+        // Decrease gold and resource:
+        if (type instanceof BuildingType) {
+            this.currentGovernment.setGold(this.currentGovernment.getGold() - ((BuildingType) type).getCost());
+            this.currentGovernment.removeItem(((BuildingType) type).getBuildingMaterial(),
+                    ((BuildingType) type).getBuildingMaterialAmount());
+        } else if (type instanceof DefensiveBuildingType) {
+            this.currentGovernment.setGold(this.currentGovernment.getGold() - ((DefensiveBuildingType) type).getCost());
+            this.currentGovernment.removeItem(Item.STONE, ((DefensiveBuildingType) type).getStoneAmount());
+        }
+
+        // TODO: storage location should be checked in coming statement!
+        if (type instanceof BuildingType) {
+            if (type == BuildingType.STOCKPILE || type == BuildingType.GRANARY || type == BuildingType.ARMORY)
+                tile.setBuilding(new Storage(this.currentGovernment, tile, (BuildingType) type));
+            else
+                tile.setBuilding(new Building(this.currentGovernment, tile, (BuildingType) type));
+        } else if (type instanceof DefensiveBuildingType)
+            tile.setBuilding(new DefensiveBuilding(this.currentGovernment, tile, (DefensiveBuildingType) type));
 
         int workersNeeded;
         if (type instanceof BuildingType && (workersNeeded = ((BuildingType) type).getWorkersNeeded()) > 0) {
@@ -178,7 +230,6 @@ public class GameMenuController {
                 }
             }
         }
-        // TODO: handle situation if building needs more workers!
         tile.setPassability(type == BuildingType.KILLING_PIT);
         return Message.DROP_BUILDING_SUCCESS.toString();
     }
@@ -189,28 +240,23 @@ public class GameMenuController {
         int y = Integer.parseInt(matcher.group("y"));
         Tile tile;
 
-        if ((tile = currentGame.getMap().getTileByLocation(x, y)) == null)
+        if ((tile = this.currentGame.getMap().getTileByLocation(x, y)) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        // TODO: decide on it!
-//        if (tile.getTerritory() != this.currentGovernment)
-//            return Message.TILE_IS_NOT_YOURS.toString();
-
         Building building;
-
         if ((building = tile.getBuilding()) == null)
             return Message.NO_BUILDING_IN_TILE.toString();
 
         if (building.getLoyalty() != this.currentGovernment)
             return Message.BUILDING_NOT_YOURS.toString();
 
-        this.buildingMenuController.setCurrentBuilding(currentGame.getMap().getTileByLocation(x, y).getBuilding());
+        this.buildingMenuController.setCurrentBuilding(this.currentGame.getMap().getTileByLocation(x, y).getBuilding());
         this.buildingMenuController.setCurrentGovernment(this.currentGovernment);
         return building.getType().toString() + " selected!\n" + Message.ENTERED_BUILDING_MENU;
     }
 
     public String selectUnit(int x, int y) {
-        Tile tile = currentGame.getMap().getTileByLocation(x, y);
+        Tile tile = this.currentGame.getMap().getTileByLocation(x, y);
 
         if (tile == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
@@ -218,14 +264,14 @@ public class GameMenuController {
         ArrayList<MilitaryUnit> unit = tile.getMilitaryUnits();
         ArrayList<MilitaryUnit> myUnit = new ArrayList<>();
         for (MilitaryUnit militaryUnit : unit) {
-            if (militaryUnit.getLoyalty() == currentGovernment)
+            if (militaryUnit.getLoyalty() == this.currentGovernment)
                 myUnit.add(militaryUnit);
         }
 
         if (myUnit.size() == 0)
             return Message.UNIT_NOT_EXISTS.toString();
 
-        unitMenuController.setUnit(myUnit, tile);
+        this.unitMenuController.setUnit(myUnit, tile);
         return Message.UNIT_SELECTED.toString();
     }
 
@@ -235,7 +281,7 @@ public class GameMenuController {
         int x = Integer.parseInt(matcher.group("x")), y = Integer.parseInt(matcher.group("y"));
 
         Tile tile;
-        if ((tile = currentGame.getMap().getTileByLocation(x,y)) == null)
+        if ((tile = this.currentGame.getMap().getTileByLocation(x, y)) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
         TroopType troopType = TroopType.getTroopTypeByName(type);
@@ -244,115 +290,124 @@ public class GameMenuController {
 
         Building building;
         if (troopType.getTrainingCamp() == BuildingType.BARRACKS) {
-            building = currentGovernment.getUniqueBuilding(BuildingType.BARRACKS);
+            building = this.currentGovernment.getUniqueBuilding(BuildingType.BARRACKS);
             if (building == null)
                 return Message.BARRACKS_NOT_EXISTS.toString();
         } else if (troopType.getTrainingCamp() == BuildingType.MERCENARY_POST) {
-            building = currentGovernment.getUniqueBuilding(BuildingType.MERCENARY_POST);
+            building = this.currentGovernment.getUniqueBuilding(BuildingType.MERCENARY_POST);
             if (building == null)
                 return Message.MERCENARY_POST_NOT_EXISTS.toString();
         } else if (troopType.getTrainingCamp() == BuildingType.ENGINEER_GUILD) {
-            building = currentGovernment.getUniqueBuilding(BuildingType.ENGINEER_GUILD);
+            building = this.currentGovernment.getUniqueBuilding(BuildingType.ENGINEER_GUILD);
             if (building == null)
                 return Message.ENGINEER_GUILD_NOT_EXISTS.toString();
-        }
-        else {
-            building = currentGovernment.getUniqueBuilding(BuildingType.TUNNELER_GUILD);
+        } else {
+            building = this.currentGovernment.getUniqueBuilding(BuildingType.TUNNELER_GUILD);
             if (building == null)
                 return Message.TUNNELER_GUILD_NOT_EXISTS.toString();
         }
 
-        Troop troop = new Troop(currentGovernment, troopType, tile);
+        Troop troop = new Troop(this.currentGovernment, troopType, tile);
 
         if (count < 0)
             return Message.INVALID_AMOUNT.toString();
 
-        currentGovernment.addTroops(troop, count);
+        this.currentGovernment.addTroops(troop, count);
         return Message.DROP_UNIT_SUCCESSFUL.toString();
     }
 
     public String setTexture(Matcher matcher) {
-        int x = Integer.parseInt(matcher.group("y"));//reverse because of the array!!
-        int y = Integer.parseInt(matcher.group("x"));
-        if (currentGame.getMap().getTileByLocation(x, y) == null)
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+
+        if (this.currentGame.getMap().getTileByLocation(x, y) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
         if (Texture.getTextureByName(MultiMenuFunctions.deleteQuotations(matcher.group("type"))) == null)
             return Message.INVALID_TEXTURE_NAME.toString();
 
-        if (currentGame.getMap().getField()[x][y].getBuilding() != null || currentGame.getMap().getField()[x][y].getPeople().size() != 0)
+        if (!this.currentGame.getMap().getField()[x][y].isTotallyEmpty())
             return Message.TEXTURE_CHANGE_ERROR.toString();
 
-        currentGame.getMap().getField()[x][y].changeTexture(Texture.getTextureByName
-                (MultiMenuFunctions.deleteQuotations(matcher.group("type"))));
+        this.currentGame.getMap().getField()[x][y].changeTexture(Texture.getTextureByName(
+                MultiMenuFunctions.deleteQuotations(matcher.group("type"))));
         return Message.TEXTURE_CHANGED_SUCCESSFULLY.toString();
     }
 
     public String setRectangleTextures(Matcher matcher) {
-        int x1 = Integer.parseInt(matcher.group("y1"));
-        int y1 = Integer.parseInt(matcher.group("x1"));
-        int x2 = Integer.parseInt(matcher.group("y2"));
-        int y2 = Integer.parseInt(matcher.group("x2"));
+        int x1 = Integer.parseInt(matcher.group("x1"));
+        int y1 = Integer.parseInt(matcher.group("y1"));
+        int x2 = Integer.parseInt(matcher.group("x2"));
+        int y2 = Integer.parseInt(matcher.group("y2"));
 
-        if (currentGame.getMap().getTileByLocation(x1, y1) == null || currentGame.getMap().getTileByLocation(x2, y2) == null)
+        if (this.currentGame.getMap().getTileByLocation(x1, y1) == null ||
+                this.currentGame.getMap().getTileByLocation(x2, y2) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        if (currentGame.getMap().AreaContainsSomething(x1, y1, x2, y2))
-            return Message.AREA_NOT_EMPTY.toString();
+        for (int i = x1; i <= x2; i++)
+            for (int j = y1; j <= y2; j++)
+                if (!this.currentGame.getMap().getField()[i][j].isTotallyEmpty())
+                    return Message.AREA_NOT_EMPTY.toString();
 
         if (Texture.getTextureByName(MultiMenuFunctions.deleteQuotations(matcher.group("type"))) == null)
             return Message.INVALID_TEXTURE_NAME.toString();
 
-        for (int i = y1; i <= y2; i++) {
-            for (int j = x1; j <= x2; j++) {
-                currentGame.getMap().getField()[i][j].changeTexture(Texture.getTextureByName
-                        (MultiMenuFunctions.deleteQuotations(matcher.group("type"))));
-            }
-        }
+        for (int i = x1; i <= x2; i++)
+            for (int j = y1; j <= y2; j++)
+                this.currentGame.getMap().getField()[i][j].changeTexture(Texture.getTextureByName(
+                        MultiMenuFunctions.deleteQuotations(matcher.group("type"))));
 
         return Message.TEXTURE_CHANGED_SUCCESSFULLY.toString();
     }
 
     public String clearTexture(Matcher matcher) {
-        int x = Integer.parseInt(matcher.group("y"));
-        int y = Integer.parseInt(matcher.group("x"));
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
 
-        if (currentGame.getMap().getTileByLocation(x, y) == null)
+        if (this.currentGame.getMap().getTileByLocation(x, y) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        currentGame.getMap().getTileByLocation(x, y).changeTexture(Texture.GROUND);//default
-        currentGame.getMap().getTileByLocation(x, y).getPeople().clear();
-        currentGame.getMap().getTileByLocation(x, y).removeBuilding();
+        Tile tile = this.currentGame.getMap().getTileByLocation(x, y);
+
+        tile.changeTexture(Texture.GROUND);
+        for (Person person : this.currentGame.getMap().getTileByLocation(x, y).getPeople())
+            this.currentGovernment.getPeople().remove(person);
+        tile.getPeople().clear();
+        for (MilitaryUnit unit : tile.getMilitaryUnits())
+            this.currentGovernment.getMilitaryUnits().remove(unit);
+        tile.getMilitaryUnits().clear();
+        this.currentGovernment.getBuildings().remove(tile.getBuilding());
+        tile.removeBuilding();
 
         return Message.CLEAR_SUCCESSFUL.toString();
     }
 
     public String dropTree(Matcher matcher) {
-        int x = Integer.parseInt(matcher.group("y"));
-        int y = Integer.parseInt(matcher.group("x"));
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
 
-        if (currentGame.getMap().getTileByLocation(x, y) == null)
+        if (this.currentGame.getMap().getTileByLocation(x, y) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        if (currentGame.getMap().getField()[x][y].getBuilding() != null || currentGame.getMap().getField()[x][y].getPeople().size() != 0
-                || !currentGame.getMap().getField()[x][y].getTexture().canHaveTree())
+        if (!this.currentGame.getMap().getField()[x][y].isTotallyEmpty() ||
+                !this.currentGame.getMap().getField()[x][y].getTexture().canHaveTree())
             return Message.DROP_TREE_ERROR.toString();
-        currentGame.getMap().getField()[x][y].changeTexture(Texture.getTextureByName
-                (MultiMenuFunctions.deleteQuotations(matcher.group("type"))));
+        this.currentGame.getMap().getField()[x][y].changeTexture(Texture.getTextureByName(
+                MultiMenuFunctions.deleteQuotations(matcher.group("type"))));
         return Message.DROP_TREE.toString();
     }
 
     public String dropRock(Matcher matcher) {
-        int x = Integer.parseInt(matcher.group("y"));
-        int y = Integer.parseInt(matcher.group("x"));
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
 
-        if (currentGame.getMap().getTileByLocation(x, y) == null)
+        if (this.currentGame.getMap().getTileByLocation(x, y) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        if (currentGame.getMap().getField()[x][y].getBuilding() != null || currentGame.getMap().getField()[x][y].getPeople().size() != 0)
+        if (!this.currentGame.getMap().getField()[x][y].isTotallyEmpty())
             return Message.DROP_ROCK_ERROR.toString();
 
-        currentGame.getMap().getField()[x][y].changeTexture(Texture.ROCK);
+        this.currentGame.getMap().getField()[x][y].changeTexture(Texture.ROCK);
         return Message.DROP_ROCK.toString();
     }
 

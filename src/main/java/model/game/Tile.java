@@ -122,6 +122,10 @@ public class Tile {
         else this.state = 'N';
     }
 
+    public ArrayList<Person> getPeople() {
+        return this.people;
+    }
+
     public void addPerson(Person person) {
         this.people.add(person);
     }
@@ -135,8 +139,8 @@ public class Tile {
         isPassable = passability;
     }
 
-    public ArrayList<Person> getPeople() {
-        return people;
+    public boolean isTotallyEmpty() {
+        return this.people.isEmpty() && this.militaryUnits.isEmpty() && this.getBuilding() == null;
     }
 
     public boolean hasEnemy(Government government) {
