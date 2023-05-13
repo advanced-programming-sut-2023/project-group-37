@@ -238,6 +238,9 @@ public class Government {
     }
 
     public ArrayList<Storage> getTargetRepository(Item item) {
+        if (item == null)
+            return null;
+
         return switch (item.getCategory()) {
             case RESOURCES -> this.stockpile;
             case FOODS -> this.granary;
@@ -249,6 +252,9 @@ public class Government {
     // Shop Menu Methods :
 
     public int getFreeSpace(ArrayList<Storage> repository) {
+        if (repository == null)
+            return 0;
+
         int freeSpace = 0;
         for (Storage storage : repository) {
             freeSpace += storage.getFreeSpace();
@@ -257,6 +263,9 @@ public class Government {
     }
 
     public int getItemAmount(Item item) {
+        if (item == null)
+            return 0;
+
         int itemAmount = 0;
         for (Storage storage : getTargetRepository(item)) {
             itemAmount += storage.getItemAmount(item);
@@ -283,6 +292,9 @@ public class Government {
     }
 
     public boolean buyItem(Item item, int amount) {
+        if (item == null)
+            return false;
+
         if (!addItem(item, amount))
             return false;
 
@@ -308,6 +320,9 @@ public class Government {
     }
 
     public boolean sellItem(Item item, int amount) {
+        if (item == null)
+            return false;
+
         if (!removeItem(item, amount))
             return false;
 

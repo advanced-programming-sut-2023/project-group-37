@@ -86,6 +86,9 @@ public class GameMenuController {
     }
 
     public String setFoodRate(Matcher matcher) {
+        if (matcher.group("rateNumber") == null)
+            return Message.EMPTY_FIELD.toString();
+
         int rate = Integer.parseInt(matcher.group("rateNumber"));
 
         if (rate < -2 || rate > 2)
@@ -124,7 +127,7 @@ public class GameMenuController {
     }
 
     public String showFearRate() {
-        return "Fear rate: " + this.currentGovernment.getTaxRate();
+        return "Fear rate: " + this.currentGovernment.getFearRate();
     }
 
     public String dropBuilding(Matcher matcher) {
@@ -515,7 +518,7 @@ public class GameMenuController {
     public String showInfo() {
         return "All Info:\n" + "Username: " + this.currentGovernment.getUser().getUsername() +
                 "\nGold amount:" + this.currentGovernment.getGold() +
-                "\nFood rate: " + this.currentGovernment.getFearRate() +
+                "\nFood rate: " + this.currentGovernment.getFoodRate() +
                 "\nTax rate: " + this.currentGovernment.getTaxRate() +
                 "\nFear rate:" + this.currentGovernment.getFearRate() +
                 "\nPopularity:" + this.currentGovernment.getPopularity() +
@@ -532,7 +535,7 @@ public class GameMenuController {
         if (gameEndMessage() != null)
             return gameEndMessage();
 
-        return Message.SUCCESS.toString();
+        return "Now its " + currentGame.getCurrentTurnGovernment().getUser().getUsername() + " turn";
     }
 
     private String gameEndMessage() {
@@ -543,7 +546,7 @@ public class GameMenuController {
             else government.destroy();
         }
 
-        if (remainingGovernments.size() > 1 && this.currentGame.getTurnNumber() < this.currentGame.getTurns())
+        if (remainingGovernments.size() > 1 && this.currentGame.getTurnNumber() < this.currentGame.getTurns() * this.currentGame.getGovernments().size())
             return null;
 
         this.setGovernmentsRank();
