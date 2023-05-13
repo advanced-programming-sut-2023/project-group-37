@@ -64,14 +64,14 @@ public abstract class MilitaryUnit {
     public void attack() {
         if (this instanceof MilitaryMachine) {
             if (((MilitaryMachine) this).getType() == MilitaryMachineType.FIRE_BALLISTA)
-                target.receiveDamage(this.damage, this.loyalty);
+                target.receiveDamage(this.getDamage(), this.loyalty);
             else if (((MilitaryMachine) this).getType() == MilitaryMachineType.SIEGE_TOWER) {
                 if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
                     defensiveBuilding.setCanBeReached(true);
                     defensiveBuilding.setHasLadderAttached(true);
                 }
             } else if (((MilitaryMachine) this).getType() != MilitaryMachineType.PORTABLE_SHIELD)
-                target.receiveBuildingDamage(this.damage, this.loyalty);
+                target.receiveBuildingDamage(this.getDamage(), this.loyalty);
         } else {
             Troop troop = (Troop) this;
             if (troop.getType() == TroopType.LADDERMAN) {
@@ -89,7 +89,7 @@ public abstract class MilitaryUnit {
                         this.loyalty.getMilitaryUnits().remove(this);
                     }
                 }
-            } else target.receiveDamage(this.damage, this.loyalty);
+            } else target.receiveDamage(this.getDamage(), this.loyalty);
         }
     }
 
