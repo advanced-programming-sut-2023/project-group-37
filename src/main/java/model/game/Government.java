@@ -25,7 +25,6 @@ public class Government {
     private final HashMap<Troop, Integer> troops;
     private final ArrayList<MilitaryUnit> militaryUnits;
     private final ArrayList<Building> buildings;
-    private boolean hasMarket;
     private final ArrayList<Storage> stockpile;
     private final ArrayList<Storage> granary;
     private final ArrayList<Storage> armory;
@@ -45,7 +44,6 @@ public class Government {
         this.people = new ArrayList<>();
         this.militaryUnits = new ArrayList<>();
         this.buildings = new ArrayList<>();
-        this.hasMarket = false;
         // TODO: set default resources!
         this.stockpile = new ArrayList<>();
         this.granary = new ArrayList<>();
@@ -114,10 +112,6 @@ public class Government {
 
     public ArrayList<Building> getBuildings() {
         return this.buildings;
-    }
-
-    public boolean hasMarket() {
-        return hasMarket;
     }
 
     public ArrayList<Storage> getStockpile() {

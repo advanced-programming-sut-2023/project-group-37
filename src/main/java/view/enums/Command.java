@@ -98,6 +98,7 @@ public enum Command {
 
 
     // UnitMenu:
+    SELECT_TYPE_UNIT("\\s*select\\s+unit\\s+type\\s+(-t\\s+(?<type>\"[\"]+\"))"),
     MOVE_UNIT("\\s*move\\s+unit\\s+to(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s*"),
     PATROL_UNIT("\\s*patrol\\s+unit(\\s+((-x1\\s+(?<x1>\\d+))|(-y1\\s+(?<y1>\\d+))|" +
             "(-x2\\s+(?<x2>\\d+))|(-y2\\s+(?<y2>\\d+)))+\\s*"),

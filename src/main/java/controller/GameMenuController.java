@@ -60,7 +60,7 @@ public class GameMenuController {
     }
 
     public String enterShopMenu() {
-        if (this.currentGovernment.hasMarket())
+        if (this.currentGovernment.getUniqueBuilding(BuildingType.MARKET) != null)
             return Message.ENTERED_SHOP_MENU.toString();
         return Message.MARKET_NOT_EXISTS.toString();
     }

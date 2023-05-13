@@ -23,7 +23,10 @@ public class UnitMenu {
         while (true) {
             command = scanner.nextLine();
 
-            if ((matcher = Command.MOVE_UNIT.getMatcher(command)) != null)
+            if ((matcher = Command.SELECT_TYPE_UNIT.getMatcher(command)) != null)
+                System.out.println(controller.selectUnitWithType(matcher.group("type")));
+
+            else if ((matcher = Command.MOVE_UNIT.getMatcher(command)) != null)
                 System.out.println(this.controller.moveUnit(Integer.parseInt(matcher.group("x")),
                         Integer.parseInt(matcher.group("y"))));
             else if ((matcher = Command.PATROL_UNIT.getMatcher(command)) != null)
