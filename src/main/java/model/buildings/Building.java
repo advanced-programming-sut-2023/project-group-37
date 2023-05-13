@@ -79,7 +79,6 @@ public class Building {
         this.location.setBuilding(null);
         this.location.removeMilitaryUnits();
         this.getLoyalty().getBuildings().remove(this);
-        this.getLoyalty().setGold(this.getLoyalty().getGold() - 20);
     }
 
 }

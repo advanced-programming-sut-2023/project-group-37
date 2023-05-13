@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 import model.buildings.Building;
 import model.buildings.DefensiveBuilding;
+import model.game.Texture;
 import model.game.Tile;
 import model.game.Map;
 import model.people.MilitaryUnit;
@@ -155,5 +156,26 @@ public class MultiMenuFunctions {
         int x = (tile2.getX() - tile1.getX()) / 2;
         int y = (tile2.getY() - tile1.getY()) / 2;
         return map.getTileByLocation(x, y);
+    }
+
+    public static Tile getNearestPassableTileByLocation(Tile tile, Map map) {
+        for (int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+                if (map.getPassabilityByLocation(tile.getX() + i, tile.getY() + j))
+                    return map.getTileByLocation(tile.getX() + i, tile.getY() + j);
+            }
+        }
+        return tile;
+    }
+
+    public static Tile getNearestMoatTileByLocation(Tile tile, Map map) {
+        Tile target;
+        for (int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+                if ((target = map.getTileByLocation(tile.getX() + i, tile.getY() + j)).getTexture() == Texture.MOAT)
+                    return target;
+            }
+        }
+        return tile;
     }
 }

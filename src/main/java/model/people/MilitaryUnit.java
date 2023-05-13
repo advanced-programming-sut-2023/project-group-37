@@ -1,6 +1,7 @@
 package model.people;
 
 import model.buildings.Building;
+import model.buildings.BuildingType;
 import model.buildings.DefensiveBuilding;
 import model.game.Government;
 import model.game.Tile;
@@ -76,6 +77,8 @@ public abstract class MilitaryUnit {
                 if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
                     defensiveBuilding.setCanBeReached(true);
                     defensiveBuilding.setHasLadderAttached(true);
+                    this.location.getMilitaryUnits().remove(this);
+                    this.loyalty.getMilitaryUnits().remove(this);
                 }
             }
             else if (troop.getType() == TroopType.TUNNELER) {
@@ -128,12 +131,30 @@ public abstract class MilitaryUnit {
             if (route.size() - 1 < speed)
                 speed = route.size() - 1;
 
-            this.location.getMilitaryUnits().remove(this);
-            this.location = route.get(speed);
-            this.location.addMilitaryUnit(this);
+            boolean hasKillingPit = false;
+            Building building;
+            for (int i = 0; i <= speed; i++) {
+                if ((building = route.get(i).getBuilding()) != null) {
+                    if (building.getType() == BuildingType.KILLING_PIT) {
+                        building.destroy();
+                        hasKillingPit = true;
+                        break;
+                    }
+                }
+            }
+            if (hasKillingPit) {
+                this.loyalty.getMilitaryUnits().remove(this);
+                this.location.getMilitaryUnits().remove(this);
+            }
+            else {
 
-            if (speed > 0)
-                route.subList(0, speed).clear();
+                this.location.getMilitaryUnits().remove(this);
+                this.location = route.get(speed);
+                this.location.addMilitaryUnit(this);
+
+                if (speed > 0)
+                    route.subList(0, speed).clear();
+            }
         }
     }
 
