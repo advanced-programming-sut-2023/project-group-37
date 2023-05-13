@@ -1,6 +1,7 @@
 package view.menus;
 
 import controller.GameMenuController;
+import controller.MultiMenuFunctions;
 import view.enums.Result;
 import model.game.Tile;
 import view.enums.Command;
@@ -105,7 +106,7 @@ public class GameMenu {
         }
     }
 
-    public boolean showMap(int x, int y) {
+    private boolean showMap(int x, int y) {
         if (controller.getMap().getTileByLocation(x, y) == null) {
             System.out.println(Message.ADDRESS_OUT_OF_BOUNDS);
             return false;
@@ -113,19 +114,7 @@ public class GameMenu {
 
         Tile[][] tiles = this.controller.showMap(x, y);
 
-        int columnLength = tiles[0].length;
-        Tile tile;
-
-        for (int j = 0; j < columnLength; j++) {
-            for (Tile[] value : tiles) {
-                tile = value[j];
-                System.out.print(tile.getTexture().getColor().toString() + " " + tile.getState());
-            }
-            System.out.print(" ");
-            System.out.println("\033[0m");
-        }
-
-        return true;
+        return MapMenu.showMapWithTiles(tiles);
     }
 
     private boolean selectBuilding(Matcher matcher) {

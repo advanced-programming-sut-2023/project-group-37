@@ -24,6 +24,7 @@ public class Map {
         this.size = 200;
         this.field = new Tile[size][size];
         this.tilesPassability = new boolean[size][size];
+        this.territories = new HashMap<>();
         this.initializeTiles();
     }
 

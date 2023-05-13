@@ -53,7 +53,7 @@ public class MainMenuController {
         if (map == null)
             return Message.INVALID_MAP_NAME.toString();
 
-        governments.add(new Government(currentUser, Color.RED, map,0));
+        governments.add(new Government(currentUser, Color.RED, map,1));
 
         int index = 1;
         for (String username : usernames) {
@@ -61,7 +61,7 @@ public class MainMenuController {
             if (user == null)
                 return Message.USERNAME_NOT_FOUND.toString();
 
-            governments.add(new Government(user, Color.values()[index], map,index-1));
+            governments.add(new Government(user, Color.values()[index], map,territories[index-1]));
             index++;
         }
 

@@ -15,10 +15,6 @@ public class MapMenuController {
     private Government government;
     private int currentX;
     private int currentY;
-    private final GameMenu gameMenu;
-    public MapMenuController(GameMenu gameMenu) {
-        this.gameMenu = gameMenu;
-    }
     public void setGovernment(Government government) {
         this.government = government;
     }
@@ -58,7 +54,7 @@ public class MapMenuController {
         return result;
     }
 
-    public void moveMap(Matcher matcher) {
+    public Tile[][] moveMap(Matcher matcher) {
         int up = 0, down = 0, left = 0, right = 0;
         if (matcher.group("up") != null) {
             if (matcher.group("upDistance") == null)
@@ -80,7 +76,11 @@ public class MapMenuController {
                 right = 1;
             else right = Integer.parseInt(matcher.group("rightDistance"));
         }
-        gameMenu.showMap(up - down,right - left);
+        int x = currentX + right - left, y = currentY + up - down;
+        if (map.getTileByLocation(x, y) == null)
+            return null;
+
+        return showMap(x, y);
     }
 
     public Message showDetails(Matcher matcher) {
