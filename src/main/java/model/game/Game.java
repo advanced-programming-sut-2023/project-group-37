@@ -103,21 +103,30 @@ public class Game {
                         if (type == BuildingType.INN)
                             innCount++;
 
-                        if (type.getRawMaterial() == null)
-                            government.addItem(type.getProduct(), (int) (type.getProductProvides() *
-                                    (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1);
-                        else if (government.getItemAmount(type.getRawMaterial()) >=
-                                type.getRawMaterialUses() + type.getRawMaterialUsesForSecond()) {
+                        if ((type == BuildingType.TANNER &&
+                                this.currentTurnGovernment.getUniqueBuilding(BuildingType.TANNER) != null) || type.getRawMaterial() == null) {
+                            if (government.getFreeSpace(government.getTargetRepository(type.getProduct())) >= (int) (type.getProductProvides() *
+                                    (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1)
+                                government.addItem(type.getProduct(), (int) (type.getProductProvides() *
+                                        (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1);
+                        } else if (government.getItemAmount(type.getRawMaterial()) >=
+                                type.getRawMaterialUses() + (int) (type.getRawMaterialUsesForSecond() *
+                                        (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1) {
                             government.removeItem(type.getRawMaterial(), type.getRawMaterialUses() +
-                                    type.getRawMaterialUsesForSecond());
+                                    (int) (type.getRawMaterialUsesForSecond() *
+                                            (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1);
                             if ((type.getSecondProduct() == null && this.currentTurnGovernment.getFreeSpace
                                     (this.currentTurnGovernment.getTargetRepository(type.getProduct())) >=
-                                    type.getProductProvides()) ||
+                                    (int) (type.getProductProvides() *
+                                            (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1) ||
                                     (type.getSecondProduct() != null && this.currentTurnGovernment.getFreeSpace
                                             (this.currentTurnGovernment.getTargetRepository(type.getProduct())) >=
-                                            1 + type.getProductProvides())) {
-                                government.addItem(type.getProduct(), type.getProductProvides());
-                                government.addItem(type.getSecondProduct(), 1);
+                                            (int) ((double) this.currentTurnGovernment.getFearRate() / 6) + 1 + (type.getProductProvides() *
+                                                    (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1)) {
+                                government.addItem(type.getProduct(), (int) (type.getProductProvides() *
+                                        (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1);
+                                government.addItem(type.getSecondProduct(), (int)
+                                        ((double) this.currentTurnGovernment.getFearRate() / 6) + 1);
                             } else {
                                 government.addItem(type.getRawMaterial(), type.getRawMaterialUses() +
                                         type.getRawMaterialUsesForSecond());

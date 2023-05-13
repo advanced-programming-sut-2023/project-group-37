@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public enum BuildingType {
 
     // Processing:
-    // TODO: handle stable as processing when horse defined!
     STABLE("stable", 400, 250, Item.WOOD, 20, null, 0,
             Item.HORSE, 4, 0, false, false, false),
     APPLE_ORCHARD("apple orchard", 150, Item.WOOD, 5, Item.APPLE, 4,
@@ -42,7 +41,6 @@ public enum BuildingType {
     BLACKSMITH("blacksmith", 200, 150, Item.WOOD, 20, Item.IRON,
             1, 1, Item.SWORD, Item.MACE, 1, 1,
             false, false, false),
-    // TODO: rawMaterialUses is related to product mode!
     FLETCHER("fletcher", 100, 150, Item.WOOD, 20, Item.WOOD,
             2, 3, Item.BOW, Item.CROSSBOW, 1, 1,
             false, false, false),

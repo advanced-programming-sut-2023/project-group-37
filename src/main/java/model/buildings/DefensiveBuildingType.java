@@ -2,16 +2,11 @@ package model.buildings;
 
 public enum DefensiveBuildingType {
 
-    // TODO: set real capacity for them!
-    // TODO: set real damage & range for them!
-    // TODO: these should only be placed in own territory!
-
     KEEP(null, 1, 0, 0, 16),
     WALL("wall", 250, 1, 1.1, 1),
     STAIRS("stairs", 150, 1, 0, 1),
     SMALL_GATEHOUSE("small gatehouse", 350, 10, 1.2, 8),
     LARGE_GATEHOUSE("large gatehouse", 450, 20, 1.4, 12),
-    // TODO: decide if they need a seperated class or category field or else!
     LOOKOUT_TOWER("lookout tower", 250, 10, 2.2, 4),
     PERIMETER_TOWER("perimeter tower", 350, 10, 1.6, 6),
     DEFENCE_TOWER("defence tower", 350, 15, 1.6, 6),
