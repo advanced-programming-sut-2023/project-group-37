@@ -291,7 +291,7 @@ public class Government {
         return true;
     }
 
-    public void removeDiedUnits() {
+    public void removeDeadUnits() {
         int index = 0;
         MilitaryUnit militaryUnit;
         while (index < this.militaryUnits.size()) {
@@ -323,5 +323,9 @@ public class Government {
             this.user.setHighScore(score);
 
         return score;
+    }
+
+    public void destroy() {
+        // todo
     }
 }

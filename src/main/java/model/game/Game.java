@@ -170,7 +170,7 @@ public class Game {
                 }
             }
             for (Government government : governments) {
-                government.removeDiedUnits();
+                government.removeDeadUnits();
                 government.removeDestroyedBuildings();
             }
         }

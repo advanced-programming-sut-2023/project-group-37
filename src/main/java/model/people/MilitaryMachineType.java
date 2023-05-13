@@ -2,9 +2,9 @@ package model.people;
 
 public enum MilitaryMachineType {
 
-    PORTABLE_SHIELD(5, 120, 0, 0, 80, 1),
-    BATTERING_RAM(150, 500, 200, 1, 45, 40),
-    SIEGE_TOWER(150, 120, 0, 1, 50, 4),
+    PORTABLE_SHIELD(5, 300, 0, 0, 80, 1),
+    BATTERING_RAM(150, 250, 200, 1, 45, 4),
+    SIEGE_TOWER(150, 250, 0, 1, 50, 4),
     CATAPULT(150, 80, 100, 35, 45, 2),
     TREBUCHET(150, 80, 125, 45, 0, 3),
     FIRE_BALLISTA(150, 75, 40, 30, 30, 2),

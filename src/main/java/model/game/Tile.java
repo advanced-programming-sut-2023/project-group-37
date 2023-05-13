@@ -56,6 +56,7 @@ public class Tile {
     }
 
     public void receiveDamage(int damage, Government government) {
+        int firstDamage = damage;
         for (MilitaryUnit militaryUnit : militaryUnits) {
             if (militaryUnit.getLoyalty() != government) {
                 damage -= militaryUnit.takeDamage(damage);
@@ -64,7 +65,7 @@ public class Tile {
             }
         }
 
-        if (damage > 0 && this.building != null ) {
+        if (damage == firstDamage && this.building != null ) {
             if (!(this.building instanceof DefensiveBuilding) && this.building.getLoyalty() != government)
                 this.building.takeDamage(damage);
         }

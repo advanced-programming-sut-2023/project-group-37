@@ -57,7 +57,10 @@ public abstract class MilitaryUnit {
         if (this instanceof MilitaryMachine) {
             if (((MilitaryMachine) this).getType() == MilitaryMachineType.FIRE_BALLISTA)
                 target.receiveDamage(this.damage, this.loyalty);
-            else
+            else if (((MilitaryMachine) this).getType() == MilitaryMachineType.SIEGE_TOWER) {
+                // todo
+            }
+            else if (((MilitaryMachine) this).getType() != MilitaryMachineType.PORTABLE_SHIELD)
                 target.receiveBuildingDamage(this.damage, this.loyalty);
         }
         else target.receiveDamage(this.damage, this.loyalty);

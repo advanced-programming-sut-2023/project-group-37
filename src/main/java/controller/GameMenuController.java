@@ -455,18 +455,20 @@ public class GameMenuController {
     }
 
     private String gameEndMessage() {
-        ArrayList<Government> liveGovernments = new ArrayList<>();
+        ArrayList<Government> remainingGovernments = new ArrayList<>();
         for (Government government : currentGame.getGovernments()) {
             if (government.getLord().getHitpoints() > 0)
-                liveGovernments.add(government);
+                remainingGovernments.add(government);
+            else government.destroy();
         }
-        if (liveGovernments.size() > 1)
+
+        if (remainingGovernments.size() > 1)
             return null;
 
         setGovernmentsRank();
-        if (liveGovernments.size() == 0)
+        if (remainingGovernments.size() == 0)
             return "Game ended; All governments died!";
-        else return "Game ended; Winner: " + liveGovernments.get(0).getUser().getUsername();
+        else return "Game ended; Winner: " + remainingGovernments.get(0).getUser().getUsername();
     }
 
     public String endGame() {
