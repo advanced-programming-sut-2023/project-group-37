@@ -6,55 +6,52 @@ import model.game.Item;
 public enum TroopType {
 
     //LORD:
-    LORD(null, 0, 100, 100, 55, 1, null, null, false, false),
+    LORD("", null, 0, 100, 100, 55, 1, null, null,
+            false, false),
 
     // Barracks:
-    ARCHER(BuildingType.BARRACKS, 12, 45, 40, 90, 10,
+    ARCHER("archer", BuildingType.BARRACKS, 12, 45, 40, 90, 10,
             Item.BOW, null, true, true),
-    SPEARMAN(BuildingType.BARRACKS, 8, 50, 50, 60, 1,
+    SPEARMAN("spearman", BuildingType.BARRACKS, 8, 50, 50, 60, 1,
             Item.SPEAR, null, true, true),
-    MaceMan(BuildingType.BARRACKS, 20, 70, 75, 85, 1,
+    MaceMan("maceman", BuildingType.BARRACKS, 20, 70, 75, 85, 1,
             Item.MACE, Item.LEATHER_ARMOR, true, true),
-    CROSSBOWMAN(BuildingType.BARRACKS, 20, 75, 70, 55, 8,
+    CROSSBOWMAN("crossbowman", BuildingType.BARRACKS, 20, 75, 70, 55, 8,
             Item.CROSSBOW, Item.LEATHER_ARMOR, false, false),
-    PIKEMAN(BuildingType.BARRACKS, 20, 77, 76, 60, 1,
+    PIKEMAN("pikeman", BuildingType.BARRACKS, 20, 77, 76, 60, 1,
             Item.PIKE, Item.METAL_ARMOR, false, true),
-    SWORDSMAN(BuildingType.BARRACKS, 40, 94, 94, 40, 1,
+    SWORDSMAN("swordsman", BuildingType.BARRACKS, 40, 94, 94, 40, 1,
             Item.SWORD, Item.METAL_ARMOR, false, false),
-    // TODO: define horse!
-    KNIGHT(BuildingType.BARRACKS, 40, 90, 94, 95, 1,
-            Item.SWORD, Item.METAL_ARMOR, false, false),
+    KNIGHT("knight", BuildingType.BARRACKS, 40, 90, 94, 95, 1,
+            Item.SWORD, Item.METAL_ARMOR, Item.HORSE, false, false),
 
     // Mercenary post:
-    // TODO: some free weapons may be needed!
-    ARABIAN_ARCHER(BuildingType.MERCENARY_POST, 75, 45, 45, 90, 12,
+    ARABIAN_ARCHER("arabian archer", BuildingType.MERCENARY_POST, 75, 45, 45, 90,
+            12, null, null, false, true),
+    SLAVE("slave", BuildingType.MERCENARY_POST, 5, 20, 10, 90, 1,
             null, null, false, true),
-    SLAVE(BuildingType.MERCENARY_POST, 5, 20, 10, 90, 1,
-            null, null, false, true),
-    SLINGER(BuildingType.MERCENARY_POST, 12, 20, 36, 90, 6,
+    SLINGER("slinger", BuildingType.MERCENARY_POST, 12, 20, 36, 90, 6,
             null, null, false, false),
-    HORSE_ARCHER(BuildingType.MERCENARY_POST, 80, 55, 50, 95, 12,
+    HORSE_ARCHER("horse archer", BuildingType.MERCENARY_POST, 80, 55, 50, 95, 12,
             null, null, false, false),
-    ARABIAN_SWORDSMAN(BuildingType.MERCENARY_POST, 80, 88, 88, 40, 1,
+    ARABIAN_SWORDSMAN("arabian swordsman", BuildingType.MERCENARY_POST, 80, 88, 88,
+            40, 1, null, null, false, false),
+    ASSASSIN("assassin", BuildingType.MERCENARY_POST, 60, 73, 76, 67, 1,
             null, null, false, false),
-    ASSASSIN(BuildingType.MERCENARY_POST, 60, 73, 76, 67, 1,
-            null, null, false, false),
-    FIRE_THROWER(BuildingType.MERCENARY_POST, 100, 60, 84, 60, 4,
+    FIRE_THROWER("fire thrower", BuildingType.MERCENARY_POST, 100, 60, 84, 60, 4,
             null, null, false, false),
 
     // Engineer guild:
-    // Hitpoints are set as low as slinger damage!
-    ENGINEER(BuildingType.ENGINEER_GUILD, 30, 10, 0, 60, 1,
+    ENGINEER("engineer", BuildingType.ENGINEER_GUILD, 30, 10, 0, 60, 1,
             null, null, false, false),
-    LADDERMAN(BuildingType.ENGINEER_GUILD, 4, 5, 0, 60, 1,
+    LADDERMAN("ladderman", BuildingType.ENGINEER_GUILD, 4, 5, 0, 60, 1,
             null, null, false, false),
 
     // Tunneler guild:
-    TUNNELER(BuildingType.TUNNELER_GUILD, 30, 20, 0, 60, 20,
-            null,null,false,false);
+    TUNNELER("tunneler", BuildingType.TUNNELER_GUILD, 30, 20, 0, 60, 20,
+            null, null, false, false);
 
-    // TODO: implement monk!
-
+    private final String name;
     private final BuildingType trainingCamp;
     private final int cost;
     private final int maxHitpoints;
@@ -63,11 +60,13 @@ public enum TroopType {
     private final int speed;
     private final Item weapon;
     private final Item armor;
+    private final Item animal;
     private final boolean canClimbLadder;
     private final boolean canDigMoat;
 
-    TroopType(BuildingType trainingCamp, int cost, int maxHitpoints, int damage, int speed, int range, Item weapon,
-              Item armor, boolean canClimbLadder, boolean canDigMoat) {
+    TroopType(String name, BuildingType trainingCamp, int cost, int maxHitpoints, int damage, int speed, int range,
+              Item weapon, Item armor, boolean canClimbLadder, boolean canDigMoat) {
+        this.name = name;
         this.trainingCamp = trainingCamp;
         this.cost = cost;
         this.maxHitpoints = maxHitpoints;
@@ -76,16 +75,36 @@ public enum TroopType {
         this.speed = speed;
         this.weapon = weapon;
         this.armor = armor;
+        this.animal = null;
+        this.canClimbLadder = canClimbLadder;
+        this.canDigMoat = canDigMoat;
+    }
+
+    TroopType(String name, BuildingType trainingCamp, int cost, int maxHitpoints, int damage, int speed, int range,
+              Item weapon, Item armor, Item animal, boolean canClimbLadder, boolean canDigMoat) {
+        this.name = name;
+        this.trainingCamp = trainingCamp;
+        this.cost = cost;
+        this.maxHitpoints = maxHitpoints;
+        this.damage = damage;
+        this.range = range;
+        this.speed = speed;
+        this.weapon = weapon;
+        this.armor = armor;
+        this.animal = animal;
         this.canClimbLadder = canClimbLadder;
         this.canDigMoat = canDigMoat;
     }
 
     public static TroopType getTroopTypeByName(String name) {
-        try {
-            return valueOf(name.toUpperCase());
-        } catch (Exception ignored) {
-            return null;
-        }
+        for (TroopType type : values())
+            if (type.getName().equals(name))
+                return type;
+        return null;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     public BuildingType getTrainingCamp() {
@@ -118,6 +137,10 @@ public enum TroopType {
 
     public Item getArmor() {
         return this.armor;
+    }
+
+    public Item getAnimal() {
+        return this.animal;
     }
 
     public boolean canClimbLadder() {

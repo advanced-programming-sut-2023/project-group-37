@@ -87,6 +87,7 @@ public enum Message {
     TEXTURE_CHANGED_SUCCESSFULLY("Texture changed successfully!"),
     GAME_END_ALL_DESTROYED("Game ended; All governments are destroyed!"),
     GAME_END_WITH_WINNER("Game ended; winner: "),
+    NOT_ENOUGH_HORSE("Not enough horse!"),
 
     // MapMenu:
 
