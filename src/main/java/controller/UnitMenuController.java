@@ -267,7 +267,6 @@ public class UnitMenuController {
         if (!this.isUnitOfType(TroopType.TUNNELER))
             return Message.UNIT_NOT_TUNNELER;
 
-        // TODO: exclude killing pit later
         Tile location = this.currentGame.getMap().getTileByLocation(x, y);
         if (this.currentLocation.getBuilding() != null || ((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.WALL &&
                 ((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.LOOKOUT_TOWER &&
@@ -288,8 +287,6 @@ public class UnitMenuController {
     }
 
     public Message buildEquipment(Matcher matcher) {
-        // TODO: handle quotation erfan
-
         if (!this.isUnitOfType(TroopType.ENGINEER))
             return Message.UNIT_NOT_ENGINEER;
 
