@@ -2,12 +2,10 @@ package model.game;
 
 import controller.GameMenuController;
 import controller.MultiMenuFunctions;
-import model.buildings.SiegeTent;
+import model.buildings.*;
 import model.people.MilitaryMachine;
 import model.people.MilitaryUnit;
 import model.people.MilitaryUnitStance;
-import model.buildings.Building;
-import model.buildings.BuildingType;
 import model.people.Troop;
 
 import java.util.ArrayList;
@@ -234,18 +232,12 @@ public class Game {
                             ((DefensiveBuilding) building).getDefensiveType() == DefensiveBuildingType.SMALL_GATEHOUSE ||
                                     ((DefensiveBuilding) building).getDefensiveType() == DefensiveBuildingType.LARGE_GATEHOUSE))
                         ((DefensiveBuilding) building).setOwner();
-
-            this.index = (this.index + 1) % this.governments.size();
-            this.currentTurnGovernment = this.governments.get(this.index);
-            this.gameMenuController.setCurrentGovernment(this.currentTurnGovernment);
-            this.turnNumber++;
-        }
         }
         do {
             this.index = (this.index + 1) % this.governments.size();
         } while (this.governments.get(index).isDead());
         this.currentTurnGovernment = this.governments.get(this.index);
         this.gameMenuController.setCurrentGovernment(this.currentTurnGovernment);
-        turnNumber++;
+        this.turnNumber++;
     }
 }
