@@ -107,9 +107,12 @@ public class UnitMenuController {
                     return Message.NOT_ENOUGH_SPACE.toString();
             }
         }
+        LinkedList<Tile> routeCopy;
 
-        for (MilitaryUnit militaryUnit : this.currentUnit)
-            militaryUnit.setRoute(route);
+        for (MilitaryUnit militaryUnit : this.currentUnit) {
+            routeCopy = new LinkedList<>(route);
+            militaryUnit.setRoute(routeCopy);
+        }
 
         return Message.SUCCESS.toString();
     }
@@ -128,9 +131,12 @@ public class UnitMenuController {
         }
 
         LinkedList<Tile> patrolRoute = MultiMenuFunctions.routeFinder(tile1, tile2, this.currentGame.getMap());
+        LinkedList<Tile> patrolRouteCopy ;
 
-        for (MilitaryUnit militaryUnit : this.currentUnit)
-            militaryUnit.setPatrol(patrolRoute);
+        for (MilitaryUnit militaryUnit : this.currentUnit) {
+            patrolRouteCopy = new LinkedList<>(patrolRoute);
+            militaryUnit.setPatrol(patrolRouteCopy);
+        }
 
         return "Patrol target set to :" + x1 + ", " + y1 + "and " + x2 + ", " +y2;
     }

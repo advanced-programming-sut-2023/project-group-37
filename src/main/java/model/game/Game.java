@@ -147,8 +147,9 @@ public class Game {
 
             for (Government government : this.governments) {
                 for (MilitaryUnit militaryUnit : government.getMilitaryUnits()) {
-                    if (militaryUnit.isOnMove())
+                    if (militaryUnit.isOnMove()) {
                         militaryUnit.move();
+                    }
 
                     else if (militaryUnit.isOnPatrol())
                         militaryUnit.patrol();

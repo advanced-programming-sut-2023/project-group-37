@@ -532,7 +532,8 @@ public class GameMenuController {
                 "\nFear rate: " + this.currentGovernment.getFearRate() +
                 "\nPopularity: " + this.currentGovernment.getPopularity() +
                 "\nPopulation: " + this.currentGovernment.getPeople().size() +
-                "\nNumber of buildings: " + this.currentGovernment.getBuildings().size();
+                "\nNumber of buildings: " + this.currentGovernment.getBuildings().size() +
+                "\nNumber of MilitaryUnits: " + this.currentGovernment.getMilitaryUnits().size();
     }
 
     public String enterTradeMenu() {

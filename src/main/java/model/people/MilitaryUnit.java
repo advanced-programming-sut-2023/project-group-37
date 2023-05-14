@@ -168,7 +168,7 @@ public abstract class MilitaryUnit {
                 this.location.addMilitaryUnit(this);
 
                 if (speed > 0)
-                    route.subList(0, speed).clear();
+                    this.route.subList(0, speed).clear();
             }
         }
     }
