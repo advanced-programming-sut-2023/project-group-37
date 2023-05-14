@@ -78,8 +78,8 @@ public class LoginMenuController {
 
         if (!PasswordHashing.checkPassword(newPassword,password))
             return Message.INCOMPATIBLE_PASSWORDS.toString();
-
-        user.changePassword(newPassword);
+        user.setHashedPassword(password);
+        //user.changePassword(newPassword);
         return Message.CHANGE_PASSWORD_SUCCESSFUL.toString();
     }
 

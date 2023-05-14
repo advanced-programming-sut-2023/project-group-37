@@ -73,16 +73,15 @@ public class LoginMenu {
                 this.message = this.controller.getNewPassword(this.command);
 
                 System.out.println(this.message);
-                String tempMessage;
-                if (Message.ENTER_PASSWORD_AGAIN.equals(message))
+                if (Message.ENTER_NEW_PASSWORD_AGAIN.equals(message)) {
                     while (true) {
                         this.command = this.scanner.nextLine();
-                        tempMessage = this.controller.getNewPasswordAgain(this.command);
-                        System.out.println(tempMessage);
-                        if (Message.CHANGE_PASSWORD_SUCCESSFUL.toString().equals(tempMessage) || Message.CANCEL.equals(message))
+                        this.message = this.controller.getNewPasswordAgain(this.command);
+                        System.out.println(this.message);
+                        if (Message.CHANGE_PASSWORD_SUCCESSFUL.equals(this.message) || Message.CANCEL.equals(message))
                             break firstLoop;
                     }
-                else if (Message.CANCEL.equals(message))
+                } else if (Message.CANCEL.equals(message))
                     break;
             }
         }

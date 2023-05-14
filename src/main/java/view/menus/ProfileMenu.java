@@ -53,22 +53,17 @@ public class ProfileMenu {
     }
 
     private void changePassword(Matcher matcher) {
-        Message message = this.controller.changePassword(matcher.group("oldPassword"), matcher.group("newPassword"));
+        String message = this.controller.changePassword(matcher.group("oldPassword"), matcher.group("newPassword"));
         System.out.println(message);
 
-        if (message.equals(Message.ENTER_PASSWORD_AGAIN)) {
+        if (Message.ENTER_PASSWORD_AGAIN.equals(message)) {
             String password;
             flag:
-            while (true) {
+            do {
                 password = this.scanner.nextLine();
                 message = this.controller.checkPasswordAgain(password);
                 System.out.println(message);
-                switch (message) {
-                    case CHANGE_PASSWORD, CANCEL -> {
-                        break flag;
-                    }
-                }
-            }
+            } while (!Message.CHANGE_PASSWORD.equals(message) && !Message.CANCEL.equals(message));
         }
     }
 }

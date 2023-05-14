@@ -142,6 +142,10 @@ public class User implements Serializable {
         this.hashedPassword = PasswordHashing.encode(newPassword);
     }
 
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
     public void setNickName(String nickname) {
         this.nickname = nickname;
     }

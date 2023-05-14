@@ -43,31 +43,31 @@ public class ProfileMenuController {
         return Message.CHANGE_NICKNAME;
     }
 
-    public Message changePassword(String oldPass, String newPass) {
+    public String changePassword(String oldPass, String newPass) {
         MultiMenuFunctions.deleteQuotations(oldPass);
         MultiMenuFunctions.deleteQuotations(newPass);
         if (oldPass == null || newPass == null) {
-            return Message.CHANGE_PASSWORD_ERROR1;
+            return Message.CHANGE_PASSWORD_ERROR1.toString();
         }
         if (currentUser.isWrongPassword(oldPass)) {
-            return Message.CHANGE_PASSWORD_ERROR2;
+            return Message.CHANGE_PASSWORD_ERROR2.toString();
         }
         if (RegisterMenuController.checkPasswordNotOK(newPass)) {
-            return Message.CHANGE_PASSWORD_ERROR4;
+            return Message.CHANGE_PASSWORD_ERROR4.toString();
         }
         password = newPass;
-        return Message.ENTER_PASSWORD_AGAIN;
+        return Message.ENTER_PASSWORD_AGAIN.toString();
     }
 
-    public Message checkPasswordAgain(String newPassword) {
+    public String checkPasswordAgain(String newPassword) {
         if (Command.CANCEL.getMatcher(newPassword) != null)
-            return Message.CANCEL;
+            return Message.CANCEL.toString();
 
         if (!newPassword.equals(password))
-            return Message.CHANGE_PASSWORD_ERROR5;
+            return Message.CHANGE_PASSWORD_ERROR5.toString();
 
         currentUser.changePassword(newPassword);
-        return Message.CHANGE_PASSWORD;
+        return Message.CHANGE_PASSWORD.toString();
     }
 
 
