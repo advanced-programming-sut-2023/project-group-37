@@ -102,34 +102,33 @@ public class Game {
 
                         if ((type == BuildingType.TANNER &&
                                 government.getUniqueBuilding(BuildingType.TANNER) != null) || type.getRawMaterial() == null) {
-                            if (government.getFreeSpace(government.getTargetRepository(type.getProduct())) >= (int) (type.getProductProvides() *
-                                    (1 - (double) government.getFearRate() / 6) + 1))
-                                government.addItem(type.getProduct(), (int) (type.getProductProvides() *
-                                        (1 - (double) government.getFearRate() / 6) + 1));
+                            if (government.getFreeSpace(government.getTargetRepository(type.getProduct())) >=
+                                    (int) Math.ceil(type.getProductProvides() * (1 - (double) government.getFearRate() / 6)))
+                                government.addItem(type.getProduct(), (int) Math.ceil(type.getProductProvides() *
+                                        (1 - (double) government.getFearRate() / 6)));
                         } else if (government.getItemAmount(type.getRawMaterial()) >=
-                                type.getRawMaterialUses() * (1 - (double) government.getFearRate() / 6) + 1
-                                        + (int) (type.getRawMaterialUsesForSecond() *
-                                        (1 - (double) government.getFearRate() / 6) + 1)) {
+                                (int) Math.ceil(type.getRawMaterialUses() * (1 - (double) government.getFearRate() / 6))
+                                        + (int) Math.ceil(type.getRawMaterialUsesForSecond() *
+                                        (1 - (double) government.getFearRate() / 6))) {
 
                             government.removeItem(type.getRawMaterial(), type.getRawMaterialUses() +
-                                    (int) (type.getRawMaterialUsesForSecond() *
-                                            (1 - (double) government.getFearRate() / 6) + 1));
+                                    (int) Math.ceil(type.getRawMaterialUsesForSecond() *
+                                            (1 - (double) government.getFearRate() / 6)));
                             if ((type.getSecondProduct() == null && government.getFreeSpace
                                     (government.getTargetRepository(type.getProduct())) >=
-                                    (int) (type.getProductProvides() *
-                                            (1 - (double) government.getFearRate() / 6) + 1)) ||
+                                    (int) Math.ceil(type.getProductProvides() * (1 - (double) government.getFearRate() / 6))) ||
                                     (type.getSecondProduct() != null && government.getFreeSpace
                                             (government.getTargetRepository(type.getProduct())) >=
-                                            (int) ((double) government.getFearRate() / 6) + 1 + (type.getProductProvides() *
-                                                    (1 - (double) government.getFearRate() / 6) + 1))) {
-                                government.addItem(type.getProduct(), (int) (type.getProductProvides() *
-                                        (1 - (double) government.getFearRate() / 6) + 1));
-                                government.addItem(type.getSecondProduct(), (int)
-                                        ((double) government.getFearRate() / 6) + 1);
+                                            (int) Math.ceil((double) government.getFearRate() / 6) + (int) Math.ceil(type.getProductProvides() *
+                                                    (1 - (double) government.getFearRate() / 6)))) {
+                                government.addItem(type.getProduct(), (int) Math.ceil(type.getProductProvides() *
+                                        (1 - (double) government.getFearRate() / 6)));
+                                government.addItem(type.getSecondProduct(), (int) Math.ceil(
+                                        ((double) government.getFearRate() / 6)));
                             } else {
                                 government.addItem(type.getRawMaterial(), (type.getRawMaterialUses() +
                                         type.getRawMaterialUsesForSecond()) *
-                                        (int) (1 - (double) government.getFearRate() / 6) + 1);
+                                        (int) Math.ceil(1 - (double) government.getFearRate() / 6));
                             }
                         }
                     }
