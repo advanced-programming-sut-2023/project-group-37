@@ -31,8 +31,7 @@ public class GameMenu {
             if ((matcher = Command.SHOW_MAP.getMatcher(command)) != null) {
                 if (matcher.group("x") == null || matcher.group("y") == null) {
                     System.out.println(Message.EMPTY_FIELD);
-                }
-                else {
+                } else {
                     if (showMap(Integer.parseInt(matcher.group("x")), Integer.parseInt(matcher.group("y")))) {
                         System.out.println(Message.ENTERED_MAP_MENU);
                         return Result.ENTER_MAP_MENU;
@@ -70,9 +69,10 @@ public class GameMenu {
                     return Result.ENTER_UNIT_MENU;
 
             } else if (command.matches(Command.ENTER_SHOP_MENU.toString())) {
-                System.out.println(controller.enterShopMenu());
-                return Result.ENTER_SHOP_MENU;
-
+                String message;
+                System.out.println(message = this.controller.enterShopMenu());
+                if (!message.equals(Message.MARKET_NOT_EXISTS.toString()))
+                    return Result.ENTER_SHOP_MENU;
             } else if (command.matches(Command.ENTER_TRADE_MENU.toString())) {
                 System.out.println(Message.ENTERED_TRADE_MENU);
                 System.out.println(controller.enterTradeMenu());
@@ -97,13 +97,10 @@ public class GameMenu {
             else if (command.matches(Command.NEXT_TURN.toString())) {
                 if (goNextTurn())
                     return Result.END_GAME;
-            }
-
-            else if (command.matches(Command.END_GAME.toString())) {
+            } else if (command.matches(Command.END_GAME.toString())) {
                 System.out.println(controller.endGame());
                 return Result.END_GAME;
-            }
-            else
+            } else
                 System.out.println(Message.INVALID_COMMAND);
         }
     }
