@@ -141,7 +141,13 @@ public class GameMenuController {
         if (type == null)
             return Message.INVALID_BUILDING_TYPE.toString();
 
-        // TODO: check if there is moat!
+        char direction;
+        try {
+            direction = matcher.group("direction").charAt(0);
+        } catch (Exception ignored) {
+            direction = 'v';
+        }
+
         if (!tile.getTexture().canHaveBuildingAndUnit())
             return Message.CANNOT_PLACE_BUILDING_ON_TEXTURE.toString();
 
@@ -225,8 +231,7 @@ public class GameMenuController {
             else
                 building = new Building(this.currentGovernment, tile, (BuildingType) type);
         } else if (type instanceof DefensiveBuildingType) {
-            building = new DefensiveBuilding(this.currentGovernment, tile, (DefensiveBuildingType) type);
-
+            building = new DefensiveBuilding(this.currentGovernment, tile, (DefensiveBuildingType) type, direction);
 
             for (Building neighborBuilding : neighborBuildings)
                 if (neighborBuilding instanceof DefensiveBuilding) {
@@ -239,7 +244,6 @@ public class GameMenuController {
                             neighbor.addDefensiveNeighbor((DefensiveBuilding) neighborBuilding);
                 }
         }
-
         assert building != null;
         tile.setBuilding(building);
         this.currentGovernment.addBuilding(building);
@@ -272,8 +276,13 @@ public class GameMenuController {
                         defensiveNeighbor.setCanBeReached(true);
                 }
             }
-        }
-        tile.setPassability(type == BuildingType.KILLING_PIT || type == DefensiveBuildingType.STAIRS);
+        } else if (type == BuildingType.STABLE)
+            this.currentGovernment.addHorse(4);
+
+        tile.setPassability(type == BuildingType.KILLING_PIT || type == DefensiveBuildingType.STAIRS ||
+                type == BuildingType.BARRACKS || type == BuildingType.MERCENARY_POST ||
+                type == BuildingType.ENGINEER_GUILD || type == BuildingType.TUNNELER_GUILD ||
+                type == DefensiveBuildingType.SMALL_GATEHOUSE || type == DefensiveBuildingType.LARGE_GATEHOUSE);
         return Message.DROP_BUILDING_SUCCESS.toString();
     }
 
@@ -370,6 +379,9 @@ public class GameMenuController {
 
         if (count < currentGovernment.getItemAmount(armor) || count < currentGovernment.getItemAmount(weapon))
             return Message.NOT_ENOUGH_RESOURCE.toString();
+
+        if (troopType.getAnimal() != null && count < currentGovernment.getHorseCount())
+            return Message.NOT_ENOUGH_HORSE.toString();
 
         currentGovernment.removeItem(armor, count);
         currentGovernment.removeItem(weapon, count);
@@ -530,7 +542,6 @@ public class GameMenuController {
                 remainingGovernments.add(government);
             else government.destroy();
         }
-        this.currentGame.setGovernments(remainingGovernments);
 
         if (remainingGovernments.size() > 1 && this.currentGame.getTurnNumber() < this.currentGame.getTurns())
             return null;

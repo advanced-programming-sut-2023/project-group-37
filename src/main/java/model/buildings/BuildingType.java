@@ -7,12 +7,9 @@ import java.util.ArrayList;
 
 public enum BuildingType {
 
-    // hitpoints are : 150 250 350 450
-
     // Processing:
-    // TODO: handle stable as processing when horse defined!
-    // TODO: define wall, stairs!
-//    STABLE(400, 250, Item.WOOD, 20),
+    STABLE("stable", 400, 250, Item.WOOD, 20, null, 0,
+            Item.HORSE, 4, 0, false, false, false),
     APPLE_ORCHARD("apple orchard", 150, Item.WOOD, 5, Item.APPLE, 4,
             1, false, false, false),
     DIARY_FARMER("diary farmer", 150, Item.WOOD, 10, Item.CHEESE, 4,
@@ -44,7 +41,6 @@ public enum BuildingType {
     BLACKSMITH("blacksmith", 200, 150, Item.WOOD, 20, Item.IRON,
             1, 1, Item.SWORD, Item.MACE, 1, 1,
             false, false, false),
-    // TODO: rawMaterialUses is related to product mode!
     FLETCHER("fletcher", 100, 150, Item.WOOD, 20, Item.WOOD,
             2, 3, Item.BOW, Item.CROSSBOW, 1, 1,
             false, false, false),
@@ -65,26 +61,21 @@ public enum BuildingType {
             false, false),
     HOVEL("hovel", 150, Item.WOOD, 6, false, false,
             false),
-    //    CHAPEL(250, null, 0),
     CHURCH("church", 500, null, 0, false,
             false, false),
     CATHEDRAL("cathedral", 1000, null, 0, false,
             false, false),
-//    GOOD_THINGS("good things", 25, null, 0),
-//    BAD_THINGS("bad things", 45, null, 0),
-    // TODO: I set a dummy hp of 1 not to be removed!
+    // I set a dummy hp of 1 not to be removed!
     KILLING_PIT("killing pit", 1, Item.WOOD, 6, true, true,
             false),
     OIL_SMELTER("oil smelter", 100, Item.IRON, 10, 1, true,
             false, false),
     CAGED_WAR_DOGS("caged war dogs", 100, 150, Item.WOOD, 10, 0,
             false, false, false),
-    // TODO: name is null because only we can create it!
     SIEGE_TENT("", 150, null, 0, true,
             false, false),
     TUNNEL_ENTRANCE("tunnel entrance", 150, null, 0, true,
             false, false),
-
     // Our stockpile has hitpoints & can be destroyed!
     STOCKPILE("stockpile", 250, 150),
     GRANARY("granary", 250, 250),

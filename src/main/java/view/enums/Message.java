@@ -87,6 +87,7 @@ public enum Message {
     TEXTURE_CHANGED_SUCCESSFULLY("Texture changed successfully!"),
     GAME_END_ALL_DESTROYED("Game ended; All governments are destroyed!"),
     GAME_END_WITH_WINNER("Game ended; winner: "),
+    NOT_ENOUGH_HORSE("Not enough horse!"),
 
     // MapMenu:
 
@@ -135,7 +136,9 @@ public enum Message {
     CANCEL_DIG_MOAT_SUCCESS("Dig moat canceled successfully!"),
     NO_OIL_SMELTER("You have to build an oil smelter first!"),
 
-    // BuildingMenu:,
+    // BuildingMenu:
+    INCORRECT_BUILDING("Incorrect building type for this action!"),
+    CREATE_UNIT_SUCCESSFUL("Unit created successfully!"),
     TILE_IS_NOT_YOURS("The tile is not in your territory!"),
     BUILDING_NOT_YOURS("Building is not yours!"),
     NO_BUILDING_IN_TILE("No building in the tile!"),

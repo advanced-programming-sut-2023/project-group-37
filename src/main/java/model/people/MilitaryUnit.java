@@ -1,5 +1,6 @@
 package model.people;
 
+import controller.MultiMenuFunctions;
 import model.buildings.Building;
 import model.buildings.BuildingType;
 import model.buildings.DefensiveBuilding;
@@ -42,6 +43,10 @@ public abstract class MilitaryUnit {
         return this.loyalty;
     }
 
+    public int getDamage() {
+        return (int) (this.damage * (1 - (double)this.loyalty.getFearRate() / 6)) + 1;
+    }
+
     public int getHitpoints() {
         return hitpoints;
     }
@@ -50,7 +55,9 @@ public abstract class MilitaryUnit {
         this.hitpoints = hitpoints;
     }
 
-    public int getRange() {
+    public double getRange() {
+        if (this.location.getBuilding() instanceof DefensiveBuilding defensiveBuilding)
+            return defensiveBuilding.getDefensiveType().getRangeRate() * this.range;
         return this.range;
     }
 
@@ -61,17 +68,15 @@ public abstract class MilitaryUnit {
     public void attack() {
         if (this instanceof MilitaryMachine) {
             if (((MilitaryMachine) this).getType() == MilitaryMachineType.FIRE_BALLISTA)
-                target.receiveDamage(this.damage, this.loyalty);
+                target.receiveDamage(this.getDamage(), this.loyalty);
             else if (((MilitaryMachine) this).getType() == MilitaryMachineType.SIEGE_TOWER) {
                 if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
                     defensiveBuilding.setCanBeReached(true);
                     defensiveBuilding.setHasLadderAttached(true);
                 }
-            }
-            else if (((MilitaryMachine) this).getType() != MilitaryMachineType.PORTABLE_SHIELD)
-                target.receiveBuildingDamage(this.damage, this.loyalty);
-        }
-        else {
+            } else if (((MilitaryMachine) this).getType() != MilitaryMachineType.PORTABLE_SHIELD)
+                target.receiveBuildingDamage(this.getDamage(), this.loyalty);
+        } else {
             Troop troop = (Troop) this;
             if (troop.getType() == TroopType.LADDERMAN) {
                 if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
@@ -80,13 +85,15 @@ public abstract class MilitaryUnit {
                     this.location.getMilitaryUnits().remove(this);
                     this.loyalty.getMilitaryUnits().remove(this);
                 }
-            }
-            else if (troop.getType() == TroopType.TUNNELER) {
+            } else if (troop.getType() == TroopType.TUNNELER) {
                 if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
-                    defensiveBuilding.destroy();
+                    if (MultiMenuFunctions.routeFinder(this.location, target, location.getTerritory().getMap()) != null) {
+                        defensiveBuilding.destroy();
+                        this.location.getMilitaryUnits().remove(this);
+                        this.loyalty.getMilitaryUnits().remove(this);
+                    }
                 }
-            }
-            else target.receiveDamage(this.damage, this.loyalty);
+            } else target.receiveDamage(this.getDamage(), this.loyalty);
         }
     }
 
@@ -145,8 +152,7 @@ public abstract class MilitaryUnit {
             if (hasKillingPit) {
                 this.loyalty.getMilitaryUnits().remove(this);
                 this.location.getMilitaryUnits().remove(this);
-            }
-            else {
+            } else {
 
                 this.location.getMilitaryUnits().remove(this);
                 this.location = route.get(speed);
@@ -222,10 +228,9 @@ public abstract class MilitaryUnit {
             index += speed;
             this.location = patrolRoute.get(index);
 
-            if (index == patrolRoute.size()-1)
+            if (index == patrolRoute.size() - 1)
                 patrolTile = 0;
-        }
-        else if (patrolTile == 0) {
+        } else if (patrolTile == 0) {
             if (speed > index)
                 speed = index;
 

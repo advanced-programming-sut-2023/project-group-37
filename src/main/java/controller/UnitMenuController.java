@@ -7,7 +7,6 @@ import model.game.Tile;
 import model.people.*;
 import view.enums.Message;
 
-import javax.ws.rs.core.Link;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
@@ -100,6 +99,14 @@ public class UnitMenuController {
 
         if (route == null)
             return Message.NO_ROUTS_FOUND.toString();
+
+        if (destination.getBuilding() != null) {
+            if (destination.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
+                if (defensiveBuilding.getType().getCapacity() < defensiveBuilding.getLocation().getMilitaryUnits().size()
+                        + currentUnit.size())
+                    return Message.NOT_ENOUGH_SPACE.toString();
+            }
+        }
 
         for (MilitaryUnit militaryUnit : this.currentUnit)
             militaryUnit.setRoute(route);
@@ -260,7 +267,6 @@ public class UnitMenuController {
         if (!this.isUnitOfType(TroopType.TUNNELER))
             return Message.UNIT_NOT_TUNNELER;
 
-        // TODO: exclude killing pit later
         Tile location = this.currentGame.getMap().getTileByLocation(x, y);
         if (this.currentLocation.getBuilding() != null || ((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.WALL &&
                 ((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.LOOKOUT_TOWER &&
@@ -281,13 +287,11 @@ public class UnitMenuController {
     }
 
     public Message buildEquipment(Matcher matcher) {
-        // TODO: handle quotation erfan
-
         if (!this.isUnitOfType(TroopType.ENGINEER))
             return Message.UNIT_NOT_ENGINEER;
 
         MilitaryMachineType type;
-        if ((type = MilitaryMachineType.getMilitaryMachineTypeByName(matcher.group("type"))) == null)
+        if ((type = MilitaryMachineType.getMilitaryMachineTypeByName(MultiMenuFunctions.deleteQuotations(matcher.group("type")))) == null)
             return Message.INVALID_MACHINE_TYPE;
 
         if (this.currentLocation.getBuilding() != null &&
@@ -344,8 +348,9 @@ public class UnitMenuController {
             if (unit instanceof MilitaryMachine || !((Troop) unit).getType().canDigMoat())
                 return Message.UNIT_CANNOT_DIG_MOAT;
 
+        Tile target = MultiMenuFunctions.getNearestPassableTileByLocation(destination, this.currentGame.getMap());
         LinkedList<Tile> route;
-        if ((route = MultiMenuFunctions.routeFinder(this.currentLocation, destination, this.currentGame.getMap())) == null)
+        if ((route = MultiMenuFunctions.routeFinder(this.currentLocation, target, this.currentGame.getMap())) == null)
             return Message.NO_ROUTS_FOUND;
         for (MilitaryUnit unit : this.currentUnit) {
             unit.setRoute(route);
@@ -390,13 +395,14 @@ public class UnitMenuController {
             if (unit instanceof MilitaryMachine || !((Troop) unit).getType().canDigMoat())
                 return Message.UNIT_CANNOT_DIG_MOAT;
 
+        Tile target = MultiMenuFunctions.getNearestPassableTileByLocation(destination, this.currentGame.getMap());
         LinkedList<Tile> route;
-        if ((route = MultiMenuFunctions.routeFinder(this.currentLocation, destination, this.currentGame.getMap())) == null)
+        if ((route = MultiMenuFunctions.routeFinder(this.currentLocation, target, this.currentGame.getMap())) == null)
             return Message.NO_ROUTS_FOUND;
 
         for (MilitaryUnit unit : this.currentUnit) {
             unit.setRoute(route);
-            unit.setMoatTarget(MultiMenuFunctions.getNearestPassableTileByLocation(destination, this.currentGame.getMap()));
+            unit.setMoatTarget(destination);
         }
 
         return Message.SUCCESS;

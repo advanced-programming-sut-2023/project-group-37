@@ -33,8 +33,6 @@ public class Person {
         this.location = workplace.getLocation();
     }
 
-    // TODO: handle workSpace destruction!
-
     public int getSpeed() {
         return this.speed;
     }

@@ -2,12 +2,10 @@ package model.game;
 
 import controller.GameMenuController;
 import controller.MultiMenuFunctions;
-import model.buildings.SiegeTent;
+import model.buildings.*;
 import model.people.MilitaryMachine;
 import model.people.MilitaryUnit;
 import model.people.MilitaryUnitStance;
-import model.buildings.Building;
-import model.buildings.BuildingType;
 import model.people.Troop;
 
 import java.util.ArrayList;
@@ -37,10 +35,6 @@ public class Game {
                 return government;
         }
         return null;
-    }
-
-    public void setGovernments(ArrayList<Government> governments) {
-        this.governments = governments;
     }
 
     public int getIndex() {
@@ -77,7 +71,7 @@ public class Game {
                 government.distributeFood();
                 government.receiveTax();
                 government.setPopularity(government.getPopularity() + government.getFearRate());
-                int innCount = 0, churchCount = 0, cathedralCount = 0;
+                int innCount = 0, churchCount = 0, cathedralCount = 0, stableCount = 0;
                 for (Building building : government.getBuildings()) {
                     BuildingType type = building.getType();
 
@@ -87,6 +81,8 @@ public class Game {
                         churchCount++;
                     else if (type == BuildingType.CATHEDRAL)
                         cathedralCount++;
+                    else if (type == BuildingType.STABLE)
+                        stableCount++;
                     else if (building instanceof SiegeTent) {
                         MilitaryMachine machine = new MilitaryMachine(government,
                                 ((SiegeTent) building).getFormingMachine(), building.getLocation());
@@ -107,21 +103,30 @@ public class Game {
                         if (type == BuildingType.INN)
                             innCount++;
 
-                        if (type.getRawMaterial() == null)
-                            government.addItem(type.getProduct(), (int) (type.getProductProvides() *
-                                    (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1);
-                        else if (government.getItemAmount(type.getRawMaterial()) >=
-                                type.getRawMaterialUses() + type.getRawMaterialUsesForSecond()) {
+                        if ((type == BuildingType.TANNER &&
+                                this.currentTurnGovernment.getUniqueBuilding(BuildingType.TANNER) != null) || type.getRawMaterial() == null) {
+                            if (government.getFreeSpace(government.getTargetRepository(type.getProduct())) >= (int) (type.getProductProvides() *
+                                    (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1)
+                                government.addItem(type.getProduct(), (int) (type.getProductProvides() *
+                                        (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1);
+                        } else if (government.getItemAmount(type.getRawMaterial()) >=
+                                type.getRawMaterialUses() + (int) (type.getRawMaterialUsesForSecond() *
+                                        (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1) {
                             government.removeItem(type.getRawMaterial(), type.getRawMaterialUses() +
-                                    type.getRawMaterialUsesForSecond());
+                                    (int) (type.getRawMaterialUsesForSecond() *
+                                            (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1);
                             if ((type.getSecondProduct() == null && this.currentTurnGovernment.getFreeSpace
                                     (this.currentTurnGovernment.getTargetRepository(type.getProduct())) >=
-                                    type.getProductProvides()) ||
+                                    (int) (type.getProductProvides() *
+                                            (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1) ||
                                     (type.getSecondProduct() != null && this.currentTurnGovernment.getFreeSpace
                                             (this.currentTurnGovernment.getTargetRepository(type.getProduct())) >=
-                                            1 + type.getProductProvides())) {
-                                government.addItem(type.getProduct(), type.getProductProvides());
-                                government.addItem(type.getSecondProduct(), 1);
+                                            (int) ((double) this.currentTurnGovernment.getFearRate() / 6) + 1 + (type.getProductProvides() *
+                                                    (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1)) {
+                                government.addItem(type.getProduct(), (int) (type.getProductProvides() *
+                                        (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1);
+                                government.addItem(type.getSecondProduct(), (int)
+                                        ((double) this.currentTurnGovernment.getFearRate() / 6) + 1);
                             } else {
                                 government.addItem(type.getRawMaterial(), type.getRawMaterialUses() +
                                         type.getRawMaterialUsesForSecond());
@@ -129,6 +134,7 @@ public class Game {
                         }
                     }
                 }
+                government.setHorseCount(4 * stableCount);
                 government.setReligionPopularityRate(Math.max(4, (8 * churchCount + 16 * cathedralCount) / 24));
                 government.setPopularity(government.getPopularity() + Math.min(4, innCount) * 2);
                 government.setPopularity(government.getPopularity() + government.getReligionPopularityRate());
@@ -136,10 +142,10 @@ public class Game {
             }
 
             // MOVE AND STANCE:
-            int range;
+            double range;
             Tile target;
 
-            for (Government government : governments) {
+            for (Government government : this.governments) {
                 for (MilitaryUnit militaryUnit : government.getMilitaryUnits()) {
                     if (militaryUnit.isOnMove())
                         militaryUnit.move();
@@ -161,49 +167,49 @@ public class Game {
 
                                 if (Math.sqrt(i * i + j * j) < range + 0.2) {
                                     // i : + AND j : +
-                                    target = map.getTileByLocation(militaryUnit.getLocation().getX() + i,
+                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getX() + i,
                                             militaryUnit.getLocation().getY() + j);
 
                                     if (target.hasEnemy(government)) {
                                         if (MultiMenuFunctions.distance(militaryUnit.getLocation(), target) > militaryUnit.getRange() + 0.2) {
                                             militaryUnit.setRoute(MultiMenuFunctions.routeFinder(militaryUnit.getLocation(),
-                                                    MultiMenuFunctions.getMiddle(militaryUnit.getLocation(), target, map), map));
+                                                    MultiMenuFunctions.getMiddle(militaryUnit.getLocation(), target, this.map), this.map));
                                         }
                                         militaryUnit.setTarget(target);
                                         break firstFor;
                                     }
                                     // i : - AND j : +
-                                    target = map.getTileByLocation(militaryUnit.getLocation().getX() - i,
+                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getX() - i,
                                             militaryUnit.getLocation().getY() + j);
 
                                     if (target.hasEnemy(government)) {
                                         if (MultiMenuFunctions.distance(militaryUnit.getLocation(), target) > militaryUnit.getRange() + 0.2) {
                                             militaryUnit.setRoute(MultiMenuFunctions.routeFinder(militaryUnit.getLocation(),
-                                                    MultiMenuFunctions.getMiddle(militaryUnit.getLocation(), target, map), map));
+                                                    MultiMenuFunctions.getMiddle(militaryUnit.getLocation(), target, this.map), this.map));
                                         }
                                         militaryUnit.setTarget(target);
                                         break firstFor;
                                     }
                                     // i : + AND j : -
-                                    target = map.getTileByLocation(militaryUnit.getLocation().getX() + i,
+                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getX() + i,
                                             militaryUnit.getLocation().getY() - j);
 
                                     if (target.hasEnemy(government)) {
                                         if (MultiMenuFunctions.distance(militaryUnit.getLocation(), target) > militaryUnit.getRange() + 0.2) {
                                             militaryUnit.setRoute(MultiMenuFunctions.routeFinder(militaryUnit.getLocation(),
-                                                    MultiMenuFunctions.getMiddle(militaryUnit.getLocation(), target, map), map));
+                                                    MultiMenuFunctions.getMiddle(militaryUnit.getLocation(), target, this.map), this.map));
                                         }
                                         militaryUnit.setTarget(target);
                                         break firstFor;
                                     }
                                     // i : - AND j : -
-                                    target = map.getTileByLocation(militaryUnit.getLocation().getX() - i,
+                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getX() - i,
                                             militaryUnit.getLocation().getY() - j);
 
                                     if (target.hasEnemy(government)) {
                                         if (MultiMenuFunctions.distance(militaryUnit.getLocation(), target) > militaryUnit.getRange() + 0.2) {
                                             militaryUnit.setRoute(MultiMenuFunctions.routeFinder(militaryUnit.getLocation(),
-                                                    MultiMenuFunctions.getMiddle(militaryUnit.getLocation(), target, map), map));
+                                                    MultiMenuFunctions.getMiddle(militaryUnit.getLocation(), target, this.map), this.map));
                                         }
                                         militaryUnit.setTarget(target);
                                         break firstFor;
@@ -221,31 +227,26 @@ public class Game {
             }
 
             // FIGHT :
-            for (Government government : governments) {
-                for (MilitaryUnit militaryUnit : government.getMilitaryUnits()) {
+            for (Government government : this.governments)
+                for (MilitaryUnit militaryUnit : government.getMilitaryUnits())
                     militaryUnit.attack();
-                }
-            }
-            for (Government government : governments) {
+
+            for (Government government : this.governments) {
                 government.removeDeadUnits();
                 government.removeDestroyedBuildings();
             }
+            for (Government government : this.governments)
+                for (Building building : government.getBuildings())
+                    if (building instanceof DefensiveBuilding && (
+                            ((DefensiveBuilding) building).getDefensiveType() == DefensiveBuildingType.SMALL_GATEHOUSE ||
+                                    ((DefensiveBuilding) building).getDefensiveType() == DefensiveBuildingType.LARGE_GATEHOUSE))
+                        ((DefensiveBuilding) building).setOwner();
         }
-        this.index = (this.index + 1) % this.governments.size();
+        do {
+            this.index = (this.index + 1) % this.governments.size();
+        } while (this.governments.get(index).isDead());
         this.currentTurnGovernment = this.governments.get(this.index);
         this.gameMenuController.setCurrentGovernment(this.currentTurnGovernment);
-        turnNumber++;
+        this.turnNumber++;
     }
 }
-
-// Some bullshit:
-//if (type.getProductProvides() >= 3) {
-//                            government.removeItem(type.getRawMaterial(),
-//                                    (int) (((type.getRawMaterialUses() + type.getRawMaterialUsesForSecond())) *
-//                                            (1 + (double) this.currentTurnGovernment.getFearRate() / 6)) + 1);
-//                            government.addItem(type.getProduct(), (int) ((type.getProductProvides()) *
-//                                    (1 + (double) this.currentTurnGovernment.getFearRate() / 6)) + 1);
-//                            government.addItem(type.getSecondProduct(),
-//                                    (int) ((double) (this.currentTurnGovernment.getFearRate() / 6) + 1));
-//                        } else {
-//                        }

@@ -11,13 +11,7 @@ import java.util.regex.Matcher;
 
 public class RegisterMenuController {
 
-    // TODO: why these fields?
-
     private User user;
-    //private String randomPassword;
-
-    // TODO: handle countdown!
-//    private int delayTime = 0;
 
     private void saveUser() {
         User.saveUsersToFile();
@@ -84,7 +78,7 @@ public class RegisterMenuController {
         return Slogan.getRandomSlogan().toString();
     }
 
-    public String register(Matcher matcher) { //TODO : random slogan
+    public String register(Matcher matcher) {
         String username = deleteQuotations(matcher.group("username")),
                 password = deleteQuotations(matcher.group("password")),
                 email = deleteQuotations(matcher.group("email")),
@@ -129,7 +123,7 @@ public class RegisterMenuController {
         return randomMessages + Message.ASK_FOR_SECURITY_QUESTION;
     }
 
-    public String pickQuestion(Matcher matcher) { // TODO : remove user if canceled
+    public String pickQuestion(Matcher matcher) {
         int questionNumber = Integer.parseInt(matcher.group("questionNumber"));
 
         if (questionNumber > SecurityQuestion.values().length || questionNumber < 1)

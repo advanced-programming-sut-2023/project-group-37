@@ -19,7 +19,6 @@ public class Storage extends Building {
         super(loyalty, location, type);
         this.type = type;
 
-        //TODO: add items to stock based on type!
         this.stock = new HashMap<>();
         ItemCategory category = null;
         switch (this.type) {
@@ -30,7 +29,6 @@ public class Storage extends Building {
         for (Item item : Item.values())
             if (item.getCategory() == category)
                 this.stock.put(item, 0);
-        //TODO: set defaults!
     }
 
     public HashMap<Item, Integer> getStock() {

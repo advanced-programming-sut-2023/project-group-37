@@ -4,16 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Map {
-
-    // TODO: handle load maps!
     private static final ArrayList<Map> maps;
     private final String name;
     private final int size;
     private final Tile[][] field;
     private final boolean[][] tilesPassability;
     private HashMap<Integer, Territory> territories;
-
-    // TODO: should be final?
 
     static {
         maps = new ArrayList<>();
@@ -35,7 +31,6 @@ public class Map {
         this.field = map;
         this.tilesPassability = tilesPassability;
         this.territories = territories;
-        // TODO: assign territories
     }
 
     public static Map getMapByName(String name) {

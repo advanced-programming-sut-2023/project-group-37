@@ -1,5 +1,5 @@
 package model.game;
 
 public enum ItemCategory {
-    RESOURCES, FOODS, WEAPONS
+    RESOURCES, FOODS, WEAPONS, ANIMALS,
 }
