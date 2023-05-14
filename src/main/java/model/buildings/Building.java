@@ -75,7 +75,9 @@ public class Building {
     }
 
     public void destroy() {
-        this.getLoyalty().addPeasant(operators.size());
+        if (this.operators != null)
+            this.getLoyalty().addPeasant(operators.size());
+
         this.location.removeBuilding();
         this.location.removeMilitaryUnits();
         this.getLoyalty().getBuildings().remove(this);

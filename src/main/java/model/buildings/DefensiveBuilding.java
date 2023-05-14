@@ -76,4 +76,5 @@ public class DefensiveBuilding extends Building {
     public boolean isFull() {
         return super.getLocation().getMilitaryUnits().size() == this.type.getCapacity();
     }
+
 }

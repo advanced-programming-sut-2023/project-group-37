@@ -22,6 +22,7 @@ public class Tile {
     private boolean isPassable;
     private Territory territory;
     public int number;
+    private boolean hasBuilding;
 
     public Tile(int x, int y) {
         this.x = x;
@@ -31,6 +32,7 @@ public class Tile {
         this.militaryUnits = new ArrayList<>();
         this.building = null;
         this.isPassable = true;
+        this.hasBuilding = false;
     }
 
     public int getX() {
@@ -54,6 +56,9 @@ public class Tile {
     }
 
     public Building getBuilding() {
+        if (!this.hasBuilding)
+            return null;
+
         return building;
     }
 
@@ -81,11 +86,12 @@ public class Tile {
     }
 
     public void removeBuilding() {
-        this.building = null;
+        this.hasBuilding = false;
     }
 
     public void setBuilding(Building building) {
         this.building = building;
+        this.hasBuilding = true;
     }
 
     public Character getState() {

@@ -339,7 +339,17 @@ public class Government {
             if (militaryUnit.getHitpoints() < 1) {
                 this.militaryUnits.remove(index);
                 militaryUnit.getLocation().getMilitaryUnits().remove(militaryUnit);
-            } else index++;
+                continue;
+            }
+            else if (militaryUnit instanceof Troop troop) {
+                if (troop.getType() == TroopType.LADDERMAN || troop.getType() == TroopType.TUNNELER) {
+                    this.militaryUnits.remove(index);
+                    militaryUnit.getLocation().getMilitaryUnits().remove(militaryUnit);
+                    continue;
+                }
+            }
+
+            index++;
         }
     }
 

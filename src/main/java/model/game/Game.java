@@ -205,9 +205,10 @@ public class Game {
             }
 
             // FIGHT :
-            for (Government government : this.governments)
+            for (Government government : this.governments) {
                 for (MilitaryUnit militaryUnit : government.getMilitaryUnits())
                     militaryUnit.attack();
+            }
 
             for (Government government : this.governments) {
                 government.removeDeadUnits();

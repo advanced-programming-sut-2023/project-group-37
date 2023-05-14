@@ -96,7 +96,7 @@ public abstract class MilitaryUnit {
                         if (MultiMenuFunctions.routeFinder(this.location, target.get(0), location.getTerritory().getMap()) != null) {
                             defensiveBuilding.destroy();
                             this.location.getMilitaryUnits().remove(this);
-                            this.loyalty.getMilitaryUnits().remove(this);
+                            this.target.get(0).removeBuilding();
                         }
                     }
                 } else target.get(0).receiveDamage(this.getDamage(), this.loyalty);
