@@ -114,7 +114,7 @@ public class Game {
                             government.removeItem(type.getRawMaterial(), type.getRawMaterialUses() +
                                     (int) (type.getRawMaterialUsesForSecond() *
                                             (1 - (double) government.getFearRate() / 6) + 1));
-                            if ((type.getSecondProduct() == null && this.currentTurnGovernment.getFreeSpace
+                            if ((type.getSecondProduct() == null && government.getFreeSpace
                                     (government.getTargetRepository(type.getProduct())) >=
                                     (int) (type.getProductProvides() *
                                             (1 - (double) government.getFearRate() / 6) + 1)) ||
