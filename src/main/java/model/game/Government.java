@@ -151,6 +151,14 @@ public class Government {
         return this.foodRate;
     }
 
+    public void setFoodRate(int foodRate) {
+        this.foodRate = foodRate;
+    }
+
+    public int getFearRate() {
+        return this.fearRate;
+    }
+
     public void setFearRate(int fearRate) {
         this.fearRate = fearRate;
     }
@@ -159,16 +167,8 @@ public class Government {
         return this.taxRate;
     }
 
-    public void setFoodRate(int foodRate) {
-        this.foodRate = foodRate;
-    }
-
     public void setTaxRate(int taxRate) {
         this.taxRate = taxRate;
-    }
-
-    public int getFearRate() {
-        return this.fearRate;
     }
 
     public int getReligionPopularityRate() {
