@@ -517,13 +517,13 @@ public class GameMenuController {
 
     public String showInfo() {
         return "All Info:\n" + "Username: " + this.currentGovernment.getUser().getUsername() +
-                "\nGold amount:" + this.currentGovernment.getGold() +
+                "\nGold amount: " + this.currentGovernment.getGold() +
                 "\nFood rate: " + this.currentGovernment.getFoodRate() +
                 "\nTax rate: " + this.currentGovernment.getTaxRate() +
-                "\nFear rate:" + this.currentGovernment.getFearRate() +
-                "\nPopularity:" + this.currentGovernment.getPopularity() +
-                "\nPopulation:" + this.currentGovernment.getPeople().size() +
-                "\nNumber of buildings:" + this.currentGovernment.getBuildings().size();
+                "\nFear rate: " + this.currentGovernment.getFearRate() +
+                "\nPopularity: " + this.currentGovernment.getPopularity() +
+                "\nPopulation: " + this.currentGovernment.getPeople().size() +
+                "\nNumber of buildings: " + this.currentGovernment.getBuildings().size();
     }
 
     public String enterTradeMenu() {
