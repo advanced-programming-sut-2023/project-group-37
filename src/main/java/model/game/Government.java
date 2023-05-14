@@ -191,8 +191,7 @@ public class Government {
             this.granary.add((Storage) building);
         else if (building.getType() == BuildingType.ARMORY)
             this.armory.add((Storage) building);
-        else
-            this.buildings.add(building);
+        this.buildings.add(building);
         score += 10;
     }
 
@@ -203,13 +202,15 @@ public class Government {
 
         int totalFoodNeeded = (int) (this.people.size() * foodPerPerson), foodToDistribute;
 
+        ArrayList<Item> typesOfFoods = new ArrayList<>();
 
         OUTER:
         for (int i = this.granary.size() - 1; i >= 0; i--) {
             for (java.util.Map.Entry<Item, Integer> entry : granary.get(i).getStock().entrySet()) {
                 if (totalFoodNeeded == 0)
                     break OUTER;
-
+                if (!typesOfFoods.contains(entry.getKey()) && entry.getValue() > 0)
+                    typesOfFoods.add(entry.getKey());
                 foodToDistribute = Math.min(entry.getValue(), totalFoodNeeded);
                 entry.setValue(entry.getValue() - foodToDistribute);
                 totalFoodNeeded -= foodToDistribute;
@@ -218,6 +219,8 @@ public class Government {
 
         if (totalFoodNeeded != 0)
             this.foodRate = -2;
+        else
+            this.popularity += typesOfFoods.size() - 1;
 
         this.popularity += 4 * this.foodRate;
     }
@@ -256,9 +259,8 @@ public class Government {
             return 0;
 
         int freeSpace = 0;
-        for (Storage storage : repository) {
+        for (Storage storage : repository)
             freeSpace += storage.getFreeSpace();
-        }
         return freeSpace;
     }
 
@@ -267,9 +269,8 @@ public class Government {
             return 0;
 
         int itemAmount = 0;
-        for (Storage storage : getTargetRepository(item)) {
+        for (Storage storage : getTargetRepository(item))
             itemAmount += storage.getItemAmount(item);
-        }
 
         return itemAmount;
     }

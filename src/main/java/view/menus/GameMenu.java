@@ -2,6 +2,7 @@ package view.menus;
 
 import controller.GameMenuController;
 import controller.MultiMenuFunctions;
+import model.game.ItemCategory;
 import view.enums.Result;
 import model.game.Tile;
 import view.enums.Command;
@@ -42,7 +43,11 @@ public class GameMenu {
             else if (command.matches(Command.SHOW_POPULARITY_FACTORS.toString()))
                 System.out.println(this.controller.showPopularityFactors());
             else if (command.matches(Command.SHOW_FOOD_LIST.toString()))
-                System.out.println(this.controller.showFoodList());
+                System.out.println(this.controller.showItemList(ItemCategory.FOODS));
+            else if (command.matches(Command.SHOW_RESOURCE_LIST.toString()))
+                System.out.println(this.controller.showItemList(ItemCategory.RESOURCES));
+            else if (command.matches(Command.SHOW_ARM_LIST.toString()))
+                System.out.println(this.controller.showItemList(ItemCategory.WEAPONS));
             else if ((matcher = Command.FOOD_RATE.getMatcher(command)) != null)
                 System.out.println(this.controller.setFoodRate(matcher));
             else if (command.matches(Command.FOOD_RATE_SHOW.toString()))
@@ -67,7 +72,6 @@ public class GameMenu {
             } else if ((matcher = Command.SELECT_UNIT.getMatcher(command)) != null) {
                 if (selectUnit(matcher))
                     return Result.ENTER_UNIT_MENU;
-
             } else if (command.matches(Command.ENTER_SHOP_MENU.toString())) {
                 String message;
                 System.out.println(message = this.controller.enterShopMenu());
