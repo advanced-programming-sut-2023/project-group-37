@@ -76,7 +76,6 @@ public enum Message {
     // GameMenu:
     ENTERED_MAP_MENU("Entered map menu!"),
     ENTERED_BUILDING_MENU("Entered Building menu!"),
-    ENTERED_UNIT_MENU("Entered unit menu!"),
     MARKET_NOT_EXISTS("Market not exists!"),
     ENGINEER_GUILD_NOT_EXISTS("Engineer Guild not exists!"),
     TUNNELER_GUILD_NOT_EXISTS("Tunneler Guild not exists!"),
@@ -106,6 +105,7 @@ public enum Message {
     TRADE_SUCCESS("The trade was successfully completed!"),
 
     // UnitMenu:
+    UNIT_STOPPED("Unit stopped!"),
     NO_ROUTS_FOUND("Cant move to the address!"),
     UNIT_NOT_EXISTS("There are no units on address!"),
     UNIT_SELECTED("Unit selected and entered unitMenu!"),
@@ -156,7 +156,7 @@ public enum Message {
     TILE_ALREADY_HAS_BUILDING("Tile already has a building!"),
     NOT_IN_TERRITORY("You can place defensive buildings only in your own territory!"),
     NOT_ENOUGH_PEASANT("Peasant not enough!"),
-    NOT_ENOUGH_RESOURCE(" not enough!"),
+    NOT_ENOUGH_RESOURCE("Not enough resources!"),
     BUILDING_IS_UNIQUE("This building can be placed once!"),
     STORAGE_NOT_NEIGHBOR("You have to place this storage near the other ones!"),
     DROP_BUILDING_SUCCESS("Building has been dropped successfully!"),

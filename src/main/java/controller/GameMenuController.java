@@ -377,11 +377,18 @@ public class GameMenuController {
         int goldCost = troopType.getCost() * count;
         Item armor = troopType.getArmor(), weapon = troopType.getWeapon();
 
-        if (goldCost < currentGovernment.getGold())
+        if (goldCost > currentGovernment.getGold())
             return Message.NOT_ENOUGH_GOLD.toString();
 
-        if (count < currentGovernment.getItemAmount(armor) || count < currentGovernment.getItemAmount(weapon))
-            return Message.NOT_ENOUGH_RESOURCE.toString();
+        if (armor != null) {
+            if (count > currentGovernment.getItemAmount(armor))
+                return Message.NOT_ENOUGH_RESOURCE.toString();
+        }
+
+        if (weapon != null) {
+            if (count > currentGovernment.getItemAmount(weapon))
+                return Message.NOT_ENOUGH_RESOURCE.toString();
+        }
 
         if (troopType.getAnimal() != null && count < currentGovernment.getHorseCount())
             return Message.NOT_ENOUGH_HORSE.toString();
@@ -517,6 +524,8 @@ public class GameMenuController {
 
     public String showInfo() {
         return "All Info:\n" + "Username: " + this.currentGovernment.getUser().getUsername() +
+                "\nTerritory location: " + currentGovernment.getTerritory().getKeep().getX() +
+                ", " +currentGovernment.getTerritory().getKeep().getY()+
                 "\nGold amount: " + this.currentGovernment.getGold() +
                 "\nFood rate: " + this.currentGovernment.getFoodRate() +
                 "\nTax rate: " + this.currentGovernment.getTaxRate() +

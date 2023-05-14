@@ -27,20 +27,22 @@ public class UnitMenu {
             if ((matcher = Command.SELECT_TYPE_UNIT.getMatcher(command)) != null)
                 System.out.println(controller.selectUnitWithType(MultiMenuFunctions.deleteQuotations(matcher.group("type"))));
 
+            else if (command.matches(Command.STOP.toString()))
+                System.out.println(controller.stop());
+
             else if ((matcher = Command.MOVE_UNIT.getMatcher(command)) != null) {
-                try {
-                    System.out.println(this.controller.moveUnit(Integer.parseInt(matcher.group("x")),
-                            Integer.parseInt(matcher.group("y"))));
-                } catch (Exception ex) {
+                if (matcher.group("x") == null || matcher.group("y") == null)
                     System.out.println(Message.EMPTY_FIELD);
-                }
+                else System.out.println(controller.moveUnit(Integer.parseInt(matcher.group("x")),
+                        Integer.parseInt(matcher.group("y"))));
+
             } else if ((matcher = Command.PATROL_UNIT.getMatcher(command)) != null) {
-                try {
-                    System.out.println(this.controller.patrolUnit(Integer.parseInt(matcher.group("x1")), Integer.parseInt(matcher.group("y1")),
-                            Integer.parseInt(matcher.group("x2")), Integer.parseInt(matcher.group("y2"))));
-                } catch (Exception ex) {
+                if (matcher.group("x1") == null || matcher.group("x2") == null || matcher.group("y1") == null ||
+                matcher.group("y2") == null)
                     System.out.println(Message.EMPTY_FIELD);
-                }
+                else System.out.println(this.controller.patrolUnit(Integer.parseInt(matcher.group("x1")), Integer.parseInt(matcher.group("y1")),
+                        Integer.parseInt(matcher.group("x2")), Integer.parseInt(matcher.group("y2"))));
+
             } else if ((matcher = Command.SET_UNIT.getMatcher(command)) != null)
                 System.out.println(this.controller.setUnitState(MultiMenuFunctions.deleteQuotations(matcher.group("state"))));
             else if ((matcher = Command.ATTACK.getMatcher(command)) != null) {

@@ -40,33 +40,60 @@ public class MultiMenuFunctions {
     private static ArrayList<Tile> setNextNumber(ArrayList<Tile> targets, int nextNumber, boolean[][] tilePassability, Map map) {
         ArrayList<Tile> result = new ArrayList<>();
         Tile nextTile;
-        int x, y;
+        int x,y;
 
         for (Tile tile : targets) {
-            for (int i = -1; i < 2; i++) {
-                for (int j = -1; j < 2; j++) {
-                    if (i != 0 || j != 0) {
-                        x = tile.getX() + i;
-                        y = tile.getY() + j;
-                        nextTile = map.getTileByLocation(x, y);
-                        if (nextTile != null) {
-                            if (nextTile.number == 0 && tilePassability[x][y]) {
-                                nextTile.number = nextNumber;
-                                result.add(nextTile);
-                            }
-                        }
-                    }
+            x = tile.getX(); y = tile.getY();
+
+            nextTile = map.getTileByLocation(x+1,y);
+            if (nextTile != null) {
+                if (nextTile.number == 0 && tilePassability[x+1][y]) {
+                    nextTile.number = nextNumber;
+                    result.add(nextTile);
+                }
+            }
+            nextTile = map.getTileByLocation(x-1,y);
+            if (nextTile != null) {
+                if (nextTile.number == 0 && tilePassability[x-1][y]) {
+                    nextTile.number = nextNumber;
+                    result.add(nextTile);
+                }
+            }
+            nextTile = map.getTileByLocation(x,y+1);
+            if (nextTile != null) {
+                if (nextTile.number == 0 && tilePassability[x][y+1]) {
+                    nextTile.number = nextNumber;
+                    result.add(nextTile);
+                }
+            }
+            nextTile = map.getTileByLocation(x,y-1);
+            if (nextTile != null) {
+                if (nextTile.number == 0 && tilePassability[x][y-1]) {
+                    nextTile.number = nextNumber;
+                    result.add(nextTile);
                 }
             }
         }
         return result;
     }
 
+    private static boolean isNeighbor(Tile neighbor, Tile tile) {
+        if (tile.getX() - neighbor.getX() == 1 || neighbor.getX() - tile.getX() == 1)
+            return tile.getY() == neighbor.getY();
+
+        if (tile.getY() - neighbor.getY() == 1 || neighbor.getY() - tile.getY() == 1)
+            return tile.getX() == neighbor.getX();
+
+        return false;
+    }
+
     private static Tile getNeighbor(Tile tile, ArrayList<Tile> targets) {
         for (Tile neighbor : targets) {
-            if (Math.abs((neighbor.getY()) + neighbor.getX()) - (tile.getY()) + tile.getX() == 1)
+
+            if (isNeighbor(neighbor, tile))
                 return neighbor;
         }
+        System.out.println(tile.getX() + " " + tile.getY() + " " + tile.number);
         return null;
     }
 
@@ -86,7 +113,7 @@ public class MultiMenuFunctions {
         if (targets.get(targets.size() - 1).size() == 0)
             return routeFinder2(origin, destination, map);
 
-        return getFinalRoute(origin, destination, targets, number);
+        return getFinalRoute(origin, destination, targets);
     }
 
     private static LinkedList<Tile> routeFinder2(Tile origin, Tile destination, Map map) {
@@ -126,20 +153,20 @@ public class MultiMenuFunctions {
         if (targets.get(targets.size() - 1).size() == 0)
             return null;
 
-        return getFinalRoute(origin, destination, targets, number);
+        return getFinalRoute(origin, destination, targets);
     }
 
-    private static LinkedList<Tile> getFinalRoute(Tile origin, Tile destination, ArrayList<ArrayList<Tile>> targets, int number) {
+    private static LinkedList<Tile> getFinalRoute(Tile origin, Tile destination, ArrayList<ArrayList<Tile>> targets) {
         LinkedList<Tile> result = new LinkedList<>();
         result.add(0, origin);
-        result.add(number, destination);
+        result.add(1, destination);
 
         Tile preTile;
         Tile tile = destination;
-        int index = number - 1;
+        int index = targets.size() -2;
         while (index > 0) {
-            preTile = getNeighbor(tile, targets.get(number));
-            result.add(index, preTile);
+            preTile = getNeighbor(tile, targets.get(index));
+            result.add(1, preTile);
             tile = preTile;
             index--;
         }

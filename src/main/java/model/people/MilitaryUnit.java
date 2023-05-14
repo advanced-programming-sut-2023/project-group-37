@@ -66,35 +66,44 @@ public abstract class MilitaryUnit {
     }
 
     public void attack() {
-        if (this instanceof MilitaryMachine) {
-            if (((MilitaryMachine) this).getType() == MilitaryMachineType.FIRE_BALLISTA)
-                target.receiveDamage(this.getDamage(), this.loyalty);
-            else if (((MilitaryMachine) this).getType() == MilitaryMachineType.SIEGE_TOWER) {
-                if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
-                    defensiveBuilding.setCanBeReached(true);
-                    defensiveBuilding.setHasLadderAttached(true);
-                }
-            } else if (((MilitaryMachine) this).getType() != MilitaryMachineType.PORTABLE_SHIELD)
-                target.receiveBuildingDamage(this.getDamage(), this.loyalty);
-        } else {
-            Troop troop = (Troop) this;
-            if (troop.getType() == TroopType.LADDERMAN) {
-                if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
-                    defensiveBuilding.setCanBeReached(true);
-                    defensiveBuilding.setHasLadderAttached(true);
-                    this.location.getMilitaryUnits().remove(this);
-                    this.loyalty.getMilitaryUnits().remove(this);
-                }
-            } else if (troop.getType() == TroopType.TUNNELER) {
-                if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
-                    if (MultiMenuFunctions.routeFinder(this.location, target, location.getTerritory().getMap()) != null) {
-                        defensiveBuilding.destroy();
+        if (target != null) {
+            if (this instanceof MilitaryMachine) {
+                if (((MilitaryMachine) this).getType() == MilitaryMachineType.FIRE_BALLISTA)
+                    target.receiveDamage(this.getDamage(), this.loyalty);
+                else if (((MilitaryMachine) this).getType() == MilitaryMachineType.SIEGE_TOWER) {
+                    if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
+                        defensiveBuilding.setCanBeReached(true);
+                        defensiveBuilding.setHasLadderAttached(true);
+                    }
+                } else if (((MilitaryMachine) this).getType() != MilitaryMachineType.PORTABLE_SHIELD)
+                    target.receiveBuildingDamage(this.getDamage(), this.loyalty);
+            } else {
+                Troop troop = (Troop) this;
+                if (troop.getType() == TroopType.LADDERMAN) {
+                    if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
+                        defensiveBuilding.setCanBeReached(true);
+                        defensiveBuilding.setHasLadderAttached(true);
                         this.location.getMilitaryUnits().remove(this);
                         this.loyalty.getMilitaryUnits().remove(this);
                     }
-                }
-            } else target.receiveDamage(this.getDamage(), this.loyalty);
+                } else if (troop.getType() == TroopType.TUNNELER) {
+                    if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
+                        if (MultiMenuFunctions.routeFinder(this.location, target, location.getTerritory().getMap()) != null) {
+                            defensiveBuilding.destroy();
+                            this.location.getMilitaryUnits().remove(this);
+                            this.loyalty.getMilitaryUnits().remove(this);
+                        }
+                    }
+                } else target.receiveDamage(this.getDamage(), this.loyalty);
+            }
         }
+    }
+
+    public void stop() {
+        this.target = null;
+        this.moatTarget = null;
+        this.route = null;
+        this.patrolRoute = null;
     }
 
     public int takeDamage(int damage) {
