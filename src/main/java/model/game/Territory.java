@@ -51,6 +51,10 @@ public class Territory {
         return this.village;
     }
 
+    public int getTerritoryNumber() {
+        return territoryNumber;
+    }
+
     public Tile getFirstStockpileLocation() {
         return this.firstStockpileLocation;
     }

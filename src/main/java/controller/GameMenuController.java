@@ -39,7 +39,7 @@ public class GameMenuController {
         this.currentGovernment = government;
         this.shopMenuController.setGovernment(government);
         this.tradeMenuController.setGovernment(government);
-        this.mapMenuController.setGovernment(government);
+        this.mapMenuController.setCurrentGovernment(government);
         this.unitMenuController.setCurrentGovernment(government);
         this.buildingMenuController.setCurrentGovernment(government);
     }
@@ -172,7 +172,7 @@ public class GameMenuController {
 
         // Check territory for defensiveBuildings
         if (type instanceof DefensiveBuildingType &&
-                this.currentGovernment.getTerritory() != tile.getTerritory())
+                this.currentGovernment.getTerritory().getTerritoryNumber() != tile.getTerritory().getTerritoryNumber())
             return Message.NOT_IN_TERRITORY.toString();
 
         // Check enough gold and resource:
@@ -346,6 +346,9 @@ public class GameMenuController {
         Tile tile;
         if ((tile = this.currentGame.getMap().getTileByLocation(x, y)) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
+
+        if (tile.getTerritory().getTerritoryNumber() != this.currentGovernment.getTerritory().getTerritoryNumber())
+            return Message.TILE_IS_NOT_YOURS.toString();
 
         TroopType troopType = TroopType.getTroopTypeByName(type);
         if (troopType == null)
