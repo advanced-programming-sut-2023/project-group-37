@@ -229,9 +229,9 @@ public class Government {
 
         if (this.people.size() * taxPerPerson > this.gold)
             this.taxRate = 0;
-        this.gold = Math.min(0, this.gold + (int) (this.people.size() * taxPerPerson));
+        this.gold = Math.max(0, this.gold + (int) (this.people.size() * taxPerPerson));
 
-        if (Math.abs(this.popularity) <= 4)
+        if (Math.abs(this.taxRate) <= 4)
             this.popularity += -2 * this.taxRate + (this.taxRate > 0 ? 0 : 1);
         else
             this.popularity += -4 * this.taxRate + 8;

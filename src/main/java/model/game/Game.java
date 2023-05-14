@@ -135,7 +135,7 @@ public class Game {
                     }
                 }
                 government.setHorseCount(4 * stableCount);
-                government.setReligionPopularityRate(Math.max(4, (8 * churchCount + 16 * cathedralCount) / 24));
+                government.setReligionPopularityRate(Math.min(4, (8 * churchCount + 16 * cathedralCount) / 24));
                 government.setPopularity(government.getPopularity() + Math.min(4, innCount) * 2);
                 government.setPopularity(government.getPopularity() + government.getReligionPopularityRate());
                 government.setPopularity(government.getPopularity() > 100 ? 100 : Math.max(government.getPopularity(), 0));
