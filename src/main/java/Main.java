@@ -1,6 +1,6 @@
 import controller.Controller;
 
-public class Main {//TODO : change password and forgot password!
+public class Main {
     public static void main(String[] args) {
         new Controller().run();
     }
