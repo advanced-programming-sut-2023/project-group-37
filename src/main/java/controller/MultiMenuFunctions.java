@@ -101,6 +101,9 @@ public class MultiMenuFunctions {
         map.resetNumbers();
         boolean[][] tilePassability = map.getTilesPassability();
 
+        if (!destination.isPassable())
+            return routeFinder2(origin, destination, map);
+
         ArrayList<ArrayList<Tile>> targets = new ArrayList<>();
         targets.add(new ArrayList<>());
         targets.get(0).add(origin);
@@ -140,6 +143,8 @@ public class MultiMenuFunctions {
                 }
             }
         }
+        if (!tilePassability[destination.getX()][destination.getY()])
+            return null;
 
         ArrayList<ArrayList<Tile>> targets = new ArrayList<>();
         targets.add(new ArrayList<>());
