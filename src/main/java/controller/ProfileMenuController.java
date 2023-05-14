@@ -1,6 +1,7 @@
 package controller;
 
 import model.user.User;
+import model.utils.PasswordHashing;
 import view.enums.Command;
 import view.enums.Message;
 
@@ -65,8 +66,8 @@ public class ProfileMenuController {
 
         if (!newPassword.equals(password))
             return Message.CHANGE_PASSWORD_ERROR5.toString();
-
-        currentUser.changePassword(newPassword);
+        String encoded = PasswordHashing.encode(newPassword);
+        currentUser.setHashedPassword(encoded);
         return Message.CHANGE_PASSWORD.toString();
     }
 
