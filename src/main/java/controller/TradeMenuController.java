@@ -63,10 +63,10 @@ public class TradeMenuController {
 
     public String showNewTrades() {
         StringBuilder newTrades = new StringBuilder();
-        newTrades.append("Here's the trades you have received in this turn:\n");
+        newTrades.append("Here's the trades you have received in last turn:\n");
         int id = 1;
         for (TradeRequest request : TradeRequest.getRequestsByReceiver(government)) {
-            if (request.getTime() == game.getIndex() && !request.isDone()) {
+            if ((request.getTime() == (game.getIndex()-1)) && !request.isDone()) {
                 newTrades.append("id: ").append(id).append(", Sender: ").append(request.getSender().getUser().getUsername())
                         .append(", Type: ").append(request.getItem().getName()).append(", Amount: ")
                         .append(request.getItemAmount())
