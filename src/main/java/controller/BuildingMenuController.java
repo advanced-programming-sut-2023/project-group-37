@@ -76,11 +76,18 @@ public class BuildingMenuController {
         int goldCost = troopType.getCost() * count;
         Item armor = troopType.getArmor(), weapon = troopType.getWeapon();
 
-        if (goldCost < currentGovernment.getGold())
+        if (goldCost > currentGovernment.getGold())
             return Message.NOT_ENOUGH_GOLD.toString();
 
-        if (count < currentGovernment.getItemAmount(armor) || count < currentGovernment.getItemAmount(weapon))
-            return Message.NOT_ENOUGH_RESOURCE.toString();
+        if (armor != null) {
+            if (count > currentGovernment.getItemAmount(armor))
+                return Message.NOT_ENOUGH_RESOURCE.toString();
+        }
+
+        if (weapon != null) {
+            if (count > currentGovernment.getItemAmount(weapon))
+                return Message.NOT_ENOUGH_RESOURCE.toString();
+        }
 
         currentGovernment.removeItem(armor, count);
         currentGovernment.removeItem(weapon, count);

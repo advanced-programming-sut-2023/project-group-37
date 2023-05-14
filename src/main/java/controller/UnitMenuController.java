@@ -114,12 +114,12 @@ public class UnitMenuController {
         return Message.SUCCESS.toString();
     }
 
-    public Message patrolUnit(int x1, int y1, int x2, int y2) {
+    public String patrolUnit(int x1, int y1, int x2, int y2) {
         Tile tile1 = this.currentGame.getMap().getTileByLocation(x1, y1);
         Tile tile2 = this.currentGame.getMap().getTileByLocation(x2, y2);
 
         if (tile1 == null || tile2 == null)
-            return Message.ADDRESS_OUT_OF_BOUNDS;
+            return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
         if (tile1 != this.currentLocation) {
             LinkedList<Tile> route = MultiMenuFunctions.routeFinder(this.currentLocation, tile1, this.currentGame.getMap());
@@ -132,7 +132,7 @@ public class UnitMenuController {
         for (MilitaryUnit militaryUnit : this.currentUnit)
             militaryUnit.setPatrol(patrolRoute);
 
-        return Message.SUCCESS;
+        return "Patrol target set to :" + x1 + ", " + y1 + "and " + x2 + ", " +y2;
     }
 
     public String cancelMove() {
@@ -144,7 +144,7 @@ public class UnitMenuController {
             }
         }
         if (isOnMove)
-            return Message.SUCCESS.toString();
+            return Message.CANCEL.toString();
         return Message.NO_MOVER.toString();
     }
 
@@ -157,7 +157,7 @@ public class UnitMenuController {
             }
         }
         if (isOnPatrol)
-            return Message.SUCCESS.toString();
+            return Message.CANCEL.toString();
         return Message.NO_PATROL.toString();
     }
 
@@ -406,5 +406,12 @@ public class UnitMenuController {
         }
 
         return Message.SUCCESS;
+    }
+
+    public Message stop() {
+        for (MilitaryUnit militaryUnit : currentUnit) {
+            militaryUnit.stop();
+        }
+        return Message.UNIT_STOPPED;
     }
 }

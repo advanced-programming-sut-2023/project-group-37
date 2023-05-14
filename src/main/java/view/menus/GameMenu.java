@@ -132,7 +132,7 @@ public class GameMenu {
                 Integer.parseInt(matcher.group("y")));
         System.out.println(this.message);
 
-        return Message.ENTERED_UNIT_MENU.equals(message);
+        return Message.UNIT_SELECTED.equals(message);
     }
 
     private boolean goNextTurn() {

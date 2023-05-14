@@ -98,24 +98,25 @@ public enum Command {
 
 
     // UnitMenu:
-    SELECT_TYPE_UNIT("\\s*select\\s+unit\\s+type\\s+(-t\\s+(?<type>\"[\"]+\"))"),
-    MOVE_UNIT("\\s*move\\s+unit\\s+to(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s*"),
+    SELECT_TYPE_UNIT("\\s*select\\s+unit\\s+type\\s+-t\\s+(?<type>\"[^\"]+\")\\s*"),
+    STOP("\\s*stop\\s*"),
+    MOVE_UNIT("\\s*move\\s+unit\\s+to(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
     PATROL_UNIT("\\s*patrol\\s+unit(\\s+((-x1\\s+(?<x1>\\d+))|(-y1\\s+(?<y1>\\d+))|" +
-            "(-x2\\s+(?<x2>\\d+))|(-y2\\s+(?<y2>\\d+)))+\\s*"),
+            "(-x2\\s+(?<x2>\\d+))|(-y2\\s+(?<y2>\\d+))))+\\s*"),
     CANCEL_MOVE("\\s*cancel\\s+move\\s*"),
     CANCEL_PATROL("\\s*cancel\\s+patrol\\s*"),
     SET_UNIT("\\s*set(-s\\s+(?<state>\"[^\"]+\"|\\S+))\\s*"),
     ATTACK("\\s*attack(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(?<isEarth>-e)))+\\s*"),//if isEarth is not null we have earth attack
     POUR_OIL("\\s*pour\\s+oil\\s+-d\\s+(?<direction>\"[^\"]+\"|\\S+)\\s*"),
-    DIG_TUNNEL("\\s*dig\\s+tunnel\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s*"),
+    DIG_TUNNEL("\\s*dig\\s+tunnel\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
     BUILD_EQUIPMENT("\\s*build\\s+-q\\s+(?<equipmentName>\"[^\"]+\"|\\S+)\\s*"),
     DISBAND_UNIT("\\s*disband\\s*"),
-    DIG_MOAT("\\s*dig\\s+moat\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s*"),
-    FILL_MOAT("\\s*fill\\s+moat\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s*"),
-    CANCEL_DIG_MOAT("\\s*cancel\\s+dig\\s+moat\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+)))+\\s*"),
+    DIG_MOAT("\\s*dig\\s+moat\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
+    FILL_MOAT("\\s*fill\\s+moat\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
+    CANCEL_DIG_MOAT("\\s*cancel\\s+dig\\s+moat\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
 
     // BuildingMenu:
-    CREATE_UNIT("\\s*create\\s+unit(\\s+((-t(?<type>\"[^\"]+\"))|(-c(?<count>\\d+))))+"),
+    CREATE_UNIT("\\s*create\\s+unit(\\s+((-t\\s+(?<type>\"[^\"]+\"))|(-c\\s+(?<count>\\d+))))+\\s*"),
     REPAIR("\\s*repair\\s*"),
     ;
     private final String regex;
