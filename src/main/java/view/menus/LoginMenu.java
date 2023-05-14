@@ -65,7 +65,7 @@ public class LoginMenu {
 
                 System.out.println(this.message);
 
-            } while (Message.ENTER_NEW_PASSWORD.equals(message));
+            } while (!Message.ENTER_NEW_PASSWORD.equals(message));
 
             firstLoop:
             while (true) {

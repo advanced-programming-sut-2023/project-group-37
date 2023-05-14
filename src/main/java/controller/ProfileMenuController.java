@@ -44,6 +44,8 @@ public class ProfileMenuController {
     }
 
     public Message changePassword(String oldPass, String newPass) {
+        MultiMenuFunctions.deleteQuotations(oldPass);
+        MultiMenuFunctions.deleteQuotations(newPass);
         if (oldPass == null || newPass == null) {
             return Message.CHANGE_PASSWORD_ERROR1;
         }

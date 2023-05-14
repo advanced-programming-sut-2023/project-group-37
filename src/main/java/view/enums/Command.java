@@ -71,10 +71,10 @@ public enum Command {
             "(-y2\\s+(?<y2>\\d+))|(-t\\s+(?<type>\"[^\"]+\"|\\S+))))+\\s*"),
     CLEAR_TEXTURE("\\s*clear\\s+texture(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
     DROP_ROCK("\\s*drop\\s+rock\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-d(?<direction>\"[^\"]+\"|\\S+))))+\\s*"),
-    DROP_TREE("\\s*drop tree(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t\\s+(?<type>\"[^\"]+\"|\\S+))))+\\s*"),
+    DROP_TREE("\\s*drop\\s+tree(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t\\s+(?<type>\"[^\"]+\"|\\S+))))+\\s*"),//fixed
     SHOW_INFO("\\s*show\\s+info\\s*"),
     NEXT_TURN("\\s*go\\s+next\\s+turn\\s*"),
-    END_GAME("\\s*End\\s+the\\s+game\\s*"),
+    END_GAME("\\s*end\\s+the\\s+game\\s*"),
 
     // MapMenu:
     MOVE_THE_MAP("map(\\s+(((?<up>up)(\\s+(?<upDistance>\\d+))?)|((?<down>down)(\\s+(?<downDistance>\\d+))?)|" +
