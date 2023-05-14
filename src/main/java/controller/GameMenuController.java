@@ -78,11 +78,12 @@ public class GameMenuController {
                 "\nReligion: " + this.currentGovernment.getReligionPopularityRate();
     }
 
-    public String showFoodList() {
-        return "Apple: " + this.currentGovernment.getItemAmount(Item.APPLE) +
-                "\nCheese: " + this.currentGovernment.getItemAmount(Item.CHEESE) +
-                "\nBread: " + this.currentGovernment.getItemAmount(Item.BREAD) +
-                "\nMeat: " + this.currentGovernment.getItemAmount(Item.MEAT);
+    public String showItemList(ItemCategory category) {
+        StringBuilder result = new StringBuilder();
+        for (Item item : Item.values())
+            if (item.getCategory() == category)
+                result.append(item.getName()).append(":\t").append(this.currentGovernment.getItemAmount(item)).append("\n");
+        return result.toString().trim();
     }
 
     public String setFoodRate(Matcher matcher) {

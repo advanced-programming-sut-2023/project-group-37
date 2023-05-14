@@ -57,11 +57,10 @@ public class ShopMenuController {
     }
 
     public String showAllItems(){
-        StringBuilder list = new StringBuilder("Here's all things you can buy :\n");
-        for (Item item : Item.getAllItems()) {
-            list.append(item.getName()).append("  price :  ").append(item.getBuyCost()).append(" ( sell price : ")
-                    .append(item.getSellCost()).append(" )\n");
-        }
+        StringBuilder list = new StringBuilder("Here's all the things you can sell/buy:\n");
+        for (Item item : Item.getAllItems())
+            list.append(item.getName()).append(":\t").append(item.getBuyCost()).append("\tsell:\t")
+                    .append(item.getSellCost()).append("\n");
         return list.toString().trim();
     }
 }
