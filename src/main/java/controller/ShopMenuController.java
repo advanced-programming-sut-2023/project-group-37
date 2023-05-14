@@ -43,7 +43,7 @@ public class ShopMenuController {
 
     public String sell(Matcher matcher) {
         int amount = Integer.parseInt(matcher.group("itemAmount"));
-        Item item = Item.getItemByName(MultiMenuFunctions.deleteQuotations(matcher.group("ItemName")));
+        Item item = Item.getItemByName(MultiMenuFunctions.deleteQuotations(matcher.group("itemName")));
 
         if (item == null)
             return Message.INVALID_ITEM_NAME.toString();
