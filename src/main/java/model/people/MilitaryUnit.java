@@ -7,6 +7,7 @@ import model.buildings.DefensiveBuilding;
 import model.game.Government;
 import model.game.Tile;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public abstract class MilitaryUnit {
@@ -23,9 +24,11 @@ public abstract class MilitaryUnit {
     private LinkedList<Tile> route;
     private LinkedList<Tile> patrolRoute;
     private int patrolTile;
-    private Tile target;
-    private Tile moatTarget;
+    private ArrayList<Tile> target;
+    private ArrayList<Tile> moatTarget;
     private MilitaryUnitStance stance;
+    private boolean hasTarget;
+    private boolean hasMoatTarget;
 
     public MilitaryUnit(Government loyalty, Tile location, int hitpoints, int damage, int range, int speed) {
         this.loyalty = loyalty;
@@ -37,6 +40,8 @@ public abstract class MilitaryUnit {
         this.speed = speed;
         this.moatTarget = null;
         this.stance = MilitaryUnitStance.STANDING;
+        this.hasTarget = false;
+        this.hasMoatTarget = false;
     }
 
     public Government getLoyalty() {
@@ -66,42 +71,44 @@ public abstract class MilitaryUnit {
     }
 
     public void attack() {
-        if (target != null) {
+        if (hasTarget) {
             if (this instanceof MilitaryMachine) {
                 if (((MilitaryMachine) this).getType() == MilitaryMachineType.FIRE_BALLISTA)
-                    target.receiveDamage(this.getDamage(), this.loyalty);
+                    target.get(0).receiveDamage(this.getDamage(), this.loyalty);
                 else if (((MilitaryMachine) this).getType() == MilitaryMachineType.SIEGE_TOWER) {
-                    if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
+                    if (target.get(0).getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
                         defensiveBuilding.setCanBeReached(true);
                         defensiveBuilding.setHasLadderAttached(true);
                     }
                 } else if (((MilitaryMachine) this).getType() != MilitaryMachineType.PORTABLE_SHIELD)
-                    target.receiveBuildingDamage(this.getDamage(), this.loyalty);
+                    target.get(0).receiveBuildingDamage(this.getDamage(), this.loyalty);
             } else {
                 Troop troop = (Troop) this;
                 if (troop.getType() == TroopType.LADDERMAN) {
-                    if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
+                    if (target.get(0).getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
                         defensiveBuilding.setCanBeReached(true);
                         defensiveBuilding.setHasLadderAttached(true);
                         this.location.getMilitaryUnits().remove(this);
                         this.loyalty.getMilitaryUnits().remove(this);
                     }
                 } else if (troop.getType() == TroopType.TUNNELER) {
-                    if (target.getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
-                        if (MultiMenuFunctions.routeFinder(this.location, target, location.getTerritory().getMap()) != null) {
+                    if (target.get(0).getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
+                        if (MultiMenuFunctions.routeFinder(this.location, target.get(0), location.getTerritory().getMap()) != null) {
                             defensiveBuilding.destroy();
                             this.location.getMilitaryUnits().remove(this);
                             this.loyalty.getMilitaryUnits().remove(this);
                         }
                     }
-                } else target.receiveDamage(this.getDamage(), this.loyalty);
+                } else target.get(0).receiveDamage(this.getDamage(), this.loyalty);
             }
         }
     }
 
     public void stop() {
-        this.target = null;
-        this.moatTarget = null;
+        this.hasTarget = false;
+        this.target = new ArrayList<>();
+        this.hasMoatTarget = false;
+        this.moatTarget = new ArrayList<>();
         this.route = null;
         this.patrolRoute = null;
     }
@@ -133,11 +140,18 @@ public abstract class MilitaryUnit {
     }
 
     public Tile getMoatTarget() {
-        return this.moatTarget;
+        return this.moatTarget.get(0);
     }
 
     public void setMoatTarget(Tile moatTarget) {
-        this.moatTarget = moatTarget;
+        this.moatTarget = new ArrayList<>();
+        this.moatTarget.add(moatTarget);
+        hasMoatTarget = true;
+    }
+
+    public void cancelMoatTarget() {
+        this.moatTarget = new ArrayList<>();
+        this.hasMoatTarget = false;
     }
 
     public void move() {
@@ -183,7 +197,9 @@ public abstract class MilitaryUnit {
     }
 
     public void setTarget(Tile target) {
-        this.target = target;
+        this.target = new ArrayList<>();
+        this.target.add(target);
+        hasTarget = true;
     }
 
     protected LinkedList<Tile> getRoute() {
@@ -252,4 +268,9 @@ public abstract class MilitaryUnit {
     }
 
     public abstract boolean canGoUp();
+
+    public boolean hasMoatTarget() {
+        return hasMoatTarget;
+    }
+
 }

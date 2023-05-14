@@ -154,7 +154,7 @@ public class Game {
                     else if (militaryUnit.isOnPatrol())
                         militaryUnit.patrol();
 
-                    else if (militaryUnit.getMoatTarget() != null)
+                    else if (militaryUnit.hasMoatTarget())
                         militaryUnit.getMoatTarget().changeMoat();
 
                     else {

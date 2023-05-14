@@ -378,8 +378,8 @@ public class UnitMenuController {
             return Message.ADDRESS_OUT_OF_BOUNDS;
 
         for (MilitaryUnit unit : this.currentUnit)
-            if (unit.getMoatTarget() != null) {
-                unit.setMoatTarget(null);
+            if (unit.hasMoatTarget()) {
+                unit.cancelMoatTarget();
                 unit.setRoute(null);
             }
 
@@ -406,8 +406,10 @@ public class UnitMenuController {
         if ((route = MultiMenuFunctions.routeFinder(this.currentLocation, target, this.currentGame.getMap())) == null)
             return Message.NO_ROUTS_FOUND;
 
+        LinkedList<Tile> copyRoute;
         for (MilitaryUnit unit : this.currentUnit) {
-            unit.setRoute(route);
+            copyRoute = new LinkedList<>(route);
+            unit.setRoute(copyRoute);
             unit.setMoatTarget(destination);
         }
 
