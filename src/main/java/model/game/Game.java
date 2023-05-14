@@ -14,7 +14,7 @@ public class Game {
     private final GameMenuController gameMenuController;
     private final Map map;
     private final int turns;
-    private ArrayList<Government> governments;
+    private final ArrayList<Government> governments;
     private Government currentTurnGovernment;
     private int index;
     private int turnNumber;
@@ -68,9 +68,6 @@ public class Game {
     public void goToNextTurn() {
         if (this.index == this.governments.size() - 1) {
             for (Government government : this.governments) {
-                government.distributeFood();
-                government.receiveTax();
-                government.setPopularity(government.getPopularity() + government.getFearRate());
                 int innCount = 0, churchCount = 0, cathedralCount = 0, stableCount = 0;
                 for (Building building : government.getBuildings()) {
                     BuildingType type = building.getType();
@@ -104,36 +101,42 @@ public class Game {
                             innCount++;
 
                         if ((type == BuildingType.TANNER &&
-                                this.currentTurnGovernment.getUniqueBuilding(BuildingType.TANNER) != null) || type.getRawMaterial() == null) {
+                                government.getUniqueBuilding(BuildingType.TANNER) != null) || type.getRawMaterial() == null) {
                             if (government.getFreeSpace(government.getTargetRepository(type.getProduct())) >= (int) (type.getProductProvides() *
-                                    (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1)
+                                    (1 - (double) government.getFearRate() / 6) + 1))
                                 government.addItem(type.getProduct(), (int) (type.getProductProvides() *
-                                        (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1);
+                                        (1 - (double) government.getFearRate() / 6) + 1));
                         } else if (government.getItemAmount(type.getRawMaterial()) >=
-                                type.getRawMaterialUses() + (int) (type.getRawMaterialUsesForSecond() *
-                                        (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1) {
+                                type.getRawMaterialUses() * (1 - (double) government.getFearRate() / 6) + 1
+                                        + (int) (type.getRawMaterialUsesForSecond() *
+                                        (1 - (double) government.getFearRate() / 6) + 1)) {
+
                             government.removeItem(type.getRawMaterial(), type.getRawMaterialUses() +
                                     (int) (type.getRawMaterialUsesForSecond() *
-                                            (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1);
+                                            (1 - (double) government.getFearRate() / 6) + 1));
                             if ((type.getSecondProduct() == null && this.currentTurnGovernment.getFreeSpace
-                                    (this.currentTurnGovernment.getTargetRepository(type.getProduct())) >=
+                                    (government.getTargetRepository(type.getProduct())) >=
                                     (int) (type.getProductProvides() *
-                                            (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1) ||
-                                    (type.getSecondProduct() != null && this.currentTurnGovernment.getFreeSpace
-                                            (this.currentTurnGovernment.getTargetRepository(type.getProduct())) >=
-                                            (int) ((double) this.currentTurnGovernment.getFearRate() / 6) + 1 + (type.getProductProvides() *
-                                                    (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1)) {
+                                            (1 - (double) government.getFearRate() / 6) + 1)) ||
+                                    (type.getSecondProduct() != null && government.getFreeSpace
+                                            (government.getTargetRepository(type.getProduct())) >=
+                                            (int) ((double) government.getFearRate() / 6) + 1 + (type.getProductProvides() *
+                                                    (1 - (double) government.getFearRate() / 6) + 1))) {
                                 government.addItem(type.getProduct(), (int) (type.getProductProvides() *
-                                        (1 - (double) this.currentTurnGovernment.getFearRate() / 6)) + 1);
+                                        (1 - (double) government.getFearRate() / 6) + 1));
                                 government.addItem(type.getSecondProduct(), (int)
-                                        ((double) this.currentTurnGovernment.getFearRate() / 6) + 1);
+                                        ((double) government.getFearRate() / 6) + 1);
                             } else {
-                                government.addItem(type.getRawMaterial(), type.getRawMaterialUses() +
-                                        type.getRawMaterialUsesForSecond());
+                                government.addItem(type.getRawMaterial(), (type.getRawMaterialUses() +
+                                        type.getRawMaterialUsesForSecond()) *
+                                        (int) (1 - (double) government.getFearRate() / 6) + 1);
                             }
                         }
                     }
                 }
+                government.distributeFood();
+                government.receiveTax();
+                government.setPopularity(government.getPopularity() + government.getFearRate());
                 government.setHorseCount(4 * stableCount);
                 government.setReligionPopularityRate(Math.min(4, (8 * churchCount + 16 * cathedralCount) / 24));
                 government.setPopularity(government.getPopularity() + Math.min(4, innCount) * 2);

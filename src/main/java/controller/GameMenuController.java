@@ -204,10 +204,14 @@ public class GameMenuController {
         // Check if non-first storage is not near the others!
         if ((type == BuildingType.STOCKPILE || type == BuildingType.GRANARY || type == BuildingType.ARMORY) &&
                 this.currentGovernment.getUniqueBuilding((BuildingType) type) != null &&
-                this.currentGame.getMap().getTileByLocation(tile.getX() - 1, tile.getY()).getBuilding().getType() != type &&
-                this.currentGame.getMap().getTileByLocation(tile.getX() + 1, tile.getY()).getBuilding().getType() != type &&
-                this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() - 1).getBuilding().getType() != type &&
-                this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() + 1).getBuilding().getType() != type)
+                (this.currentGame.getMap().getTileByLocation(tile.getX() - 1, tile.getY()).getBuilding() == null ||
+                        this.currentGame.getMap().getTileByLocation(tile.getX() - 1, tile.getY()).getBuilding().getType() != type) &&
+                (this.currentGame.getMap().getTileByLocation(tile.getX() + 1, tile.getY()).getBuilding() == null ||
+                        this.currentGame.getMap().getTileByLocation(tile.getX() + 1, tile.getY()).getBuilding().getType() != type) &&
+                (this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() - 1).getBuilding() == null ||
+                        this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() - 1).getBuilding().getType() != type) &&
+                (this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() + 1).getBuilding() == null ||
+                        this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() + 1).getBuilding().getType() != type))
             return Message.STORAGE_NOT_NEIGHBOR.toString();
 
         // Decrease gold and resource:
@@ -250,12 +254,6 @@ public class GameMenuController {
         assert building != null;
         tile.setBuilding(building);
         this.currentGovernment.addBuilding(building);
-        if (building instanceof Storage)
-            switch (building.getType()) {
-                case STOCKPILE -> this.currentGovernment.getStockpile().add((Storage) building);
-                case GRANARY -> this.currentGovernment.getGranary().add((Storage) building);
-                case ARMORY -> this.currentGovernment.getArmory().add((Storage) building);
-            }
 
         int workersNeeded;
         if (type instanceof BuildingType && (workersNeeded = ((BuildingType) type).getWorkersNeeded()) > 0) {
@@ -524,8 +522,8 @@ public class GameMenuController {
 
     public String showInfo() {
         return "All Info:\n" + "Username: " + this.currentGovernment.getUser().getUsername() +
-                "\nTerritory location: " + currentGovernment.getTerritory().getKeep().getX() +
-                ", " +currentGovernment.getTerritory().getKeep().getY()+
+                "\nKeep location: " + currentGovernment.getTerritory().getKeep().getX() +
+                ", " + currentGovernment.getTerritory().getKeep().getY() +
                 "\nGold amount: " + this.currentGovernment.getGold() +
                 "\nFood rate: " + this.currentGovernment.getFoodRate() +
                 "\nTax rate: " + this.currentGovernment.getTaxRate() +

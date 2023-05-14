@@ -2,7 +2,7 @@ package model.buildings;
 
 public enum DefensiveBuildingType {
 
-    KEEP(null, 1, 0, 0, 16),
+    KEEP("", 1, 0, 0, 16),
     WALL("wall", 250, 1, 1.1, 1),
     STAIRS("stairs", 150, 1, 0, 1),
     SMALL_GATEHOUSE("small gatehouse", 350, 10, 1.2, 8),
