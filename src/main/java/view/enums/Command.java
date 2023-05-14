@@ -92,7 +92,7 @@ public enum Command {
     REQUEST_TRADE("\\s*trade(\\s+((-t\\s+(?<resourceType>\"[^\"]+\"|\\S+))|(-u\\s+(?<receiverUsername>\"[^\"]+\"|\\S+))|" +
             "(-a\\s+(?<resourceAmount>\\d+))|(-p\\s+(?<price>\\d+))|(-m\\s+(?<message>\"[^\"]+\"|\\S+))))+\\s*"),
     SHOW_TRADE_LIST("\\s*show\\s+trade\\s+list\\s*"),
-    ACCEPT_TRADE("\\s*trade\\s+accept(\\s+((-i(?<id>\\d+))|(-m(?<message>\"[^\"]+\"|\\S+))))+\\s*"),
+    ACCEPT_TRADE("\\s*trade\\s+accept(\\s+((-i\\s+(?<id>\\d+))|(-m\\s+(?<message>\"[^\"]+\"|\\S+))))+\\s*"),
     SHOW_TRADE_HISTORY("\\s*show\\s+trade\\s+history\\s*"),
     SHOW_NEW_TRADES("\\s*show\\s+new\\s+trades\\s*"),
 

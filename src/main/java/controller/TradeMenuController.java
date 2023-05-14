@@ -40,7 +40,7 @@ public class TradeMenuController {
         if (price < 0)
             return Message.INVALID_PRICE.toString();
 
-        new TradeRequest(item, amount, price, message, government, receiver, game.getTurnNumber());
+        new TradeRequest(item, amount, price, message, government, receiver, game.getIndex());
 
         return Message.REQUEST_SENT.toString();
     }
@@ -66,7 +66,7 @@ public class TradeMenuController {
         newTrades.append("Here's the trades you have received in this turn:\n");
         int id = 1;
         for (TradeRequest request : TradeRequest.getRequestsByReceiver(government)) {
-            if (request.getTime() == game.getTurnNumber() && !request.isDone()) {
+            if (request.getTime() == game.getIndex() && !request.isDone()) {
                 newTrades.append("id: ").append(id).append(", Sender: ").append(request.getSender().getUser().getUsername())
                         .append(", Type: ").append(request.getItem().getName()).append(", Amount: ")
                         .append(request.getItemAmount())
@@ -98,7 +98,7 @@ public class TradeMenuController {
         message.append("Here's the trades you received and replied:\n");
         for (TradeRequest request : TradeRequest.getRequestsByReceiver(government)) {
             if (request.isDone()) {
-                message.append(", Sender: ").append(request.getSender().getUser().getUsername())
+                message.append("Sender: ").append(request.getSender().getUser().getUsername())
                         .append(", Type: ").append(request.getItem().getName()).append(", Amount: ")
                         .append(request.getItemAmount())
                         .append(", Price: ").append(request.getPrice()).append("\n").append("Their Message: ")
@@ -110,7 +110,7 @@ public class TradeMenuController {
 
         message.append("Here's the trades you've sent:\n");
         for (TradeRequest request : TradeRequest.getRequestsBySender(government)) {
-            message.append(", Receiver: ").append(request.getReceiver().getUser().getUsername())
+            message.append("Receiver: ").append(request.getReceiver().getUser().getUsername())
                     .append(", Type: ").append(request.getItem().getName()).append(", Amount: ")
                     .append(request.getItemAmount())
                     .append(", Price: ").append(request.getPrice()).append("\n").append("Your Message: ")
