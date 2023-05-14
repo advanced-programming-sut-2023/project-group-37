@@ -64,7 +64,7 @@ public enum Command {
     FEAR_RATE_SHOW("\\s*fear\\s+rate\\s+show\\s*"),
     DROP_BUILDING("\\s*drop\\s+building(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-t\\s+(?<type>\"[^\"]+\"))))+\\s*"),
     DROP_GATEHOUSE("\\s*drop\\s+gatehouse(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-d\\s+(?<direction>h|v))|(-t\\s+(?<type>\"[^\"]+\"))))+\\s*"),
-    DROP_UNIT("\\s*drop\\s+unit(\\s+((-t\\s+(?<type>/\"[^\"]+\"|\\S+))|(-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-c\\s+(?<count>\\d+))))+\\s*"),
+    DROP_UNIT("\\s*drop\\s+unit(\\s+((-t\\s+(?<type>\"[^\"]+\"|\\S+))|(-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(-c\\s+(?<count>\\d+))))+\\s*"),
     SELECT_BUILDING("\\s*select\\s+building(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
     SELECT_UNIT("\\s*select\\s+unit(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
     ENTER_TRADE_MENU("\\s*enter\\s+trade\\s+menu\\s*"),
@@ -110,7 +110,7 @@ public enum Command {
     SET_UNIT("\\s*set(-s\\s+(?<state>\"[^\"]+\"|\\S+))\\s*"),
     ATTACK("\\s*attack(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))|(?<isEarth>-e)))+\\s*"),//if isEarth is not null we have earth attack
     POUR_OIL("\\s*pour\\s+oil\\s+-d\\s+(?<direction>\"[^\"]+\"|\\S+)\\s*"),
-    DIG_TUNNEL("\\s*dig\\s+tunnel\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
+    DIG_TUNNEL("\\s*dig\\s+tunnel(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
     BUILD_EQUIPMENT("\\s*build\\s+-q\\s+(?<equipmentName>\"[^\"]+\"|\\S+)\\s*"),
     DISBAND_UNIT("\\s*disband\\s*"),
     DIG_MOAT("\\s*dig\\s+moat\\s+(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),

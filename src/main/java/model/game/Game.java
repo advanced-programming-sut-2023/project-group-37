@@ -70,6 +70,9 @@ public class Game {
             for (Government government : this.governments) {
                 int innCount = 0, churchCount = 0, cathedralCount = 0, stableCount = 0;
                 for (Building building : government.getBuildings()) {
+                    if (building instanceof DefensiveBuilding)
+                        continue;
+
                     BuildingType type = building.getType();
 
                     if (type == BuildingType.HOVEL)

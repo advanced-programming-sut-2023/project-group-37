@@ -1,5 +1,6 @@
 package controller;
 
+import model.buildings.DefensiveBuilding;
 import model.game.Game;
 import model.game.Government;
 import model.game.Map;
@@ -14,12 +15,12 @@ import java.util.regex.Matcher;
 public class MapMenuController {
     private Game game;
     private Map map;
-    private Government government;
+    private Government currentGovernment;
     private int currentX;
     private int currentY;
 
-    public void setGovernment(Government government) {
-        this.government = government;
+    public void setCurrentGovernment(Government currentGovernment) {
+        this.currentGovernment = currentGovernment;
     }
 
     public void setGame(Game game) {
@@ -100,8 +101,16 @@ public class MapMenuController {
         StringBuilder details = new StringBuilder();
         details.append("The texture: ").append(tile.getTexture().name()).append("\n");
 
-        if(tile.getBuilding() != null)
-            details.append("You have the building (").append(tile.getBuilding().getType().getName()).append(") here!\n");
+        if(tile.getBuilding() != null) {
+            if (tile.getBuilding().getLoyalty() == currentGovernment) {
+                if (tile.getBuilding() instanceof DefensiveBuilding defensiveBuilding)
+                    details.append("you have the building (").append(defensiveBuilding.getDefensiveType().getName()).append(") here!\n");
+
+                else
+                    details.append("You have the building (").append(tile.getBuilding().getType().getName()).append(") here!\n");
+            }
+        }
+
         else
             details.append("You have no buildings here!\n");
 
@@ -112,12 +121,16 @@ public class MapMenuController {
             int machineCounter = 1;
             for (MilitaryUnit militaryUnit : tile.getMilitaryUnits()) {
                 if(militaryUnit instanceof Troop) {
-                    details.append("Troop ").append(troopCounter).append(": ").append(((Troop) militaryUnit).getType().name()).append("\n");
-                    troopCounter++;
+                    if (militaryUnit.getLoyalty() == currentGovernment) {
+                        details.append("Troop ").append(troopCounter).append(": ").append(((Troop) militaryUnit).getType().name()).append("\n");
+                        troopCounter++;
+                    }
                 }
-                else if(militaryUnit instanceof MilitaryMachine){
-                    details.append("Machine ").append(machineCounter).append(": ").append(((MilitaryMachine) militaryUnit).getType().name()).append("\n");
-                    machineCounter++;
+                else if(militaryUnit instanceof MilitaryMachine) {
+                    if (militaryUnit.getLoyalty() == currentGovernment) {
+                        details.append("Machine ").append(machineCounter).append(": ").append(((MilitaryMachine) militaryUnit).getType().name()).append("\n");
+                        machineCounter++;
+                    }
                 }
             }
         }
