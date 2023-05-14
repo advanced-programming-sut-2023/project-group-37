@@ -47,6 +47,7 @@ public class User implements Serializable {
         users.add(this);
     }
 
+
     private void setRanks() {
         for (User user : users)
             user.rank = 0;
