@@ -83,8 +83,8 @@ public enum Command {
     SHOW_DETAILS("\\s*show\\s+details(\\s+((-x\\s+(?<x>\\d+))|(-y\\s+(?<y>\\d+))))+\\s*"),
 
     // ShopMenu:
-    BUY_ITEM("\\s*buy(\\s+((-i(?<itemName>\"[^\"]+\"|\\S+))|(-a(?<itemAmount>\\d+))))+\\s*"),
-    SELL_ITEM("\\s*sell(\\s+((-i(?<itemName>\"[^\"]+\"|\\S+))|(-a(?<itemAmount>\\d+))))+\\s*"),
+    BUY_ITEM("\\s*buy(\\s+((-i\\s+(?<itemName>\"[^\"]+\"|\\S+))|(-a\\s+(?<itemAmount>\\d+))))+\\s*"),
+    SELL_ITEM("\\s*sell(\\s+((-i\\s+(?<itemName>\"[^\"]+\"|\\S+))|(-a\\s+(?<itemAmount>\\d+))))+\\s*"),
     SHOW_ALL_ITEMS("\\s*show\\s+all\\s+items\\s*"),
 
 

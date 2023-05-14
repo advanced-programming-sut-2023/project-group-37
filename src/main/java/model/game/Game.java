@@ -170,50 +170,22 @@ public class Game {
                                     target = this.map.getTileByLocation(militaryUnit.getLocation().getX() + i,
                                             militaryUnit.getLocation().getY() + j);
 
-                                    if (target.hasEnemy(government)) {
-                                        if (MultiMenuFunctions.distance(militaryUnit.getLocation(), target) > militaryUnit.getRange() + 0.2) {
-                                            militaryUnit.setRoute(MultiMenuFunctions.routeFinder(militaryUnit.getLocation(),
-                                                    MultiMenuFunctions.getMiddle(militaryUnit.getLocation(), target, this.map), this.map));
-                                        }
-                                        militaryUnit.setTarget(target);
-                                        break firstFor;
-                                    }
+                                    if (setEnemyTargetForDefence(target, government, militaryUnit)) break firstFor;
                                     // i : - AND j : +
                                     target = this.map.getTileByLocation(militaryUnit.getLocation().getX() - i,
                                             militaryUnit.getLocation().getY() + j);
 
-                                    if (target.hasEnemy(government)) {
-                                        if (MultiMenuFunctions.distance(militaryUnit.getLocation(), target) > militaryUnit.getRange() + 0.2) {
-                                            militaryUnit.setRoute(MultiMenuFunctions.routeFinder(militaryUnit.getLocation(),
-                                                    MultiMenuFunctions.getMiddle(militaryUnit.getLocation(), target, this.map), this.map));
-                                        }
-                                        militaryUnit.setTarget(target);
-                                        break firstFor;
-                                    }
+                                    if (setEnemyTargetForDefence(target, government, militaryUnit)) break;
                                     // i : + AND j : -
                                     target = this.map.getTileByLocation(militaryUnit.getLocation().getX() + i,
                                             militaryUnit.getLocation().getY() - j);
 
-                                    if (target.hasEnemy(government)) {
-                                        if (MultiMenuFunctions.distance(militaryUnit.getLocation(), target) > militaryUnit.getRange() + 0.2) {
-                                            militaryUnit.setRoute(MultiMenuFunctions.routeFinder(militaryUnit.getLocation(),
-                                                    MultiMenuFunctions.getMiddle(militaryUnit.getLocation(), target, this.map), this.map));
-                                        }
-                                        militaryUnit.setTarget(target);
-                                        break firstFor;
-                                    }
+                                    if (setEnemyTargetForDefence(target, government, militaryUnit)) break;
                                     // i : - AND j : -
                                     target = this.map.getTileByLocation(militaryUnit.getLocation().getX() - i,
                                             militaryUnit.getLocation().getY() - j);
 
-                                    if (target.hasEnemy(government)) {
-                                        if (MultiMenuFunctions.distance(militaryUnit.getLocation(), target) > militaryUnit.getRange() + 0.2) {
-                                            militaryUnit.setRoute(MultiMenuFunctions.routeFinder(militaryUnit.getLocation(),
-                                                    MultiMenuFunctions.getMiddle(militaryUnit.getLocation(), target, this.map), this.map));
-                                        }
-                                        militaryUnit.setTarget(target);
-                                        break firstFor;
-                                    }
+                                    if (setEnemyTargetForDefence(target, government, militaryUnit)) break;
                                 }
                             }
                         }
@@ -248,5 +220,17 @@ public class Game {
         this.currentTurnGovernment = this.governments.get(this.index);
         this.gameMenuController.setCurrentGovernment(this.currentTurnGovernment);
         this.turnNumber++;
+    }
+
+    private boolean setEnemyTargetForDefence(Tile target, Government government, MilitaryUnit militaryUnit) {
+        if (target.hasEnemy(government)) {
+            if (MultiMenuFunctions.distance(militaryUnit.getLocation(), target) > militaryUnit.getRange() + 0.2) {
+                militaryUnit.setRoute(MultiMenuFunctions.routeFinder(militaryUnit.getLocation(),
+                        MultiMenuFunctions.getMiddle(militaryUnit.getLocation(), target, this.map), this.map));
+            }
+            militaryUnit.setTarget(target);
+            return true;
+        }
+        return false;
     }
 }
