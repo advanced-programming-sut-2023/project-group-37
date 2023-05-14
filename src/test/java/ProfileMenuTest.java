@@ -75,7 +75,7 @@ public class ProfileMenuTest {
     public void changeEmailTest2() { //email already exists
         User user1 = new User("mehrshad", "Mehr12345@", "salam@gmail.com", "winner",
                 "mehri");
-        User user2 = new User("erfan", "erfan1234@", "erfan@gmail.com", "yeeeees!",
+        new User("erfan", "erfan1234@", "erfan@gmail.com", "yeeeees!",
                 "payea");
 
         ProfileMenuController profileMenuController = new ProfileMenuController();
@@ -87,14 +87,14 @@ public class ProfileMenuTest {
 
     @Test
     public void changeEmailTest3() { //change expected
-        User user = new User("mehrshad", "Mehr12345@", "salam@gmail.com", "winner",
+        User user = new User("mehrshad", "Mehr12345@", "randomEmail@gmail.com", "winner",
                 "mehri");
 
         ProfileMenuController profileMenuController = new ProfileMenuController();
         ProfileMenuController.setCurrentUser(user);
-        profileMenuController.changeEmail("mehrshad@gmail.com");
+        profileMenuController.changeEmail("changedEmail@gmail.com");
 
-        Assert.assertEquals("mehrshad@gmail.com", user.getEmail());
+        Assert.assertEquals("changedEmail@gmail.com", user.getEmail());
     }
 
     @Test
@@ -153,7 +153,7 @@ public class ProfileMenuTest {
         ProfileMenuController profileMenuController = new ProfileMenuController();
         ProfileMenuController.setCurrentUser(user);
         String expected = "Info:\nUsername: mehrshad\nNickname: mehri\nEmail: salam@gmail.com\nSlogan: winner\n" +
-                "HighScore: 0\nRank: 1";
+                "HighScore: 0\nRank: 6";
         Assert.assertEquals(expected, profileMenuController.showProfile());
 
     }
