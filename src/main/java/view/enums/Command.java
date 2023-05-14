@@ -89,8 +89,8 @@ public enum Command {
 
 
     // TradeMenu:
-    REQUEST_TRADE("\\s*trade(\\s+((-t(?<resourceType>\"[^\"]+\"|\\S+))|(-u(?<receiverUsername>\"[^\"]+\"|\\S+))|(-a(?<resourceAmount>\\d+))|" +
-            "(-p(?<price>\\d+))|(-m(?<message>\"[^\"]+\"|\\S+))))+\\s*"),
+    REQUEST_TRADE("\\s*trade(\\s+((-t\\s+(?<resourceType>\"[^\"]+\"|\\S+))|(-u\\s+(?<receiverUsername>\"[^\"]+\"|\\S+))|" +
+            "(-a\\s+(?<resourceAmount>\\d+))|(-p\\s+(?<price>\\d+))|(-m\\s+(?<message>\"[^\"]+\"|\\S+))))+\\s*"),
     SHOW_TRADE_LIST("\\s*show\\s+trade\\s+list\\s*"),
     ACCEPT_TRADE("\\s*trade\\s+accept(\\s+((-i(?<id>\\d+))|(-m(?<message>\"[^\"]+\"|\\S+))))+\\s*"),
     SHOW_TRADE_HISTORY("\\s*show\\s+trade\\s+history\\s*"),
