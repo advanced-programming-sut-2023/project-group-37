@@ -94,12 +94,12 @@ public class GenerateMap {
         }
         // 30 * 30 territory
         setTerritory(map.getField()[35][35], 1);
-        setTerritory(map.getField()[35][75], 2);
-        setTerritory(map.getField()[35][125], 3);
-        setTerritory(map.getField()[35][165], 4);
-        setTerritory(map.getField()[165][35], 5);
-        setTerritory(map.getField()[165][75], 6);
-        setTerritory(map.getField()[165][125], 7);
+        setTerritory(map.getField()[75][35], 2);
+        setTerritory(map.getField()[125][35], 3);
+        setTerritory(map.getField()[165][35], 4);
+        setTerritory(map.getField()[35][165], 5);
+        setTerritory(map.getField()[75][165], 6);
+        setTerritory(map.getField()[125][165], 7);
         setTerritory(map.getField()[165][165], 8);
 
         map.setTilesPassability();

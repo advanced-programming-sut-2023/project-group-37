@@ -274,10 +274,10 @@ public class UnitMenuController {
             return Message.UNIT_NOT_TUNNELER;
 
         Tile location = this.currentGame.getMap().getTileByLocation(x, y);
-        if (this.currentLocation.getBuilding() != null || ((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.WALL &&
+        if (this.currentLocation.getBuilding() == null || (((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.WALL &&
                 ((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.LOOKOUT_TOWER &&
                 ((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.PERIMETER_TOWER &&
-                ((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.DEFENCE_TOWER)
+                ((DefensiveBuilding) location.getBuilding()).getDefensiveType() != DefensiveBuildingType.DEFENCE_TOWER))
             return Message.CANNOT_DIG_TUNNEL_THERE;
 
         if (MultiMenuFunctions.distance(this.currentLocation, location) > TroopType.TUNNELER.getRange() + 0.2)
