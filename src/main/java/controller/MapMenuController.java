@@ -101,7 +101,7 @@ public class MapMenuController {
         StringBuilder details = new StringBuilder();
         details.append("The texture: ").append(tile.getTexture().name()).append("\n");
 
-        if(tile.getBuilding() != null) {
+        if(tile.hasBuilding()) {
             if (tile.getBuilding().getLoyalty() == currentGovernment) {
                 if (tile.getBuilding() instanceof DefensiveBuilding defensiveBuilding)
                     details.append("you have the building (").append(defensiveBuilding.getDefensiveType().getName()).append(") here!\n");

@@ -109,12 +109,14 @@ public class MultiMenuFunctions {
         targets.get(0).add(origin);
 
         int number = 1;
-        while (targets.size() > 0 && !targets.get(number - 1).contains(destination)) {
-            targets.add(setNextNumber(targets.get(targets.size() - 1), number, tilePassability, map));
+        while (targets.get(number-1).size() > 0 && !targets.get(number-1).contains(destination)) {
+            targets.add(setNextNumber(targets.get(targets.size()-1), number, tilePassability, map));
             number++;
         }
-        if (targets.get(targets.size() - 1).size() == 0)
+
+        if (targets.get(targets.size() - 1).size() == 0) {
             return routeFinder2(origin, destination, map);
+        }
 
         return getFinalRoute(origin, destination, targets);
     }
@@ -151,8 +153,8 @@ public class MultiMenuFunctions {
         targets.get(0).add(origin);
 
         int number = 1;
-        while (targets.size() > 0 && !targets.get(number - 1).contains(destination)) {
-            targets.add(setNextNumber(targets.get(targets.size() - 1), number, tilePassability, map));
+        while (targets.get(number-1).size() > 0 && !targets.get(number-1).contains(destination)) {
+            targets.add(setNextNumber(targets.get(targets.size()-1), number, tilePassability, map));
             number++;
         }
         if (targets.get(targets.size() - 1).size() == 0)

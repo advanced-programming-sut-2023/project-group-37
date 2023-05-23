@@ -162,6 +162,11 @@ public class Game {
                     else if (militaryUnit.hasMoatTarget())
                         militaryUnit.getMoatTarget().changeMoat();
 
+                    if (militaryUnit instanceof Troop troop) {
+                        if (troop.getType().getName().equals("tunneler"))
+                            continue;
+                    }
+
                     else {
                         if (militaryUnit.getStance() == MilitaryUnitStance.STANDING)
                             range = militaryUnit.getRange();

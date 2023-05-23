@@ -87,6 +87,7 @@ public class Tile {
 
     public void removeBuilding() {
         this.hasBuilding = false;
+        this.building = null;
     }
 
     public void setBuilding(Building building) {
@@ -127,7 +128,7 @@ public class Tile {
                 }
             }
             this.state = 'S';
-        } else if (this.building != null) {
+        } else if (this.hasBuilding) {
             if (this.building instanceof DefensiveBuilding)
                 this.state = 'W';
             else this.state = 'B';
@@ -187,5 +188,9 @@ public class Tile {
             texture = Texture.MOAT;
             this.isPassable = false;
         }
+    }
+
+    public boolean hasBuilding() {
+        return hasBuilding;
     }
 }

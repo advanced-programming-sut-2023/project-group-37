@@ -92,12 +92,15 @@ public abstract class MilitaryUnit {
                         this.loyalty.getMilitaryUnits().remove(this);
                     }
                 } else if (troop.getType() == TroopType.TUNNELER) {
+                    System.out.println(target.get(0).getBuilding());
                     if (target.get(0).getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
+                        target.get(0).setPassability(true);
                         if (MultiMenuFunctions.routeFinder(this.location, target.get(0), location.getTerritory().getMap()) != null) {
                             defensiveBuilding.destroy();
                             this.location.getMilitaryUnits().remove(this);
                             this.target.get(0).removeBuilding();
                         }
+                        target.get(0).setPassability(false);
                     }
                 } else target.get(0).receiveDamage(this.getDamage(), this.loyalty);
             }
