@@ -49,7 +49,7 @@ public class BuildingMenuController {
                 (1 - (double) (this.currentBuilding.getHitpoints() / this.getCurrentBuilding().getMaxHitpoints())) *
                 this.currentBuilding.getType().getRawMaterialUsesForSecond();
 
-        if (!this.currentGovernment.sellItem(Item.STONE, stoneNeededToRepair))
+        if (!this.currentGovernment.removeItem(Item.STONE, stoneNeededToRepair))
             return "Stone" + Message.NOT_ENOUGH_RESOURCE;
 
         this.currentBuilding.setHitpoints(this.currentBuilding.getMaxHitpoints());

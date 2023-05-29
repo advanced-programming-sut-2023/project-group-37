@@ -23,7 +23,7 @@ public class TradeMenuController {
 
     public String requestTrade(Matcher matcher) {
         Government receiver = game.getGovernmentByUsername(matcher.group("receiverUsername"));
-        Item item = Item.getItemByName(matcher.group("resourceType"));
+        Item item = Item.getItemByName(MultiMenuFunctions.deleteQuotations(matcher.group("resourceType")));
         int amount = Integer.parseInt(matcher.group("resourceAmount"));
         int price = Integer.parseInt(matcher.group("price"));
         String message = matcher.group("message");
