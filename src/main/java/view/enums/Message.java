@@ -1,6 +1,6 @@
 package view.enums;
 
-import model.user.SecurityQuestion;
+import model.user.RecoveryQuestion;
 
 public enum Message {
     // MultiMenu:
@@ -23,7 +23,7 @@ public enum Message {
     INCORRECT_EMAIL_FORM("Incorrect email format!"),
     ENTERED_LOGIN_MENU("Entered login menu!"),
     REENTER_AGAIN("Please re-enter your password again:"),
-    ASK_FOR_SECURITY_QUESTION("Pick your security question: " + SecurityQuestion.getAllQuestions()),
+    ASK_FOR_SECURITY_QUESTION("Pick your security question: " + RecoveryQuestion.getAllQuestions()),
     INCORRECT_QUESTION_NUMBER("Please select question-number between 1,2,3:"),
     INCOMPATIBLE_ANSWERS("Incompatible answers!"),
     REGISTER_SUCCESSFUL("User created successfully!"),

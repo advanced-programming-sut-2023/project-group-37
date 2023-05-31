@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.menus.RegisterMenu">
+    <children>
+        <Pane prefHeight="400.0" prefWidth="600.0">
+            <children>
+                <VBox layoutX="190.0" layoutY="15.0" prefHeight="370.0" prefWidth="220.0" spacing="7.5">
+                    <children>
+                        <TextField fx:id="usernameField" alignment="CENTER" promptText="username" />
+                        <PasswordField fx:id="passwordField" alignment="CENTER" promptText="password" />
+                        <TextField fx:id="passwordConfirmField" alignment="CENTER" promptText="password confirm" />
+                        <TextField fx:id="nicknameField" alignment="CENTER" promptText="nickname" />
+                        <TextField fx:id="emailField" alignment="CENTER" promptText="email" />
+                        <VBox prefHeight="52.0" prefWidth="226.0">
+                            <children>
+                                <Label prefHeight="27.0" prefWidth="163.0" text="Password recovery question :" />
+                                <ChoiceBox fx:id="recoveryQuestions" prefHeight="20.0" prefWidth="199.0">
+                                    <VBox.margin>
+                                        <Insets left="50.0" />
+                                    </VBox.margin>
+                                </ChoiceBox>
+                            </children>
+                        </VBox>
+                        <TextField fx:id="recoveryAnswerField" alignment="CENTER" promptText="Password recovery answer" />
+                  <ChoiceBox fx:id="sloganChoiceBox" prefHeight="20.0" prefWidth="150.0" />
+                  <TextField fx:id="sloganField" alignment="CENTER" promptText="slogan" />
+                  <Button mnemonicParsing="false" onAction="#register" prefHeight="30.0" prefWidth="100.0" text="Register">
+                     <VBox.margin>
+                        <Insets left="60.0" />
+                     </VBox.margin></Button>
+
+                    </children>
+                </VBox>
+                <VBox layoutX="37.0" layoutY="15.0" prefHeight="370.0" prefWidth="141.0" spacing="7.5">
+                    <children>
+                        <Label fx:id="usernameError" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="147.0" textFill="RED">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="passwordError" alignment="CENTER_RIGHT" prefHeight="24.0" prefWidth="142.0" textFill="RED">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="passwordConfirmError" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="147.0" textFill="RED">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="nicknameError" alignment="CENTER_RIGHT" prefHeight="24.0" prefWidth="142.0" textFill="RED">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="emailError" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="147.0" textFill="RED">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="recoveryQuestionError" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="142.0" textFill="RED">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="142.0" textFill="RED">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="recoveryAnswerError" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="147.0" textFill="RED">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="147.0" textFill="RED">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="sloganError" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="147.0" textFill="RED">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

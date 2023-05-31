@@ -27,7 +27,7 @@ public class LoginMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
+        appController.runMenu(Result.ENTER_REGISTER_MENU);
     }
 
     public Result run() {

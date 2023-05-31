@@ -101,7 +101,7 @@ public class User implements Serializable {
         this.nickname = nickname;
         this.slogan = slogan;
         this.email = email;
-        this.securityQuestion = SecurityQuestion.getQuestion(questionNumber);
+        this.securityQuestion = RecoveryQuestion.getQuestion(questionNumber);
         this.securityQuestionAnswer = answer;
         this.highScore = 0;
         users.add(this);
@@ -160,7 +160,7 @@ public class User implements Serializable {
     }
 
     public void setSecurityQuestion(int questionNumber) {
-        this.securityQuestion = SecurityQuestion.getQuestion(questionNumber);
+        this.securityQuestion = RecoveryQuestion.getQuestion(questionNumber);
     }
 
     public void setSecurityQuestionAnswer(String securityQuestionAnswer) {
@@ -179,6 +179,54 @@ public class User implements Serializable {
 
     public boolean isCorrectAnswer(String answer) {
         return this.securityQuestionAnswer.equals(answer);
+    }
+
+    public static void deleteUser(User user) {
+        users.remove(user);
+    }
+
+    private static User getUserByRank(int rank) {
+        for (User user : users) {
+            if (user.rank == rank)
+                return user;
+        }
+        return null;
+    }
+
+    public static void setRankByHyScore(User user) {
+        int rank = user.rank;
+        User rankUser;
+        int rankNumber = 1;
+        while (rankNumber <= rank) {
+            rankUser = getUserByRank(rankNumber);
+            if (rankUser != null) {
+                if (rankUser.highScore < user.highScore) {
+                    user.rank = rankNumber;
+                    rankUser.rank = -1;
+                    break;
+                }
+            }
+            rankNumber++;
+        }
+        for (int rankToChange = rankNumber + 1; rankToChange < rank; rankToChange++) {
+            rankUser = getUserByRank(rankToChange);
+            assert rankUser != null;
+            rankUser.rank = rankToChange + 1;
+        }
+
+        rankUser = getUserByRank(-1);
+        if (rankUser != null)
+            rankUser.rank = rankNumber + 1;
+    }
+
+    // Database functions :
+
+    public static void updateDatabase() {
+        saveUsersToFile();
+
+        if (loadStayLoggedIn() != null) {
+            setStayLoggedIn(currentUser);
+        }
     }
 
     public static void loadUsersFromFile() {
@@ -253,41 +301,4 @@ public class User implements Serializable {
         }
     }
 
-    public static void deleteUser(User user) {
-        users.remove(user);
-    }
-
-    private static User getUserByRank(int rank) {
-        for (User user : users) {
-            if (user.rank == rank)
-                return user;
-        }
-        return null;
-    }
-
-    public static void setRankByHyScore(User user) {
-        int rank = user.rank;
-        User rankUser;
-        int rankNumber = 1;
-        while (rankNumber <= rank) {
-            rankUser = getUserByRank(rankNumber);
-            if (rankUser != null) {
-                if (rankUser.highScore < user.highScore) {
-                    user.rank = rankNumber;
-                    rankUser.rank = -1;
-                    break;
-                }
-            }
-            rankNumber++;
-        }
-        for (int rankToChange = rankNumber + 1; rankToChange < rank; rankToChange++) {
-            rankUser = getUserByRank(rankToChange);
-            assert rankUser != null;
-            rankUser.rank = rankToChange + 1;
-        }
-
-        rankUser = getUserByRank(-1);
-        if (rankUser != null)
-            rankUser.rank = rankNumber + 1;
-    }
 }

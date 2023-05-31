@@ -1,6 +1,6 @@
 package model.user;
 
-public enum SecurityQuestion {
+public enum RecoveryQuestion {
 
     Q1("What is my father's name?"),
     Q2("What was my first pet's name?"),
@@ -11,7 +11,7 @@ public enum SecurityQuestion {
 
         int index = 1;
 
-        for (SecurityQuestion question : values()) {
+        for (RecoveryQuestion question : values()) {
             result.append(index).append(". ").append(question.question).append(" ");
             if (index % 2 == 1)
                 result.append("\n");
@@ -23,11 +23,14 @@ public enum SecurityQuestion {
 
     private final String question;
 
-    SecurityQuestion(String question) {
+    RecoveryQuestion(String question) {
         this.question = question;
     }
 
     public static String getQuestion(int number) {
         return values()[number - 1].question;
+    }
+    public String getQuestion() {
+        return this.question;
     }
 }

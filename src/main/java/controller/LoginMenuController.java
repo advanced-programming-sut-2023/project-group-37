@@ -89,10 +89,11 @@ public class LoginMenuController {
         if (Command.CANCEL.getMatcher(newPassword) != null)
             return Message.CANCEL.toString();
 
-        if (!PasswordHashing.checkPassword(newPassword,password))
+        if (!PasswordHashing.checkPassword(newPassword, password))
             return Message.INCOMPATIBLE_PASSWORDS.toString();
         user.setHashedPassword(password);
-        User.saveUsersToFile();
+
+        User.updateDatabase();
         return Message.CHANGE_PASSWORD_SUCCESSFUL.toString();
     }
 

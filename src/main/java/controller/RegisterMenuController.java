@@ -1,6 +1,6 @@
 package controller;
 
-import model.user.SecurityQuestion;
+import model.user.RecoveryQuestion;
 import model.user.Slogan;
 import model.user.User;
 import model.utils.PasswordHashing;
@@ -27,7 +27,7 @@ public class RegisterMenuController {
     }
 
     private void saveUser() {
-        User.saveUsersToFile();
+        User.updateDatabase();
     }
 
     private String deleteQuotations(String string) {
@@ -139,7 +139,7 @@ public class RegisterMenuController {
     public String pickQuestion(Matcher matcher) {
         int questionNumber = Integer.parseInt(matcher.group("questionNumber"));
 
-        if (questionNumber > SecurityQuestion.values().length || questionNumber < 1)
+        if (questionNumber > RecoveryQuestion.values().length || questionNumber < 1)
             return Message.INCORRECT_QUESTION_NUMBER.toString();
 
         String answer = deleteQuotations(matcher.group("answer")),
