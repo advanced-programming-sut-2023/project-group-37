@@ -7,8 +7,21 @@ import view.enums.Message;
 
 
 public class ProfileMenuController {
+    private static final ProfileMenuController profileMenuController;
     private static User currentUser;
     private String password;
+
+    static {
+        profileMenuController = new ProfileMenuController();
+    }
+
+    private ProfileMenuController() {
+
+    }
+
+    public static ProfileMenuController getInstance() {
+        return profileMenuController;
+    }
 
     public static void setCurrentUser(User currentUser) {
         ProfileMenuController.currentUser = currentUser;

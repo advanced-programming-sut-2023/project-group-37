@@ -1,6 +1,9 @@
 package view.menus;
 
+import controller.AppController;
 import controller.RegisterMenuController;
+import javafx.application.Application;
+import javafx.stage.Stage;
 import model.utils.Captcha;
 import view.enums.Message;
 import view.enums.Result;
@@ -9,15 +12,22 @@ import view.enums.Command;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class RegisterMenu {
-    private final RegisterMenuController controller;
+public class RegisterMenu extends Application {
+    private final AppController appController;
+    private final RegisterMenuController registerMenuController;
     private final Scanner scanner;
     private String command;
     private String message;
 
-    public RegisterMenu(Scanner scanner, RegisterMenuController registerMenuController) {
-        this.scanner = scanner;
-        this.controller = registerMenuController;
+    public RegisterMenu() {
+        this.scanner = new Scanner(System.in);
+        this.appController = AppController.getInstance();
+        this.registerMenuController = RegisterMenuController.getInstance();
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+
     }
 
     public Result run() {
@@ -29,7 +39,7 @@ public class RegisterMenu {
             if ((matcher = Command.REGISTER.getMatcher(this.command)) != null
                     || (matcher = Command.REGISTER_RANDOM_PASSWORD.getMatcher(this.command)) != null) {
                 if (register(matcher))
-                    return Result.USER_CREATED;
+                    return Result.ENTER_LOGIN_MENU;
             }
 
             else if (command.matches(Command.ENTER_LOGIN_MENU.toString())) {
@@ -52,7 +62,7 @@ public class RegisterMenu {
             this.command = this.scanner.nextLine();
 
             if ((matcher = Command.PICK_QUESTION.getMatcher(this.command)) != null) {
-                this.message = this.controller.pickQuestion(matcher);
+                this.message = this.registerMenuController.pickQuestion(matcher);
                 System.out.println(this.message);
 
                 if (Message.DO_CAPTCHA.equals(this.message)) {
@@ -61,7 +71,7 @@ public class RegisterMenu {
                     while (!command.equals("cancel")) {
                         this.command = scanner.nextLine();
                         if (command.equals(captcha.getCaptchaNumber())) {
-                            System.out.println(controller.captcha());
+                            System.out.println(registerMenuController.captcha());
                             return true;
                         } else if (!command.equals("cancel")) {
                             System.out.println(Message.WRONG_CAPTCHA);
@@ -79,14 +89,14 @@ public class RegisterMenu {
     }
 
     private boolean register(Matcher matcher) {
-        this.message = this.controller.register(matcher);
+        this.message = this.registerMenuController.register(matcher);
         System.out.println(message);
 
         if (this.message.contains("re-enter")) {
             do {
                 this.command = this.scanner.nextLine();
 
-                this.message = this.controller.checkPasswordConfirm(this.command);
+                this.message = this.registerMenuController.checkPasswordConfirm(this.command);
                 System.out.println(this.message);
 
             } while (Message.REENTER_AGAIN.equals(message));

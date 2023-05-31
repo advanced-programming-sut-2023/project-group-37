@@ -10,8 +10,21 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class TradeMenuController {
+    private static final TradeMenuController tradeMenuController;
     private Government government;
     private Game game;
+
+    static {
+        tradeMenuController = new TradeMenuController();
+    }
+
+    private TradeMenuController() {
+
+    }
+
+    public static TradeMenuController getInstance() {
+        return tradeMenuController;
+    }
 
     public void setGovernment(Government government) {
         this.government = government;

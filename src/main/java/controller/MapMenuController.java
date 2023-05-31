@@ -13,11 +13,24 @@ import view.enums.Message;
 import java.util.regex.Matcher;
 
 public class MapMenuController {
+    private static final MapMenuController mapMenuController;
     private Game game;
     private Map map;
     private Government currentGovernment;
     private int currentX;
     private int currentY;
+
+    static {
+        mapMenuController = new MapMenuController();
+    }
+
+    private MapMenuController() {
+
+    }
+
+    public static MapMenuController getInstance() {
+        return mapMenuController;
+    }
 
     public void setCurrentGovernment(Government currentGovernment) {
         this.currentGovernment = currentGovernment;

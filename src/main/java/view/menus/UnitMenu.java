@@ -1,5 +1,6 @@
 package view.menus;
 
+import controller.AppController;
 import controller.MultiMenuFunctions;
 import controller.UnitMenuController;
 import view.enums.Command;
@@ -9,12 +10,14 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class UnitMenu {
+    private final AppController appController;
     private final UnitMenuController controller;
     private final Scanner scanner;
 
-    public UnitMenu(Scanner scanner, UnitMenuController unitMenuController) {
-        this.scanner = scanner;
-        this.controller = unitMenuController;
+    public UnitMenu() {
+        this.appController = AppController.getInstance();
+        this.scanner = new Scanner(System.in);
+        this.controller = UnitMenuController.getInstance();
     }
 
     public void run() {

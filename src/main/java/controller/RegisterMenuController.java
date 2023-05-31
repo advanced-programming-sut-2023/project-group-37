@@ -11,7 +11,20 @@ import java.util.regex.Matcher;
 
 public class RegisterMenuController {
 
+    private static final RegisterMenuController registerMenuController;
     private User user;
+
+    static {
+        registerMenuController = new RegisterMenuController();
+    }
+
+    private RegisterMenuController() {
+
+    }
+
+    public static RegisterMenuController getInstance() {
+        return registerMenuController;
+    }
 
     private void saveUser() {
         User.saveUsersToFile();

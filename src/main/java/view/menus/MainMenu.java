@@ -1,7 +1,10 @@
 package view.menus;
 
+import controller.AppController;
 import controller.MainMenuController;
 import controller.MultiMenuFunctions;
+import javafx.application.Application;
+import javafx.stage.Stage;
 import view.enums.Result;
 import view.enums.Command;
 import view.enums.Message;
@@ -9,13 +12,20 @@ import view.enums.Message;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class MainMenu {
-    private final MainMenuController controller;
+public class MainMenu extends Application {
+    private final AppController appController;
+    private final MainMenuController mainMenuController;
     private final Scanner scanner;
 
-    public MainMenu(Scanner scanner, MainMenuController mainMenuController) {
-        this.scanner = scanner;
-        this.controller = mainMenuController;
+    public MainMenu() {
+        this.appController = AppController.getInstance();
+        this.scanner = new Scanner(System.in);
+        this.mainMenuController = MainMenuController.getInstance();
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+
     }
 
     public Result run() {
@@ -26,13 +36,13 @@ public class MainMenu {
             command = scanner.nextLine();
 
             if (command.matches(Command.ENTER_PROFILE_MENU.toString())) {
-                System.out.println(this.controller.enterProfileMenu());
+                System.out.println(this.mainMenuController.enterProfileMenu());
                 return Result.ENTER_PROFILE_MENU;
             } else if ((matcher = Command.START_GAME.getMatcher(command)) != null) {
                 if (startGame(matcher))
                     return Result.ENTER_GAME_MENU;
             } else if (command.matches(Command.LOGOUT.toString())) {
-                System.out.println(this.controller.logout());
+                System.out.println(this.mainMenuController.logout());
                 return Result.ENTER_LOGIN_MENU;
             } else if (command.matches(Command.EXIT.toString())) {
                 return Result.EXIT;
@@ -59,7 +69,7 @@ public class MainMenu {
             return false;
         }
 
-        String message = this.controller.startGame(usernames, numbers, matcher.group("turns"),
+        String message = this.mainMenuController.startGame(usernames, numbers, matcher.group("turns"),
                 MultiMenuFunctions.deleteQuotations(matcher.group("mapName")));
 
         System.out.println(message);

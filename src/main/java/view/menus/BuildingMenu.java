@@ -1,5 +1,6 @@
 package view.menus;
 
+import controller.AppController;
 import controller.BuildingMenuController;
 import view.enums.Command;
 import view.enums.Message;
@@ -8,12 +9,14 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class BuildingMenu {
-    private final BuildingMenuController controller;
+    private final AppController appController;
+    private final BuildingMenuController buildingMenuController;
     private final Scanner scanner;
 
-    public BuildingMenu(Scanner scanner, BuildingMenuController buildingMenuController) {
-        this.scanner = scanner;
-        this.controller = buildingMenuController;
+    public BuildingMenu() {
+        this.appController = AppController.getInstance();
+        this.scanner = new Scanner(System.in);
+        this.buildingMenuController = BuildingMenuController.getInstance();
     }
 
     public void run() {
@@ -21,16 +24,16 @@ public class BuildingMenu {
         String command;
         Matcher matcher;
 
-        if (this.controller.getCurrentBuilding().getType().isRepairable())
-            System.out.println("Hitpoints: " + this.controller.getCurrentBuilding().getHitpoints());
+        if (this.buildingMenuController.getCurrentBuilding().getType().isRepairable())
+            System.out.println("Hitpoints: " + this.buildingMenuController.getCurrentBuilding().getHitpoints());
 
         while (true) {
             command = scanner.nextLine();
-            if (command.matches(Command.REPAIR.toString()) && this.controller.getCurrentBuilding() != null)
-                System.out.println(this.controller.repair());
+            if (command.matches(Command.REPAIR.toString()) && this.buildingMenuController.getCurrentBuilding() != null)
+                System.out.println(this.buildingMenuController.repair());
 
             else if ((matcher = Command.CREATE_UNIT.getMatcher(command)) != null)
-                System.out.println(controller.createUnit(matcher));
+                System.out.println(buildingMenuController.createUnit(matcher));
 
             else if (command.matches(Command.BACK_GAME_MENU.toString())) {
                 System.out.println(Message.BACK_GAME_MENU);

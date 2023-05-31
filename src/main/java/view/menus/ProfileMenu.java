@@ -1,6 +1,9 @@
 package view.menus;
 
+import controller.AppController;
 import controller.ProfileMenuController;
+import javafx.application.Application;
+import javafx.stage.Stage;
 import view.enums.Result;
 import view.enums.Command;
 import view.enums.Message;
@@ -8,14 +11,20 @@ import view.enums.Message;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class ProfileMenu {
-
-    private final ProfileMenuController controller;
+public class ProfileMenu extends Application {
+    private final AppController appController;
+    private final ProfileMenuController profileMenuController;
     private final Scanner scanner;
 
-    public ProfileMenu(Scanner scanner, ProfileMenuController profileMenuController) {
-        this.scanner = scanner;
-        this.controller = profileMenuController;
+    public ProfileMenu() {
+        this.appController = AppController.getInstance();
+        this.scanner = new Scanner(System.in);
+        this.profileMenuController = ProfileMenuController.getInstance();
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+
     }
 
     public Result run() {
@@ -25,25 +34,25 @@ public class ProfileMenu {
         while (true) {
             command = this.scanner.nextLine();
             if ((matcher = Command.CHANGE_USERNAME.getMatcher(command)) != null) {
-                System.out.println(this.controller.changeUsername(matcher.group("username")));
+                System.out.println(this.profileMenuController.changeUsername(matcher.group("username")));
             } else if ((matcher = Command.CHANGE_NICKNAME.getMatcher(command)) != null) {
-                System.out.println(this.controller.changeNickName(matcher.group("nickname")));
+                System.out.println(this.profileMenuController.changeNickName(matcher.group("nickname")));
             } else if ((matcher = Command.CHANGE_PASSWORD.getMatcher(command)) != null) {
                 changePassword(matcher);
             } else if ((matcher = Command.CHANGE_EMAIL.getMatcher(command)) != null) {
-                System.out.println(this.controller.changeEmail(matcher.group("email")));
+                System.out.println(this.profileMenuController.changeEmail(matcher.group("email")));
             } else if ((matcher = Command.CHANGE_SLOGAN.getMatcher(command)) != null) {
-                System.out.println(this.controller.changeSlogan(matcher.group("slogan")));
+                System.out.println(this.profileMenuController.changeSlogan(matcher.group("slogan")));
             } else if (command.matches(Command.REMOVE_SLOGAN.toString())) {
-                System.out.println(this.controller.removeSlogan());
+                System.out.println(this.profileMenuController.removeSlogan());
             } else if (command.matches(Command.DISPLAY_HIGHSCORE.toString())) {
-                System.out.println(this.controller.showScore());
+                System.out.println(this.profileMenuController.showScore());
             } else if (command.matches(Command.DISPLAY_RANK.toString())) {
-                System.out.println(this.controller.showRank());
+                System.out.println(this.profileMenuController.showRank());
             } else if (command.matches(Command.DISPLAY_SLOGAN.toString())) {
-                System.out.println(this.controller.showSlogan());
+                System.out.println(this.profileMenuController.showSlogan());
             } else if (command.matches(Command.DISPLAY_PROFILE.toString())) {
-                System.out.println(this.controller.showProfile());
+                System.out.println(this.profileMenuController.showProfile());
             } else if (command.matches(Command.BACK.toString())) {
                 System.out.println(Message.BACK_MAIN_MENU);
                 return Result.ENTER_MAIN_MENU;
@@ -53,7 +62,7 @@ public class ProfileMenu {
     }
 
     private void changePassword(Matcher matcher) {
-        String message = this.controller.changePassword(matcher.group("oldPassword"), matcher.group("newPassword"));
+        String message = this.profileMenuController.changePassword(matcher.group("oldPassword"), matcher.group("newPassword"));
         System.out.println(message);
 
         if (Message.ENTER_PASSWORD_AGAIN.equals(message)) {
@@ -61,7 +70,7 @@ public class ProfileMenu {
             flag:
             do {
                 password = this.scanner.nextLine();
-                message = this.controller.checkPasswordAgain(password);
+                message = this.profileMenuController.checkPasswordAgain(password);
                 System.out.println(message);
             } while (!Message.CHANGE_PASSWORD.equals(message) && !Message.CANCEL.equals(message));
         }

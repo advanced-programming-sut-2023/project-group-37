@@ -12,10 +12,23 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 
 public class UnitMenuController {
+    private static final UnitMenuController unitMenuController;
     private Game currentGame;
     private Government currentGovernment;
     private ArrayList<MilitaryUnit> currentUnit;
     private Tile currentLocation;
+
+    static {
+        unitMenuController = new UnitMenuController();
+    }
+
+    private UnitMenuController() {
+
+    }
+
+    public static UnitMenuController getInstance() {
+        return unitMenuController;
+    }
 
     public void setCurrentGovernment(Government currentGovernment) {
         this.currentGovernment = currentGovernment;

@@ -75,7 +75,7 @@ assignees: Arman17Babaei
 </details>
 
 <details>
-  <summary>طراحی قسمت view و controller در UML</summary>
+  <summary>طراحی قسمت view و appController در UML</summary>
 
   <div dir="ltr" align='right'>
 

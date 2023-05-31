@@ -8,9 +8,22 @@ import view.enums.Message;
 import java.util.regex.Matcher;
 
 public class LoginMenuController {
+    private static final LoginMenuController loginMenuController;
     private User user;
     private String password;
     private int delayTime = 0;
+
+    static {
+        loginMenuController = new LoginMenuController();
+    }
+
+    private LoginMenuController() {
+
+    }
+
+    public static LoginMenuController getInstance() {
+        return loginMenuController;
+    }
 
     public int getDelayTime() {
         return delayTime;

@@ -10,12 +10,22 @@ import view.enums.Message;
 import java.util.ArrayList;
 
 public class MainMenuController {
+    private static final MainMenuController mainMenuController;
     private static User currentUser;
-
     private final GameMenuController gameMenuController;
+    static {
+        mainMenuController = new MainMenuController();
+    }
+    {
+        gameMenuController = GameMenuController.getInstance();
+    }
 
-    public MainMenuController(GameMenuController gameMenuController) {
-        this.gameMenuController = gameMenuController;
+    private MainMenuController() {
+
+    }
+
+    public static MainMenuController getInstance() {
+        return mainMenuController;
     }
 
     public static void setCurrentUser(User user) {

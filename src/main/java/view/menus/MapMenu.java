@@ -1,5 +1,6 @@
 package view.menus;
 
+import controller.AppController;
 import controller.MapMenuController;
 import model.game.Tile;
 import view.enums.Command;
@@ -9,13 +10,14 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class MapMenu {
-
-    private final MapMenuController controller;
+    private final AppController appController;
+    private final MapMenuController mapMenuController;
     private final Scanner scanner;
 
-    public MapMenu(Scanner scanner, MapMenuController mapMenuController) {
-        this.scanner = scanner;
-        this.controller = mapMenuController;
+    public MapMenu() {
+        this.appController = AppController.getInstance();
+        this.scanner = new Scanner(System.in);
+        this.mapMenuController = MapMenuController.getInstance();
     }
 
     public void run() {
@@ -30,7 +32,7 @@ public class MapMenu {
                     System.out.println(Message.ADDRESS_OUT_OF_BOUNDS);
             }
             else if ((matcher = Command.SHOW_DETAILS.getMatcher(command)) != null)
-                System.out.println(this.controller.showDetails(matcher));
+                System.out.println(this.mapMenuController.showDetails(matcher));
             else if (command.matches(Command.BACK_GAME_MENU.toString())) {
                 System.out.println(Message.BACK_GAME_MENU);
                 return;
@@ -38,7 +40,7 @@ public class MapMenu {
         }
     }
     private boolean showMap(Matcher matcher) {
-        Tile[][] tiles = this.controller.moveMap(matcher);
+        Tile[][] tiles = this.mapMenuController.moveMap(matcher);
         if (tiles == null)
             return false;
 

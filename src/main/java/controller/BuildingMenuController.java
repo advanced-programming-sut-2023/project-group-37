@@ -11,10 +11,21 @@ import view.enums.Message;
 import java.util.regex.Matcher;
 
 public class BuildingMenuController {
-
+    private static final BuildingMenuController buildingMenuController;
     private Game currentGame;
     private Building currentBuilding;
     private Government currentGovernment;
+
+    static {
+        buildingMenuController = new BuildingMenuController();
+    }
+    private BuildingMenuController() {
+
+    }
+
+    public static BuildingMenuController getInstance() {
+        return buildingMenuController;
+    }
 
     public void setCurrentGovernment(Government currentGovernment) {
         this.currentGovernment = currentGovernment;

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class GameMenuController {
+    private static final GameMenuController gameMenuController;
     private Game currentGame;
     private final MapMenuController mapMenuController;
     private final ShopMenuController shopMenuController;
@@ -24,15 +25,21 @@ public class GameMenuController {
     private final BuildingMenuController buildingMenuController;
     private final UnitMenuController unitMenuController;
     private Government currentGovernment;
+    static {
+        gameMenuController = new GameMenuController();
+    }
 
-    public GameMenuController(MapMenuController mapMenuController, ShopMenuController shopMenuController,
-                              TradeMenuController tradeMenuController, BuildingMenuController buildingMenuController,
-                              UnitMenuController unitMenuController) {
-        this.mapMenuController = mapMenuController;
-        this.shopMenuController = shopMenuController;
-        this.tradeMenuController = tradeMenuController;
-        this.buildingMenuController = buildingMenuController;
-        this.unitMenuController = unitMenuController;
+    private GameMenuController() {
+        mapMenuController = MapMenuController.getInstance();
+        shopMenuController = ShopMenuController.getInstance();
+        tradeMenuController = TradeMenuController.getInstance();
+        buildingMenuController = BuildingMenuController.getInstance();
+        unitMenuController = UnitMenuController.getInstance();
+
+    }
+
+    public static GameMenuController getInstance() {
+        return gameMenuController;
     }
 
     public void setCurrentGovernment(Government government) {
