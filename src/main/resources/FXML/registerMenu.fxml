@@ -13,7 +13,7 @@
                     <children>
                         <TextField fx:id="usernameField" alignment="CENTER" promptText="username" />
                         <PasswordField fx:id="passwordField" alignment="CENTER" promptText="password" />
-                        <TextField fx:id="passwordConfirmField" alignment="CENTER" promptText="password confirm" />
+                        <PasswordField fx:id="passwordConfirmField" alignment="CENTER" promptText="password confirm" />
                         <TextField fx:id="nicknameField" alignment="CENTER" promptText="nickname" />
                         <TextField fx:id="emailField" alignment="CENTER" promptText="email" />
                         <VBox prefHeight="52.0" prefWidth="226.0">

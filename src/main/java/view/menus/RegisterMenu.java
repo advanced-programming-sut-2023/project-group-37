@@ -31,10 +31,13 @@ public class RegisterMenu extends Application {
     private String command;
     private String message;
 
+    // choiceBoxes :
     @FXML
     private ChoiceBox<String> recoveryQuestions;
     @FXML
     private ChoiceBox<String> sloganChoiceBox;
+
+    // fields :
     @FXML
     private TextField usernameField;
     @FXML
