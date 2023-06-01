@@ -68,7 +68,7 @@ public class LoginMenu extends Application {
         System.out.println(this.message);
 
         if (Message.ASK_QUESTION.equals(message)) {
-            System.out.println(this.loginMenuController.getUser().getSecurityQuestion());
+            System.out.println(this.loginMenuController.getUser().getRecoveryQuestion());
             do {
                 this.command = this.scanner.nextLine();
                 this.message = this.loginMenuController.answerSecurityQuestion(this.command);

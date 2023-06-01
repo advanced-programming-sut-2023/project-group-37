@@ -21,8 +21,8 @@ public class User implements Serializable {
     private String nickname;
     private String slogan;
     private String email;
-    private String securityQuestion;
-    private String securityQuestionAnswer;
+    private String recoveryQuestion;
+    private String recoveryAnswer;
     private int highScore;
     private int rank;
     private static ArrayList<User> users = new ArrayList<>();
@@ -94,17 +94,16 @@ public class User implements Serializable {
         this.rank = rank;
     }
 
-    public User(String username, String password, String nickname, String slogan, String email, int questionNumber,
-                String answer) {
+    public User(String username, String password, String nickname, String email, String recoveryQuestion,
+                String recoveryAnswer, String slogan) {
         this.username = username;
         this.hashedPassword = password;
         this.nickname = nickname;
         this.slogan = slogan;
         this.email = email;
-        this.securityQuestion = RecoveryQuestion.getQuestion(questionNumber);
-        this.securityQuestionAnswer = answer;
+        this.recoveryQuestion = recoveryQuestion;
+        this.recoveryAnswer = recoveryAnswer;
         this.highScore = 0;
-        users.add(this);
     }
 
     public int getRank() {
@@ -127,8 +126,8 @@ public class User implements Serializable {
         return this.email;
     }
 
-    public String getSecurityQuestion() {
-        return this.securityQuestion;
+    public String getRecoveryQuestion() {
+        return this.recoveryQuestion;
     }
 
     public int getHighScore() {
@@ -159,12 +158,12 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public void setSecurityQuestion(int questionNumber) {
-        this.securityQuestion = RecoveryQuestion.getQuestion(questionNumber);
+    public void setRecoveryQuestion(int questionNumber) {
+        this.recoveryQuestion = RecoveryQuestion.getQuestion(questionNumber);
     }
 
-    public void setSecurityQuestionAnswer(String securityQuestionAnswer) {
-        this.securityQuestionAnswer = securityQuestionAnswer;
+    public void setRecoveryAnswer(String recoveryAnswer) {
+        this.recoveryAnswer = recoveryAnswer;
     }
 
     public void setHighScore(int highScore) {
@@ -178,7 +177,7 @@ public class User implements Serializable {
     }
 
     public boolean isCorrectAnswer(String answer) {
-        return this.securityQuestionAnswer.equals(answer);
+        return this.recoveryAnswer.equals(answer);
     }
 
     public static void deleteUser(User user) {

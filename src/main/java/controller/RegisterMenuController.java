@@ -70,35 +70,19 @@ public class RegisterMenuController {
        return password.toString();
     }
 
-    public User getUser() {
-        return user;
-    }
-
     public String generateRandomSlogan() {
         return Slogan.getRandomSlogan().toString();
     }
 
-    public String register(String username, String password, String passwordConfirm, String nickName, String email,
-                           String recoveryQuestion, String recoveryAnswer, String sloganChoice, String slogan) {
+    public Message register(String username, String password, String nickName, String email,
+                           String recoveryQuestion, String recoveryAnswer, String slogan) {
+        if (User.getUserByUsername(username) != null)
+            return Message.USERNAME_ALREADY_EXISTS;
 
-        if (!password.equals("random")) {
-            if (passwordConfirm.isEmpty())
-                return Message.EMPTY_FIELD.toString();
-            if (!passwordConfirm.equals(password))
-                return Message.INCOMPATIBLE_PASSWORDS.toString();
-        } else {
-            String randomPassword = generateRandomPassword();
-            //save hashed password
-            this.user = new User(username.toLowerCase(), PasswordHashing.encode(randomPassword), email, slogan, nickName);
-            return  "";
-        }
+        this.user = new User(username, PasswordHashing.encode(password), nickName, email,
+                recoveryQuestion, recoveryAnswer, slogan);
 
-        if (MultiMenuFunctions.checkEmailNotOK(email))
-            return Message.INCORRECT_EMAIL_FORM.toString();
-        //save hashed password
-        this.user = new User(username, PasswordHashing.encode(password), email, slogan, nickName);
-
-        return  Message.ASK_FOR_SECURITY_QUESTION.toString();
+        return Message.GO_FOR_CAPTCHA;
     }
 
     public String pickQuestion(Matcher matcher) {
@@ -116,8 +100,8 @@ public class RegisterMenuController {
         if (!answer.equals(answerConfirm))
             return Message.INCOMPATIBLE_ANSWERS.toString();
 
-        user.setSecurityQuestion(questionNumber);
-        user.setSecurityQuestionAnswer(answer);
+        user.setRecoveryQuestion(questionNumber);
+        user.setRecoveryAnswer(answer);
         return Message.DO_CAPTCHA.toString();
     }
 

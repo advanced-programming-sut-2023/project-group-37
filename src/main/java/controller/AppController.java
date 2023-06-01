@@ -22,8 +22,9 @@ public class AppController {
 
     }
 
-    private final RegisterMenu registerMenu;
     private final LoginMenu loginMenu;
+    private final RegisterMenu registerMenu;
+    private final CaptchaMenu captchaMenu;
     private final MainMenu mainMenu;
     private final ProfileMenu profileMenu;
     private final GameMenu gameMenu;
@@ -36,16 +37,17 @@ public class AppController {
     {
         this.stage = new Stage();
 
-        registerMenu = new RegisterMenu();
-        loginMenu = new LoginMenu();
-        mainMenu = new MainMenu();
-        profileMenu = new ProfileMenu();
-        gameMenu = new GameMenu();
-        buildingMenu = new BuildingMenu();
-        mapMenu = new MapMenu();
-        shopMenu = new ShopMenu();
-        tradeMenu = new TradeMenu();
-        unitMenu = new UnitMenu();
+        this.loginMenu = new LoginMenu();
+        this.registerMenu = new RegisterMenu();
+        this.captchaMenu = new CaptchaMenu();
+        this.mainMenu = new MainMenu();
+        this.profileMenu = new ProfileMenu();
+        this.gameMenu = new GameMenu();
+        this.buildingMenu = new BuildingMenu();
+        this.mapMenu = new MapMenu();
+        this.shopMenu = new ShopMenu();
+        this.tradeMenu = new TradeMenu();
+        this.unitMenu = new UnitMenu();
     }
 
     public void runLoginMenu() throws Exception {
@@ -64,11 +66,12 @@ public class AppController {
 
     public void runMenu(Result result) throws Exception {
         switch (result) {
-            case ENTER_LOGIN_MENU -> loginMenu.start(this.stage);
-            case ENTER_REGISTER_MENU -> registerMenu.start(this.stage);
-            case ENTER_PROFILE_MENU -> profileMenu.start(this.stage);
-            case ENTER_MAIN_MENU -> mainMenu.start(this.stage);
-            case ENTER_GAME_MENU -> gameMenu.start(this.stage);
+            case ENTER_LOGIN_MENU -> this.loginMenu.start(this.stage);
+            case ENTER_REGISTER_MENU -> this.registerMenu.start(this.stage);
+            case GO_FOR_CAPTCHA -> this.captchaMenu.start(this.stage);
+            case ENTER_PROFILE_MENU -> this.profileMenu.start(this.stage);
+            case ENTER_MAIN_MENU -> this.mainMenu.start(this.stage);
+            case ENTER_GAME_MENU -> this.gameMenu.start(this.stage);
 
             // todo : how to show game parts menu ??
         }

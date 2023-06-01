@@ -26,6 +26,7 @@ public enum Message {
     ASK_FOR_SECURITY_QUESTION("Pick your security question: " + RecoveryQuestion.getAllQuestions()),
     INCORRECT_QUESTION_NUMBER("Please select question-number between 1,2,3:"),
     INCOMPATIBLE_ANSWERS("Incompatible answers!"),
+    GO_FOR_CAPTCHA("For the last thing; Enter captcha :"),
     REGISTER_SUCCESSFUL("User created successfully!"),
 
     // LoginMenu:
@@ -167,7 +168,8 @@ public enum Message {
     INVALID_TAX_RATE("You have to enter a rate between -3 to 8"),
     TAX_RATE_SET("Tax rate has been set to"),
     INVALID_FEAR_RATE("You have to enter a rate between -5 to 5"),
-    FEAR_RATE_SET("Fear rate has been set to");
+    FEAR_RATE_SET("Fear rate has been set to"),
+    ;
 
     private final String message;
 
