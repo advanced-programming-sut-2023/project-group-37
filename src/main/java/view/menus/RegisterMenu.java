@@ -7,10 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.user.RecoveryQuestion;
@@ -36,6 +33,8 @@ public class RegisterMenu extends Application {
     private ChoiceBox<String> recoveryQuestions;
     @FXML
     private ChoiceBox<String> sloganChoiceBox;
+    @FXML
+    private CheckBox showPassword;
 
     // fields :
     @FXML
@@ -52,12 +51,14 @@ public class RegisterMenu extends Application {
     private TextField recoveryAnswerField;
     @FXML
     private TextField sloganField;
+
+    // Error labels :
     @FXML
     private Label usernameError;
     @FXML
     private Label passwordError;
     @FXML
-    private Label PasswordConfirmError;
+    private Label passwordConfirmError;
     @FXML
     private Label nicknameError;
     @FXML
@@ -178,6 +179,14 @@ public class RegisterMenu extends Application {
     }
 
     public void register() {
+
+    }
+
+    public void generateRandomPassword() {
+
+    }
+
+    public void showOrHide() {
 
     }
 }

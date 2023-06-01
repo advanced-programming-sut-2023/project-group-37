@@ -90,6 +90,8 @@
                         </Label>
                     </children>
                 </VBox>
+            <CheckBox fx:id="showPassword" alignment="CENTER" contentDisplay="CENTER" layoutX="420.0" layoutY="53.0" mnemonicParsing="false" onAction="#showOrHide" text="Show" />
+            <Button layoutX="419.0" layoutY="81.0" mnemonicParsing="false" onAction="#generateRandomPassword" prefHeight="25.0" prefWidth="115.0" text="Generate Random" />
             </children>
         </Pane>
     </children>
