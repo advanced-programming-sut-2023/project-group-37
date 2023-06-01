@@ -34,20 +34,7 @@ public class RegisterMenuController {
         return MultiMenuFunctions.deleteQuotations(string);
     }
 
-    static boolean checkUsernameNotOK(String username) {
-        return !username.matches("[A-Za-z0-9_]+");
-    }
-
-    static boolean checkPasswordNotOK(String password) {
-        return !(password.matches(".*[A-Z].*") && password.matches(".*[a-z].*") &&
-                password.matches(".*[0-9].*") && password.length() > 5 && password.matches(".*[^a-zA_Z0-9].*"));
-    }
-
-    static boolean checkEmailNotOK(String email) {
-        return !email.matches("[A-Za-z0-9_.]+@[a-zA-Z0-9_]+\\.[A-Za-z0-9_.]+");
-    }
-
-    private String generateRandomPassword() {
+    public String generateRandomPassword() {
         SecureRandom random = new SecureRandom();
 
         String LOWER_CHARACTERS = "abcdefghijklmnopqrstuvwxyz";
@@ -87,35 +74,14 @@ public class RegisterMenuController {
         return user;
     }
 
-    private String generateRandomSlogan() {
+    public String generateRandomSlogan() {
         return Slogan.getRandomSlogan().toString();
     }
 
-    public String register(Matcher matcher) {
-        String username = deleteQuotations(matcher.group("username")),
-                password = deleteQuotations(matcher.group("password")),
-                email = deleteQuotations(matcher.group("email")),
-                nickName = deleteQuotations(matcher.group("nickName")),
-                slogan = deleteQuotations(matcher.group("slogan"));
-
-        String randomMessages = "";
-
-        if (username.isEmpty() || password.isEmpty() || email.isEmpty() || nickName.isEmpty())
-            return Message.EMPTY_FIELD.toString();
-        if (checkUsernameNotOK(username))
-            return Message.INCORRECT_USERNAME_FORM.toString();
-        if (User.getUserByUsername(username) != null)
-            return Message.USERNAME_ALREADY_EXISTS.toString();
-        if (checkPasswordNotOK(password) && !password.equals("random"))
-            return Message.WEAK_PASSWORD.toString();
-
-        if (slogan.equals("random")) {
-            slogan = generateRandomSlogan();
-            randomMessages += "Your slogan is \"" + slogan + "\"\n";
-        }
+    public String register(String username, String password, String passwordConfirm, String nickName, String email,
+                           String recoveryQuestion, String recoveryAnswer, String sloganChoice, String slogan) {
 
         if (!password.equals("random")) {
-            String passwordConfirm = deleteQuotations(matcher.group("passwordConfirm"));
             if (passwordConfirm.isEmpty())
                 return Message.EMPTY_FIELD.toString();
             if (!passwordConfirm.equals(password))
@@ -124,16 +90,15 @@ public class RegisterMenuController {
             String randomPassword = generateRandomPassword();
             //save hashed password
             this.user = new User(username.toLowerCase(), PasswordHashing.encode(randomPassword), email, slogan, nickName);
-            randomMessages += "Your random password is: " + randomPassword + "\nPlease re-enter your password here:";
-            return randomMessages;
+            return  "";
         }
 
-        if (checkEmailNotOK(email))
+        if (MultiMenuFunctions.checkEmailNotOK(email))
             return Message.INCORRECT_EMAIL_FORM.toString();
         //save hashed password
         this.user = new User(username, PasswordHashing.encode(password), email, slogan, nickName);
 
-        return randomMessages + Message.ASK_FOR_SECURITY_QUESTION;
+        return  Message.ASK_FOR_SECURITY_QUESTION.toString();
     }
 
     public String pickQuestion(Matcher matcher) {

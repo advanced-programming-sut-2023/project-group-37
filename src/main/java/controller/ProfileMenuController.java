@@ -36,7 +36,7 @@ public class ProfileMenuController {
             return Message.CHANGE_USERNAME_ERROR1;
         }
         username = deleteQuotation(username);
-        if (RegisterMenuController.checkUsernameNotOK(username)) {
+        if (MultiMenuFunctions.checkUsernameNotOK(username)) {
             return Message.CHANGE_USERNAME_ERROR2;
         }
         if (username.equals(currentUser.getUsername())) {
@@ -66,7 +66,7 @@ public class ProfileMenuController {
         if (currentUser.isWrongPassword(oldPass)) {
             return Message.CHANGE_PASSWORD_ERROR2.toString();
         }
-        if (RegisterMenuController.checkPasswordNotOK(newPass)) {
+        if (MultiMenuFunctions.checkPasswordNotOK(newPass)) {
             return Message.CHANGE_PASSWORD_ERROR4.toString();
         }
         password = newPass;
@@ -89,7 +89,7 @@ public class ProfileMenuController {
         if (newEmail.isEmpty()) {
             return Message.CHANGE_EMAIL_ERROR3;
         }
-        if (RegisterMenuController.checkEmailNotOK(newEmail)) {
+        if (MultiMenuFunctions.checkEmailNotOK(newEmail)) {
             return Message.CHANGE_EMAIL_ERROR1;
         }
         if (User.getUserByEmail(newEmail) != null) {

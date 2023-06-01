@@ -78,7 +78,7 @@ public class LoginMenuController {
         if (Command.CANCEL.getMatcher(newPassword) != null)
             return Message.CANCEL.toString();
 
-        if (RegisterMenuController.checkPasswordNotOK(newPassword))
+        if (MultiMenuFunctions.checkPasswordNotOK(newPassword))
             return Message.WEAK_PASSWORD.toString();
         //save hashed password
         password = PasswordHashing.encode(newPassword);

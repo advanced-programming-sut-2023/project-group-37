@@ -1,9 +1,9 @@
 package view.menus;
 
 import controller.AppController;
+import controller.MultiMenuFunctions;
 import controller.RegisterMenuController;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.user.RecoveryQuestion;
 import model.utils.Captcha;
+import view.enums.Error;
 import view.enums.Message;
 import view.enums.Result;
 import view.enums.Command;
@@ -87,15 +88,101 @@ public class RegisterMenu extends Application {
 
     @FXML
     private void initialize() {
+        initializeFields();
+        initializeErrors();
+        initializeSlogan();
+
         for (RecoveryQuestion recoveryQuestion : RecoveryQuestion.values()) {
-            recoveryQuestions.getItems().add(recoveryQuestion.getQuestion());
+            this.recoveryQuestions.getItems().add(recoveryQuestion.getQuestion());
         }
+    }
 
-        sloganChoiceBox.getItems().add("No slogan");
-        sloganChoiceBox.getItems().add("Type a slogan");
-        sloganChoiceBox.getItems().add("Random slogan");
+    private void initializeSlogan() {
+        this.sloganChoiceBox.getItems().add("No slogan");
+        this.sloganChoiceBox.getItems().add("Type a slogan");
+        this.sloganChoiceBox.getItems().add("Random slogan");
+        this.sloganChoiceBox.setValue("No slogan");
 
-        sloganChoiceBox.setValue("No slogan");
+        this.sloganField.setDisable(true);
+
+        this.sloganChoiceBox.setOnAction(actionEvent -> {
+            if (this.sloganChoiceBox.getValue().equals("Type a slogan")) {
+                this.sloganField.setDisable(false);
+                this.sloganError.setText(Error.NECESSARY_FIELD.toString());
+            }
+
+            else if (this.sloganChoiceBox.getValue().equals("Random slogan"))
+                sloganField.setText(registerMenuController.generateRandomSlogan());
+        });
+    }
+
+    private void initializeFields() {
+        this.usernameField.textProperty().addListener((observable, oldText, newText) -> {
+            if (MultiMenuFunctions.checkUsernameNotOK(newText))
+                this.usernameError.setText(Error.INCORRECT_USERNAME_FORM.toString());
+
+            else if (newText.isEmpty())
+                this.usernameError.setText(Error.NECESSARY_FIELD.toString());
+
+            else this.usernameError.setText("");
+        });
+
+        this.passwordField.textProperty().addListener((observable, oldText, newText) -> {
+            if (MultiMenuFunctions.checkPasswordNotOK(newText))
+                this.passwordError.setText(Error.WEAK_PASSWORD.toString());
+
+            else if (newText.isEmpty())
+                this.passwordError.setText(Error.NECESSARY_FIELD.toString());
+
+            else this.passwordError.setText("");
+        });
+
+        this.passwordConfirmField.textProperty().addListener((observable, oldText, newText) -> {
+            if (!passwordField.getText().equals(newText))
+                this.passwordConfirmError.setText(Error.INCOMPATIBLE_PASSWORDS.toString());
+
+            else if (newText.isEmpty())
+                this.passwordConfirmError.setText(Error.NECESSARY_FIELD.toString());
+
+            else this.passwordConfirmError.setText("");
+        });
+
+        this.nicknameField.textProperty().addListener((observable, oldText, newText) -> {
+            if (newText.isEmpty())
+                nicknameError.setText(Error.NECESSARY_FIELD.toString());
+            else nicknameError.setText("");
+        });
+
+        this.emailField.textProperty().addListener((observable, oldText, newText) -> {
+            if (MultiMenuFunctions.checkEmailNotOK(newText))
+                this.emailError.setText(Error.INCORRECT_EMAIL_FORM.toString());
+
+            else if (newText.isEmpty())
+                emailError.setText(Error.NECESSARY_FIELD.toString());
+
+            else emailError.setText("");
+        });
+
+        this.recoveryQuestions.setOnAction(actionEvent -> {
+            if (!this.recoveryQuestions.getValue().isEmpty())
+                this.recoveryQuestionError.setText("");
+        });
+
+        this.recoveryAnswerField.textProperty().addListener((observable, oldText, newText) -> {
+            if (newText.isEmpty())
+                recoveryAnswerError.setText(Error.NECESSARY_FIELD.toString());
+            else recoveryAnswerError.setText("");
+        });
+    }
+
+    private void initializeErrors() { // TODO : is this function necessary ?
+        usernameError.setText(Error.NECESSARY_FIELD.toString());
+        passwordError.setText(Error.NECESSARY_FIELD.toString());
+        passwordConfirmError.setText(Error.NECESSARY_FIELD.toString());
+        nicknameError.setText(Error.NECESSARY_FIELD.toString());
+        emailError.setText(Error.NECESSARY_FIELD.toString());
+        recoveryQuestionError.setText(Error.NECESSARY_FIELD.toString());
+        recoveryAnswerError.setText(Error.NECESSARY_FIELD.toString());
     }
 
     public Result run() {
@@ -108,14 +195,10 @@ public class RegisterMenu extends Application {
                     || (matcher = Command.REGISTER_RANDOM_PASSWORD.getMatcher(this.command)) != null) {
                 if (register(matcher))
                     return Result.ENTER_LOGIN_MENU;
-            }
-
-            else if (command.matches(Command.ENTER_LOGIN_MENU.toString())) {
+            } else if (command.matches(Command.ENTER_LOGIN_MENU.toString())) {
                 System.out.println(Message.ENTERED_LOGIN_MENU);
                 return Result.ENTER_LOGIN_MENU;
-            }
-
-            else if (command.matches(Command.EXIT.toString()))
+            } else if (command.matches(Command.EXIT.toString()))
                 return Result.EXIT;
 
             else
@@ -157,7 +240,6 @@ public class RegisterMenu extends Application {
     }
 
     private boolean register(Matcher matcher) {
-        this.message = this.registerMenuController.register(matcher);
         System.out.println(message);
 
         if (this.message.contains("re-enter")) {
@@ -174,19 +256,33 @@ public class RegisterMenu extends Application {
         } else if (this.message.contains("Pick"))
             return pickQuestion();
 
-
         return false;
     }
 
-    public void register() {
+    private boolean checkForErrors() {
+        return usernameError.getText().isEmpty() && passwordError.getText().isEmpty() &&
+                passwordConfirmError.getText().isEmpty() && nicknameError.getText().isEmpty() &&
+                emailError.getText().isEmpty() && recoveryQuestionError.getText().isEmpty() &&
+                recoveryAnswerError.getText().isEmpty() && sloganError.getText().isEmpty();
+    }
 
+    public void register() {
+        if (!this.checkForErrors())
+            return;
+
+        this.message = this.registerMenuController.register(usernameField.getText(), passwordField.getText(),
+                passwordConfirmField.getText(), nicknameField.getText(), emailField.getText(), recoveryQuestions.getValue(),
+                recoveryAnswerField.getText(), sloganChoiceBox.getValue(), sloganField.getText());
     }
 
     public void generateRandomPassword() {
-
+        this.passwordField.setText(registerMenuController.generateRandomPassword());
+        this.showPassword.setSelected(true);
+        showOrHide();
     }
 
     public void showOrHide() {
-
+        this.passwordField.setVisible(this.showPassword.isSelected());
+        this.passwordConfirmField.setVisible(this.showPassword.isSelected());
     }
 }

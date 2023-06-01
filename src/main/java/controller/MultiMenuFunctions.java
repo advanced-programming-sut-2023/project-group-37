@@ -13,6 +13,19 @@ import model.people.MilitaryUnit;
 
 public class MultiMenuFunctions {
 
+    public static boolean checkUsernameNotOK(String username) {
+        return !username.matches("[A-Za-z0-9_]+");
+    }
+
+    public static boolean checkPasswordNotOK(String password) {
+        return !(password.matches(".*[A-Z].*") && password.matches(".*[a-z].*") &&
+                password.matches(".*[0-9].*") && password.length() > 5 && password.matches(".*[^a-zA_Z0-9].*"));
+    }
+
+    public static boolean checkEmailNotOK(String email) {
+        return !email.matches("[A-Za-z0-9_.]+@[a-zA-Z0-9_]+\\.[A-Za-z0-9_.]+");
+    }
+
     public static void wait(int ms) {
         try {
             Thread.sleep(ms);
@@ -36,6 +49,8 @@ public class MultiMenuFunctions {
         }
         return string;
     }
+
+    // Route finding:
 
     private static ArrayList<Tile> setNextNumber(ArrayList<Tile> targets, int nextNumber, boolean[][] tilePassability, Map map) {
         ArrayList<Tile> result = new ArrayList<>();
