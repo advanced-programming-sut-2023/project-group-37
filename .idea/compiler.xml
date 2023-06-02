@@ -13,4 +13,9 @@
       <module name="Stronghold" target="19" />
     </bytecodeTargetLevel>
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Stronghold" options="--add-exports java.datatransfer/java.awt=Stronghold --add-exports java.base/java=Stronghold" />
+    </option>
+  </component>
 </project>

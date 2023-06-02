@@ -4,11 +4,12 @@ import controller.AppController;
 import controller.MultiMenuFunctions;
 import controller.RegisterMenuController;
 import javafx.application.Application;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.user.RecoveryQuestion;
 import view.enums.Error;
@@ -34,7 +35,11 @@ public class RegisterMenu extends Application {
     @FXML
     private TextField usernameField;
     @FXML
+    private TextField passwordShow;
+    @FXML
     private PasswordField passwordField;
+    @FXML
+    private TextField passwordConfirmShow;
     @FXML
     private PasswordField passwordConfirmField;
     @FXML
@@ -69,11 +74,15 @@ public class RegisterMenu extends Application {
         this.registerMenuController = RegisterMenuController.getInstance();
     }
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         URL url = LoginMenu.class.getResource("/FXML/registerMenu.fxml");
-        BorderPane borderPane = FXMLLoader.load(Objects.requireNonNull(url));
-        Scene scene = new Scene(borderPane);
+        AnchorPane anchorPane = FXMLLoader.load(Objects.requireNonNull(url));
+        Scene scene = new Scene(anchorPane);
         stage.setScene(scene);
         stage.show();
     }
@@ -97,14 +106,23 @@ public class RegisterMenu extends Application {
 
         this.sloganField.setDisable(true);
 
-        this.sloganChoiceBox.setOnAction(actionEvent -> {
-            if (this.sloganChoiceBox.getValue().equals("Type a slogan")) {
-                this.sloganField.setDisable(false);
-                this.sloganError.setText(Error.NECESSARY_FIELD.toString());
-            }
+        this.sloganChoiceBox.getSelectionModel().selectedIndexProperty().addListener(
+                (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+                    if (new_val.intValue() == 1) {
+                        this.sloganField.setDisable(false);
+                        this.sloganError.setText(Error.NECESSARY_FIELD.toString());
+                        return;
+                    }
 
-            else if (this.sloganChoiceBox.getValue().equals("Random slogan"))
-                sloganField.setText(registerMenuController.generateRandomSlogan());
+                    if (new_val.intValue() == 2)
+                        this.sloganField.setText(this.registerMenuController.generateRandomSlogan());
+                    else this.sloganField.setText("");
+
+                    this.sloganField.setDisable(true);
+                });
+
+        this.sloganChoiceBox.setOnMouseClicked(actionEvent -> {
+
         });
     }
 
@@ -119,7 +137,12 @@ public class RegisterMenu extends Application {
             else this.usernameError.setText("");
         });
 
+        this.passwordShow.textProperty().addListener((observable, oldText, newText) ->
+                this.passwordField.setText(newText));
+
         this.passwordField.textProperty().addListener((observable, oldText, newText) -> {
+            this.passwordShow.setText(newText);
+
             if (MultiMenuFunctions.checkPasswordNotOK(newText))
                 this.passwordError.setText(Error.WEAK_PASSWORD.toString());
 
@@ -129,7 +152,12 @@ public class RegisterMenu extends Application {
             else this.passwordError.setText("");
         });
 
+        this.passwordConfirmShow.textProperty().addListener((observable, oldText, newText) ->
+                this.passwordConfirmField.setText(newText));
+
         this.passwordConfirmField.textProperty().addListener((observable, oldText, newText) -> {
+            passwordConfirmShow.setText(newText);
+
             if (!passwordField.getText().equals(newText))
                 this.passwordConfirmError.setText(Error.INCOMPATIBLE_PASSWORDS.toString());
 
@@ -138,6 +166,19 @@ public class RegisterMenu extends Application {
 
             else this.passwordConfirmError.setText("");
         });
+
+        this.passwordShow.managedProperty().bind(this.showPassword.selectedProperty());
+        this.passwordShow.visibleProperty().bind(this.showPassword.selectedProperty());
+
+        this.passwordField.managedProperty().bind(this.showPassword.selectedProperty().not());
+        this.passwordField.visibleProperty().bind(this.showPassword.selectedProperty().not());
+
+        this.passwordConfirmShow.managedProperty().bind(this.showPassword.selectedProperty());
+        this.passwordConfirmShow.visibleProperty().bind(this.showPassword.selectedProperty());
+
+        this.passwordConfirmField.managedProperty().bind(this.showPassword.selectedProperty().not());
+        this.passwordConfirmField.visibleProperty().bind(this.showPassword.selectedProperty().not());
+
 
         this.nicknameField.textProperty().addListener((observable, oldText, newText) -> {
             if (newText.isEmpty())
@@ -202,11 +243,6 @@ public class RegisterMenu extends Application {
     public void generateRandomPassword() {
         this.passwordField.setText(registerMenuController.generateRandomPassword());
         this.showPassword.setSelected(true);
-        showOrHide();
     }
 
-    public void showOrHide() {
-        this.passwordField.setVisible(this.showPassword.isSelected());
-        this.passwordConfirmField.setVisible(this.showPassword.isSelected());
-    }
 }

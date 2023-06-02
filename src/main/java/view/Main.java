@@ -1,3 +1,5 @@
+package view;
+
 import controller.AppController;
 
 public class Main {

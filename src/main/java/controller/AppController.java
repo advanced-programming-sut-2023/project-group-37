@@ -1,14 +1,15 @@
 package controller;
 
+import javafx.application.Application;
 import javafx.stage.Stage;
 import model.game.Map;
 import model.user.User;
 import view.enums.Result;
 import view.menus.*;
 
-public class AppController {
+public class AppController extends Application {
     private final static AppController appController;
-    private final Stage stage;
+    private Stage stage;
 
     static {
         appController = new AppController();
@@ -18,8 +19,18 @@ public class AppController {
         return appController;
     }
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     private AppController() {
 
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        this.stage = stage;
+        this.registerMenu.start(stage);
     }
 
     private final LoginMenu loginMenu;
@@ -35,8 +46,6 @@ public class AppController {
     private final UnitMenu unitMenu;
 
     {
-        this.stage = new Stage();
-
         this.loginMenu = new LoginMenu();
         this.registerMenu = new RegisterMenu();
         this.captchaMenu = new CaptchaMenu();

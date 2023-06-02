@@ -192,7 +192,7 @@ public enum BuildingType {
                 isRepairable);
     }
 
-    // Main constructor:
+    // view.Main constructor:
     BuildingType(String name, int cost, int maxHitpoints, Item buildingMaterial, int buildingMaterialAmount,
                  Item rawMaterial, int rawMaterialUses, Item product, int productProvides, int workersNeeded,
                  boolean canHoldTroop, boolean canHoldMachine, boolean isRepairable) {

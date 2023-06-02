@@ -11,11 +11,13 @@
             <children>
                 <VBox layoutX="190.0" layoutY="15.0" prefHeight="370.0" prefWidth="220.0" spacing="7.5">
                     <children>
-                        <TextField fx:id="usernameField" alignment="CENTER" promptText="username" />
-                        <PasswordField fx:id="passwordField" alignment="CENTER" promptText="password" />
-                        <PasswordField fx:id="passwordConfirmField" alignment="CENTER" promptText="password confirm" />
-                        <TextField fx:id="nicknameField" alignment="CENTER" promptText="nickname" />
-                        <TextField fx:id="emailField" alignment="CENTER" promptText="email" />
+                        <TextField fx:id="usernameField" promptText="username" />
+                  <TextField fx:id="passwordShow" promptText="password" />
+                        <PasswordField fx:id="passwordField" promptText="password" />
+                  <TextField fx:id="passwordConfirmShow" promptText="password confirm" />
+                        <PasswordField fx:id="passwordConfirmField" promptText="password confirm" />
+                        <TextField fx:id="nicknameField" promptText="nickname" />
+                        <TextField fx:id="emailField" promptText="email" />
                         <VBox prefHeight="52.0" prefWidth="226.0">
                             <children>
                                 <Label prefHeight="27.0" prefWidth="163.0" text="Password recovery question :" />
@@ -26,12 +28,15 @@
                                 </ChoiceBox>
                             </children>
                         </VBox>
-                        <TextField fx:id="recoveryAnswerField" alignment="CENTER" promptText="Password recovery answer" />
+                        <TextField fx:id="recoveryAnswerField" promptText="Password recovery answer" />
                   <ChoiceBox fx:id="sloganChoiceBox" prefHeight="20.0" prefWidth="150.0">
                      <VBox.margin>
                         <Insets left="35.0" />
                      </VBox.margin></ChoiceBox>
-                  <TextField fx:id="sloganField" alignment="CENTER" promptText="slogan" />
+                  <TextField fx:id="sloganField" prefHeight="26.0" prefWidth="220.0" promptText="slogan">
+                     <font>
+                        <Font size="9.0" />
+                     </font></TextField>
                   <Button mnemonicParsing="false" onAction="#register" prefHeight="30.0" prefWidth="100.0" text="Register">
                      <VBox.margin>
                         <Insets left="60.0" />
@@ -93,7 +98,7 @@
                         </Label>
                     </children>
                 </VBox>
-            <CheckBox fx:id="showPassword" alignment="CENTER" contentDisplay="CENTER" layoutX="420.0" layoutY="53.0" mnemonicParsing="false" onAction="#showOrHide" text="Show" />
+            <CheckBox fx:id="showPassword" alignment="CENTER" contentDisplay="CENTER" layoutX="420.0" layoutY="53.0" mnemonicParsing="false" text="Show" />
             <Button layoutX="419.0" layoutY="81.0" mnemonicParsing="false" onAction="#generateRandomPassword" prefHeight="25.0" prefWidth="115.0" text="Generate Random" />
             </children>
         </Pane>

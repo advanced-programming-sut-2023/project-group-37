@@ -19,7 +19,7 @@ public class MultiMenuFunctions {
 
     public static boolean checkPasswordNotOK(String password) {
         return !(password.matches(".*[A-Z].*") && password.matches(".*[a-z].*") &&
-                password.matches(".*[0-9].*") && password.length() > 5 && password.matches(".*[^a-zA_Z0-9].*"));
+                password.matches(".*[0-9].*") && password.length() > 5 && password.matches(".*[^a-zA-Z0-9]+.*"));
     }
 
     public static boolean checkEmailNotOK(String email) {
