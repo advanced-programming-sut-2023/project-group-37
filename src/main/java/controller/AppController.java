@@ -1,6 +1,9 @@
 package controller;
 
+import controller.viewControllers.MainMenuController;
 import javafx.stage.Stage;
+import model.game.Map;
+import model.user.User;
 import view.enums.Result;
 import view.menus.*;
 
@@ -43,18 +46,17 @@ public class AppController {
     }
 
     public void loadApp() throws Exception {
-//        User.loadUsersFromFile();
-//        User loggedInUser = User.loadStayLoggedIn();
-//        Map.loadMaps();
-//
-//        if (loggedInUser != null) {
-//            MainMenuController.setCurrentUser(loggedInUser);
-//
-//            mainMenu.start(stage);
-//        }
-//
-//        loginMenu.start(stage);
-        runMenu(Result.ENTER_REGISTER_MENU);
+        User.loadUsersFromFile();
+        User loggedInUser = User.loadStayLoggedIn();
+        Map.loadMaps();
+
+        if (loggedInUser != null) {
+            MainMenuController.setCurrentUser(loggedInUser);
+
+            this.mainMenu.start(stage);
+        }
+
+        this.loginMenu.start(stage);
     }
 
     public void runMenu(Result result) throws Exception {

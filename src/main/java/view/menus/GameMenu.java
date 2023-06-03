@@ -1,7 +1,7 @@
 package view.menus;
 
 import controller.AppController;
-import controller.GameMenuController;
+import controller.viewControllers.GameMenuController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.game.ItemCategory;
@@ -20,7 +20,7 @@ public class GameMenu extends Application {
 
     private final Scanner scanner;
 
-    {
+    public GameMenu() {
         this.appController = AppController.getInstance();
         this.scanner = new Scanner(System.in);
         this.gameMenuController = GameMenuController.getInstance();

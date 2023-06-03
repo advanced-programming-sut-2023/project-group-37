@@ -1,4 +1,4 @@
-import controller.ProfileMenuController;
+import controller.viewControllers.ProfileMenuController;
 import model.user.User;
 import org.junit.Assert;
 import org.junit.Test;

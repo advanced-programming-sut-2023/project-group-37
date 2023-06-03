@@ -2,7 +2,7 @@ package view.menus;
 
 import controller.AppController;
 import controller.MultiMenuFunctions;
-import controller.RegisterMenuController;
+import controller.viewControllers.RegisterMenuController;
 import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -12,8 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.user.RecoveryQuestion;
+import model.user.User;
 import view.enums.Error;
-import view.enums.Message;
 import view.enums.Result;
 
 import java.net.URL;
@@ -69,7 +69,7 @@ public class RegisterMenu extends Application {
     @FXML
     private Label sloganError;
 
-    {
+    public RegisterMenu() {
         this.appController = AppController.getInstance();
         this.registerMenuController = RegisterMenuController.getInstance();
     }
@@ -137,6 +137,10 @@ public class RegisterMenu extends Application {
                 this.usernameError.setText(Error.NECESSARY_FIELD.toString());
 
             else this.usernameError.setText("");
+
+            if (User.getUserByUsername(usernameField.getText()) != null) {
+                this.usernameError.setText(Error.USERNAME_ALREADY_EXISTS.toString());
+            }
         });
 
         this.passwordShow.textProperty().addListener((observable, oldText, newText) ->
@@ -231,14 +235,11 @@ public class RegisterMenu extends Application {
         if (!this.checkForErrors())
             return;
 
-        Message message = this.registerMenuController.register(usernameField.getText(), passwordField.getText(),
+        this.registerMenuController.register(usernameField.getText(), passwordField.getText(),
                 nicknameField.getText(), emailField.getText(), recoveryQuestions.getValue(),
                 recoveryAnswerField.getText(), sloganField.getText());
 
-        if (message == Message.USERNAME_ALREADY_EXISTS) {
-            // TODO : alert !
-        }
-        else this.appController.runMenu(Result.GO_FOR_CAPTCHA);
+        this.appController.runMenu(Result.GO_FOR_CAPTCHA);
     }
 
     public void generateRandomPassword() {

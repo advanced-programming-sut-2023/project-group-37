@@ -1,13 +1,11 @@
-package controller;
+package controller.viewControllers;
 
-import model.user.RecoveryQuestion;
 import model.user.Slogan;
 import model.user.User;
 import model.utils.PasswordHashing;
 import view.enums.Message;
 
 import java.security.SecureRandom;
-import java.util.regex.Matcher;
 
 public class RegisterMenuController {
 

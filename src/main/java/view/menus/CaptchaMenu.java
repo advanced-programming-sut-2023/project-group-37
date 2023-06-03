@@ -1,7 +1,7 @@
 package view.menus;
 
 import controller.AppController;
-import controller.RegisterMenuController;
+import controller.viewControllers.RegisterMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

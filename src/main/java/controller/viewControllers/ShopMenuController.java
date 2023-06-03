@@ -1,5 +1,6 @@
-package controller;
+package controller.viewControllers;
 
+import controller.MultiMenuFunctions;
 import model.game.Government;
 import model.game.Item;
 import view.enums.Message;

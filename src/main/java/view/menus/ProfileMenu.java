@@ -1,7 +1,7 @@
 package view.menus;
 
 import controller.AppController;
-import controller.ProfileMenuController;
+import controller.viewControllers.ProfileMenuController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import view.enums.Result;
@@ -16,7 +16,7 @@ public class ProfileMenu extends Application {
     private final ProfileMenuController profileMenuController;
     private final Scanner scanner;
 
-    {
+    public ProfileMenu() {
         this.appController = AppController.getInstance();
         this.scanner = new Scanner(System.in);
         this.profileMenuController = ProfileMenuController.getInstance();
