@@ -1,7 +1,7 @@
 package view.menus;
 
 import controller.AppController;
-import controller.ShopMenuController;
+import controller.viewControllers.ShopMenuController;
 import view.enums.Command;
 import view.enums.Message;
 
@@ -13,7 +13,7 @@ public class ShopMenu {
     private final ShopMenuController shopMenuController;
     private final Scanner scanner;
 
-    {
+    public ShopMenu() {
         this.appController = AppController.getInstance();
         this.scanner = new Scanner(System.in);
         this.shopMenuController = ShopMenuController.getInstance();

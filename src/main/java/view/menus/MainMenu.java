@@ -1,7 +1,7 @@
 package view.menus;
 
 import controller.AppController;
-import controller.MainMenuController;
+import controller.viewControllers.MainMenuController;
 import controller.MultiMenuFunctions;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -17,7 +17,7 @@ public class MainMenu extends Application {
     private final MainMenuController mainMenuController;
     private final Scanner scanner;
 
-    {
+    public MainMenu() {
         this.appController = AppController.getInstance();
         this.scanner = new Scanner(System.in);
         this.mainMenuController = MainMenuController.getInstance();

@@ -1,5 +1,6 @@
-package controller;
+package controller.viewControllers;
 
+import controller.MultiMenuFunctions;
 import model.buildings.*;
 import model.game.Game;
 import model.game.Government;

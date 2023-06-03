@@ -2,7 +2,7 @@ package view.menus;
 
 import controller.AppController;
 import controller.MultiMenuFunctions;
-import controller.UnitMenuController;
+import controller.viewControllers.UnitMenuController;
 import view.enums.Command;
 import view.enums.Message;
 
@@ -14,7 +14,7 @@ public class UnitMenu {
     private final UnitMenuController controller;
     private final Scanner scanner;
 
-    {
+    public UnitMenu() {
         this.appController = AppController.getInstance();
         this.scanner = new Scanner(System.in);
         this.controller = UnitMenuController.getInstance();

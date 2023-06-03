@@ -1,4 +1,4 @@
-package controller;
+package controller.viewControllers;
 
 import model.buildings.DefensiveBuilding;
 import model.game.Game;

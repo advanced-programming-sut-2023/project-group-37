@@ -1,12 +1,11 @@
 package view.menus;
 
 import controller.AppController;
-import controller.LoginMenuController;
+import controller.viewControllers.LoginMenuController;
 import controller.MultiMenuFunctions;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import view.enums.Result;
-import view.enums.Command;
 import view.enums.Message;
 
 import java.util.Scanner;
@@ -20,7 +19,7 @@ public class LoginMenu extends Application {
     private String message;
 
 
-    {
+    public LoginMenu() {
         this.appController = AppController.getInstance();
         this.loginMenuController = LoginMenuController.getInstance();
         this.scanner = new Scanner(System.in);
@@ -29,27 +28,6 @@ public class LoginMenu extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.appController.runMenu(Result.ENTER_REGISTER_MENU);
-    }
-
-    public Result run() {
-        Matcher matcher;
-
-        while (true) {
-            this.command = this.scanner.nextLine();
-
-            if ((matcher = Command.LOGIN.getMatcher(this.command)) != null) {
-                if (login(matcher))
-                    return Result.ENTER_MAIN_MENU;
-            } else if ((matcher = Command.FORGOT_PASSWORD.getMatcher(this.command)) != null)
-                forgotPassword(matcher);
-            else if (command.matches(Command.ENTER_REGISTER_MENU.toString())) {
-                System.out.println(Message.ENTERED_REGISTER_MENU);
-                return Result.ENTER_REGISTER_MENU;
-            } else if (command.matches(Command.EXIT.toString()))
-                return Result.EXIT;
-            else
-                System.out.println(Message.INVALID_COMMAND);
-        }
     }
 
     private boolean login(Matcher matcher) {

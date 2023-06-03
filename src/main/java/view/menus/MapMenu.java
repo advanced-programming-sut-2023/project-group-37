@@ -1,7 +1,7 @@
 package view.menus;
 
 import controller.AppController;
-import controller.MapMenuController;
+import controller.viewControllers.MapMenuController;
 import model.game.Tile;
 import view.enums.Command;
 import view.enums.Message;
@@ -14,7 +14,7 @@ public class MapMenu {
     private final MapMenuController mapMenuController;
     private final Scanner scanner;
 
-    {
+    public MapMenu() {
         this.appController = AppController.getInstance();
         this.scanner = new Scanner(System.in);
         this.mapMenuController = MapMenuController.getInstance();

@@ -1,4 +1,4 @@
-package controller;
+package controller.viewControllers;
 
 import model.game.Color;
 import model.game.Game;

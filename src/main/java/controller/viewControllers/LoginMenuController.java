@@ -1,5 +1,6 @@
-package controller;
+package controller.viewControllers;
 
+import controller.MultiMenuFunctions;
 import model.user.User;
 import model.utils.PasswordHashing;
 import view.enums.Command;

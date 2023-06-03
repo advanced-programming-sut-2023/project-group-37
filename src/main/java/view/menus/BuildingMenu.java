@@ -1,7 +1,7 @@
 package view.menus;
 
 import controller.AppController;
-import controller.BuildingMenuController;
+import controller.viewControllers.BuildingMenuController;
 import view.enums.Command;
 import view.enums.Message;
 
@@ -13,7 +13,7 @@ public class BuildingMenu {
     private final BuildingMenuController buildingMenuController;
     private final Scanner scanner;
 
-    {
+    public BuildingMenu() {
         this.appController = AppController.getInstance();
         this.scanner = new Scanner(System.in);
         this.buildingMenuController = BuildingMenuController.getInstance();
