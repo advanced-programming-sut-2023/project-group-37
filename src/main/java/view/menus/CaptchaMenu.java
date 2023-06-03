@@ -3,14 +3,17 @@ package view.menus;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.user.RecoveryQuestion;
 import view.enums.Message;
 
 import java.net.URL;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class CaptchaMenu extends Application {
     @FXML

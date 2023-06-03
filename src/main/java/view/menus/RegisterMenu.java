@@ -20,6 +20,7 @@ import java.net.URL;
 import java.util.Objects;
 
 public class RegisterMenu extends Application {
+    private final AppController appController;
     private final RegisterMenuController registerMenuController;
 
     // choiceBoxes :
@@ -69,11 +70,8 @@ public class RegisterMenu extends Application {
     private Label sloganError;
 
     public RegisterMenu() {
+        this.appController = AppController.getInstance();
         this.registerMenuController = RegisterMenuController.getInstance();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
     @Override
@@ -240,8 +238,7 @@ public class RegisterMenu extends Application {
         if (message == Message.USERNAME_ALREADY_EXISTS) {
             // TODO : alert !
         }
-        else AppController.runMenu(Result.GO_FOR_CAPTCHA);
-
+        else this.appController.runMenu(Result.GO_FOR_CAPTCHA);
     }
 
     public void generateRandomPassword() {
