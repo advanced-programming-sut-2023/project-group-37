@@ -26,14 +26,6 @@ public class RegisterMenuController {
         return registerMenuController;
     }
 
-    private void saveUser() {
-        User.updateDatabase();
-    }
-
-    private String deleteQuotations(String string) {
-        return MultiMenuFunctions.deleteQuotations(string);
-    }
-
     public String generateRandomPassword() {
         SecureRandom random = new SecureRandom();
 
@@ -85,41 +77,8 @@ public class RegisterMenuController {
         return Message.GO_FOR_CAPTCHA;
     }
 
-    public String pickQuestion(Matcher matcher) {
-        int questionNumber = Integer.parseInt(matcher.group("questionNumber"));
-
-        if (questionNumber > RecoveryQuestion.values().length || questionNumber < 1)
-            return Message.INCORRECT_QUESTION_NUMBER.toString();
-
-        String answer = deleteQuotations(matcher.group("answer")),
-                answerConfirm = deleteQuotations(matcher.group("answerConfirm"));
-
-        if (answer.isEmpty() || answerConfirm.isEmpty())
-            return Message.EMPTY_FIELD.toString();
-
-        if (!answer.equals(answerConfirm))
-            return Message.INCOMPATIBLE_ANSWERS.toString();
-
-        user.setRecoveryQuestion(questionNumber);
-        user.setRecoveryAnswer(answer);
-        return Message.DO_CAPTCHA.toString();
-    }
-
-    public String checkPasswordConfirm(String passwordConfirm) {
-        if (passwordConfirm.equals("cancel")) {
-            User.deleteUser(user);
-            return Message.CANCEL.toString();
-        }
-
-        if (!user.isWrongPassword(passwordConfirm)) {
-            return Message.ASK_FOR_SECURITY_QUESTION.toString();
-        }
-
-        return Message.REENTER_AGAIN.toString();
-    }
-
     public Message captcha() {
-        saveUser();
+        User.updateDatabase();
         return Message.REGISTER_SUCCESSFUL;
     }
 }
