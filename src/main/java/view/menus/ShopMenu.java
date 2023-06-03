@@ -9,12 +9,14 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class ShopMenu {
-    private final ShopMenuController controller;
+    private final AppController appController;
+    private final ShopMenuController shopMenuController;
     private final Scanner scanner;
 
-    public ShopMenu() {
+    {
+        this.appController = AppController.getInstance();
         this.scanner = new Scanner(System.in);
-        this.controller = ShopMenuController.getInstance();
+        this.shopMenuController = ShopMenuController.getInstance();
     }
 
     public void run() {
@@ -25,13 +27,13 @@ public class ShopMenu {
             command = scanner.nextLine();
 
             if ((matcher = Command.BUY_ITEM.getMatcher(command)) != null)
-                System.out.println(this.controller.buy(matcher));
+                System.out.println(this.shopMenuController.buy(matcher));
 
             else if ((matcher = Command.SELL_ITEM.getMatcher(command)) != null)
-                System.out.println(this.controller.sell(matcher));
+                System.out.println(this.shopMenuController.sell(matcher));
 
             else if (command.matches(Command.SHOW_ALL_ITEMS.toString()))
-                System.out.println(controller.showAllItems());
+                System.out.println(shopMenuController.showAllItems());
 
             else if (command.matches(Command.BACK_GAME_MENU.toString())) {
                 System.out.println(Message.BACK_GAME_MENU);

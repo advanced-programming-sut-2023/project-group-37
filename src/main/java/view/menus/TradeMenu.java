@@ -9,10 +9,12 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class TradeMenu {
+    private final AppController appController;
     private final TradeMenuController tradeMenuController;
     private final Scanner scanner;
 
-    public TradeMenu() {
+    {
+        this.appController = AppController.getInstance();
         this.scanner = new Scanner(System.in);
         this.tradeMenuController = TradeMenuController.getInstance();
     }

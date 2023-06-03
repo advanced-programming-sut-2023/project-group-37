@@ -19,7 +19,8 @@ public class LoginMenu extends Application {
     private String command;
     private String message;
 
-    public LoginMenu() {
+
+    {
         this.appController = AppController.getInstance();
         this.loginMenuController = LoginMenuController.getInstance();
         this.scanner = new Scanner(System.in);

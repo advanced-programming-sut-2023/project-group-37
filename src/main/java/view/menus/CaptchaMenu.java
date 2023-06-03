@@ -1,5 +1,6 @@
 package view.menus;
 
+import controller.AppController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,8 +17,14 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class CaptchaMenu extends Application {
+    private final AppController appController;
     @FXML
     private Label label;
+
+    {
+        this.appController = AppController.getInstance();
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         URL url = LoginMenu.class.getResource("/FXML/captchaMenu.fxml");

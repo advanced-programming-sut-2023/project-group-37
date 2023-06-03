@@ -21,21 +21,21 @@ public class AppController {
 
     public AppController(Stage stage) {
         this.stage = stage;
-        appController = this;
-    }
 
-    {
-        loginMenu = new LoginMenu();
-        registerMenu = new RegisterMenu();
-        captchaMenu = new CaptchaMenu();
-        mainMenu = new MainMenu();
-        profileMenu = new ProfileMenu();
-        gameMenu = new GameMenu();
-        buildingMenu = new BuildingMenu();
-        mapMenu = new MapMenu();
-        shopMenu = new ShopMenu();
-        tradeMenu = new TradeMenu();
-        unitMenu = new UnitMenu();
+        if (appController == null)
+            appController = this;
+
+        this.loginMenu = new LoginMenu();
+        this.registerMenu = new RegisterMenu();
+        this.captchaMenu = new CaptchaMenu();
+        this.mainMenu = new MainMenu();
+        this.profileMenu = new ProfileMenu();
+        this.gameMenu = new GameMenu();
+        this.buildingMenu = new BuildingMenu();
+        this.mapMenu = new MapMenu();
+        this.shopMenu = new ShopMenu();
+        this.tradeMenu = new TradeMenu();
+        this.unitMenu = new UnitMenu();
     }
 
     public static AppController getInstance() {

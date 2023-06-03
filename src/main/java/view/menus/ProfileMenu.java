@@ -12,10 +12,12 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class ProfileMenu extends Application {
+    private final AppController appController;
     private final ProfileMenuController profileMenuController;
     private final Scanner scanner;
 
-    public ProfileMenu() {
+    {
+        this.appController = AppController.getInstance();
         this.scanner = new Scanner(System.in);
         this.profileMenuController = ProfileMenuController.getInstance();
     }

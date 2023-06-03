@@ -69,7 +69,7 @@ public class RegisterMenu extends Application {
     @FXML
     private Label sloganError;
 
-    public RegisterMenu() {
+    {
         this.appController = AppController.getInstance();
         this.registerMenuController = RegisterMenuController.getInstance();
     }
