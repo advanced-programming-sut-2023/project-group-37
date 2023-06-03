@@ -2,8 +2,6 @@ package controller;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import model.game.Map;
-import model.user.User;
 import view.enums.Result;
 import view.menus.*;
 
@@ -13,7 +11,7 @@ public class AppController extends Application{
     @Override
     public void start(Stage stage) throws Exception {
         AppController.stage = stage;
-        runLoginMenu();
+        loadApp();
     }
 
     private static final LoginMenu loginMenu;
@@ -42,7 +40,7 @@ public class AppController extends Application{
         unitMenu = new UnitMenu();
     }
 
-    public void runLoginMenu() throws Exception {
+    public void loadApp() throws Exception {
 //        User.loadUsersFromFile();
 //        User loggedInUser = User.loadStayLoggedIn();
 //        Map.loadMaps();
