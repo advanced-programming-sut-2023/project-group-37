@@ -1,8 +1,11 @@
 package controller;
 
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 import model.buildings.Building;
 import model.buildings.DefensiveBuilding;
@@ -32,6 +35,32 @@ public class MultiMenuFunctions {
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    public static ArrayList<File> getAllImageFilesFromFolder(File directory) {
+        //Get all the files from the folder
+        File[] allFiles = directory.listFiles();
+        if (allFiles == null || allFiles.length == 0) {
+            throw new RuntimeException("No files present in the directory: " + directory.getAbsolutePath());
+        }
+
+        //Set the required image extensions here.
+        List<String> supportedImageExtensions = Arrays.asList("jpg", "png", "gif", "webp");
+
+        //Filter out only image files
+        ArrayList<File> acceptedImages = new ArrayList<>();
+        for (File file : allFiles) {
+            //Parse the file extension
+            String fileExtension = file.getName().substring(file.getName().lastIndexOf(".") + 1);
+            //Check if the extension is listed in the supportedImageExtensions
+            if (supportedImageExtensions.stream().anyMatch(fileExtension::equalsIgnoreCase)) {
+                //Add the image to the filtered list
+                acceptedImages.add(file);
+            }
+        }
+
+        //Return the filtered images
+        return acceptedImages;
     }
 
     public static String deleteQuotations(String string) {
