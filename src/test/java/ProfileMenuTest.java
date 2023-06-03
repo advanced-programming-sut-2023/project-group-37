@@ -8,7 +8,7 @@ public class ProfileMenuTest {
     public void changeUsernameTest1() { //valid username change expected
         User user = new User("mehrshad", "Mehr12345@", "salam@gmail.com", "winner",
                 "mehri");
-        ProfileMenuController profileMenuController = new ProfileMenuController();
+        ProfileMenuController profileMenuController = ProfileMenuController.getInstance();
         ProfileMenuController.setCurrentUser(user);
         profileMenuController.changeUsername("changedToMamad");
 
@@ -19,7 +19,7 @@ public class ProfileMenuTest {
     public void changeUsernameTest2() { //invalid username
         User user = new User("mehrshad", "Mehr12345@", "salam@gmail.com", "winner",
                 "mehri");
-        ProfileMenuController profileMenuController = new ProfileMenuController();
+        ProfileMenuController profileMenuController = ProfileMenuController.getInstance();
         ProfileMenuController.setCurrentUser(user);
         profileMenuController.changeUsername("invalidUsername!!!!");
 
@@ -30,7 +30,7 @@ public class ProfileMenuTest {
     public void changeNicknameTest() { //change expected
         User user = new User("mehrshad", "Mehr12345@", "salam@gmail.com", "winner",
                 "mehri");
-        ProfileMenuController profileMenuController = new ProfileMenuController();
+        ProfileMenuController profileMenuController = ProfileMenuController.getInstance();
         ProfileMenuController.setCurrentUser(user);
         profileMenuController.changeNickName("newNickname !!");
 
@@ -41,7 +41,7 @@ public class ProfileMenuTest {
     public void changePasswordTest1() { // wrong old password
         User user = new User("mehrshad", "Mehr12345@", "salam@gmail.com", "winner",
                 "mehri");
-        ProfileMenuController profileMenuController = new ProfileMenuController();
+        ProfileMenuController profileMenuController = ProfileMenuController.getInstance();
         ProfileMenuController.setCurrentUser(user);
         profileMenuController.changePassword("wrongOldPassword", "newPass1234@");
 
@@ -52,7 +52,7 @@ public class ProfileMenuTest {
     public void changePasswordTest2() { //invalid password format
         User user = new User("mehrshad", "Mehr12345@", "salam@gmail.com", "winner",
                 "mehri");
-        ProfileMenuController profileMenuController = new ProfileMenuController();
+        ProfileMenuController profileMenuController = ProfileMenuController.getInstance();
         ProfileMenuController.setCurrentUser(user);
         profileMenuController.changePassword("Mehr12345@", "newPass123");
 
@@ -64,7 +64,7 @@ public class ProfileMenuTest {
         User user1 = new User("mehrshad", "Mehr12345@", "mehrshad@gmail.com", "winner",
                 "mehri");
 
-        ProfileMenuController profileMenuController = new ProfileMenuController();
+        ProfileMenuController profileMenuController = ProfileMenuController.getInstance();
         ProfileMenuController.setCurrentUser(user1);
         profileMenuController.changeEmail("invaildEmailFormat");
 
@@ -78,7 +78,7 @@ public class ProfileMenuTest {
         new User("erfan", "erfan1234@", "erfan@gmail.com", "yeeeees!",
                 "payea");
 
-        ProfileMenuController profileMenuController = new ProfileMenuController();
+        ProfileMenuController profileMenuController = ProfileMenuController.getInstance();
         ProfileMenuController.setCurrentUser(user1);
         profileMenuController.changeEmail("erfan@gmail.com");
 
@@ -90,7 +90,7 @@ public class ProfileMenuTest {
         User user = new User("mehrshad", "Mehr12345@", "randomEmail@gmail.com", "winner",
                 "mehri");
 
-        ProfileMenuController profileMenuController = new ProfileMenuController();
+        ProfileMenuController profileMenuController = ProfileMenuController.getInstance();
         ProfileMenuController.setCurrentUser(user);
         profileMenuController.changeEmail("changedEmail@gmail.com");
 
@@ -102,7 +102,7 @@ public class ProfileMenuTest {
         User user = new User("mehrshad", "Mehr12345@", "salam@gmail.com", "winner",
                 "mehri");
 
-        ProfileMenuController profileMenuController = new ProfileMenuController();
+        ProfileMenuController profileMenuController = ProfileMenuController.getInstance();
         ProfileMenuController.setCurrentUser(user);
         profileMenuController.changeSlogan("I need a new slogan!!");
 
@@ -114,7 +114,7 @@ public class ProfileMenuTest {
         User user = new User("mehrshad", "Mehr12345@", "salam@gmail.com", "winner",
                 "mehri");
 
-        ProfileMenuController profileMenuController = new ProfileMenuController();
+        ProfileMenuController profileMenuController = ProfileMenuController.getInstance();
         ProfileMenuController.setCurrentUser(user);
         profileMenuController.removeSlogan();
 
@@ -126,7 +126,7 @@ public class ProfileMenuTest {
         User user = new User("mehrshad", "Mehr12345@", "salam@gmail.com", "winner",
                 "mehri");
 
-        ProfileMenuController profileMenuController = new ProfileMenuController();
+        ProfileMenuController profileMenuController = ProfileMenuController.getInstance();
         ProfileMenuController.setCurrentUser(user);
 
         Assert.assertEquals(0, profileMenuController.showScore());
@@ -138,7 +138,7 @@ public class ProfileMenuTest {
         User user = new User("mehrshad", "Mehr12345@", "salam@gmail.com", "winner",
                 "mehri");
 
-        ProfileMenuController profileMenuController = new ProfileMenuController();
+        ProfileMenuController profileMenuController = ProfileMenuController.getInstance();
         ProfileMenuController.setCurrentUser(user);
 
         Assert.assertEquals("winner", profileMenuController.showSlogan());
@@ -150,7 +150,7 @@ public class ProfileMenuTest {
         User user = new User("mehrshad", "Mehr12345@", "salam@gmail.com", "winner",
                 "mehri");
 
-        ProfileMenuController profileMenuController = new ProfileMenuController();
+        ProfileMenuController profileMenuController = ProfileMenuController.getInstance();
         ProfileMenuController.setCurrentUser(user);
         String expected = "Info:\nUsername: mehrshad\nNickname: mehri\nEmail: salam@gmail.com\nSlogan: winner\n" +
                 "HighScore: 0\nRank: 6";
