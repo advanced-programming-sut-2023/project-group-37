@@ -7,80 +7,64 @@ import model.user.User;
 import view.enums.Result;
 import view.menus.*;
 
-public class AppController extends Application {
-    private final static AppController appController;
-    private Stage stage;
-
-    static {
-        appController = new AppController();
-    }
-
-    public static AppController getInstance() {
-        return appController;
-    }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    private AppController() {
-
-    }
+public class AppController extends Application{
+    private static Stage stage;
 
     @Override
     public void start(Stage stage) throws Exception {
-        this.stage = stage;
-        this.registerMenu.start(stage);
+        AppController.stage = stage;
+        runLoginMenu();
     }
 
-    private final LoginMenu loginMenu;
-    private final RegisterMenu registerMenu;
-    private final CaptchaMenu captchaMenu;
-    private final MainMenu mainMenu;
-    private final ProfileMenu profileMenu;
-    private final GameMenu gameMenu;
-    private final BuildingMenu buildingMenu;
-    private final MapMenu mapMenu;
-    private final ShopMenu shopMenu;
-    private final TradeMenu tradeMenu;
-    private final UnitMenu unitMenu;
+    private static final LoginMenu loginMenu;
+    private static final RegisterMenu registerMenu;
+    private static final CaptchaMenu captchaMenu;
+    private static final MainMenu mainMenu;
+    private static final ProfileMenu profileMenu;
+    private static final GameMenu gameMenu;
+    private static final BuildingMenu buildingMenu;
+    private static final MapMenu mapMenu;
+    private static final ShopMenu shopMenu;
+    private static final TradeMenu tradeMenu;
+    private static final UnitMenu unitMenu;
 
-    {
-        this.loginMenu = new LoginMenu();
-        this.registerMenu = new RegisterMenu();
-        this.captchaMenu = new CaptchaMenu();
-        this.mainMenu = new MainMenu();
-        this.profileMenu = new ProfileMenu();
-        this.gameMenu = new GameMenu();
-        this.buildingMenu = new BuildingMenu();
-        this.mapMenu = new MapMenu();
-        this.shopMenu = new ShopMenu();
-        this.tradeMenu = new TradeMenu();
-        this.unitMenu = new UnitMenu();
+    static {
+        loginMenu = new LoginMenu();
+        registerMenu = new RegisterMenu();
+        captchaMenu = new CaptchaMenu();
+        mainMenu = new MainMenu();
+        profileMenu = new ProfileMenu();
+        gameMenu = new GameMenu();
+        buildingMenu = new BuildingMenu();
+        mapMenu = new MapMenu();
+        shopMenu = new ShopMenu();
+        tradeMenu = new TradeMenu();
+        unitMenu = new UnitMenu();
     }
 
     public void runLoginMenu() throws Exception {
-        User.loadUsersFromFile();
-        User loggedInUser = User.loadStayLoggedIn();
-        Map.loadMaps();
-
-        if (loggedInUser != null) {
-            MainMenuController.setCurrentUser(loggedInUser);
-
-            mainMenu.start(this.stage);
-        }
-
-        loginMenu.start(this.stage);
+//        User.loadUsersFromFile();
+//        User loggedInUser = User.loadStayLoggedIn();
+//        Map.loadMaps();
+//
+//        if (loggedInUser != null) {
+//            MainMenuController.setCurrentUser(loggedInUser);
+//
+//            mainMenu.start(stage);
+//        }
+//
+//        loginMenu.start(stage);
+        registerMenu.start(stage);
     }
 
-    public void runMenu(Result result) throws Exception {
+    public static void runMenu(Result result) throws Exception {
         switch (result) {
-            case ENTER_LOGIN_MENU -> this.loginMenu.start(this.stage);
-            case ENTER_REGISTER_MENU -> this.registerMenu.start(this.stage);
-            case GO_FOR_CAPTCHA -> this.captchaMenu.start(this.stage);
-            case ENTER_PROFILE_MENU -> this.profileMenu.start(this.stage);
-            case ENTER_MAIN_MENU -> this.mainMenu.start(this.stage);
-            case ENTER_GAME_MENU -> this.gameMenu.start(this.stage);
+            case ENTER_LOGIN_MENU -> loginMenu.start(stage);
+            case ENTER_REGISTER_MENU -> registerMenu.start(stage);
+            case GO_FOR_CAPTCHA -> captchaMenu.start(stage);
+            case ENTER_PROFILE_MENU -> profileMenu.start(stage);
+            case ENTER_MAIN_MENU -> mainMenu.start(stage);
+            case ENTER_GAME_MENU -> gameMenu.start(stage);
 
             // todo : how to show game parts menu ??
         }

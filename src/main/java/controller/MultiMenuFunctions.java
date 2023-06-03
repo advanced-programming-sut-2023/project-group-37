@@ -14,7 +14,7 @@ import model.people.MilitaryUnit;
 public class MultiMenuFunctions {
 
     public static boolean checkUsernameNotOK(String username) {
-        return !username.matches("[A-Za-z0-9_]+");
+        return !username.matches("[A-Za-z0-9_]+") || username.length() < 4;
     }
 
     public static boolean checkPasswordNotOK(String password) {

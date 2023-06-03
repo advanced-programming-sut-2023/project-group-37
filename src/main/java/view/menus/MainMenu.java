@@ -13,12 +13,10 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class MainMenu extends Application {
-    private final AppController appController;
     private final MainMenuController mainMenuController;
     private final Scanner scanner;
 
     public MainMenu() {
-        this.appController = AppController.getInstance();
         this.scanner = new Scanner(System.in);
         this.mainMenuController = MainMenuController.getInstance();
     }

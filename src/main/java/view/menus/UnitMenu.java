@@ -10,12 +10,10 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class UnitMenu {
-    private final AppController appController;
     private final UnitMenuController controller;
     private final Scanner scanner;
 
     public UnitMenu() {
-        this.appController = AppController.getInstance();
         this.scanner = new Scanner(System.in);
         this.controller = UnitMenuController.getInstance();
     }

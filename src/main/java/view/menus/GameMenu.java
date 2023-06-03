@@ -14,14 +14,12 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class GameMenu extends Application {
-    private final AppController appController;
     private final GameMenuController gameMenuController;
     private String message;
 
     private final Scanner scanner;
 
     public GameMenu() {
-        this.appController = AppController.getInstance();
         this.scanner = new Scanner(System.in);
         this.gameMenuController = GameMenuController.getInstance();
     }

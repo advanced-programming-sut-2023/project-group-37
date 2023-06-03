@@ -20,7 +20,6 @@ import java.net.URL;
 import java.util.Objects;
 
 public class RegisterMenu extends Application {
-    private final AppController appController;
     private final RegisterMenuController registerMenuController;
 
     // choiceBoxes :
@@ -70,7 +69,6 @@ public class RegisterMenu extends Application {
     private Label sloganError;
 
     public RegisterMenu() {
-        this.appController = AppController.getInstance();
         this.registerMenuController = RegisterMenuController.getInstance();
     }
 
@@ -119,10 +117,16 @@ public class RegisterMenu extends Application {
                     else this.sloganField.setText("");
 
                     this.sloganField.setDisable(true);
+                    this.sloganError.setText("");
                 });
 
-        this.sloganChoiceBox.setOnMouseClicked(actionEvent -> {
-
+        this.sloganField.textProperty().addListener((
+                ObservableValue<? extends String> ov, String old_val, String new_val) -> {
+            if (this.sloganChoiceBox.getValue().equals("Type a slogan")) {
+                if (new_val.equals(""))
+                    this.sloganError.setText(Error.NECESSARY_FIELD.toString());
+                else this.sloganError.setText("");
+            }
         });
     }
 
@@ -236,7 +240,7 @@ public class RegisterMenu extends Application {
         if (message == Message.USERNAME_ALREADY_EXISTS) {
             // TODO : alert !
         }
-        else appController.runMenu(Result.GO_FOR_CAPTCHA);
+        else AppController.runMenu(Result.GO_FOR_CAPTCHA);
 
     }
 

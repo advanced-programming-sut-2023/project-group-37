@@ -13,21 +13,19 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class LoginMenu extends Application {
-    private final AppController appController;
     private final LoginMenuController loginMenuController;
     private final Scanner scanner;
     private String command;
     private String message;
 
     public LoginMenu() {
-        this.appController = AppController.getInstance();
         this.loginMenuController = LoginMenuController.getInstance();
         this.scanner = new Scanner(System.in);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        appController.runMenu(Result.ENTER_REGISTER_MENU);
+        AppController.runMenu(Result.ENTER_REGISTER_MENU);
     }
 
     public Result run() {
