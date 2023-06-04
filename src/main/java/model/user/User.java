@@ -104,6 +104,9 @@ public class User implements Serializable {
         this.recoveryQuestion = recoveryQuestion;
         this.recoveryAnswer = recoveryAnswer;
         this.highScore = 0;
+
+        users.add(this);
+        User.updateDatabase();
     }
 
     public int getRank() {
@@ -142,8 +145,8 @@ public class User implements Serializable {
         this.hashedPassword = PasswordHashing.encode(newPassword);
     }
 
-    public void setHashedPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
+    public void setPassword(String password) {
+        this.hashedPassword = PasswordHashing.encode(password);
     }
 
     public void setNickName(String nickname) {
@@ -176,8 +179,8 @@ public class User implements Serializable {
         return !PasswordHashing.checkPassword(password, this.hashedPassword);
     }
 
-    public boolean isCorrectAnswer(String answer) {
-        return this.recoveryAnswer.equals(answer);
+    public boolean isWrongAnswer(String answer) {
+        return !this.recoveryAnswer.equals(answer);
     }
 
     public static void deleteUser(User user) {

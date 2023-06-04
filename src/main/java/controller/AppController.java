@@ -11,6 +11,7 @@ public class AppController {
     private static AppController appController;
     private final Stage stage;
     private final LoginMenu loginMenu;
+    private final ForgotMenu forgotMenu;
     private final RegisterMenu registerMenu;
     private final MainMenu mainMenu;
     private final ProfileMenu profileMenu;
@@ -28,6 +29,7 @@ public class AppController {
             appController = this;
 
         this.loginMenu = new LoginMenu();
+        this.forgotMenu = new ForgotMenu();
         this.registerMenu = new RegisterMenu();
         this.mainMenu = new MainMenu();
         this.profileMenu = new ProfileMenu();
@@ -59,17 +61,14 @@ public class AppController {
 
     public void runMenu(Result result) throws Exception {
         switch (result) {
-            case ENTER_LOGIN_MENU -> this.loginMenu.start(stage);
-            case ENTER_REGISTER_MENU -> this.registerMenu.start(stage);
-            case ENTER_PROFILE_MENU -> this.profileMenu.start(stage);
-            case ENTER_MAIN_MENU -> this.mainMenu.start(stage);
-            case ENTER_GAME_MENU -> this.gameMenu.start(stage);
+            case ENTER_LOGIN_MENU -> this.loginMenu.start(this.stage);
+            case ENTER_FORGOT_MENU -> this.forgotMenu.start(this.stage);
+            case ENTER_REGISTER_MENU -> this.registerMenu.start(this.stage);
+            case ENTER_PROFILE_MENU -> this.profileMenu.start(this.stage);
+            case ENTER_MAIN_MENU -> this.mainMenu.start(this.stage);
+            case ENTER_GAME_MENU -> this.gameMenu.start(this.stage);
 
             // todo : how to show game parts menu ??
         }
-    }
-
-    public Stage getStage() {
-        return stage;
     }
 }

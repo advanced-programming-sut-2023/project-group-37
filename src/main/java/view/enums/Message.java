@@ -16,6 +16,7 @@ public enum Message {
     INVALID_COMMAND("Invalid command!"),
 
     // SignupMenu:
+    CANT_LOGIN("Username or password incorrect!"),
     CANCEL("The process canceled successfully!"),
     EMPTY_FIELD("Please fill all necessary fields!"),
     INCORRECT_USERNAME_FORM("Incorrect username format!"),
@@ -67,7 +68,7 @@ public enum Message {
     ENTER_PASSWORD_AGAIN("Please enter new password again!"),
     CHANGE_EMAIL("Email changed successfully!"),
     CHANGE_EMAIL_ERROR1("Invalid format for email!"),
-    CHANGE_EMAIL_ERROR2("Email already exists!"),
+    EMAIL_ALREADY_EXISTS("Email already exists!"),
     CHANGE_EMAIL_ERROR3("Please enter an email!"),
     CHANGE_SLOGAN("Slogan changed successfully!"),
     CHANGE_SLOGAN_ERROR1("Please enter a slogan! (empty field)"),

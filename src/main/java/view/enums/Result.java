@@ -3,7 +3,6 @@ package view.enums;
 public enum Result {
     EXIT,
     ENTER_REGISTER_MENU,
-    GO_FOR_CAPTCHA,
     ENTER_LOGIN_MENU,
     ENTER_PROFILE_MENU,
     ENTER_MAIN_MENU,
@@ -15,6 +14,6 @@ public enum Result {
     ENTER_SHOP_MENU,
     ENTER_TRADE_MENU,
     ENTER_UNIT_MENU,
-    END_GAME
+    ENTER_FORGOT_MENU, END_GAME
 
 }

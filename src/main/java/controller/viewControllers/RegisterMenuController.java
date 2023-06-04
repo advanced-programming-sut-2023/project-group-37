@@ -10,7 +10,6 @@ import java.security.SecureRandom;
 public class RegisterMenuController {
 
     private static final RegisterMenuController registerMenuController;
-    private User user;
 
     static {
         registerMenuController = new RegisterMenuController();
@@ -66,17 +65,11 @@ public class RegisterMenuController {
 
     public Message register(String username, String password, String nickName, String email,
                            String recoveryQuestion, String recoveryAnswer, String slogan) {
-        if (User.getUserByUsername(username) != null)
-            return Message.USERNAME_ALREADY_EXISTS;
 
-        this.user = new User(username, PasswordHashing.encode(password), nickName, email,
+        new User(username, PasswordHashing.encode(password), nickName, email,
                 recoveryQuestion, recoveryAnswer, slogan);
 
-        return Message.GO_FOR_CAPTCHA;
-    }
-
-    public Message captcha() {
-        User.updateDatabase();
         return Message.REGISTER_SUCCESSFUL;
     }
+
 }

@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import model.user.RecoveryQuestion;
 import model.user.User;
 import view.enums.Error;
+import view.enums.Message;
 import view.enums.Result;
 
 import java.net.URL;
@@ -172,48 +173,9 @@ public class RegisterMenu extends Application {
             }
         });
 
-        this.passwordShow.textProperty().addListener((observable, oldText, newText) ->
-                this.passwordField.setText(newText));
-
-        this.passwordField.textProperty().addListener((observable, oldText, newText) -> {
-            this.passwordShow.setText(newText);
-
-            if (MultiMenuFunctions.checkPasswordNotOK(newText))
-                this.passwordError.setText(Error.WEAK_PASSWORD.toString());
-
-            else if (newText.isEmpty())
-                this.passwordError.setText(Error.NECESSARY_FIELD.toString());
-
-            else this.passwordError.setText("");
-        });
-
-        this.passwordConfirmShow.textProperty().addListener((observable, oldText, newText) ->
-                this.passwordConfirmField.setText(newText));
-
-        this.passwordConfirmField.textProperty().addListener((observable, oldText, newText) -> {
-            passwordConfirmShow.setText(newText);
-
-            if (!passwordField.getText().equals(newText))
-                this.passwordConfirmError.setText(Error.INCOMPATIBLE_PASSWORDS.toString());
-
-            else if (newText.isEmpty())
-                this.passwordConfirmError.setText(Error.NECESSARY_FIELD.toString());
-
-            else this.passwordConfirmError.setText("");
-        });
-
-        this.passwordShow.managedProperty().bind(this.showPassword.selectedProperty());
-        this.passwordShow.visibleProperty().bind(this.showPassword.selectedProperty());
-
-        this.passwordField.managedProperty().bind(this.showPassword.selectedProperty().not());
-        this.passwordField.visibleProperty().bind(this.showPassword.selectedProperty().not());
-
-        this.passwordConfirmShow.managedProperty().bind(this.showPassword.selectedProperty());
-        this.passwordConfirmShow.visibleProperty().bind(this.showPassword.selectedProperty());
-
-        this.passwordConfirmField.managedProperty().bind(this.showPassword.selectedProperty().not());
-        this.passwordConfirmField.visibleProperty().bind(this.showPassword.selectedProperty().not());
-
+        MultiMenuFunctions.initializePasswordFieldsWithConfirm(this.passwordShow, this.passwordConfirmShow,
+                this.passwordField, this.passwordConfirmField, this.passwordError, this.passwordConfirmError,
+                this.showPassword);
 
         this.nicknameField.textProperty().addListener((observable, oldText, newText) -> {
             if (newText.isEmpty())
@@ -224,6 +186,9 @@ public class RegisterMenu extends Application {
         this.emailField.textProperty().addListener((observable, oldText, newText) -> {
             if (MultiMenuFunctions.checkEmailNotOK(newText))
                 this.emailError.setText(Error.INCORRECT_EMAIL_FORM.toString());
+
+            else if (User.getUserByEmail(newText) != null)
+                this.emailError.setText(Error.EMAIL_ALREADY_EXISTS.toString());
 
             else if (newText.isEmpty())
                 this.emailError.setText(Error.NECESSARY_FIELD.toString());
@@ -271,11 +236,12 @@ public class RegisterMenu extends Application {
         if (!this.checkForErrors())
             return;
 
-        this.registerMenuController.register(this.usernameField.getText(), this.passwordField.getText(),
+        Message message = this.registerMenuController.register(this.usernameField.getText(), this.passwordField.getText(),
                 this.nicknameField.getText(), this.emailField.getText(), this.recoveryQuestions.getValue(),
                 this.recoveryAnswerField.getText(), this.sloganField.getText());
 
-        this.appController.runMenu(Result.GO_FOR_CAPTCHA);
+        this.appController.runMenu(Result.ENTER_LOGIN_MENU);
+        new Alert(Alert.AlertType.INFORMATION, message.toString()).show();
     }
 
     @FXML
@@ -292,5 +258,10 @@ public class RegisterMenu extends Application {
             this.captchaError.setText(Error.INCORRECT_CAPTCHA.toString());
 
         else this.captchaError.setText("");
+    }
+
+    @FXML
+    private void enterLoginMenu() throws Exception {
+        this.appController.runMenu(Result.ENTER_LOGIN_MENU);
     }
 }

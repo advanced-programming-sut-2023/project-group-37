@@ -2,7 +2,6 @@ package controller.viewControllers;
 
 import controller.MultiMenuFunctions;
 import model.user.User;
-import model.utils.PasswordHashing;
 import view.enums.Command;
 import view.enums.Message;
 
@@ -80,8 +79,8 @@ public class ProfileMenuController {
 
         if (!newPassword.equals(password))
             return Message.CHANGE_PASSWORD_ERROR5.toString();
-        String encoded = PasswordHashing.encode(newPassword);
-        currentUser.setHashedPassword(encoded);
+
+        currentUser.setPassword(newPassword);
         return Message.CHANGE_PASSWORD.toString();
     }
 
@@ -94,7 +93,7 @@ public class ProfileMenuController {
             return Message.CHANGE_EMAIL_ERROR1;
         }
         if (User.getUserByEmail(newEmail) != null) {
-            return Message.CHANGE_EMAIL_ERROR2;
+            return Message.EMAIL_ALREADY_EXISTS;
         }
         currentUser.setEmail(newEmail);
         return Message.CHANGE_EMAIL;

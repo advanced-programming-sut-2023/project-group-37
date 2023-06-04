@@ -10,6 +10,7 @@ import java.util.Random;
 
 public class CaptchaController {
     private final static ArrayList<File> allCaptchaImageFiles;
+    private static final Random random;
     private String captchaCode;
     private Image captchaImage;
 
@@ -22,12 +23,12 @@ public class CaptchaController {
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
-
         allCaptchaImageFiles.addAll(MultiMenuFunctions.getAllImageFilesFromFolder(file));
+
+        random = new Random();
     }
     public void generateCaptcha() {
-        Random random = new Random();
-        int randomNumber = random.nextInt(0, 50);
+        int randomNumber = random.nextInt(0, allCaptchaImageFiles.size());
 
         this.captchaImage = new Image(allCaptchaImageFiles.get(randomNumber).getAbsolutePath(),
                 145, 25, false, false);

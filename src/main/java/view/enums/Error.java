@@ -4,6 +4,7 @@ public enum Error {
     // Multi Menu Errors :
     NECESSARY_FIELD("Require field!"),
     INCOMPATIBLE_PASSWORDS("Incompatible passwords!"),
+    EMAIL_ALREADY_EXISTS("Email already exists!"),
 
     // RegisterMenu Errors :
     USERNAME_ALREADY_EXISTS("Username already exists"),

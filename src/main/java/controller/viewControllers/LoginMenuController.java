@@ -1,18 +1,17 @@
 package controller.viewControllers;
 
-import controller.MultiMenuFunctions;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import model.user.User;
-import model.utils.PasswordHashing;
-import view.enums.Command;
 import view.enums.Message;
 
-import java.util.regex.Matcher;
 
 public class LoginMenuController {
     private static final LoginMenuController loginMenuController;
+
     private User user;
-    private String password;
-    private int delayTime = 0;
 
     static {
         loginMenuController = new LoginMenuController();
@@ -26,79 +25,38 @@ public class LoginMenuController {
         return loginMenuController;
     }
 
-    public int getDelayTime() {
-        return delayTime;
-    }
+    public Message login(String username, String password, boolean stayLoggedIn) {
+        User user = User.getUserByUsername(username);
 
-    private String deleteQuotations(String string) {
-        return MultiMenuFunctions.deleteQuotations(string);
-    }
-
-    public String login(Matcher matcher) {
-        String username = deleteQuotations(matcher.group("username")),
-                password = deleteQuotations(matcher.group("password"));
-
-        boolean stayLoggedIn = matcher.group("stayLoggedIn") != null;
-
-        user = User.getUserByUsername(username);
         if (user == null)
-            return Message.USER_NOT_EXISTS.toString();
+            return Message.USER_NOT_EXISTS;
 
-        if (user.isWrongPassword(password)) {
-            delayTime += 5;
-            return Message.INCORRECT_PASSWORD.toString();
-        }
-
-        delayTime = 0;
+        if (user.isWrongPassword(password))
+            return Message.INCORRECT_PASSWORD;
 
         MainMenuController.setCurrentUser(user);
         if (stayLoggedIn)
             User.setStayLoggedIn(user);
 
-        return Message.LOGIN_SUCCESSFUL.toString();
+        return Message.LOGIN_SUCCESSFUL;
     }
 
-    public String forgotPassword(Matcher matcher) {
-        String username = matcher.group("username");
+    public Message findUser(String username, Label questionLabel) {
+        if (User.getUserByUsername(username) == null)
+            return Message.USER_NOT_EXISTS;
 
-        user = User.getUserByUsername(username);
-        if (user == null)
-            return Message.USER_NOT_EXISTS.toString();
+        this.user = User.getUserByUsername(username);
 
-        return Message.ASK_QUESTION.toString();
+        questionLabel.setText(this.user.getRecoveryQuestion());
+        return null;
     }
 
-    public String answerSecurityQuestion(String answer) {
-        if (user.isCorrectAnswer(answer))
-            return Message.ENTER_NEW_PASSWORD.toString();
+    public Message changePassword(TextField answerField, PasswordField passwordField) {
+        if (this.user.isWrongAnswer(answerField.getText()))
+            return Message.INCORRECT_ANSWER;
 
-        return Message.INCORRECT_ANSWER.toString();
-    }
-
-    public String getNewPassword(String newPassword) {
-        if (Command.CANCEL.getMatcher(newPassword) != null)
-            return Message.CANCEL.toString();
-
-        if (MultiMenuFunctions.checkPasswordNotOK(newPassword))
-            return Message.WEAK_PASSWORD.toString();
-        //save hashed password
-        password = PasswordHashing.encode(newPassword);
-        return Message.ENTER_NEW_PASSWORD_AGAIN.toString();
-    }
-
-    public String getNewPasswordAgain(String newPassword) {
-        if (Command.CANCEL.getMatcher(newPassword) != null)
-            return Message.CANCEL.toString();
-
-        if (!PasswordHashing.checkPassword(newPassword, password))
-            return Message.INCOMPATIBLE_PASSWORDS.toString();
-        user.setHashedPassword(password);
-
+        this.user.setPassword(passwordField.getText());
         User.updateDatabase();
-        return Message.CHANGE_PASSWORD_SUCCESSFUL.toString();
-    }
-
-    public User getUser() {
-        return user;
+        return Message.CHANGE_PASSWORD;
     }
 }

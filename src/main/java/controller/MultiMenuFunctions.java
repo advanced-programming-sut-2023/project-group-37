@@ -7,12 +7,17 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import model.buildings.Building;
 import model.buildings.DefensiveBuilding;
 import model.game.Texture;
 import model.game.Tile;
 import model.game.Map;
 import model.people.MilitaryUnit;
+import view.enums.Error;
 
 public class MultiMenuFunctions {
 
@@ -29,12 +34,72 @@ public class MultiMenuFunctions {
         return !email.matches("[A-Za-z0-9_.]+@[a-zA-Z0-9_]+\\.[A-Za-z0-9_.]+");
     }
 
-    public static void wait(int ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
+    public static void initializePasswordFields(TextField passwordShow, PasswordField passwordField,
+                                                Label passwordError, CheckBox showPassword) {
+
+        passwordField.textProperty().addListener((observable, oldText, newText) -> {
+                passwordShow.setText(newText);
+                if (newText.isEmpty())
+                    passwordError.setText(Error.NECESSARY_FIELD.toString());
+                else passwordError.setText("");
+        });
+
+        passwordShow.textProperty().addListener((observable, oldText, newText) ->
+                passwordField.setText(newText));
+
+        passwordShow.managedProperty().bind(showPassword.selectedProperty());
+        passwordShow.visibleProperty().bind(showPassword.selectedProperty());
+
+        passwordField.managedProperty().bind(showPassword.selectedProperty().not());
+        passwordField.visibleProperty().bind(showPassword.selectedProperty().not());
+    }
+
+    public static void initializePasswordFieldsWithConfirm(
+            TextField passwordShow, TextField passwordConfirmShow,
+            PasswordField passwordField, PasswordField passwordConfirmField, Label passwordError,
+            Label passwordConfirmError, CheckBox showPassword) {
+
+        passwordShow.textProperty().addListener((observable, oldText, newText) ->
+                passwordField.setText(newText));
+
+        passwordField.textProperty().addListener((observable, oldText, newText) -> {
+            passwordShow.setText(newText);
+
+            if (MultiMenuFunctions.checkPasswordNotOK(newText))
+                passwordError.setText(Error.WEAK_PASSWORD.toString());
+
+            else if (newText.isEmpty())
+                passwordError.setText(Error.NECESSARY_FIELD.toString());
+
+            else passwordError.setText("");
+        });
+
+        passwordConfirmShow.textProperty().addListener((observable, oldText, newText) ->
+                passwordConfirmField.setText(newText));
+
+        passwordConfirmField.textProperty().addListener((observable, oldText, newText) -> {
+            passwordConfirmShow.setText(newText);
+
+            if (!passwordField.getText().equals(newText))
+                passwordConfirmError.setText(Error.INCOMPATIBLE_PASSWORDS.toString());
+
+            else if (newText.isEmpty())
+                passwordConfirmError.setText(Error.NECESSARY_FIELD.toString());
+
+            else passwordConfirmError.setText("");
+        });
+
+        passwordShow.managedProperty().bind(showPassword.selectedProperty());
+        passwordShow.visibleProperty().bind(showPassword.selectedProperty());
+
+        passwordField.managedProperty().bind(showPassword.selectedProperty().not());
+        passwordField.visibleProperty().bind(showPassword.selectedProperty().not());
+
+        passwordConfirmShow.managedProperty().bind(showPassword.selectedProperty());
+        passwordConfirmShow.visibleProperty().bind(showPassword.selectedProperty());
+
+        passwordConfirmField.managedProperty().bind(showPassword.selectedProperty().not());
+        passwordConfirmField.visibleProperty().bind(showPassword.selectedProperty().not());
     }
 
     public static ArrayList<File> getAllImageFilesFromFolder(File directory) {
@@ -84,35 +149,36 @@ public class MultiMenuFunctions {
     private static ArrayList<Tile> setNextNumber(ArrayList<Tile> targets, int nextNumber, boolean[][] tilePassability, Map map) {
         ArrayList<Tile> result = new ArrayList<>();
         Tile nextTile;
-        int x,y;
+        int x, y;
 
         for (Tile tile : targets) {
-            x = tile.getX(); y = tile.getY();
+            x = tile.getX();
+            y = tile.getY();
 
-            nextTile = map.getTileByLocation(x+1,y);
+            nextTile = map.getTileByLocation(x + 1, y);
             if (nextTile != null) {
-                if (nextTile.number == 0 && tilePassability[x+1][y]) {
+                if (nextTile.number == 0 && tilePassability[x + 1][y]) {
                     nextTile.number = nextNumber;
                     result.add(nextTile);
                 }
             }
-            nextTile = map.getTileByLocation(x-1,y);
+            nextTile = map.getTileByLocation(x - 1, y);
             if (nextTile != null) {
-                if (nextTile.number == 0 && tilePassability[x-1][y]) {
+                if (nextTile.number == 0 && tilePassability[x - 1][y]) {
                     nextTile.number = nextNumber;
                     result.add(nextTile);
                 }
             }
-            nextTile = map.getTileByLocation(x,y+1);
+            nextTile = map.getTileByLocation(x, y + 1);
             if (nextTile != null) {
-                if (nextTile.number == 0 && tilePassability[x][y+1]) {
+                if (nextTile.number == 0 && tilePassability[x][y + 1]) {
                     nextTile.number = nextNumber;
                     result.add(nextTile);
                 }
             }
-            nextTile = map.getTileByLocation(x,y-1);
+            nextTile = map.getTileByLocation(x, y - 1);
             if (nextTile != null) {
-                if (nextTile.number == 0 && tilePassability[x][y-1]) {
+                if (nextTile.number == 0 && tilePassability[x][y - 1]) {
                     nextTile.number = nextNumber;
                     result.add(nextTile);
                 }
@@ -153,8 +219,8 @@ public class MultiMenuFunctions {
         targets.get(0).add(origin);
 
         int number = 1;
-        while (targets.get(number-1).size() > 0 && !targets.get(number-1).contains(destination)) {
-            targets.add(setNextNumber(targets.get(targets.size()-1), number, tilePassability, map));
+        while (targets.get(number - 1).size() > 0 && !targets.get(number - 1).contains(destination)) {
+            targets.add(setNextNumber(targets.get(targets.size() - 1), number, tilePassability, map));
             number++;
         }
 
@@ -197,8 +263,8 @@ public class MultiMenuFunctions {
         targets.get(0).add(origin);
 
         int number = 1;
-        while (targets.get(number-1).size() > 0 && !targets.get(number-1).contains(destination)) {
-            targets.add(setNextNumber(targets.get(targets.size()-1), number, tilePassability, map));
+        while (targets.get(number - 1).size() > 0 && !targets.get(number - 1).contains(destination)) {
+            targets.add(setNextNumber(targets.get(targets.size() - 1), number, tilePassability, map));
             number++;
         }
         if (targets.get(targets.size() - 1).size() == 0)
@@ -214,7 +280,7 @@ public class MultiMenuFunctions {
 
         Tile preTile;
         Tile tile = destination;
-        int index = targets.size() -2;
+        int index = targets.size() - 2;
         while (index > 0) {
             preTile = getNeighbor(tile, targets.get(index));
             result.add(1, preTile);

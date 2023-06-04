@@ -9,17 +9,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.user.User;
 import view.enums.Error;
 import view.enums.Result;
 import view.enums.Message;
@@ -33,9 +27,6 @@ public class LoginMenu extends Application {
     private final AppController appController;
     private final LoginMenuController loginMenuController;
     private final CaptchaController captchaController;
-    private final Scanner scanner;
-    private String command;
-    private String message;
 
     // Fields :
     @FXML
@@ -48,6 +39,8 @@ public class LoginMenu extends Application {
     private TextField captchaField;
     @FXML
     private CheckBox showPassword;
+    @FXML
+    private CheckBox stayLoggedIn;
 
     // Errors :
     @FXML
@@ -65,7 +58,6 @@ public class LoginMenu extends Application {
         this.appController = AppController.getInstance();
         this.loginMenuController = LoginMenuController.getInstance();
         this.captchaController = new CaptchaController();
-        this.scanner = new Scanner(System.in);
     }
 
     @Override
@@ -94,17 +86,7 @@ public class LoginMenu extends Application {
             else this.usernameError.setText("");
         });
 
-        this.passwordField.textProperty().addListener((observable, oldText, newText) ->
-                this.passwordShow.setText(newText));
-
-        this.passwordShow.textProperty().addListener((observable, oldText, newText) ->
-                this.passwordField.setText(newText));
-
-        this.passwordShow.managedProperty().bind(this.showPassword.selectedProperty());
-        this.passwordShow.visibleProperty().bind(this.showPassword.selectedProperty());
-
-        this.passwordField.managedProperty().bind(this.showPassword.selectedProperty().not());
-        this.passwordField.visibleProperty().bind(this.showPassword.selectedProperty().not());
+        MultiMenuFunctions.initializePasswordFields(this.passwordShow, this.passwordField, this.passwordError, this.showPassword);
     }
 
     private void initializeErrors() {
@@ -128,77 +110,37 @@ public class LoginMenu extends Application {
         });
     }
 
-    private boolean login(Matcher matcher) {
-        this.message = this.loginMenuController.login(matcher);
-        System.out.println(this.message);
-
-        if (Message.INCORRECT_PASSWORD.equals(message)) {
-            System.out.println("You can try again in " + loginMenuController.getDelayTime() + " seconds!");
-            MultiMenuFunctions.wait(loginMenuController.getDelayTime() * 1000);
-        }
-
-        return Message.LOGIN_SUCCESSFUL.equals(message);
-    }
-
-    private void forgotPassword(Matcher matcher) {
-        this.message = this.loginMenuController.forgotPassword(matcher);
-        System.out.println(this.message);
-
-        if (Message.ASK_QUESTION.equals(message)) {
-            System.out.println(this.loginMenuController.getUser().getRecoveryQuestion());
-            do {
-                this.command = this.scanner.nextLine();
-                this.message = this.loginMenuController.answerSecurityQuestion(this.command);
-
-                System.out.println(this.message);
-
-            } while (!Message.ENTER_NEW_PASSWORD.equals(message));
-
-            firstLoop:
-            while (true) {
-                this.command = this.scanner.nextLine();
-                this.message = this.loginMenuController.getNewPassword(this.command);
-
-                System.out.println(this.message);
-                if (Message.ENTER_NEW_PASSWORD_AGAIN.equals(message)) {
-                    while (true) {
-                        this.command = this.scanner.nextLine();
-                        this.message = this.loginMenuController.getNewPasswordAgain(this.command);
-                        System.out.println(this.message);
-                        if (Message.CHANGE_PASSWORD_SUCCESSFUL.equals(this.message) || Message.CANCEL.equals(message))
-                            break firstLoop;
-                    }
-                } else if (Message.CANCEL.equals(message))
-                    break;
-            }
-        }
-    }
-
     private void generateCaptcha() {
         this.captchaController.generateCaptcha();
         this.captchaImage.setImage(this.captchaController.getCaptchaImage());
     }
 
-    @FXML
-    private void forgotPassword() {
-        Stage forgotPasswordStage = new Stage();
-        forgotPasswordStage.initModality(Modality.APPLICATION_MODAL);
-        forgotPasswordStage.initOwner(this.appController.getStage());
-
-//        try {
-//            new ForgotMenu().start(forgotPasswordStage);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
+    private boolean checkForErrors() {
+        return this.usernameError.getText().isEmpty() && this.passwordError.getText().isEmpty() &&
+                this.captchaError.getText().isEmpty();
     }
 
     @FXML
-    private void login() {
-
+    private void forgotPassword() throws Exception {
+        this.appController.runMenu(Result.ENTER_FORGOT_MENU);
     }
 
     @FXML
-    private void backRegisterMenu() throws Exception {
+    private void login() throws Exception {
+        if (!this.checkForErrors())
+            return;
+
+        Message message = this.loginMenuController.login(this.usernameField.getText(), this.passwordField.getText(),
+                this.stayLoggedIn.isSelected());
+
+        if (message == Message.LOGIN_SUCCESSFUL)
+            this.appController.runMenu(Result.ENTER_MAIN_MENU);
+
+        else new Alert(Alert.AlertType.ERROR, Message.CANT_LOGIN.toString()).show();
+    }
+
+    @FXML
+    private void enterRegisterMenu() throws Exception {
         this.appController.runMenu(Result.ENTER_REGISTER_MENU);
     }
 
