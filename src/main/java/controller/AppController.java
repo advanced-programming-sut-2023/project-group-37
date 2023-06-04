@@ -24,6 +24,7 @@ public class AppController {
 
     public AppController(Stage stage) {
         this.stage = stage;
+        this.stage.setResizable(false);
 
         if (appController == null)
             appController = this;

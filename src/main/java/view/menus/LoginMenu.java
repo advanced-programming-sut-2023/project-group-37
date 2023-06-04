@@ -10,8 +10,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import view.enums.Error;
@@ -64,6 +65,9 @@ public class LoginMenu extends Application {
     public void start(Stage stage) throws Exception {
         URL url = LoginMenu.class.getResource("/FXML/loginMenu.fxml");
         AnchorPane anchorPane = FXMLLoader.load(Objects.requireNonNull(url));
+
+        MultiMenuFunctions.setBackground(anchorPane, "registration-bg.jpg");
+
         Scene scene = new Scene(anchorPane);
         stage.setScene(scene);
         stage.show();
@@ -97,7 +101,7 @@ public class LoginMenu extends Application {
     private void initializeCaptcha() {
         this.generateCaptcha();
 
-        this.captchaError.setText(Error.NECESSARY_FIELD.toString());
+        this.captchaError.setText(Error.INCORRECT_CAPTCHA.toString());
 
         this.captchaField.textProperty().addListener((
                 ObservableValue<? extends String> ov, String old_val, String new_val) -> {
@@ -127,8 +131,10 @@ public class LoginMenu extends Application {
 
     @FXML
     private void login() throws Exception {
-        if (!this.checkForErrors())
+        if (!this.checkForErrors()) {
+            new Alert(Alert.AlertType.ERROR, Message.EMPTY_FIELD.toString()).show();
             return;
+        }
 
         Message message = this.loginMenuController.login(this.usernameField.getText(), this.passwordField.getText(),
                 this.stayLoggedIn.isSelected());

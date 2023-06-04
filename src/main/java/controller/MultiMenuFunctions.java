@@ -2,15 +2,14 @@ package controller;
 
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import model.buildings.Building;
 import model.buildings.DefensiveBuilding;
 import model.game.Texture;
@@ -18,6 +17,7 @@ import model.game.Tile;
 import model.game.Map;
 import model.people.MilitaryUnit;
 import view.enums.Error;
+import view.menus.LoginMenu;
 
 public class MultiMenuFunctions {
 
@@ -32,6 +32,13 @@ public class MultiMenuFunctions {
 
     public static boolean checkEmailNotOK(String email) {
         return !email.matches("[A-Za-z0-9_.]+@[a-zA-Z0-9_]+\\.[A-Za-z0-9_.]+");
+    }
+
+    public static void setBackground(Pane pane, String filePath) {
+        pane.setBackground(new Background(new BackgroundImage(new Image(Objects.requireNonNull(
+                LoginMenu.class.getResource("/Images/Backgrounds/" + filePath)).toExternalForm(),
+                pane.getPrefWidth(), pane.getPrefHeight() + 10, false, false), BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
     }
 
     public static void initializePasswordFields(TextField passwordShow, PasswordField passwordField,

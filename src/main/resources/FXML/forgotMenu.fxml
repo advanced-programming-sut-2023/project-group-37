@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.menus.ForgotMenu">
-    <VBox layoutX="190.0" layoutY="44.0" prefHeight="321.0" prefWidth="220.0" spacing="7.5">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.menus.ForgotMenu">
+    <VBox layoutX="190.0" layoutY="43.0" prefHeight="362.0" prefWidth="220.0" spacing="7.5">
 
         <TextField fx:id="usernameField" prefHeight="18.0" prefWidth="220.0" promptText="Username" />
-        <Label fx:id="questionLabel" prefHeight="18.0" prefWidth="251.0">
+        <Label fx:id="questionLabel" prefHeight="18.0" prefWidth="251.0" styleClass="Label">
             <VBox.margin>
                 <Insets top="20.0" />
             </VBox.margin>
@@ -21,9 +21,10 @@
             </VBox.margin>
         </TextField>
         <PasswordField fx:id="passwordField" promptText="New password">
-         <VBox.margin>
-            <Insets top="20.0" />
-         </VBox.margin></PasswordField>
+            <VBox.margin>
+                <Insets top="20.0" />
+            </VBox.margin>
+        </PasswordField>
         <TextField fx:id="passwordConfirmShow" promptText="New password Confirm" />
         <PasswordField fx:id="passwordConfirmField" promptText="New password Confirm" />
         <Button fx:id="changePassword" mnemonicParsing="false" onAction="#changePassword" prefHeight="30.0" prefWidth="100.0" text="Change">
@@ -31,6 +32,12 @@
                 <Insets left="55.0" top="10.0" />
             </VBox.margin>
         </Button>
+      <HBox prefHeight="30.0" prefWidth="220.0">
+         <children>
+            <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="118.0" styleClass="Label" text="Did you regret ?  " />
+            <Hyperlink onAction="#enterLoginMenu" prefHeight="77.0" prefWidth="98.0" text="Back to login" />
+         </children>
+      </HBox>
     </VBox>
     <VBox layoutX="35.0" layoutY="43.0" prefHeight="322.0" prefWidth="142.0" spacing="7.5">
         <children>
@@ -43,17 +50,17 @@
                 <font>
                     <Font size="10.0" />
                 </font>
-            <VBox.margin>
-               <Insets top="45.0" />
-            </VBox.margin>
+                <VBox.margin>
+                    <Insets top="45.0" />
+                </VBox.margin>
             </Label>
             <Label fx:id="passwordError" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="142.0" textFill="RED">
                 <font>
                     <Font size="10.0" />
                 </font>
-            <VBox.margin>
-               <Insets top="20.0" />
-            </VBox.margin>
+                <VBox.margin>
+                    <Insets top="20.0" />
+                </VBox.margin>
             </Label>
             <Label fx:id="passwordConfirmError" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="142.0" textFill="RED">
                 <font>
@@ -62,7 +69,7 @@
             </Label>
         </children>
     </VBox>
-    <Button layoutX="430.0" layoutY="44.0" mnemonicParsing="false" onAction="#findUser" text="Find" />
+    <Button layoutX="430.0" layoutY="44.0" mnemonicParsing="false" onAction="#findUser" prefHeight="26.0" prefWidth="63.0" text="Find" />
     <CheckBox fx:id="showPassword" layoutX="423.0" layoutY="180.0" mnemonicParsing="false" text="Show" />
 
 </AnchorPane>

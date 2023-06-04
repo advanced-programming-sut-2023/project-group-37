@@ -62,6 +62,8 @@ public class ForgotMenu extends Application {
     public void start(Stage stage) throws Exception {
         URL url = LoginMenu.class.getResource("/FXML/forgotMenu.fxml");
         AnchorPane anchorPane = FXMLLoader.load(Objects.requireNonNull(url));
+        MultiMenuFunctions.setBackground(anchorPane, "registration-bg.jpg");
+
         Scene scene = new Scene(anchorPane);
         stage.setScene(scene);
         stage.show();
@@ -150,8 +152,10 @@ public class ForgotMenu extends Application {
 
     @FXML
     private void changePassword() {
-        if (!this.checkForErrors())
+        if (!this.checkForErrors()) {
+            new Alert(Alert.AlertType.ERROR, Message.EMPTY_FIELD.toString()).show();
             return;
+        }
 
         Message message = this.loginMenuController.changePassword(this.answerField, this.passwordField);
 
@@ -166,5 +170,10 @@ public class ForgotMenu extends Application {
         }
 
         else new Alert(Alert.AlertType.ERROR, message.toString()).show();
+    }
+
+    @FXML
+    private void enterLoginMenu() throws Exception {
+        this.appController.runMenu(Result.ENTER_LOGIN_MENU);
     }
 }

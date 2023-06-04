@@ -91,6 +91,9 @@ public class RegisterMenu extends Application {
     public void start(Stage stage) throws Exception {
         URL url = LoginMenu.class.getResource("/FXML/registerMenu.fxml");
         AnchorPane anchorPane = FXMLLoader.load(Objects.requireNonNull(url));
+        anchorPane.setPrefHeight(anchorPane.getPrefHeight() + 30);
+        MultiMenuFunctions.setBackground(anchorPane, "registration-bg.jpg");
+
         Scene scene = new Scene(anchorPane);
         stage.setScene(scene);
         stage.show();
@@ -145,7 +148,7 @@ public class RegisterMenu extends Application {
     private void initializeCaptcha() {
         this.generateCaptcha();
 
-        this.captchaError.setText(Error.NECESSARY_FIELD.toString());
+        this.captchaError.setText(Error.INCORRECT_CAPTCHA.toString());
 
         this.captchaField.textProperty().addListener((
                 ObservableValue<? extends String> ov, String old_val, String new_val) -> {
@@ -233,8 +236,10 @@ public class RegisterMenu extends Application {
 
     @FXML
     private void register() throws Exception {
-        if (!this.checkForErrors())
+        if (!this.checkForErrors()) {
+            new Alert(Alert.AlertType.ERROR, Message.EMPTY_FIELD.toString()).show();
             return;
+        }
 
         Message message = this.registerMenuController.register(this.usernameField.getText(), this.passwordField.getText(),
                 this.nicknameField.getText(), this.emailField.getText(), this.recoveryQuestions.getValue(),

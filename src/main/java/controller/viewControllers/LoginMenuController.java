@@ -47,7 +47,7 @@ public class LoginMenuController {
 
         this.user = User.getUserByUsername(username);
 
-        questionLabel.setText(this.user.getRecoveryQuestion());
+        questionLabel.setText("Question:  " + this.user.getRecoveryQuestion());
         return null;
     }
 

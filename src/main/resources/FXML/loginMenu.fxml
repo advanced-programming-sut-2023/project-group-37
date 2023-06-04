@@ -6,19 +6,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="386.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.menus.LoginMenu">
+<AnchorPane prefHeight="386.0" prefWidth="600.0" stylesheets="@../CSS/style.css"
+            xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="view.menus.LoginMenu">
 
     <VBox layoutX="190.0" layoutY="29.0" prefHeight="309.0" prefWidth="220.0" spacing="7.5">
         <TextField fx:id="usernameField" promptText="username"/>
         <TextField fx:id="passwordShow" promptText="password"/>
         <PasswordField fx:id="passwordField" promptText="password"/>
-        <Label onMouseClicked="#forgotPassword" prefHeight="18.0" prefWidth="102.0" text="Forgot password ?"
-               textFill="#002fff">
+        <Hyperlink onAction="#forgotPassword" prefHeight="24.0" prefWidth="120.0" text="Forgot password ?"
+                   textFill="#00c8ff">
             <VBox.margin>
                 <Insets left="2.0"/>
             </VBox.margin>
-        </Label>
+        </Hyperlink>
         <HBox prefHeight="25.0" prefWidth="220.0" spacing="10.0">
             <ImageView fx:id="captchaImage" fitHeight="25.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true"/>
             <Button mnemonicParsing="false" onAction="#refreshCaptcha" prefHeight="26.0" prefWidth="67.0"
@@ -29,12 +30,22 @@
         </HBox>
         <TextField fx:id="captchaField" promptText="Captcha code"/>
         <HBox prefHeight="30.0" prefWidth="220.0" spacing="16.0">
-            <Label onMouseClicked="#enterRegisterMenu" prefHeight="30.0" prefWidth="142.0" text="Dont have an account?"
-                   textFill="#002fff"/>
-            <Button mnemonicParsing="false" onAction="#login" prefHeight="30.0" prefWidth="102.0" text="Login"/>
+            <Button mnemonicParsing="false" onAction="#login" prefHeight="30.0" prefWidth="90.0" text="Login">
+                <HBox.margin>
+                    <Insets left="65.0"/>
+                </HBox.margin>
+            </Button>
             <VBox.margin>
                 <Insets top="10.0"/>
             </VBox.margin>
+        </HBox>
+        <HBox prefHeight="27.0" prefWidth="220.0">
+            <children>
+                <Label alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="187.0" text="Dont have an account? : "
+                       styleClass="Label"/>
+                <Hyperlink onAction="#enterRegisterMenu" prefHeight="27.0" prefWidth="122.0" text="Create a new"
+                           textFill="#00c8ff"/>
+            </children>
         </HBox>
     </VBox>
 
@@ -51,7 +62,7 @@
         </Label>
         <Label fx:id="captchaError" alignment="CENTER_RIGHT" prefHeight="24.0" prefWidth="142.0" textFill="RED">
             <VBox.margin>
-                <Insets top="75.0"/>
+                <Insets top="83.0"/>
             </VBox.margin>
             <font>
                 <Font size="10.0"/>
@@ -59,6 +70,7 @@
         </Label>
     </VBox>
     <CheckBox fx:id="showPassword" layoutX="418.0" layoutY="67.0" mnemonicParsing="false" text="Show"/>
-    <CheckBox fx:id="stayLoggedIn" layoutX="425.0" layoutY="220.0" mnemonicParsing="false" text="Stay loggedIn"/>
+    <CheckBox fx:id="stayLoggedIn" layoutX="361.0" layoutY="220.0" mnemonicParsing="false" prefHeight="30.0"
+              prefWidth="97.0" text="Stay loggedIn"/>
 
 </AnchorPane>
