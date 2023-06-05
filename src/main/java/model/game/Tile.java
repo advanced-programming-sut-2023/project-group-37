@@ -52,7 +52,7 @@ public class Tile extends Rectangle {
 
     public void changeTexture(Texture texture) {
         this.texture = texture;
-        if (this.image == null) this.setFill(new ImagePattern(this.texture.getImage()));
+        this.updateImage();
     }
 
     public ArrayList<MilitaryUnit> getMilitaryUnits() {

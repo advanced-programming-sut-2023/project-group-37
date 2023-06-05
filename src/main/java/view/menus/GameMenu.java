@@ -40,6 +40,8 @@ public class GameMenu extends Application {
 
         Scene scene = new Scene(gamePane);
         stage.setScene(scene);
+
+        gamePane.getChildren().get(0).requestFocus();
         stage.show();
     }
 
