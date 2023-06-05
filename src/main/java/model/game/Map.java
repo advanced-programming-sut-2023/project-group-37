@@ -9,7 +9,7 @@ public class Map {
     private final int size;
     private final Tile[][] field;
     private final boolean[][] tilesPassability;
-    private HashMap<Integer, Territory> territories;
+    private final HashMap<Integer, Territory> territories;
 
     static {
         maps = new ArrayList<>();

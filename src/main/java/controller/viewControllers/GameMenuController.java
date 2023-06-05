@@ -20,7 +20,7 @@ import java.util.regex.Matcher;
 public class GameMenuController {
     private static final GameMenuController gameMenuController;
     private Game currentGame;
-    private final MapMenuController mapMenuController;
+    private final MapController mapController;
     private final ShopMenuController shopMenuController;
     private final TradeMenuController tradeMenuController;
     private final BuildingMenuController buildingMenuController;
@@ -31,7 +31,7 @@ public class GameMenuController {
     }
 
     private GameMenuController() {
-        mapMenuController = MapMenuController.getInstance();
+        mapController = MapController.getInstance();
         shopMenuController = ShopMenuController.getInstance();
         tradeMenuController = TradeMenuController.getInstance();
         buildingMenuController = BuildingMenuController.getInstance();
@@ -47,7 +47,7 @@ public class GameMenuController {
         this.currentGovernment = government;
         this.shopMenuController.setGovernment(government);
         this.tradeMenuController.setGovernment(government);
-        this.mapMenuController.setCurrentGovernment(government);
+        this.mapController.setCurrentGovernment(government);
         this.unitMenuController.setCurrentGovernment(government);
         this.buildingMenuController.setCurrentGovernment(government);
     }
@@ -55,17 +55,13 @@ public class GameMenuController {
     public void setCurrentGame(Game game) {
         this.currentGame = game;
         tradeMenuController.setGame(game);
-        mapMenuController.setGame(game);
+        mapController.setGame(game);
         unitMenuController.setCurrentGame(game);
         buildingMenuController.setCurrentGame(game);
     }
 
     public Map getMap() {
         return currentGame.getMap();
-    }
-
-    public Tile[][] showMap(int x, int y) {
-        return mapMenuController.showMap(x, y);
     }
 
     public String enterShopMenu() {
