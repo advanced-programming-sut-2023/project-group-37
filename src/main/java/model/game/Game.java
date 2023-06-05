@@ -178,23 +178,23 @@ public class Game {
 
                                 if (Math.sqrt(i * i + j * j) < range + 0.2) {
                                     // i : + AND j : +
-                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getX() + i,
-                                            militaryUnit.getLocation().getY() + j);
+                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getLocationX() + i,
+                                            militaryUnit.getLocation().getLocationY() + j);
 
                                     if (setEnemyTargetForDefence(target, government, militaryUnit)) break firstFor;
                                     // i : - AND j : +
-                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getX() - i,
-                                            militaryUnit.getLocation().getY() + j);
+                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getLocationX() - i,
+                                            militaryUnit.getLocation().getLocationY() + j);
 
                                     if (setEnemyTargetForDefence(target, government, militaryUnit)) break;
                                     // i : + AND j : -
-                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getX() + i,
-                                            militaryUnit.getLocation().getY() - j);
+                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getLocationX() + i,
+                                            militaryUnit.getLocation().getLocationY() - j);
 
                                     if (setEnemyTargetForDefence(target, government, militaryUnit)) break;
                                     // i : - AND j : -
-                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getX() - i,
-                                            militaryUnit.getLocation().getY() - j);
+                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getLocationX() - i,
+                                            militaryUnit.getLocation().getLocationY() - j);
 
                                     if (setEnemyTargetForDefence(target, government, militaryUnit)) break;
                                 }

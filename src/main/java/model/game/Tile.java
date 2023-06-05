@@ -1,5 +1,8 @@
 package model.game;
 
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import model.buildings.Building;
 import model.buildings.BuildingType;
 import model.buildings.DefensiveBuilding;
@@ -10,7 +13,7 @@ import model.people.TroopType;
 
 import java.util.ArrayList;
 
-public class Tile {
+public class Tile extends Rectangle {
 
     private final int x;
     private final int y;
@@ -25,9 +28,12 @@ public class Tile {
     private boolean hasBuilding;
 
     public Tile(int x, int y) {
+        super(20, 20);
         this.x = x;
         this.y = y;
         this.texture = Texture.GROUND;
+        this.setFill(new ImagePattern(this.texture.getImage()));
+
         this.people = new ArrayList<>();
         this.militaryUnits = new ArrayList<>();
         this.building = null;
@@ -35,11 +41,11 @@ public class Tile {
         this.hasBuilding = false;
     }
 
-    public int getX() {
+    public int getLocationX() {
         return x;
     }
 
-    public int getY() {
+    public int getLocationY() {
         return y;
     }
 
@@ -49,6 +55,7 @@ public class Tile {
 
     public void changeTexture(Texture texture) {
         this.texture = texture;
+        this.setFill(new ImagePattern(this.texture.getImage()));
     }
 
     public ArrayList<MilitaryUnit> getMilitaryUnits() {

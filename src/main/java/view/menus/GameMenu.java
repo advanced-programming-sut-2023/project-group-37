@@ -2,9 +2,19 @@ package view.menus;
 
 import controller.AppController;
 import controller.viewControllers.GameMenuController;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.game.ItemCategory;
+import model.game.Map;
 import view.enums.Result;
 import model.game.Tile;
 import view.enums.Command;
@@ -28,7 +38,52 @@ public class GameMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        GridPane mainPane = new GridPane();
+        Pane gamePane = new Pane();
 
+        Map.loadMaps();
+
+        Tile[][] tiles = Map.getMaps().get(0).getField();
+
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[0].length; j++) {
+                mainPane.add(tiles[i][j], i, j);
+            }
+        }
+
+//        for (int i = 50; i >= 0; i--) {
+//            for (int j = 50; j >= 0; j--) {
+//                gamePane.add(mainPane.getChildren().get((200 * i) + j), i, j);
+//            }
+//        }
+
+        mainPane.setLayoutX(0);
+        mainPane.setLayoutY(0);
+
+        gamePane.setMaxHeight(700);
+        gamePane.setMaxWidth(1000);
+
+        gamePane.getChildren().add(mainPane);
+        Scene scene = new Scene(gamePane);
+        stage.setScene(scene);
+        stage.show();
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), actionEvent -> {
+            if (mainPane.getLayoutY() <= -180 * 20)
+                return;
+            mainPane.setLayoutY(mainPane.getLayoutY() - 20);
+        }));
+//        timeline.setOnFinished(actionEvent -> {
+//
+//            Timeline timeline1 = new Timeline(new KeyFrame(Duration.millis(100), actionEvent1 -> {
+//                rectangle.setWidth(rectangle.getWidth() - 20);
+//                rectangle.setHeight(rectangle.getHeight() - 20);
+//            }));
+//            timeline1.setCycleCount(6);
+//            timeline1.play();
+//        });
+        timeline.setCycleCount(-1);
+        timeline.play();
     }
 
     public Result run() {

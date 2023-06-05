@@ -110,8 +110,8 @@ public class GenerateMap {
     public static void setTerritory(Tile headQuarter, int territoryNumber) {
         Territory territory = new Territory(map, territoryNumber, headQuarter);
         map.getKeeps().put(territoryNumber, territory);
-        for (int i = headQuarter.getX() - 14; i < headQuarter.getX() + 15; i++) {
-            for (int j = headQuarter.getY() - 14; j < headQuarter.getY() + 15; j++) {
+        for (int i = headQuarter.getLocationX() - 14; i < headQuarter.getLocationX() + 15; i++) {
+            for (int j = headQuarter.getLocationY() - 14; j < headQuarter.getLocationY() + 15; j++) {
                 map.getField()[i][j].setTerritory(territory);
             }
         }

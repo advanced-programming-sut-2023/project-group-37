@@ -36,7 +36,7 @@ public class MultiMenuFunctions {
 
     public static void setBackground(Pane pane, String filePath) {
         pane.setBackground(new Background(new BackgroundImage(new Image(Objects.requireNonNull(
-                LoginMenu.class.getResource("/Images/Backgrounds/" + filePath)).toExternalForm(),
+                LoginMenu.class.getResource("/Image/Background/" + filePath)).toExternalForm(),
                 pane.getPrefWidth(), pane.getPrefHeight() + 10, false, false), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
     }
@@ -159,8 +159,8 @@ public class MultiMenuFunctions {
         int x, y;
 
         for (Tile tile : targets) {
-            x = tile.getX();
-            y = tile.getY();
+            x = tile.getLocationX();
+            y = tile.getLocationY();
 
             nextTile = map.getTileByLocation(x + 1, y);
             if (nextTile != null) {
@@ -195,11 +195,11 @@ public class MultiMenuFunctions {
     }
 
     private static boolean isNeighbor(Tile neighbor, Tile tile) {
-        if (tile.getX() - neighbor.getX() == 1 || neighbor.getX() - tile.getX() == 1)
-            return tile.getY() == neighbor.getY();
+        if (tile.getLocationX() - neighbor.getLocationX() == 1 || neighbor.getLocationX() - tile.getLocationX() == 1)
+            return tile.getLocationY() == neighbor.getLocationY();
 
-        if (tile.getY() - neighbor.getY() == 1 || neighbor.getY() - tile.getY() == 1)
-            return tile.getX() == neighbor.getX();
+        if (tile.getLocationY() - neighbor.getLocationY() == 1 || neighbor.getLocationY() - tile.getLocationY() == 1)
+            return tile.getLocationX() == neighbor.getLocationX();
 
         return false;
     }
@@ -210,7 +210,7 @@ public class MultiMenuFunctions {
             if (isNeighbor(neighbor, tile))
                 return neighbor;
         }
-        System.out.println(tile.getX() + " " + tile.getY() + " " + tile.number);
+        System.out.println(tile.getLocationX() + " " + tile.getLocationY() + " " + tile.number);
         return null;
     }
 
@@ -262,7 +262,7 @@ public class MultiMenuFunctions {
                 }
             }
         }
-        if (!tilePassability[destination.getX()][destination.getY()])
+        if (!tilePassability[destination.getLocationX()][destination.getLocationY()])
             return null;
 
         ArrayList<ArrayList<Tile>> targets = new ArrayList<>();
@@ -299,21 +299,21 @@ public class MultiMenuFunctions {
     }
 
     public static double distance(Tile tile1, Tile tile2) {
-        int x1 = tile1.getX(), y1 = tile1.getY(), x2 = tile2.getX(), y2 = tile2.getY();
+        int x1 = tile1.getLocationX(), y1 = tile1.getLocationY(), x2 = tile2.getLocationX(), y2 = tile2.getLocationY();
         return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
     }
 
     public static Tile getMiddle(Tile tile1, Tile tile2, Map map) {
-        int x = (tile2.getX() - tile1.getX()) / 2;
-        int y = (tile2.getY() - tile1.getY()) / 2;
+        int x = (tile2.getLocationX() - tile1.getLocationX()) / 2;
+        int y = (tile2.getLocationY() - tile1.getLocationY()) / 2;
         return map.getTileByLocation(x, y);
     }
 
     public static Tile getNearestPassableTileByLocation(Tile tile, Map map) {
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
-                if (map.getPassabilityByLocation(tile.getX() + i, tile.getY() + j))
-                    return map.getTileByLocation(tile.getX() + i, tile.getY() + j);
+                if (map.getPassabilityByLocation(tile.getLocationX() + i, tile.getLocationY() + j))
+                    return map.getTileByLocation(tile.getLocationX() + i, tile.getLocationY() + j);
             }
         }
         return tile;
@@ -323,7 +323,7 @@ public class MultiMenuFunctions {
         Tile target;
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
-                if ((target = map.getTileByLocation(tile.getX() + i, tile.getY() + j)).getTexture() == Texture.MOAT)
+                if ((target = map.getTileByLocation(tile.getLocationX() + i, tile.getLocationY() + j)).getTexture() == Texture.MOAT)
                     return target;
             }
         }

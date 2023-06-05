@@ -213,14 +213,14 @@ public class GameMenuController {
         // Check if non-first storage is not near the others!
         if ((type == BuildingType.STOCKPILE || type == BuildingType.GRANARY || type == BuildingType.ARMORY) &&
                 this.currentGovernment.getUniqueBuilding((BuildingType) type) != null &&
-                (this.currentGame.getMap().getTileByLocation(tile.getX() - 1, tile.getY()).getBuilding() == null ||
-                        this.currentGame.getMap().getTileByLocation(tile.getX() - 1, tile.getY()).getBuilding().getType() != type) &&
-                (this.currentGame.getMap().getTileByLocation(tile.getX() + 1, tile.getY()).getBuilding() == null ||
-                        this.currentGame.getMap().getTileByLocation(tile.getX() + 1, tile.getY()).getBuilding().getType() != type) &&
-                (this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() - 1).getBuilding() == null ||
-                        this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() - 1).getBuilding().getType() != type) &&
-                (this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() + 1).getBuilding() == null ||
-                        this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() + 1).getBuilding().getType() != type))
+                (this.currentGame.getMap().getTileByLocation(tile.getLocationX() - 1, tile.getLocationY()).getBuilding() == null ||
+                        this.currentGame.getMap().getTileByLocation(tile.getLocationX() - 1, tile.getLocationY()).getBuilding().getType() != type) &&
+                (this.currentGame.getMap().getTileByLocation(tile.getLocationX() + 1, tile.getLocationY()).getBuilding() == null ||
+                        this.currentGame.getMap().getTileByLocation(tile.getLocationX() + 1, tile.getLocationY()).getBuilding().getType() != type) &&
+                (this.currentGame.getMap().getTileByLocation(tile.getLocationX(), tile.getLocationY() - 1).getBuilding() == null ||
+                        this.currentGame.getMap().getTileByLocation(tile.getLocationX(), tile.getLocationY() - 1).getBuilding().getType() != type) &&
+                (this.currentGame.getMap().getTileByLocation(tile.getLocationX(), tile.getLocationY() + 1).getBuilding() == null ||
+                        this.currentGame.getMap().getTileByLocation(tile.getLocationX(), tile.getLocationY() + 1).getBuilding().getType() != type))
             return Message.STORAGE_NOT_NEIGHBOR.toString();
 
         // Decrease gold and resource:
@@ -234,10 +234,10 @@ public class GameMenuController {
         }
 
         Building[] neighborBuildings = {
-                this.currentGame.getMap().getTileByLocation(tile.getX() - 1, tile.getY()).getBuilding(),
-                this.currentGame.getMap().getTileByLocation(tile.getX() + 1, tile.getY()).getBuilding(),
-                this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() - 1).getBuilding(),
-                this.currentGame.getMap().getTileByLocation(tile.getX(), tile.getY() + 1).getBuilding(),
+                this.currentGame.getMap().getTileByLocation(tile.getLocationX() - 1, tile.getLocationY()).getBuilding(),
+                this.currentGame.getMap().getTileByLocation(tile.getLocationX() + 1, tile.getLocationY()).getBuilding(),
+                this.currentGame.getMap().getTileByLocation(tile.getLocationX(), tile.getLocationY() - 1).getBuilding(),
+                this.currentGame.getMap().getTileByLocation(tile.getLocationX(), tile.getLocationY() + 1).getBuilding(),
         };
 
         Building building = null;
@@ -534,8 +534,8 @@ public class GameMenuController {
 
     public String showInfo() {
         return "All Info:\n" + "Username: " + this.currentGovernment.getUser().getUsername() +
-                "\nKeep location: " + currentGovernment.getTerritory().getKeep().getX() +
-                ", " + currentGovernment.getTerritory().getKeep().getY() +
+                "\nKeep location: " + currentGovernment.getTerritory().getKeep().getLocationX() +
+                ", " + currentGovernment.getTerritory().getKeep().getLocationY() +
                 "\nGold amount: " + this.currentGovernment.getGold() +
                 "\nFood rate: " + this.currentGovernment.getFoodRate() +
                 "\nTax rate: " + this.currentGovernment.getTaxRate() +

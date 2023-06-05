@@ -19,7 +19,7 @@ public class CaptchaController {
 
         File file;
         try {
-            file = new File(Objects.requireNonNull(CaptchaController.class.getResource("/Images/Captcha")).toURI());
+            file = new File(Objects.requireNonNull(CaptchaController.class.getResource("/Image/Captcha")).toURI());
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
