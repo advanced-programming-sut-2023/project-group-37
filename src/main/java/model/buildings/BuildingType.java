@@ -1,5 +1,6 @@
 package model.buildings;
 
+import javafx.scene.image.Image;
 import model.game.Item;
 import model.people.Person;
 
@@ -105,6 +106,7 @@ public enum BuildingType {
     private final boolean canHoldMachine;
     private final boolean isRepairable;
     private int capacity;
+    private Image image;
 
     // storage:
     BuildingType(String name, int maxHitpoints, int capacity) {
@@ -286,6 +288,10 @@ public enum BuildingType {
 
     public int getCapacity() {
         return this.capacity;
+    }
+
+    public Image getImage() {
+        return image;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package model.people;
 
+import javafx.scene.image.Image;
 import model.buildings.BuildingType;
 import model.game.Item;
 
@@ -63,6 +64,7 @@ public enum TroopType {
     private final Item animal;
     private final boolean canClimbLadder;
     private final boolean canDigMoat;
+    private Image image;
 
     TroopType(String name, BuildingType trainingCamp, int cost, int maxHitpoints, int damage, int speed, int range,
               Item weapon, Item armor, boolean canClimbLadder, boolean canDigMoat) {
@@ -141,6 +143,10 @@ public enum TroopType {
 
     public Item getAnimal() {
         return this.animal;
+    }
+
+    public Image getImage() {
+        return image;
     }
 
     public boolean canClimbLadder() {

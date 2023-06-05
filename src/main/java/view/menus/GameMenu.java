@@ -2,6 +2,7 @@ package view.menus;
 
 import controller.AppController;
 import controller.viewControllers.GameMenuController;
+import controller.viewControllers.MapController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
@@ -20,6 +21,7 @@ import java.util.regex.Matcher;
 public class GameMenu extends Application {
     private final AppController appController;
     private final GameMenuController gameMenuController;
+    private final MapController mapController;
     private String message;
 
     private final Scanner scanner;
@@ -28,30 +30,14 @@ public class GameMenu extends Application {
         this.appController = AppController.getInstance();
         this.scanner = new Scanner(System.in);
         this.gameMenuController = GameMenuController.getInstance();
+        this.mapController = MapController.getInstance();
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        GridPane mainPane = new GridPane();
         Pane gamePane = new Pane();
+        this.mapController.setGamePane(gamePane);
 
-        Map.loadMaps();
-
-        Tile[][] tiles = Map.getMaps().get(0).getField();
-
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles[0].length; j++) {
-                mainPane.add(tiles[i][j], i, j);
-            }
-        }
-
-        mainPane.setLayoutX(0);
-        mainPane.setLayoutY(0);
-
-        gamePane.setMaxHeight(700);
-        gamePane.setMaxWidth(1000);
-
-        gamePane.getChildren().add(mainPane);
         Scene scene = new Scene(gamePane);
         stage.setScene(scene);
         stage.show();

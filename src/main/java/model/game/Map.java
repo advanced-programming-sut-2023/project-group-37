@@ -76,10 +76,11 @@ public class Map {
         return this.territories;
     }
 
-    public void setTilesState() {
-        for (int i = 0; i < this.size; i++)
-            for (int j = 0; j < this.size; j++)
-                this.field[i][j].setState();
+    public void updateImages() {
+        for (Tile[] tiles : this.field) {
+            for (int j = 0; j < this.field[0].length; j++)
+                tiles[j].updateImage();
+        }
     }
 
     public void setTilesPassability() {

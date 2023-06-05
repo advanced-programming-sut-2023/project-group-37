@@ -6,10 +6,7 @@ import javafx.scene.shape.Rectangle;
 import model.buildings.Building;
 import model.buildings.BuildingType;
 import model.buildings.DefensiveBuilding;
-import model.people.MilitaryUnit;
-import model.people.Person;
-import model.people.Troop;
-import model.people.TroopType;
+import model.people.*;
 
 import java.util.ArrayList;
 
@@ -18,10 +15,10 @@ public class Tile extends Rectangle {
     private final int x;
     private final int y;
     private Texture texture;
+    private Image image;
     private final ArrayList<Person> people;
     private ArrayList<MilitaryUnit> militaryUnits;
     private Building building;
-    private Character state;
     private boolean isPassable;
     private Territory territory;
     public int number;
@@ -32,7 +29,7 @@ public class Tile extends Rectangle {
         this.x = x;
         this.y = y;
         this.texture = Texture.GROUND;
-        this.setFill(new ImagePattern(this.texture.getImage()));
+        this.setImage(this.texture.getImage());
 
         this.people = new ArrayList<>();
         this.militaryUnits = new ArrayList<>();
@@ -55,7 +52,7 @@ public class Tile extends Rectangle {
 
     public void changeTexture(Texture texture) {
         this.texture = texture;
-        this.setFill(new ImagePattern(this.texture.getImage()));
+        if (this.image == null) this.setFill(new ImagePattern(this.texture.getImage()));
     }
 
     public ArrayList<MilitaryUnit> getMilitaryUnits() {
@@ -79,7 +76,7 @@ public class Tile extends Rectangle {
             }
         }
 
-        if (damage == firstDamage && this.building != null ) {
+        if (damage == firstDamage && this.building != null) {
             if (!(this.building instanceof DefensiveBuilding) && this.building.getType() != BuildingType.KILLING_PIT &&
                     this.building.getLoyalty() != government)
                 this.building.takeDamage(damage);
@@ -97,13 +94,46 @@ public class Tile extends Rectangle {
         this.building = null;
     }
 
-    public void setBuilding(Building building) {
-        this.building = building;
-        this.hasBuilding = true;
+    private void setImage(Image inputImage) {
+        this.image = inputImage;
+        this.setFill(new ImagePattern(inputImage));
     }
 
-    public Character getState() {
-        return state;
+    public void setBuilding(Building building) {
+        this.building = building;
+
+        if (building != null) {
+            this.hasBuilding = true;
+
+            if (building instanceof DefensiveBuilding defensiveBuilding)
+                this.setImage(defensiveBuilding.getDefensiveType().getImage());
+            else this.setImage(building.getType().getImage());
+        }
+
+        else this.hasBuilding = false;
+    }
+
+    public void updateImage() {
+        if (this.militaryUnits.size() > 0) {
+            for (MilitaryUnit militaryUnit : this.militaryUnits) {
+                if (militaryUnit instanceof MilitaryMachine militaryMachine) {
+                    this.setImage(militaryMachine.getType().getImage());
+                    return;
+                }
+            }
+
+            this.setImage(((Troop) this.militaryUnits.get(this.militaryUnits.size() -1)).getType().getImage());
+            return;
+        }
+
+        if (this.hasBuilding) {
+            if (this.building instanceof DefensiveBuilding defensiveBuilding)
+                this.setImage(defensiveBuilding.getDefensiveType().getImage());
+            else this.setImage(this.building.getType().getImage());
+            return;
+        }
+
+        this.setImage(this.texture.getImage());
     }
 
     public boolean isPassable() {
@@ -114,38 +144,6 @@ public class Tile extends Rectangle {
         return this.territory;
     }
 
-    public void setState() {
-        boolean hasLord = false;
-        for (MilitaryUnit militaryUnit : this.militaryUnits) {
-            if (militaryUnit instanceof Troop troop) {
-                if (troop.getType() == TroopType.LORD) {
-                    hasLord = true;
-                    break;
-                }
-            }
-        }
-        if (hasLord)
-            this.state = 'L';
-
-        else if (this.militaryUnits.size() > 0) {
-            for (MilitaryUnit militaryUnit : this.militaryUnits) {
-                if (militaryUnit.isOnMove() || militaryUnit.isOnPatrol()) {
-                    this.state = 'M';
-                    return;
-                }
-            }
-            this.state = 'S';
-        } else if (this.hasBuilding) {
-            if (this.building instanceof DefensiveBuilding)
-                this.state = 'W';
-            else this.state = 'B';
-        }
-
-        else if (this.texture == Texture.OLIVE_TREE || texture == Texture.DESERT_TREE) {
-            this.state = 'T';
-        } else this.state = 'N';
-    }
-
     public ArrayList<Person> getPeople() {
         return this.people;
     }
@@ -154,7 +152,7 @@ public class Tile extends Rectangle {
         this.people.add(person);
     }
 
-    public void addMilitaryUnit(MilitaryUnit troop){
+    public void addMilitaryUnit(MilitaryUnit troop) {
         this.militaryUnits.add(troop);
     }
 
@@ -162,8 +160,8 @@ public class Tile extends Rectangle {
         isPassable = passability;
     }
 
-    public boolean isTotallyEmpty() {
-        return this.people.isEmpty() && this.militaryUnits.isEmpty() && this.getBuilding() == null;
+    public boolean isTotallyNotEmpty() {
+        return !this.people.isEmpty() || !this.militaryUnits.isEmpty() || this.getBuilding() != null;
     }
 
     public boolean hasEnemy(Government government) {
@@ -190,8 +188,7 @@ public class Tile extends Rectangle {
         if (texture == Texture.MOAT) {
             texture = Texture.GROUND;
             this.isPassable = true;
-        }
-        else {
+        } else {
             texture = Texture.MOAT;
             this.isPassable = false;
         }

@@ -17,7 +17,6 @@ public class AppController {
     private final ProfileMenu profileMenu;
     private final GameMenu gameMenu;
     private final BuildingMenu buildingMenu;
-    private final MapMenu mapMenu;
     private final ShopMenu shopMenu;
     private final TradeMenu tradeMenu;
     private final UnitMenu unitMenu;
@@ -36,7 +35,6 @@ public class AppController {
         this.profileMenu = new ProfileMenu();
         this.gameMenu = new GameMenu();
         this.buildingMenu = new BuildingMenu();
-        this.mapMenu = new MapMenu();
         this.shopMenu = new ShopMenu();
         this.tradeMenu = new TradeMenu();
         this.unitMenu = new UnitMenu();

@@ -1,5 +1,7 @@
 package controller.viewControllers;
 
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import model.buildings.DefensiveBuilding;
 import model.game.Game;
 import model.game.Government;
@@ -39,6 +41,26 @@ public class MapController {
     public void setGame(Game game) {
         this.game = game;
         this.map = game.getMap();
+    }
+
+    public void setGamePane(Pane gamePane) {
+        Map.loadMaps();
+        Tile[][] tiles = Map.getMaps().get(0).getField(); // todo : wtf ?
+
+        GridPane mainPane = new GridPane();
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[0].length; j++) {
+                mainPane.add(tiles[i][j], i, j);
+            }
+        }
+
+        mainPane.setLayoutX(0);
+        mainPane.setLayoutY(0);
+
+        gamePane.setMaxHeight(700);
+        gamePane.setMaxWidth(1000);
+
+        gamePane.getChildren().add(mainPane);
     }
 
     public String showDetails(Matcher matcher) {

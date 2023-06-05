@@ -1,5 +1,7 @@
 package model.buildings;
 
+import javafx.scene.image.Image;
+
 public enum DefensiveBuildingType {
 
     KEEP("", 1, 0, 0, 16),
@@ -20,6 +22,7 @@ public enum DefensiveBuildingType {
     private final double rangeRate;
     private final int capacity;
     private final boolean isRepairable;
+    private Image image;
 
     DefensiveBuildingType(String name, int maxHitpoints, int stoneAmount, double rangeRate, int capacity) {
         this.name = name;
@@ -60,6 +63,10 @@ public enum DefensiveBuildingType {
 
     public int getCapacity() {
         return this.capacity;
+    }
+
+    public Image getImage() {
+        return image;
     }
 
     public boolean isRepairable() {

@@ -1,5 +1,7 @@
 package model.people;
 
+import javafx.scene.image.Image;
+
 public enum MilitaryMachineType {
 
     PORTABLE_SHIELD("portable shield", 5, 300, 0, 0, 80, 1),
@@ -16,6 +18,7 @@ public enum MilitaryMachineType {
     private final int range;
     private final int speed;
     private final int operatorsNeeded;
+    private Image image;
 
     MilitaryMachineType(String name, int cost, int maxHitpoints, int damage, int range, int speed, int engineersNeeded) {
         this.name = name;
@@ -56,5 +59,9 @@ public enum MilitaryMachineType {
 
     public int getOperatorsNeeded() {
         return this.operatorsNeeded;
+    }
+
+    public Image getImage() {
+        return this.image;
     }
 }

@@ -425,7 +425,7 @@ public class GameMenuController {
         if (Texture.getTextureByName(MultiMenuFunctions.deleteQuotations(matcher.group("type"))) == null)
             return Message.INVALID_TEXTURE_NAME.toString();
 
-        if (!this.currentGame.getMap().getField()[x][y].isTotallyEmpty())
+        if (this.currentGame.getMap().getField()[x][y].isTotallyNotEmpty())
             return Message.TEXTURE_CHANGE_ERROR.toString();
 
         this.currentGame.getMap().getField()[x][y].changeTexture(Texture.getTextureByName(
@@ -450,7 +450,7 @@ public class GameMenuController {
 
         for (int i = x1; i <= x2; i++)
             for (int j = y1; j <= y2; j++)
-                if (!this.currentGame.getMap().getField()[i][j].isTotallyEmpty())
+                if (this.currentGame.getMap().getField()[i][j].isTotallyNotEmpty())
                     return Message.AREA_NOT_EMPTY.toString();
 
         if (Texture.getTextureByName(MultiMenuFunctions.deleteQuotations(matcher.group("type"))) == null)
@@ -499,7 +499,7 @@ public class GameMenuController {
         if (this.currentGame.getMap().getTileByLocation(x, y) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        if (!this.currentGame.getMap().getField()[x][y].isTotallyEmpty() ||
+        if (this.currentGame.getMap().getField()[x][y].isTotallyNotEmpty() ||
                 !this.currentGame.getMap().getField()[x][y].getTexture().canHaveTree())
             return Message.DROP_TREE_ERROR.toString();
 
@@ -521,7 +521,7 @@ public class GameMenuController {
         if (this.currentGame.getMap().getTileByLocation(x, y) == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        if (!this.currentGame.getMap().getField()[x][y].isTotallyEmpty())
+        if (this.currentGame.getMap().getField()[x][y].isTotallyNotEmpty())
             return Message.DROP_ROCK_ERROR.toString();
 
         this.currentGame.getMap().getField()[x][y].changeTexture(Texture.ROCK);
