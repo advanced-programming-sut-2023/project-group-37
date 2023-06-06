@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.user.User;
 import view.enums.Error;
 import view.enums.Message;
 import view.enums.Result;
@@ -60,7 +59,7 @@ public class ForgotMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        URL url = LoginMenu.class.getResource("/FXML/forgotMenu.fxml");
+        URL url = LoginMenu.class.getResource("/fxml/forgot-menu.fxml");
         AnchorPane anchorPane = FXMLLoader.load(Objects.requireNonNull(url));
         MultiMenuFunctions.setBackground(anchorPane, "registration-bg.jpg");
 

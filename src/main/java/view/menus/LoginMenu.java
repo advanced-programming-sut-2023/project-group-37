@@ -10,10 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import view.enums.Error;
 import view.enums.Result;
@@ -21,8 +19,6 @@ import view.enums.Message;
 
 import java.net.URL;
 import java.util.Objects;
-import java.util.Scanner;
-import java.util.regex.Matcher;
 
 public class LoginMenu extends Application {
     private final AppController appController;
@@ -63,7 +59,7 @@ public class LoginMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        URL url = LoginMenu.class.getResource("/FXML/loginMenu.fxml");
+        URL url = LoginMenu.class.getResource("/fxml/login-menu.fxml");
         AnchorPane anchorPane = FXMLLoader.load(Objects.requireNonNull(url));
 
         MultiMenuFunctions.setBackground(anchorPane, "registration-bg.jpg");

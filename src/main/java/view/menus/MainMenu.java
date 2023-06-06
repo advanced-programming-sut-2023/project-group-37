@@ -1,78 +1,50 @@
 package view.menus;
 
-import controller.AppController;
-import controller.viewControllers.MainMenuController;
-import controller.MultiMenuFunctions;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import view.enums.Result;
-import view.enums.Command;
-import view.enums.Message;
 
-import java.util.Scanner;
-import java.util.regex.Matcher;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Objects;
 
 public class MainMenu extends Application {
-    private final AppController appController;
-    private final MainMenuController mainMenuController;
-    private final Scanner scanner;
-
-    public MainMenu() {
-        this.appController = AppController.getInstance();
-        this.scanner = new Scanner(System.in);
-        this.mainMenuController = MainMenuController.getInstance();
-    }
-
     @Override
-    public void start(Stage stage) throws Exception {
-
+    public void start(Stage stage) throws IOException {
+        URL url = MainMenu.class.getResource("main-menu.fxml");
+        assert url != null;
+        BorderPane borderPane = FXMLLoader.load(url);
+        borderPane.setBackground(new Background(new BackgroundImage(new Image(Objects.requireNonNull(
+                MainMenu.class.getResource("images/background/main-menu-background.jpg")).toExternalForm(),
+                borderPane.getPrefWidth(), borderPane.getPrefHeight(), false, false),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT)));
+        borderPane.getStylesheets().add((Objects.requireNonNull(this.getClass().getResource("css/main-menu.css")).toExternalForm()));
+        Scene scene = new Scene(borderPane);
+        stage.setTitle("Hello!");
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public Result run() {
-        String command;
-        Matcher matcher;
-
-        while (true) {
-            command = scanner.nextLine();
-
-            if (command.matches(Command.ENTER_PROFILE_MENU.toString())) {
-                System.out.println(this.mainMenuController.enterProfileMenu());
-                return Result.ENTER_PROFILE_MENU;
-            } else if ((matcher = Command.START_GAME.getMatcher(command)) != null) {
-                if (startGame(matcher))
-                    return Result.ENTER_GAME_MENU;
-            } else if (command.matches(Command.LOGOUT.toString())) {
-                System.out.println(this.mainMenuController.logout());
-                return Result.ENTER_LOGIN_MENU;
-            } else if (command.matches(Command.EXIT.toString())) {
-                return Result.EXIT;
-            } else
-                System.out.println(Message.INVALID_COMMAND);
-        }
+    public static void main(String[] args) {
+        launch();
     }
 
-    private boolean startGame(Matcher matcher) {
-        String[] parts = MultiMenuFunctions.deleteQuotations(matcher.group("users")).trim().split("\\s*&\\s*");
-        String[] usernames = new String[parts.length];
-        String[] numbers = new String[parts.length];
-        String[] split;
+    public void profileMenu(MouseEvent mouseEvent) {
+    }
 
-        try {
-            for (int index = 0; index < parts.length; index++) {
-                split = parts[index].split("\\s+");
-                usernames[index] = split[0];
-                numbers[index] = split[1];
-            }
-        }
-        catch (Exception ex) {
-            System.out.println(Message.TERRITORY_NOT_ASSIGNED);
-            return false;
-        }
+    public void resumeGame(MouseEvent mouseEvent) {
+    }
 
-        String message = this.mainMenuController.startGame(usernames, numbers, matcher.group("turns"),
-                MultiMenuFunctions.deleteQuotations(matcher.group("mapName")));
+    public void startGame(MouseEvent mouseEvent) {
+    }
 
-        System.out.println(message);
-        return message.equals(Message.GAME_STARTED.toString());
+    public void exit() {
+        Platform.exit();
     }
 }

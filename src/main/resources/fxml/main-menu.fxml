@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.Button?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view.menus.MainMenu"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <VBox spacing="20" layoutX="35" layoutY="50">
+        <Button onMouseClicked="#startGame">Start a New Game</Button>
+        <Button onMouseClicked="#resumeGame">Resume Game</Button>
+        <Button onMouseClicked="#profileMenu">Profile Menu</Button>
+        <Button onMouseClicked="#exit">Exit</Button>
+    </VBox>
+
+</BorderPane>

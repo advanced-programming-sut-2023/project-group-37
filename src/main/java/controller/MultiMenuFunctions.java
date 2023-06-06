@@ -36,7 +36,7 @@ public class MultiMenuFunctions {
 
     public static void setBackground(Pane pane, String filePath) {
         pane.setBackground(new Background(new BackgroundImage(new Image(Objects.requireNonNull(
-                LoginMenu.class.getResource("/Images/Backgrounds/" + filePath)).toExternalForm(),
+                LoginMenu.class.getResource("/images/background/" + filePath)).toExternalForm(),
                 pane.getPrefWidth(), pane.getPrefHeight() + 10, false, false), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
     }
@@ -45,10 +45,10 @@ public class MultiMenuFunctions {
                                                 Label passwordError, CheckBox showPassword) {
 
         passwordField.textProperty().addListener((observable, oldText, newText) -> {
-                passwordShow.setText(newText);
-                if (newText.isEmpty())
-                    passwordError.setText(Error.NECESSARY_FIELD.toString());
-                else passwordError.setText("");
+            passwordShow.setText(newText);
+            if (newText.isEmpty())
+                passwordError.setText(Error.NECESSARY_FIELD.toString());
+            else passwordError.setText("");
         });
 
         passwordShow.textProperty().addListener((observable, oldText, newText) ->

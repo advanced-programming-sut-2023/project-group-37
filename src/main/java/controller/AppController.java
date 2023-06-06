@@ -26,8 +26,8 @@ public class AppController {
         this.stage = stage;
         this.stage.setResizable(false);
 
-        if (appController == null)
-            appController = this;
+        if (this.appController == null)
+            this.appController = this;
 
         this.loginMenu = new LoginMenu();
         this.forgotMenu = new ForgotMenu();
@@ -52,12 +52,13 @@ public class AppController {
         Map.loadMaps();
 
         if (loggedInUser != null) {
-            MainMenuController.setCurrentUser(loggedInUser);
+            // TODO: setCurrentUser!
+//            MainMenuController.setCurrentUser(loggedInUser);
 
             this.mainMenu.start(this.stage);
         }
 
-        this.loginMenu.start(this.stage);
+        this.mainMenu.start(this.stage);
     }
 
     public void runMenu(Result result) throws Exception {
