@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -20,15 +21,15 @@ import java.util.Objects;
 public class ChangeMenu extends Application {
     private final AppController appController;
     private final ChangeMenuController changeMenuController;
+    @FXML
+    private Label changeMenuLabel;
+    @FXML
+    private TextField textField;
 
     public ChangeMenu() {
         this.appController = AppController.getInstance();
         this.changeMenuController = ChangeMenuController.getInstance();
     }
-
-    @FXML
-    private static TextField textField;
-
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -45,7 +46,7 @@ public class ChangeMenu extends Application {
     @FXML
     private void initialize() {
         textField.setPromptText(changeMenuController.getPromptText());
-
+        changeMenuLabel.setText(changeMenuController.getPromptText());
     }
 
     private boolean hasError() {

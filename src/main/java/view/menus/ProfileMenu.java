@@ -143,16 +143,24 @@ public class ProfileMenu extends Application {
         appController.runMenu(Result.ENTER_CHANGE_MENU);
     }
 
-    public void changePassword(MouseEvent mouseEvent) {
+    public void changePassword(MouseEvent mouseEvent) throws Exception {
+        changeMenuController.setPromptText("new password");
+        appController.runMenu(Result.ENTER_CHANGE_MENU);
     }
 
-    public void changeNickname(MouseEvent mouseEvent) {
+    public void changeNickname(MouseEvent mouseEvent) throws Exception {
+        changeMenuController.setPromptText("new nickname");
+        appController.runMenu(Result.ENTER_CHANGE_MENU);
     }
 
-    public void changeEmail(MouseEvent mouseEvent) {
+    public void changeEmail(MouseEvent mouseEvent) throws Exception {
+        changeMenuController.setPromptText("new email");
+        appController.runMenu(Result.ENTER_CHANGE_MENU);
     }
 
-    public void changeSlogan(MouseEvent mouseEvent) {
+    public void changeSlogan(MouseEvent mouseEvent) throws Exception {
+        changeMenuController.setPromptText("new slogan");
+        appController.runMenu(Result.ENTER_CHANGE_MENU);
 
     }
 }
