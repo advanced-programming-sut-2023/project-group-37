@@ -16,11 +16,6 @@
                   <Font name="Segoe Print" size="19.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="50.0" prefWidth="129.0" text="Password:" textFill="WHITE">
-               <font>
-                  <Font name="Segoe Print" size="19.0" />
-               </font>
-            </Label>
             <Label alignment="CENTER" prefHeight="50.0" prefWidth="129.0" text="Nickname:" textFill="WHITE">
                <font>
                   <Font name="Segoe Print" size="19.0" />
@@ -41,11 +36,6 @@
       <VBox layoutX="181.0" layoutY="131.0" prefHeight="236.0" prefWidth="118.0">
          <children>
             <Label fx:id="username" alignment="CENTER" prefHeight="50.0" prefWidth="129.0">
-               <font>
-                  <Font name="Segoe Print" size="19.0" />
-               </font>
-            </Label>
-            <Label fx:id="password" alignment="CENTER" prefHeight="50.0" prefWidth="129.0">
                <font>
                   <Font name="Segoe Print" size="19.0" />
                </font>

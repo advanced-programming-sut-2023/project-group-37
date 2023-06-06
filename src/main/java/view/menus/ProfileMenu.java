@@ -40,8 +40,6 @@ public class ProfileMenu extends Application {
     @FXML
     private Label nickName;
     @FXML
-    private Label password;
-    @FXML
     private Label username;
 
 
@@ -74,7 +72,7 @@ public class ProfileMenu extends Application {
     }
 
     private void initializeLabels() {
-        //password is hashed and hidden from us, how can I show it???
+        //password is hashed, how can I show it???
         User.setCurrentUser(new User("mehrshad", "Mehr1283", "sdf",
                 "epf@sg.cdsf", "ddf", "sdfdf", "slogan"));//for test
         username.setText(User.getCurrentUser().getUsername());
