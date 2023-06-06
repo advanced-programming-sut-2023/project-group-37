@@ -135,7 +135,8 @@ public class ProfileMenu extends Application {
         }
     }
 
-    public void changeUsername(MouseEvent mouseEvent) {
+    public void changeUsername(MouseEvent mouseEvent) throws Exception {
+        appController.runMenu(Result.ENTER_CHANGE_MENU);
     }
 
     public void changePassword(MouseEvent mouseEvent) {

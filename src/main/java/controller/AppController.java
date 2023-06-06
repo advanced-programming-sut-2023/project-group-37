@@ -1,5 +1,6 @@
 package controller;
 
+import controller.viewControllers.ChangeMenuController;
 import controller.viewControllers.MainMenuController;
 import javafx.stage.Stage;
 import model.game.Map;
@@ -20,6 +21,7 @@ public class AppController {
     private final ShopMenu shopMenu;
     private final TradeMenu tradeMenu;
     private final UnitMenu unitMenu;
+    private final ChangeMenu changeMenu;
 
     public AppController(Stage stage) {
         this.stage = stage;
@@ -38,6 +40,7 @@ public class AppController {
         this.shopMenu = new ShopMenu();
         this.tradeMenu = new TradeMenu();
         this.unitMenu = new UnitMenu();
+        this.changeMenu = new ChangeMenu();
     }
 
     public static AppController getInstance() {
