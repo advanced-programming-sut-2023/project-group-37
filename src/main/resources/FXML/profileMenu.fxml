@@ -43,27 +43,27 @@
          <children>
             <Label fx:id="username" alignment="CENTER" prefHeight="50.0" prefWidth="129.0">
                <font>
-                  <Font size="17.0" />
+                  <Font name="Segoe Print" size="19.0" />
                </font>
             </Label>
             <Label fx:id="password" alignment="CENTER" prefHeight="50.0" prefWidth="129.0">
                <font>
-                  <Font size="17.0" />
+                  <Font name="Segoe Print" size="19.0" />
                </font>
             </Label>
             <Label fx:id="nickName" alignment="CENTER" prefHeight="50.0" prefWidth="129.0">
                <font>
-                  <Font size="17.0" />
+                  <Font name="Segoe Print" size="19.0" />
                </font>
             </Label>
             <Label fx:id="email" alignment="CENTER" prefHeight="50.0" prefWidth="129.0">
                <font>
-                  <Font size="17.0" />
+                  <Font name="Segoe Print" size="19.0" />
                </font>
             </Label>
             <Label fx:id="slogan" alignment="CENTER" prefHeight="50.0" prefWidth="129.0">
                <font>
-                  <Font size="17.0" />
+                  <Font name="Segoe Print" size="19.0" />
                </font>
             </Label>
          </children>

@@ -1,22 +1,54 @@
 package controller.viewControllers;
 
+import controller.CaptchaController;
 import controller.MultiMenuFunctions;
+import javafx.scene.image.Image;
 import model.user.User;
 import view.enums.Command;
 import view.enums.Message;
+
+import java.io.File;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Random;
 
 
 public class ProfileMenuController {
     private static final ProfileMenuController profileMenuController;
     private static User currentUser;
     private String password;
+    private static ArrayList<File> allAvatarImages;
+    private static final Random random = new Random();
 
     static {
         profileMenuController = new ProfileMenuController();
     }
 
+    static {
+        allAvatarImages = new ArrayList<>();
+
+        File file;
+        try {
+            file = new File(Objects.requireNonNull(CaptchaController.class.getResource("/Image/Avatars")).toURI());
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+        allAvatarImages.addAll(MultiMenuFunctions.getAllImageFilesFromFolder(file));
+    }
+
     private ProfileMenuController() {
 
+    }
+
+    public static ArrayList<File> getAllAvatarImages() {
+        return allAvatarImages;
+    }
+
+    public Image getRandomAvatar() {
+        int randomNumber = random.nextInt(allAvatarImages.size());
+        Image image = new Image(allAvatarImages.get(randomNumber).getAbsolutePath());
+        return image;
     }
 
     public static User getCurrentUser() {

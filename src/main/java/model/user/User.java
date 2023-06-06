@@ -25,6 +25,7 @@ public class User implements Serializable {
     private String recoveryAnswer;
     private int highScore;
     private int rank;
+    private String avatarURL;
     private static ArrayList<User> users = new ArrayList<>();
 
     public static User getCurrentUser() {

@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.game.Color;
 import model.user.User;
 import view.enums.Result;
 import view.enums.Command;
@@ -64,14 +65,26 @@ public class ProfileMenu extends Application {
     @FXML
     private void initialize() {
         this.initializeLabels();
+        this.initializeAvatar();
+    }
+
+    private void initializeAvatar() {
+        avatar.setImage(profileMenuController.getRandomAvatar());
     }
 
     private void initializeLabels() {
-        username.setText(User.getCurrentUser().getUsername());
         //password is hashed and hidden from us, how can I show it???
+        User.setCurrentUser(new User("mehrshad", "Mehr1283", "sdf",
+                "epf@sg.cdsf", "ddf", "sdfdf", "slogan"));//for test
+        username.setText(User.getCurrentUser().getUsername());
         nickName.setText(User.getCurrentUser().getNickName());
         slogan.setText(User.getCurrentUser().getSlogan());
         email.setText(User.getCurrentUser().getEmail());
+
+        username.setTextFill(Color.GREEN.getColor());
+        nickName.setTextFill(Color.RED.getColor());
+        slogan.setTextFill(Color.YELLOW.getColor());
+        email.setTextFill(Color.BLUE.getColor());
     }
 
     public Result run() {
