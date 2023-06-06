@@ -45,10 +45,10 @@ public class MultiMenuFunctions {
                                                 Label passwordError, CheckBox showPassword) {
 
         passwordField.textProperty().addListener((observable, oldText, newText) -> {
-                passwordShow.setText(newText);
-                if (newText.isEmpty())
-                    passwordError.setText(Error.NECESSARY_FIELD.toString());
-                else passwordError.setText("");
+            passwordShow.setText(newText);
+            if (newText.isEmpty())
+                passwordError.setText(Error.NECESSARY_FIELD.toString());
+            else passwordError.setText("");
         });
 
         passwordShow.textProperty().addListener((observable, oldText, newText) ->

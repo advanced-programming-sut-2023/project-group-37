@@ -1,13 +1,23 @@
 package view.menus;
 
 import controller.AppController;
+import controller.MultiMenuFunctions;
 import controller.viewControllers.ProfileMenuController;
 import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import view.enums.Result;
 import view.enums.Command;
 import view.enums.Message;
 
+import java.net.URL;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -15,6 +25,22 @@ public class ProfileMenu extends Application {
     private final AppController appController;
     private final ProfileMenuController profileMenuController;
     private final Scanner scanner;
+
+    //avatar
+    public ImageView avatar;
+
+    //labels
+    @FXML
+    private Label slogan;
+    @FXML
+    private Label email;
+    @FXML
+    private Label nickName;
+    @FXML
+    private Label password;
+    @FXML
+    private Label username;
+
 
     public ProfileMenu() {
         this.appController = AppController.getInstance();
@@ -24,7 +50,14 @@ public class ProfileMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        URL url = LoginMenu.class.getResource("/FXML/profileMenu.fxml");
+        AnchorPane anchorPane = FXMLLoader.load(Objects.requireNonNull(url));
+        anchorPane.setPrefHeight(anchorPane.getPrefHeight() + 30);
+        MultiMenuFunctions.setBackground(anchorPane, "registration-bg.jpg");
 
+        Scene scene = new Scene(anchorPane);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public Result run() {
@@ -74,5 +107,21 @@ public class ProfileMenu extends Application {
                 System.out.println(message);
             } while (!Message.CHANGE_PASSWORD.equals(message) && !Message.CANCEL.equals(message));
         }
+    }
+
+    public void changeUsername(MouseEvent mouseEvent) {
+    }
+
+    public void changePassword(MouseEvent mouseEvent) {
+    }
+
+    public void changeNickname(MouseEvent mouseEvent) {
+    }
+
+    public void changeEmail(MouseEvent mouseEvent) {
+    }
+
+    public void changeSlogan(MouseEvent mouseEvent) {
+
     }
 }

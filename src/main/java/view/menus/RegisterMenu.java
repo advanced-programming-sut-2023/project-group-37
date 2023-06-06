@@ -136,12 +136,12 @@ public class RegisterMenu extends Application {
                 });
 
         this.sloganField.textProperty().addListener((
-            ObservableValue<? extends String> ov, String old_val, String new_val) -> {
-                if (this.sloganChoiceBox.getValue().equals("Type a slogan")) {
-                    if (new_val.equals(""))
-                        this.sloganError.setText(Error.NECESSARY_FIELD.toString());
-                    else this.sloganError.setText("");
-                }
+                ObservableValue<? extends String> ov, String old_val, String new_val) -> {
+            if (this.sloganChoiceBox.getValue().equals("Type a slogan")) {
+                if (new_val.equals(""))
+                    this.sloganError.setText(Error.NECESSARY_FIELD.toString());
+                else this.sloganError.setText("");
+            }
         });
     }
 
