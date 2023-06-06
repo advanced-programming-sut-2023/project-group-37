@@ -7,31 +7,31 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.menus.ProfileMenu">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.menus.ProfileMenu">
    <children>
       <VBox layoutX="50.0" layoutY="125.0" prefHeight="236.0" prefWidth="118.0">
          <children>
-            <Label alignment="CENTER" prefHeight="50.0" prefWidth="129.0" text="Username:">
+            <Label alignment="CENTER" prefHeight="50.0" prefWidth="129.0" text="Username:" textFill="WHITE">
                <font>
                   <Font name="Segoe Print" size="19.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="50.0" prefWidth="129.0" text="Password:">
+            <Label alignment="CENTER" prefHeight="50.0" prefWidth="129.0" text="Password:" textFill="WHITE">
                <font>
                   <Font name="Segoe Print" size="19.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="50.0" prefWidth="129.0" text="Nickname:">
+            <Label alignment="CENTER" prefHeight="50.0" prefWidth="129.0" text="Nickname:" textFill="WHITE">
                <font>
                   <Font name="Segoe Print" size="19.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="50.0" prefWidth="129.0" text="Email:">
+            <Label alignment="CENTER" prefHeight="50.0" prefWidth="129.0" text="Email:" textFill="WHITE">
                <font>
                   <Font name="Segoe Print" size="19.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="50.0" prefWidth="129.0" text="Slogan:">
+            <Label alignment="CENTER" prefHeight="50.0" prefWidth="129.0" text="Slogan:" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>
@@ -68,18 +68,18 @@
             </Label>
          </children>
       </VBox>
-      <Label alignment="CENTER" layoutX="240.0" layoutY="31.0" prefHeight="47.0" prefWidth="112.0" text="Profile" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="240.0" layoutY="31.0" prefHeight="47.0" prefWidth="112.0" text="Profile" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Segoe Print" size="26.0" />
          </font>
       </Label>
       <VBox layoutX="321.0" layoutY="132.0" prefHeight="229.0" prefWidth="118.0" spacing="20">
          <children>
-            <Button lineSpacing="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="118.0" text="Change Username" onMouseClicked="#changeUsername"/>
-            <Button lineSpacing="20.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="118.0" text="Change Password" onMouseClicked="#changePassword"/>
-            <Button lineSpacing="20.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="120.0" text="Change Nickname" onMouseClicked="#changeNickname"/>
-            <Button lineSpacing="20.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="122.0" text="Change Email" onMouseClicked="#changeEmail"/>
-            <Button lineSpacing="20.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="122.0" text="Change Slogan" onMouseClicked="#changeSlogan"/>
+            <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#changeUsername" prefHeight="31.0" prefWidth="118.0" text="Change Username" />
+            <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#changePassword" prefHeight="32.0" prefWidth="118.0" text="Change Password" />
+            <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#changeNickname" prefHeight="33.0" prefWidth="120.0" text="Change Nickname" />
+            <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#changeEmail" prefHeight="34.0" prefWidth="122.0" text="Change Email" />
+            <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#changeSlogan" prefHeight="34.0" prefWidth="122.0" text="Change Slogan" />
          </children>
       </VBox>
    </children>

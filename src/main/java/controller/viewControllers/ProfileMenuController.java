@@ -19,6 +19,10 @@ public class ProfileMenuController {
 
     }
 
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
     public static ProfileMenuController getInstance() {
         return profileMenuController;
     }

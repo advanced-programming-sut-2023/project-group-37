@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.user.User;
 import view.enums.Result;
 import view.enums.Command;
 import view.enums.Message;
@@ -58,6 +59,19 @@ public class ProfileMenu extends Application {
         Scene scene = new Scene(anchorPane);
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    private void initialize() {
+        this.initializeLabels();
+    }
+
+    private void initializeLabels() {
+        username.setText(User.getCurrentUser().getUsername());
+        //password is hashed and hidden from us, how can I show it???
+        nickName.setText(User.getCurrentUser().getNickName());
+        slogan.setText(User.getCurrentUser().getSlogan());
+        email.setText(User.getCurrentUser().getEmail());
     }
 
     public Result run() {
