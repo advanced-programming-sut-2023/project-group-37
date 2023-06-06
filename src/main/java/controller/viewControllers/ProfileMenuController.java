@@ -45,10 +45,9 @@ public class ProfileMenuController {
         return allAvatarImages;
     }
 
-    public Image getRandomAvatar() {
+    public static String getRandomAvatarURL() {
         int randomNumber = random.nextInt(allAvatarImages.size());
-        Image image = new Image(allAvatarImages.get(randomNumber).getAbsolutePath());
-        return image;
+        return allAvatarImages.get(randomNumber).getAbsolutePath();
     }
 
     public static User getCurrentUser() {

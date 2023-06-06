@@ -2,7 +2,10 @@ package model.user;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import controller.viewControllers.ProfileMenuController;
+import javafx.scene.image.Image;
 import model.utils.PasswordHashing;
+import view.menus.ProfileMenu;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -45,6 +48,7 @@ public class User implements Serializable {
         this.slogan = slogan;
         this.nickname = nickname;
         this.rank = users.size() + 1;
+        this.avatarURL = ProfileMenuController.getRandomAvatarURL();
         users.add(this);
     }
 
@@ -105,6 +109,7 @@ public class User implements Serializable {
         this.recoveryQuestion = recoveryQuestion;
         this.recoveryAnswer = recoveryAnswer;
         this.highScore = 0;
+        this.avatarURL = ProfileMenuController.getRandomAvatarURL();
 
         users.add(this);
         User.updateDatabase();
@@ -175,6 +180,9 @@ public class User implements Serializable {
         setRanks();
     }
 
+    public Image getAvatar() {
+        return new Image(this.avatarURL);
+    }
 
     public boolean isWrongPassword(String password) {
         return !PasswordHashing.checkPassword(password, this.hashedPassword);
