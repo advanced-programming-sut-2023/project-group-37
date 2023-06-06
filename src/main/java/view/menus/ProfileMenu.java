@@ -2,6 +2,7 @@ package view.menus;
 
 import controller.AppController;
 import controller.MultiMenuFunctions;
+import controller.viewControllers.ChangeMenuController;
 import controller.viewControllers.ProfileMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -27,6 +28,7 @@ import java.util.regex.Matcher;
 public class ProfileMenu extends Application {
     private final AppController appController;
     private final ProfileMenuController profileMenuController;
+    private final ChangeMenuController changeMenuController;
     private final Scanner scanner;
 
     //avatar
@@ -47,6 +49,7 @@ public class ProfileMenu extends Application {
         this.appController = AppController.getInstance();
         this.scanner = new Scanner(System.in);
         this.profileMenuController = ProfileMenuController.getInstance();
+        this.changeMenuController = ChangeMenuController.getInstance();
     }
 
     @Override
@@ -136,6 +139,7 @@ public class ProfileMenu extends Application {
     }
 
     public void changeUsername(MouseEvent mouseEvent) throws Exception {
+        changeMenuController.setPromptText("new username");
         appController.runMenu(Result.ENTER_CHANGE_MENU);
     }
 

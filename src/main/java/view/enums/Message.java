@@ -18,7 +18,7 @@ public enum Message {
     // SignupMenu:
     CANT_LOGIN("Username or password incorrect!"),
     CANCEL("The process canceled successfully!"),
-    EMPTY_FIELD("Please fill all necessary fields!"),
+    EMPTY_FIELD("Please fill all necessary fields correctly!"),
     INCORRECT_USERNAME_FORM("Incorrect username format!"),
     USERNAME_ALREADY_EXISTS("Username already exists"),
     INCORRECT_EMAIL_FORM("Incorrect email format!"),

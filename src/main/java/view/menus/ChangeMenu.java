@@ -7,10 +7,12 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import view.enums.Message;
 
 import java.net.URL;
 import java.util.Objects;
@@ -23,12 +25,9 @@ public class ChangeMenu extends Application {
         this.appController = AppController.getInstance();
         this.changeMenuController = ChangeMenuController.getInstance();
     }
-    @FXML
-    private TextField textField;
 
-    public void setPromptText(String text){
-        textField.setPromptText(text);
-    }
+    @FXML
+    private static TextField textField;
 
 
     @Override
@@ -43,8 +42,28 @@ public class ChangeMenu extends Application {
         stage.show();
     }
 
+    @FXML
+    private void initialize() {
+        textField.setPromptText(changeMenuController.getPromptText());
+
+    }
+
+    private boolean hasError() {
+        return false;
+    }
+
 
     public void change(MouseEvent mouseEvent) {
-
+        if (hasError()) {
+            new Alert(Alert.AlertType.ERROR, Message.EMPTY_FIELD.toString()).show();
+            return;
+        }
+        switch (textField.getPromptText()) {
+            case "new username" -> changeMenuController.changeUsername(textField.getText());
+            case "new password" -> changeMenuController.changePassword(textField.getText());
+            case "new slogan" -> changeMenuController.changeSlogan(textField.getText());
+            case "new email" -> changeMenuController.changeEmial(textField.getText());
+            case "new nickname" -> changeMenuController.changeNickname(textField.getText());
+        }
     }
 }

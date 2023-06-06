@@ -69,6 +69,7 @@ public class AppController {
             case ENTER_PROFILE_MENU -> this.profileMenu.start(this.stage);
             case ENTER_MAIN_MENU -> this.mainMenu.start(this.stage);
             case ENTER_GAME_MENU -> this.gameMenu.start(this.stage);
+            case ENTER_CHANGE_MENU -> this.changeMenu.start(this.stage);
 
             // todo : how to show game parts menu ??
         }
