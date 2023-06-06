@@ -22,7 +22,7 @@ public class ChangeMenu extends Application {
     private final AppController appController;
     private final ChangeMenuController changeMenuController;
     @FXML
-    private Label changeMenuLabel;
+    private Label label;
     @FXML
     private TextField textField;
 
@@ -46,7 +46,7 @@ public class ChangeMenu extends Application {
     @FXML
     private void initialize() {
         textField.setPromptText(changeMenuController.getPromptText());
-        changeMenuLabel.setText(changeMenuController.getPromptText());
+        label.setText(changeMenuController.getPromptText());
     }
 
     private boolean hasError() {

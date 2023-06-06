@@ -4,11 +4,17 @@ import controller.AppController;
 import controller.viewControllers.MainMenuController;
 import controller.MultiMenuFunctions;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import view.enums.Result;
 import view.enums.Command;
 import view.enums.Message;
 
+import java.net.URL;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -25,7 +31,14 @@ public class MainMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        URL url = LoginMenu.class.getResource("/FXML/MainMenu.fxml");
+        AnchorPane anchorPane = FXMLLoader.load(Objects.requireNonNull(url));
 
+        MultiMenuFunctions.setBackground(anchorPane, "registration-bg.jpg");
+
+        Scene scene = new Scene(anchorPane);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public Result run() {
@@ -74,5 +87,9 @@ public class MainMenu extends Application {
 
         System.out.println(message);
         return message.equals(Message.GAME_STARTED.toString());
+    }
+
+    public void enterProfileMenu(MouseEvent mouseEvent) throws Exception {
+        appController.runMenu(Result.ENTER_PROFILE_MENU);
     }
 }

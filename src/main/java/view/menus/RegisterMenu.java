@@ -244,7 +244,6 @@ public class RegisterMenu extends Application {
         Message message = this.registerMenuController.register(this.usernameField.getText(), this.passwordField.getText(),
                 this.nicknameField.getText(), this.emailField.getText(), this.recoveryQuestions.getValue(),
                 this.recoveryAnswerField.getText(), this.sloganField.getText());
-
         this.appController.runMenu(Result.ENTER_LOGIN_MENU);
         new Alert(Alert.AlertType.INFORMATION, message.toString()).show();
     }
