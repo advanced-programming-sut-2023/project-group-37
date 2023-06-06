@@ -13,11 +13,18 @@
                 <Font name="Segoe Print" size="19.0" />
             </font>
         </Label>
-        <TextField fx:id="textField" alignment="CENTER" layoutX="160.0" layoutY="182.0" prefHeight="36.0" prefWidth="240.0" />
+        <TextField fx:id="textField" alignment="CENTER" layoutX="180.0" layoutY="182.0" prefHeight="36.0" prefWidth="240.0" />
         <Button layoutX="453.0" layoutY="182.0" mnemonicParsing="false" onMouseClicked="#change" prefHeight="36.0" prefWidth="94.0" text="Change" />
-      <Label fx:id="label" layoutX="37.0" layoutY="182.0" prefHeight="36.0" prefWidth="80.0" textFill="WHITE">
-         <font>
-            <Font name="Segoe Print" size="19.0" />
-         </font></Label>
+        <Label fx:id="label" alignment="CENTER" layoutX="15.0" layoutY="182.0" prefHeight="36.0" prefWidth="144.0" textFill="WHITE">
+            <font>
+                <Font name="Segoe Print" size="19.0" />
+            </font>
+        </Label>
+        <Label fx:id="errorLabel" alignment="CENTER" layoutX="180.0" layoutY="236.0" prefHeight="35.0" prefWidth="240.0" textFill="RED">
+            <font>
+                <Font name="Segoe Print" size="10.0" />
+            </font>
+        </Label>
+        <Button layoutX="37.0" layoutY="324.0" mnemonicParsing="false" onMouseClicked="#enterProfileMenu" prefHeight="36.0" prefWidth="94.0" text="Back to Profile" />
     </children>
 </AnchorPane>

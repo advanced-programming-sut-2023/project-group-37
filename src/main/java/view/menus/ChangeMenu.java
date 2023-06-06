@@ -13,7 +13,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.user.User;
+import view.enums.Error;
 import view.enums.Message;
+import view.enums.Result;
 
 import java.net.URL;
 import java.util.Objects;
@@ -21,6 +24,8 @@ import java.util.Objects;
 public class ChangeMenu extends Application {
     private final AppController appController;
     private final ChangeMenuController changeMenuController;
+    @FXML
+    private Label errorLabel;
     @FXML
     private Label label;
     @FXML
@@ -47,6 +52,48 @@ public class ChangeMenu extends Application {
     private void initialize() {
         textField.setPromptText(changeMenuController.getPromptText());
         label.setText(changeMenuController.getPromptText());
+        this.updateErrorLabel();
+    }
+
+    private void updateErrorLabel() {
+        String promptText = changeMenuController.getPromptText();
+        switch (promptText) {
+            case "new username" -> updateUsernameError();
+            case "new password" -> updatePasswordError();
+            case "new email" -> updateEmailError();
+        }
+    }
+
+    private void updateUsernameError() {
+        this.textField.textProperty().addListener((observable, oldText, newText) -> {
+            if (MultiMenuFunctions.checkUsernameNotOK(newText))
+                this.errorLabel.setText(Error.INCORRECT_USERNAME_FORM.toString());
+
+            else if (User.getUserByUsername(textField.getText()) != null)
+                this.errorLabel.setText(Error.USERNAME_ALREADY_EXISTS.toString());
+
+            else if (newText.isEmpty())
+                this.errorLabel.setText("");
+
+            else this.errorLabel.setText("");
+
+        });
+    }
+
+    private void updateEmailError() {
+        this.textField.textProperty().addListener((observable, oldText, newText) -> {
+            if (MultiMenuFunctions.checkEmailNotOK(newText))
+                this.errorLabel.setText(Error.INCORRECT_EMAIL_FORM.toString());
+
+            else if (User.getUserByEmail(newText) != null)
+                this.errorLabel.setText(Error.EMAIL_ALREADY_EXISTS.toString());
+            else if (newText.isEmpty())
+                this.errorLabel.setText("");
+            else this.errorLabel.setText("");
+        });
+    }
+
+    private void updatePasswordError() {
     }
 
     private boolean hasError() {
@@ -63,8 +110,12 @@ public class ChangeMenu extends Application {
             case "new username" -> changeMenuController.changeUsername(textField.getText());
             case "new password" -> changeMenuController.changePassword(textField.getText());
             case "new slogan" -> changeMenuController.changeSlogan(textField.getText());
-            case "new email" -> changeMenuController.changeEmial(textField.getText());
+            case "new email" -> changeMenuController.changeEmail(textField.getText());
             case "new nickname" -> changeMenuController.changeNickname(textField.getText());
         }
+    }
+
+    public void enterProfileMenu(MouseEvent mouseEvent) throws Exception {
+        appController.runMenu(Result.ENTER_PROFILE_MENU);
     }
 }
