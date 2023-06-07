@@ -62,7 +62,16 @@ public class ChangeMenu extends Application {
         switch (promptText) {
             case "new username" -> updateUsernameError();
             case "new email" -> updateEmailError();
+            case "new nickname", "new slogan" -> updateNicknameSloganError();
         }
+    }
+
+
+    private void updateNicknameSloganError() {
+        this.textField.textProperty().addListener((observable, oldText, newText) -> {
+            if (!newText.isEmpty()) errorLabel.setText("");
+            else errorLabel.setText(Error.NECESSARY_FIELD.toString());
+        });
     }
 
     private void updateUsernameError() {
@@ -105,13 +114,14 @@ public class ChangeMenu extends Application {
             new Alert(Alert.AlertType.ERROR, Message.EMPTY_FIELD.toString()).show();
             return;
         }
-        Message message = Message.valueOf("");
+        Message message = null;
         switch (textField.getPromptText()) {
             case "new username" -> message = changeMenuController.changeUsername(textField.getText());
             case "new slogan" -> message = changeMenuController.changeSlogan(textField.getText());
             case "new email" -> message = changeMenuController.changeEmail(textField.getText());
             case "new nickname" -> message = changeMenuController.changeNickname(textField.getText());
         }
+        assert message != null;
         new Alert(Alert.AlertType.INFORMATION, message.toString()).show();
         appController.runMenu(Result.ENTER_PROFILE_MENU);
     }

@@ -76,8 +76,8 @@ public class ProfileMenu extends Application {
 
     private void initializeLabels() {
         //password is hashed, how can I show it???
-        User.setCurrentUser(new User("mehrshad", "Mehr1283", "sdf",
-                "epf@sg.cdsf", "ddf", "sdfdf", "slogan"));//for test
+//        User.setCurrentUser(new User("mehrshad", "Mehr1283", "sdf",
+//                "epf@sg.cdsf", "ddf", "sdfdf", "slogan"));//for test
         username.setText(User.getCurrentUser().getUsername());
         nickName.setText(User.getCurrentUser().getNickName());
         slogan.setText(User.getCurrentUser().getSlogan());

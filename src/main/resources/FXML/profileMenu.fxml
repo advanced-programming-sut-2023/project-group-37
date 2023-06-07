@@ -33,24 +33,24 @@
             </Label>
          </children>
       </VBox>
-      <VBox layoutX="181.0" layoutY="131.0" prefHeight="236.0" prefWidth="118.0">
+      <VBox layoutX="181.0" layoutY="131.0" prefHeight="236.0" prefWidth="198.0">
          <children>
-            <Label fx:id="username" alignment="CENTER" prefHeight="50.0" prefWidth="129.0">
+            <Label fx:id="username" alignment="CENTER" prefHeight="50.0" prefWidth="198.0">
                <font>
                   <Font name="Segoe Print" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="nickName" alignment="CENTER" prefHeight="50.0" prefWidth="129.0">
+            <Label fx:id="nickName" alignment="CENTER" prefHeight="50.0" prefWidth="198.0">
                <font>
                   <Font name="Segoe Print" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="email" alignment="CENTER" prefHeight="50.0" prefWidth="129.0">
+            <Label fx:id="email" alignment="CENTER" prefHeight="50.0" prefWidth="198.0">
                <font>
                   <Font name="Segoe Print" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="slogan" alignment="CENTER" prefHeight="50.0" prefWidth="129.0">
+            <Label fx:id="slogan" alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
                <font>
                   <Font name="Segoe Print" size="19.0" />
                </font>
@@ -62,7 +62,7 @@
             <Font name="Segoe Print" size="26.0" />
          </font>
       </Label>
-      <VBox layoutX="321.0" layoutY="137.0" prefHeight="229.0" prefWidth="118.0" spacing="20">
+      <VBox layoutX="399.0" layoutY="137.0" prefHeight="229.0" prefWidth="118.0" spacing="20">
          <children>
             <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#changeUsername" prefHeight="31.0" prefWidth="118.0" text="Change Username" />
             <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#changePassword" prefHeight="32.0" prefWidth="118.0" text="Change Password" />

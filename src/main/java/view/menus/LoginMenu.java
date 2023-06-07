@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.user.User;
 import view.enums.Error;
 import view.enums.Result;
 import view.enums.Message;
@@ -138,8 +139,10 @@ public class LoginMenu extends Application {
 
         Message message = this.loginMenuController.login(this.usernameField.getText(), this.passwordField.getText(),
                 this.stayLoggedIn.isSelected());
-        if (message == Message.LOGIN_SUCCESSFUL)
+        if (message == Message.LOGIN_SUCCESSFUL) {
+            MultiMenuFunctions.setAllCurrentUsers(User.getUserByUsername(this.usernameField.getText()));
             this.appController.runMenu(Result.ENTER_MAIN_MENU);
+        }
 
         else new Alert(Alert.AlertType.ERROR, Message.CANT_LOGIN.toString()).show();
     }

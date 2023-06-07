@@ -116,6 +116,7 @@ public class ProfileMenuController {
         return Message.ENTER_PASSWORD_AGAIN.toString();
     }
 
+
     public String checkPasswordAgain(String newPassword) {  // #delete this method
         if (Command.CANCEL.getMatcher(newPassword) != null)
             return Message.CANCEL.toString();

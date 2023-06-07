@@ -4,6 +4,7 @@ package controller;
 import java.io.File;
 import java.util.*;
 
+import controller.viewControllers.ProfileMenuController;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -16,6 +17,7 @@ import model.game.Texture;
 import model.game.Tile;
 import model.game.Map;
 import model.people.MilitaryUnit;
+import model.user.User;
 import view.enums.Error;
 import view.menus.LoginMenu;
 
@@ -328,5 +330,10 @@ public class MultiMenuFunctions {
             }
         }
         return tile;
+    }
+    public static void setAllCurrentUsers(User user){
+        User.setCurrentUser(user);
+        ProfileMenuController.setCurrentUser(user);
+        //TODO ...
     }
 }
