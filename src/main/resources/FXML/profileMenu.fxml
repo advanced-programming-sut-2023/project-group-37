@@ -78,7 +78,9 @@
                         prefWidth="122.0" text="Change Slogan"/>
             </children>
         </VBox>
-        <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="63.0" layoutY="63.0" radius="59.0" stroke="BLACK"
-                strokeType="INSIDE" onMouseClicked="#enterAvatarMenu"/>
+        <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="63.0" layoutY="63.0" onMouseClicked="#enterAvatarMenu"
+                radius="59.0" stroke="BLACK" strokeType="INSIDE"/>
+        <Button layoutX="14.0" layoutY="362.0" mnemonicParsing="false" onMouseClicked="#enterMainMenu"
+                prefHeight="31.0" prefWidth="132.0" text="Back to Main Menu"/>
     </children>
 </AnchorPane>
