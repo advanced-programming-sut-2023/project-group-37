@@ -70,7 +70,16 @@ public class ChangePasswordMenu extends Application {
     }
 
     private void updateError() {
-        //TODO : password error
+        newPassword.textProperty().addListener((observable, oldText, newText) -> {
+
+            if (MultiMenuFunctions.checkPasswordNotOK(newText))
+                errorLabel.setText(Error.WEAK_PASSWORD.toString());
+
+            else if (newText.isEmpty())
+                errorLabel.setText(Error.NECESSARY_FIELD.toString());
+
+            else errorLabel.setText("");
+        });
     }
 
     private void initializeCaptcha() {

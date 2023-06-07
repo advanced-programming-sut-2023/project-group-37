@@ -168,6 +168,7 @@ public class ProfileMenu extends Application {
     }
 
     public void enterMainMenu(MouseEvent mouseEvent) throws Exception {
+        User.updateDatabase();
         appController.runMenu(Result.ENTER_MAIN_MENU);
     }
 }
