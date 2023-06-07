@@ -99,9 +99,13 @@ public class ChangePasswordMenu extends Application {
         });
     }
 
+    private boolean hasError() {
+        return !(errorLabel.getText().isEmpty() && captchaErrorLabel.getText().isEmpty());
+    }
+
 
     public void changePassword(MouseEvent mouseEvent) throws Exception {
-        if (!errorLabel.getText().isEmpty()) {
+        if (hasError()) {
             new Alert(Alert.AlertType.ERROR, Message.EMPTY_FIELD.toString()).show();
             return;
         }
