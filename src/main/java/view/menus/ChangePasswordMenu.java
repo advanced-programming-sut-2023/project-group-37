@@ -109,4 +109,8 @@ public class ChangePasswordMenu extends Application {
         this.captchaController.generateCaptcha();
         this.captchaImage.setImage(captchaController.getCaptchaImage());
     }
+
+    public void enterProfileMenu(MouseEvent mouseEvent) throws Exception {
+        appController.runMenu(Result.ENTER_PROFILE_MENU);
+    }
 }

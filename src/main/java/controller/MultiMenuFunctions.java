@@ -4,6 +4,8 @@ package controller;
 import java.io.File;
 import java.util.*;
 
+import controller.viewControllers.GameMenuController;
+import controller.viewControllers.MainMenuController;
 import controller.viewControllers.ProfileMenuController;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -20,6 +22,7 @@ import model.people.MilitaryUnit;
 import model.user.User;
 import view.enums.Error;
 import view.menus.LoginMenu;
+import view.menus.MainMenu;
 
 public class MultiMenuFunctions {
 
@@ -331,9 +334,10 @@ public class MultiMenuFunctions {
         }
         return tile;
     }
-    public static void setAllCurrentUsers(User user){
+
+    public static void setAllCurrentUsers(User user) {
         User.setCurrentUser(user);
         ProfileMenuController.setCurrentUser(user);
-        //TODO ...
+        MainMenuController.setCurrentUser(user);
     }
 }
