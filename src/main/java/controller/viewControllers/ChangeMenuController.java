@@ -1,5 +1,7 @@
 package controller.viewControllers;
 
+import view.enums.Message;
+
 public class ChangeMenuController {
     private static final ChangeMenuController changeMenuController;
     private static final ProfileMenuController profileMenuController = ProfileMenuController.getInstance();
@@ -22,19 +24,19 @@ public class ChangeMenuController {
         this.promptText = promptText;
     }
 
-    public void changeUsername(String text) {
-        profileMenuController.changeUsername(text); //errors dynamically checked no need to check here!
+    public Message changeUsername(String text) {
+        return profileMenuController.changeUsername(text); //errors dynamically checked no need to check here!
     }
 
-    public void changeSlogan(String text) {
-        profileMenuController.changeSlogan(text);
+    public Message changeSlogan(String text) {
+        return profileMenuController.changeSlogan(text);
     }
 
-    public void changeEmail(String text) {
-        profileMenuController.changeEmail(text);
+    public Message changeEmail(String text) {
+        return profileMenuController.changeEmail(text);
     }
 
-    public void changeNickname(String text) {
-        profileMenuController.changeNickName(text);
+    public Message changeNickname(String text) {
+        return profileMenuController.changeNickName(text);
     }
 }

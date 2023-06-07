@@ -53,6 +53,7 @@ public enum Message {
 
     // ProfileMenu:
     CHANGE_USERNAME("Username changed successfully!"),
+    CHANGE_SUCCESSFUL("change was successful!"),
     CHANGE_USERNAME_ERROR1("Please enter a username (empty field)!"),
     CHANGE_USERNAME_ERROR2("Invalid format for username!"),
     CHANGE_USERNAME_ERROR3("Please enter a new username!"),

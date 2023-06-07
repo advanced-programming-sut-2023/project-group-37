@@ -1,5 +1,6 @@
 package controller.viewControllers;
 
+import view.enums.Message;
 import view.menus.ChangePasswordMenu;
 
 public class ChangePasswordMenuController {
@@ -13,5 +14,9 @@ public class ChangePasswordMenuController {
 
     public static ChangePasswordMenuController getInstance() {
         return changePasswordMenuController;
+    }
+
+    public Message changePassword(String oldPass, String newPass) {
+        return profileMenuController.changePass(oldPass, newPass);
     }
 }

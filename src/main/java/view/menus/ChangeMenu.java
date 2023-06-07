@@ -52,8 +52,10 @@ public class ChangeMenu extends Application {
     private void initialize() {
         textField.setPromptText(changeMenuController.getPromptText());
         label.setText(changeMenuController.getPromptText());
+        errorLabel.setText(Error.NECESSARY_FIELD.toString());
         this.updateErrorLabel();
     }
+
 
     private void updateErrorLabel() {
         String promptText = changeMenuController.getPromptText();
@@ -72,7 +74,7 @@ public class ChangeMenu extends Application {
                 this.errorLabel.setText(Error.USERNAME_ALREADY_EXISTS.toString());
 
             else if (newText.isEmpty())
-                this.errorLabel.setText("");
+                this.textField.setText(Error.NECESSARY_FIELD.toString());
 
             else this.errorLabel.setText("");
 
@@ -87,27 +89,31 @@ public class ChangeMenu extends Application {
             else if (User.getUserByEmail(newText) != null)
                 this.errorLabel.setText(Error.EMAIL_ALREADY_EXISTS.toString());
             else if (newText.isEmpty())
-                this.errorLabel.setText("");
+                this.textField.setText(Error.NECESSARY_FIELD.toString());
+
             else this.errorLabel.setText("");
         });
     }
 
     private boolean hasError() {
-        return false;
+        return !errorLabel.getText().isEmpty();
     }
 
 
-    public void change(MouseEvent mouseEvent) {
+    public void change(MouseEvent mouseEvent) throws Exception {
         if (hasError()) {
             new Alert(Alert.AlertType.ERROR, Message.EMPTY_FIELD.toString()).show();
             return;
         }
+        Message message = Message.valueOf("");
         switch (textField.getPromptText()) {
-            case "new username" -> changeMenuController.changeUsername(textField.getText());
-            case "new slogan" -> changeMenuController.changeSlogan(textField.getText());
-            case "new email" -> changeMenuController.changeEmail(textField.getText());
-            case "new nickname" -> changeMenuController.changeNickname(textField.getText());
+            case "new username" -> message = changeMenuController.changeUsername(textField.getText());
+            case "new slogan" -> message = changeMenuController.changeSlogan(textField.getText());
+            case "new email" -> message = changeMenuController.changeEmail(textField.getText());
+            case "new nickname" -> message = changeMenuController.changeNickname(textField.getText());
         }
+        new Alert(Alert.AlertType.INFORMATION, message.toString()).show();
+        appController.runMenu(Result.ENTER_PROFILE_MENU);
     }
 
     public void enterProfileMenu(MouseEvent mouseEvent) throws Exception {

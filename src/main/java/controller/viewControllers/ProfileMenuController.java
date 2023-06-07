@@ -92,7 +92,15 @@ public class ProfileMenuController {
         return Message.CHANGE_NICKNAME;
     }
 
-    public String changePassword(String oldPass, String newPass) {
+    public Message changePass(String oldPass, String newPass) {
+        if (currentUser.isWrongPassword(oldPass)) {
+            return Message.CHANGE_PASSWORD_ERROR2;
+        }
+        currentUser.changePassword(newPass);
+        return Message.CHANGE_PASSWORD;
+    }
+
+    public String changePassword(String oldPass, String newPass) { // #delete this method
         MultiMenuFunctions.deleteQuotations(oldPass);
         MultiMenuFunctions.deleteQuotations(newPass);
         if (oldPass == null || newPass == null) {
@@ -108,7 +116,7 @@ public class ProfileMenuController {
         return Message.ENTER_PASSWORD_AGAIN.toString();
     }
 
-    public String checkPasswordAgain(String newPassword) {
+    public String checkPasswordAgain(String newPassword) {  // #delete this method
         if (Command.CANCEL.getMatcher(newPassword) != null)
             return Message.CANCEL.toString();
 
