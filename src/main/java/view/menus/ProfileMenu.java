@@ -144,8 +144,7 @@ public class ProfileMenu extends Application {
     }
 
     public void changePassword(MouseEvent mouseEvent) throws Exception {
-        changeMenuController.setPromptText("new password");
-        appController.runMenu(Result.ENTER_CHANGE_MENU);
+        appController.runMenu(Result.ENTER_CHANGE_PASSWORD_MENU);
     }
 
     public void changeNickname(MouseEvent mouseEvent) throws Exception {

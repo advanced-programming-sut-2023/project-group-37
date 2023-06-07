@@ -59,7 +59,6 @@ public class ChangeMenu extends Application {
         String promptText = changeMenuController.getPromptText();
         switch (promptText) {
             case "new username" -> updateUsernameError();
-            case "new password" -> updatePasswordError();
             case "new email" -> updateEmailError();
         }
     }
@@ -93,9 +92,6 @@ public class ChangeMenu extends Application {
         });
     }
 
-    private void updatePasswordError() {
-    }
-
     private boolean hasError() {
         return false;
     }
@@ -108,7 +104,6 @@ public class ChangeMenu extends Application {
         }
         switch (textField.getPromptText()) {
             case "new username" -> changeMenuController.changeUsername(textField.getText());
-            case "new password" -> changeMenuController.changePassword(textField.getText());
             case "new slogan" -> changeMenuController.changeSlogan(textField.getText());
             case "new email" -> changeMenuController.changeEmail(textField.getText());
             case "new nickname" -> changeMenuController.changeNickname(textField.getText());

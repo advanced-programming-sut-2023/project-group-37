@@ -26,10 +26,6 @@ public class ChangeMenuController {
         profileMenuController.changeUsername(text); //errors dynamically checked no need to check here!
     }
 
-    public void changePassword(String text) {
-        //profileMenuController.changePassword(text);
-    }
-
     public void changeSlogan(String text) {
         profileMenuController.changeSlogan(text);
     }

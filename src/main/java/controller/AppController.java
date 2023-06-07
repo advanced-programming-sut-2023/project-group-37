@@ -22,6 +22,7 @@ public class AppController {
     private final TradeMenu tradeMenu;
     private final UnitMenu unitMenu;
     private final ChangeMenu changeMenu;
+    private final ChangePasswordMenu changePasswordMenu;
 
     public AppController(Stage stage) {
         this.stage = stage;
@@ -41,6 +42,7 @@ public class AppController {
         this.tradeMenu = new TradeMenu();
         this.unitMenu = new UnitMenu();
         this.changeMenu = new ChangeMenu();
+        this.changePasswordMenu = new ChangePasswordMenu();
     }
 
     public static AppController getInstance() {
@@ -70,6 +72,7 @@ public class AppController {
             case ENTER_MAIN_MENU -> this.mainMenu.start(this.stage);
             case ENTER_GAME_MENU -> this.gameMenu.start(this.stage);
             case ENTER_CHANGE_MENU -> this.changeMenu.start(this.stage);
+            case ENTER_CHANGE_PASSWORD_MENU -> this.changePasswordMenu.start(this.stage);
 
             // todo : how to show game parts menu ??
         }
