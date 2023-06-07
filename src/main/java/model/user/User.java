@@ -171,6 +171,10 @@ public class User implements Serializable {
         this.recoveryQuestion = RecoveryQuestion.getQuestion(questionNumber);
     }
 
+    public void setAvatarURL(String avatarURL) {
+        this.avatarURL = avatarURL;
+    }
+
     public void setRecoveryAnswer(String recoveryAnswer) {
         this.recoveryAnswer = recoveryAnswer;
     }

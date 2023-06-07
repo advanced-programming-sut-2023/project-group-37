@@ -162,4 +162,8 @@ public class ProfileMenu extends Application {
         appController.runMenu(Result.ENTER_CHANGE_MENU);
 
     }
+
+    public void enterAvatarMenu(MouseEvent mouseEvent) throws Exception {
+        appController.runMenu(Result.ENTER_AVATAR_MENU);
+    }
 }
