@@ -11,12 +11,12 @@ import model.people.*;
 import java.util.ArrayList;
 
 public class Tile extends Rectangle {
-
     private final int x;
     private final int y;
     private Texture texture;
     private Image image;
-    private final ArrayList<Person> people;
+    private Tile miniTile;
+    private ArrayList<Person> people;
     private ArrayList<MilitaryUnit> militaryUnits;
     private Building building;
     private boolean isPassable;
@@ -30,6 +30,7 @@ public class Tile extends Rectangle {
         this.y = y;
         this.texture = Texture.GROUND;
         this.setImage(this.texture.getImage());
+        this.miniTile = new Tile(this);
 
         this.people = new ArrayList<>();
         this.militaryUnits = new ArrayList<>();
@@ -38,12 +39,24 @@ public class Tile extends Rectangle {
         this.hasBuilding = false;
     }
 
+    public Tile(Tile bigTile) { // for creating miniTile
+        super(0.5,0.5);
+        this.x = bigTile.x;
+        this.y = bigTile.y;
+        this.texture = bigTile.texture;
+        this.setImage(bigTile);
+    }
+
     public int getLocationX() {
         return x;
     }
 
     public int getLocationY() {
         return y;
+    }
+
+    public Tile getMiniTile() {
+        return this.miniTile;
     }
 
     public Texture getTexture() {
@@ -97,6 +110,14 @@ public class Tile extends Rectangle {
     private void setImage(Image inputImage) {
         this.image = inputImage;
         this.setFill(new ImagePattern(inputImage));
+
+        if (this.miniTile != null)
+            this.miniTile.setImage(this);
+    }
+
+    private void setImage(Tile tile) {
+        this.image = tile.image;
+        this.setFill(new ImagePattern(this.image));
     }
 
     public void setBuilding(Building building) {
