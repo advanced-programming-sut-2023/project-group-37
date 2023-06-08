@@ -7,29 +7,28 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/19"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.menus.ProfileMenu">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.menus.ProfileMenu">
     <children>
         <VBox layoutX="50.0" layoutY="134.0" prefHeight="236.0" prefWidth="118.0">
             <children>
                 <Label alignment="CENTER" prefHeight="50.0" prefWidth="129.0" text="Username:" textFill="WHITE">
                     <font>
-                        <Font name="Segoe Print" size="19.0"/>
+                        <Font name="Segoe Print" size="19.0" />
                     </font>
                 </Label>
                 <Label alignment="CENTER" prefHeight="50.0" prefWidth="129.0" text="Nickname:" textFill="WHITE">
                     <font>
-                        <Font name="Segoe Print" size="19.0"/>
+                        <Font name="Segoe Print" size="19.0" />
                     </font>
                 </Label>
                 <Label alignment="CENTER" prefHeight="50.0" prefWidth="129.0" text="Email:" textFill="WHITE">
                     <font>
-                        <Font name="Segoe Print" size="19.0"/>
+                        <Font name="Segoe Print" size="19.0" />
                     </font>
                 </Label>
                 <Label alignment="CENTER" prefHeight="50.0" prefWidth="129.0" text="Slogan:" textFill="WHITE">
                     <font>
-                        <Font size="19.0"/>
+                        <Font size="19.0" />
                     </font>
                 </Label>
             </children>
@@ -38,49 +37,42 @@
             <children>
                 <Label fx:id="username" alignment="CENTER" prefHeight="50.0" prefWidth="198.0">
                     <font>
-                        <Font name="Segoe Print" size="19.0"/>
+                        <Font name="Segoe Print" size="19.0" />
                     </font>
                 </Label>
                 <Label fx:id="nickName" alignment="CENTER" prefHeight="50.0" prefWidth="198.0">
                     <font>
-                        <Font name="Segoe Print" size="19.0"/>
+                        <Font name="Segoe Print" size="19.0" />
                     </font>
                 </Label>
                 <Label fx:id="email" alignment="CENTER" prefHeight="50.0" prefWidth="198.0">
                     <font>
-                        <Font name="Segoe Print" size="19.0"/>
+                        <Font name="Segoe Print" size="19.0" />
                     </font>
                 </Label>
                 <Label fx:id="slogan" alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
                     <font>
-                        <Font name="Segoe Print" size="19.0"/>
+                        <Font name="Segoe Print" size="19.0" />
                     </font>
                 </Label>
             </children>
         </VBox>
-        <Label alignment="CENTER" layoutX="240.0" layoutY="31.0" prefHeight="47.0" prefWidth="112.0" text="Profile"
-               textAlignment="CENTER" textFill="WHITE">
+        <Label alignment="CENTER" layoutX="240.0" layoutY="31.0" prefHeight="47.0" prefWidth="112.0" text="Profile" textAlignment="CENTER" textFill="WHITE">
             <font>
-                <Font name="Segoe Print" size="26.0"/>
+                <Font name="Segoe Print" size="26.0" />
             </font>
         </Label>
         <VBox layoutX="399.0" layoutY="137.0" prefHeight="229.0" prefWidth="118.0" spacing="20">
             <children>
-                <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#changeUsername" prefHeight="31.0"
-                        prefWidth="118.0" text="Change Username"/>
-                <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#changePassword" prefHeight="32.0"
-                        prefWidth="118.0" text="Change Password"/>
-                <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#changeNickname" prefHeight="33.0"
-                        prefWidth="120.0" text="Change Nickname"/>
-                <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#changeEmail" prefHeight="34.0"
-                        prefWidth="122.0" text="Change Email"/>
-                <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#changeSlogan" prefHeight="34.0"
-                        prefWidth="122.0" text="Change Slogan"/>
+                <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#changeUsername" prefHeight="31.0" prefWidth="118.0" text="Change Username" />
+                <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#changePassword" prefHeight="32.0" prefWidth="118.0" text="Change Password" />
+                <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#changeNickname" prefHeight="33.0" prefWidth="120.0" text="Change Nickname" />
+                <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#changeEmail" prefHeight="34.0" prefWidth="122.0" text="Change Email" />
+                <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#changeSlogan" prefHeight="34.0" prefWidth="122.0" text="Change Slogan" />
             </children>
         </VBox>
-        <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="63.0" layoutY="63.0" onMouseClicked="#enterAvatarMenu"
-                radius="59.0" stroke="BLACK" strokeType="INSIDE"/>
-        <Button layoutX="14.0" layoutY="362.0" mnemonicParsing="false" onMouseClicked="#enterMainMenu"
-                prefHeight="31.0" prefWidth="132.0" text="Back to Main Menu"/>
+        <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="63.0" layoutY="63.0" onMouseClicked="#enterAvatarMenu" radius="59.0" stroke="BLACK" strokeType="INSIDE" />
+        <Button layoutX="14.0" layoutY="362.0" mnemonicParsing="false" onMouseClicked="#enterMainMenu" prefHeight="31.0" prefWidth="132.0" text="Back to Main Menu" />
+      <Button layoutX="533.0" layoutY="335.0" mnemonicParsing="false" onMouseClicked="#deleteSlogan" prefHeight="31.0" prefWidth="59.0" text="Delete" />
     </children>
 </AnchorPane>

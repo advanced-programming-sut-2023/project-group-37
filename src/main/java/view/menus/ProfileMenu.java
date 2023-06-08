@@ -80,7 +80,8 @@ public class ProfileMenu extends Application {
 //                "epf@sg.cdsf", "ddf", "sdfdf", "slogan"));//for test
         username.setText(User.getCurrentUser().getUsername());
         nickName.setText(User.getCurrentUser().getNickName());
-        slogan.setText(User.getCurrentUser().getSlogan());
+        if (User.getCurrentUser().getSlogan() == null) slogan.setText("Slogan is empty!");
+        else slogan.setText(User.getCurrentUser().getSlogan());
         email.setText(User.getCurrentUser().getEmail());
 
         username.setTextFill(Color.GREEN.getColor());
@@ -170,5 +171,10 @@ public class ProfileMenu extends Application {
     public void enterMainMenu(MouseEvent mouseEvent) throws Exception {
         User.updateDatabase();
         appController.runMenu(Result.ENTER_MAIN_MENU);
+    }
+
+    public void deleteSlogan(MouseEvent mouseEvent) {
+        User.getCurrentUser().setSlogan(null);
+        slogan.setText("Slogan is empty!");
     }
 }
