@@ -2,15 +2,15 @@ package controller.viewControllers;
 
 import controller.MultiMenuFunctions;
 import javafx.event.EventHandler;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import model.game.Game;
 import model.game.Government;
 import model.game.Map;
 import model.game.Tile;
+import model.people.TroopType;
+
 
 public class MapController {
     private static final MapController MAP_CONTROLLER;
@@ -55,6 +55,8 @@ public class MapController {
         this.createDetailPane(gamePane);
         this.createChooserRectangle();
         this.creatMiniMap(tiles);
+        // todo : remove this :
+        MultiMenuFunctions.setTileImage(tiles[20][15], TroopType.ARCHER.getImage());
     }
 
     private void createMainMap(Pane gamePane, Tile[][] tiles) {
@@ -169,4 +171,11 @@ public class MapController {
         this.chooserRectangle.setLayoutX(this.chooserRectangle.getLayoutX() + 0.8);
     }
 
+    public GridPane getMainMap() {
+        return mainMap;
+    }
+
+    public GridPane getMiniMap() {
+        return this.miniMap;
+    }
 }

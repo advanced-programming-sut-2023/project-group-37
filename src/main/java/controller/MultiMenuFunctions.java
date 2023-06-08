@@ -4,11 +4,14 @@ package controller;
 import java.io.File;
 import java.util.*;
 
+import controller.viewControllers.GameMenuController;
+import controller.viewControllers.MapController;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import model.buildings.Building;
 import model.buildings.DefensiveBuilding;
@@ -41,10 +44,9 @@ public class MultiMenuFunctions {
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
     }
 
-    public static void setTileBackground(Pane pane, Image image) {
-        pane.setBackground(new Background(new BackgroundImage(new Image(image.getUrl(),
-                pane.getPrefWidth(), pane.getPrefHeight() + 10, false, false), BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
+    public static void setTileImage(Tile tile, Image image) {
+        MapController.getInstance().getMainMap().add(new ImageView(new Image(image.getUrl(),
+                20, 20, false, false)), tile.getLocationX(), tile.getLocationY());
     }
 
     public static void initializePasswordFields(TextField passwordShow, PasswordField passwordField,

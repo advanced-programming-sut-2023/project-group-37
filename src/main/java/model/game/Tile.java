@@ -1,6 +1,8 @@
 package model.game;
 
+import controller.MultiMenuFunctions;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import model.buildings.Building;
@@ -37,6 +39,7 @@ public class Tile extends Rectangle {
         this.building = null;
         this.isPassable = true;
         this.hasBuilding = false;
+
     }
 
     public Tile(Tile bigTile) { // for creating miniTile
@@ -44,7 +47,7 @@ public class Tile extends Rectangle {
         this.x = bigTile.x;
         this.y = bigTile.y;
         this.texture = bigTile.texture;
-        this.setImage(bigTile);
+
     }
 
     public int getLocationX() {
@@ -125,6 +128,7 @@ public class Tile extends Rectangle {
 
         if (building != null) {
             this.hasBuilding = true;
+            this.updateImage();
 
             if (building instanceof DefensiveBuilding defensiveBuilding)
                 this.setImage(defensiveBuilding.getDefensiveType().getImage());
@@ -135,26 +139,32 @@ public class Tile extends Rectangle {
     }
 
     public void updateImage() {
+        this.setImage(this.texture.getImage());
+
         if (this.militaryUnits.size() > 0) {
             for (MilitaryUnit militaryUnit : this.militaryUnits) {
                 if (militaryUnit instanceof MilitaryMachine militaryMachine) {
-                    this.setImage(militaryMachine.getType().getImage());
+                    MultiMenuFunctions.setTileImage(this, militaryMachine.getType().getImage());
                     return;
                 }
             }
 
-            this.setImage(((Troop) this.militaryUnits.get(this.militaryUnits.size() -1)).getType().getImage());
+            MultiMenuFunctions.setTileImage(this,
+                    ((Troop) this.militaryUnits.get(this.militaryUnits.size() -1)).getType().getImage());
+            this.miniTile.setFill(Color.HOTPINK);
             return;
         }
 
         if (this.hasBuilding) {
-            if (this.building instanceof DefensiveBuilding defensiveBuilding)
-                this.setImage(defensiveBuilding.getDefensiveType().getImage());
-            else this.setImage(this.building.getType().getImage());
-            return;
+            if (this.building instanceof DefensiveBuilding defensiveBuilding) {
+                MultiMenuFunctions.setTileImage(this, defensiveBuilding.getDefensiveType().getImage());
+                this.miniTile.setFill(Color.WHITESMOKE);
+            }
+            else {
+                MultiMenuFunctions.setTileImage(this, this.building.getType().getImage());
+                this.miniTile.setFill(Color.LIGHTYELLOW);
+            }
         }
-
-        this.setImage(this.texture.getImage());
     }
 
     public boolean isPassable() {
@@ -175,6 +185,7 @@ public class Tile extends Rectangle {
 
     public void addMilitaryUnit(MilitaryUnit troop) {
         this.militaryUnits.add(troop);
+        this.updateImage();
     }
 
     public void setPassability(boolean passability) {
