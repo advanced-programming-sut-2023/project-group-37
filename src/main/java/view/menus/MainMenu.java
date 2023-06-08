@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.user.User;
 import view.enums.Result;
 import view.enums.Command;
 import view.enums.Message;
@@ -34,7 +35,7 @@ public class MainMenu extends Application {
         URL url = LoginMenu.class.getResource("/FXML/MainMenu.fxml");
         AnchorPane anchorPane = FXMLLoader.load(Objects.requireNonNull(url));
 
-        MultiMenuFunctions.setBackground(anchorPane, "registration-bg.jpg");
+        MultiMenuFunctions.setBackground(anchorPane, "ProfileBackgrounds/1.png");
 
         Scene scene = new Scene(anchorPane);
         stage.setScene(scene);
@@ -91,5 +92,19 @@ public class MainMenu extends Application {
 
     public void enterProfileMenu(MouseEvent mouseEvent) throws Exception {
         appController.runMenu(Result.ENTER_PROFILE_MENU);
+    }
+
+    public void exit(MouseEvent mouseEvent) {
+        User.updateDatabase();
+        System.exit(0);
+    }
+
+    public void logout(MouseEvent mouseEvent) throws Exception {
+        appController.runMenu(Result.ENTER_LOGIN_MENU);
+    }
+
+    public void startGame(MouseEvent mouseEvent) throws Exception {
+        // TODO : select map and users menu
+        appController.runMenu(Result.ENTER_GAME_MENU);
     }
 }
