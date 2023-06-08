@@ -21,8 +21,8 @@ public enum TroopType {
     SPEARMAN("spearman", new Image(Objects.requireNonNull(Texture.class.getResource
             ("/Image/troop/european/spearman.png")).toExternalForm()), BuildingType.BARRACKS, 8, 50,
             50, 60, 1, Item.SPEAR, null, true, true),
-    MaceMan("maceman", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/troop/european/maceman.png")).toExternalForm()), BuildingType.BARRACKS, 20, 70,
+    MaceMan("maecman", new Image(Objects.requireNonNull(Texture.class.getResource
+            ("/Image/troop/european/maecman.png")).toExternalForm()), BuildingType.BARRACKS, 20, 70,
             75, 85, 1, Item.MACE, Item.LEATHER_ARMOR, true, true),
     CROSSBOWMAN("crossbowman", new Image(Objects.requireNonNull(Texture.class.getResource
             ("/Image/troop/european/crossbowman.png")).toExternalForm()), BuildingType.BARRACKS, 20, 75,
