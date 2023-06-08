@@ -32,7 +32,7 @@
             </Button>
          </children>
       </VBox>
-      <Label alignment="CENTER" layoutX="140.0" layoutY="23.0" prefHeight="70.0" prefWidth="320.0" text="Stronghold Crusader">
+      <Label alignment="CENTER" layoutX="140.0" layoutY="23.0" prefHeight="70.0" prefWidth="320.0" text="Stronghold Crusader" textFill="WHITE">
          <font>
             <Font name="Bodoni MT" size="34.0" />
          </font>

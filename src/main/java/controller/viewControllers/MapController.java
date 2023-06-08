@@ -2,6 +2,7 @@ package controller.viewControllers;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import model.buildings.DefensiveBuilding;
@@ -78,7 +79,33 @@ public class MapController {
                 }
             }
         });
+
+        final double[] startX = new double[1];
+        final double[] startY = new double[1];
+        this.mainPane.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                startX[0] = mouseEvent.getSceneX();
+                startY[0] = mouseEvent.getSceneY();
+            }
+        });
+
+        this.mainPane.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                double x = mouseEvent.getSceneX();
+                double y = mouseEvent.getSceneY();
+                if (x > startX[0]) goLeft();
+                else if (x < startX[0]) goRight();
+                else if (y < startY[0]) goDown();
+                else if (y > startY[0]) goUp();
+
+            }
+        });
+
+
     }
+
 
     public void goTo(int x, int y) {
         if (x < 32 || y < 18 || x > this.map.getSize() - 34 || y > this.map.getSize() - 20)
@@ -162,3 +189,4 @@ public class MapController {
     }
 
 }
+
