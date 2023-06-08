@@ -41,6 +41,12 @@ public class MultiMenuFunctions {
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
     }
 
+    public static void setTileBackground(Pane pane, Image image) {
+        pane.setBackground(new Background(new BackgroundImage(new Image(image.getUrl(),
+                pane.getPrefWidth(), pane.getPrefHeight() + 10, false, false), BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
+    }
+
     public static void initializePasswordFields(TextField passwordShow, PasswordField passwordField,
                                                 Label passwordError, CheckBox showPassword) {
 

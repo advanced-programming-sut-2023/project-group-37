@@ -40,7 +40,7 @@ public class Tile extends Rectangle {
     }
 
     public Tile(Tile bigTile) { // for creating miniTile
-        super(0.5,0.5);
+        super(0.5, 0.5);
         this.x = bigTile.x;
         this.y = bigTile.y;
         this.texture = bigTile.texture;

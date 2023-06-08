@@ -14,7 +14,7 @@ public enum TroopType {
             false, false),
 
     // Barracks:
-    ARCHER("archer", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/troop/archer.jpg")).toExternalForm()), BuildingType.BARRACKS, 12, 45, 40, 90, 10,
+    ARCHER("archer", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/troop/archer.png")).toExternalForm()), BuildingType.BARRACKS, 12, 45, 40, 90, 10,
             Item.BOW, null, true, true),
     SPEARMAN("spearman", BuildingType.BARRACKS, 8, 50, 50, 60, 1,
             Item.SPEAR, null, true, true),
