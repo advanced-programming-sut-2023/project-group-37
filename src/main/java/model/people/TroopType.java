@@ -3,6 +3,9 @@ package model.people;
 import javafx.scene.image.Image;
 import model.buildings.BuildingType;
 import model.game.Item;
+import model.game.Texture;
+
+import java.util.Objects;
 
 public enum TroopType {
 
@@ -11,7 +14,7 @@ public enum TroopType {
             false, false),
 
     // Barracks:
-    ARCHER("archer", BuildingType.BARRACKS, 12, 45, 40, 90, 10,
+    ARCHER("archer", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/troop/archer.jpg")).toExternalForm()), BuildingType.BARRACKS, 12, 45, 40, 90, 10,
             Item.BOW, null, true, true),
     SPEARMAN("spearman", BuildingType.BARRACKS, 8, 50, 50, 60, 1,
             Item.SPEAR, null, true, true),
@@ -69,6 +72,23 @@ public enum TroopType {
     TroopType(String name, BuildingType trainingCamp, int cost, int maxHitpoints, int damage, int speed, int range,
               Item weapon, Item armor, boolean canClimbLadder, boolean canDigMoat) {
         this.name = name;
+        this.trainingCamp = trainingCamp;
+        this.cost = cost;
+        this.maxHitpoints = maxHitpoints;
+        this.damage = damage;
+        this.range = range;
+        this.speed = speed;
+        this.weapon = weapon;
+        this.armor = armor;
+        this.animal = null;
+        this.canClimbLadder = canClimbLadder;
+        this.canDigMoat = canDigMoat;
+    }
+
+    TroopType(String name, Image image, BuildingType trainingCamp, int cost, int maxHitpoints, int damage, int speed, int range,
+              Item weapon, Item armor, boolean canClimbLadder, boolean canDigMoat) {
+        this.name = name;
+        this.image = image;
         this.trainingCamp = trainingCamp;
         this.cost = cost;
         this.maxHitpoints = maxHitpoints;
