@@ -1,7 +1,10 @@
 package controller.viewControllers;
 
+import controller.MultiMenuFunctions;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -10,18 +13,18 @@ import model.game.Game;
 import model.game.Government;
 import model.game.Map;
 import model.game.Tile;
-import model.people.MilitaryMachine;
-import model.people.MilitaryUnit;
-import model.people.Troop;
-import view.enums.Message;
 
-import java.util.regex.Matcher;
+
 
 public class MapController {
     private static final MapController MAP_CONTROLLER;
     private Game game;
     private Map map;
-    private GridPane mainPane;
+    private GridPane mainMap;
+    private Pane downPane;
+    private Pane detailPane;
+    private GridPane miniMap;
+    private Pane chooserRectangle;
     private Government currentGovernment;
     private int currentX;
     private int currentY;
@@ -51,22 +54,31 @@ public class MapController {
         Map.loadMaps();
         Tile[][] tiles = Map.getMaps().get(0).getField(); // todo : wtf ?
 
-        this.mainPane = new GridPane();
+        gamePane.setPrefHeight(740); // 37 tiles
+        gamePane.setPrefWidth(1300); // 65 tiles
+
+        this.createMainMap(gamePane, tiles);
+        this.createDetailPane(gamePane);
+        this.createChooserRectangle();
+        this.creatMiniMap(tiles);
+        // todo : remove this :
+        MultiMenuFunctions.setTileImage(tiles[20][15], TroopType.ARCHER.getImage());
+    }
+
+    private void createMainMap(Pane gamePane, Tile[][] tiles) {
+        this.mainMap = new GridPane();
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[0].length; j++) {
-                this.mainPane.add(tiles[i][j], i, j);
+                this.mainMap.add(tiles[i][j], i, j);
             }
         }
 
-        this.mainPane.setLayoutX(0);
-        this.mainPane.setLayoutY(0);
+        this.mainMap.setLayoutX(0);
+        this.mainMap.setLayoutY(0);
 
-        gamePane.setMaxHeight(740); // 37 tiles
-        gamePane.setMaxWidth(1300); // 65 tiles
+        gamePane.getChildren().add(this.mainMap);
 
-        gamePane.getChildren().add(this.mainPane);
-
-        this.mainPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        this.mainMap.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
                 String keyName = keyEvent.getCode().getName();
@@ -82,7 +94,7 @@ public class MapController {
 
         final double[] startX = new double[1];
         final double[] startY = new double[1];
-        this.mainPane.setOnMousePressed(new EventHandler<MouseEvent>() {
+        this.mainMap.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 startX[0] = mouseEvent.getSceneX();
@@ -90,7 +102,7 @@ public class MapController {
             }
         });
 
-        this.mainPane.setOnMouseDragged(new EventHandler<MouseEvent>() {
+        this.mainMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 double x = mouseEvent.getSceneX();
@@ -104,87 +116,96 @@ public class MapController {
         });
     }
 
-
     public void goTo(int x, int y) {
-        if (x < 32 || y < 18 || x > this.map.getSize() - 34 || y > this.map.getSize() - 20)
+        if (x < 32 || y < 18 || x > this.map.getSize() - 34 || y > this.map.getSize() - 29)
             return;
 
-        this.mainPane.setLayoutX((32 - x) * 20);
-        this.mainPane.setLayoutY((18 - y) * 20);
+        this.mainMap.setLayoutX((32 - x) * 20);
+        this.mainMap.setLayoutY((18 - y) * 20);
     }
 
-    public void goUp() {
-        if (this.mainPane.getLayoutY() == 0)
-            return;
-        this.mainPane.setLayoutY(this.mainPane.getLayoutY() + 20);
+    public void createDetailPane(Pane gamePane) {
+        this.downPane = new Pane();
+
+        this.downPane.setPrefWidth(gamePane.getPrefWidth());
+        this.downPane.setPrefHeight(162);
+        this.downPane.setLayoutY(gamePane.getPrefHeight() - this.downPane.getPrefHeight());
+
+        this.detailPane = new Pane();
+        this.detailPane.setPrefWidth(1138);
+        this.detailPane.setPrefHeight(162);
+        this.detailPane.setLayoutX(162);
+        MultiMenuFunctions.setBackground(this.detailPane, "details.png");
+
+        this.downPane.setBackground(Background.fill(Color.web("#795C32")));
+
+        this.downPane.getChildren().add(this.detailPane);
+        gamePane.getChildren().add(this.downPane);
     }
 
-    public void goLeft() {
-        if (this.mainPane.getLayoutX() == 0)
-            return;
-        this.mainPane.setLayoutX(this.mainPane.getLayoutX() + 20);
+    private void createChooserRectangle() {
+        this.chooserRectangle = new Pane();
+        this.chooserRectangle.setBackground(Background.EMPTY);
+        this.chooserRectangle.setBorder(new Border(new BorderStroke(
+                Color.DARKRED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+        this.chooserRectangle.setPrefWidth(65 * 0.8);
+        this.chooserRectangle.setPrefHeight(27 * 0.8);
+
+        this.chooserRectangle.setLayoutX(1);
+        this.chooserRectangle.setLayoutY(1);
+
+        this.downPane.getChildren().add(this.chooserRectangle);
     }
 
-    public void goDown() {
-        if (this.mainPane.getLayoutY() == -162 * 20)
-            return;
-        this.mainPane.setLayoutY(this.mainPane.getLayoutY() - 20);
-    }
-
-    public void goRight() {
-        if (this.mainPane.getLayoutX() == -134 * 20)
-            return;
-        this.mainPane.setLayoutX(this.mainPane.getLayoutX() - 20);
-    }
-
-    public String showDetails(Matcher matcher) {
-        if (matcher.group("x") == null || matcher.group("y") == null)
-            return Message.EMPTY_FIELD.toString();
-
-        int x = Integer.parseInt(matcher.group("x"));
-        int y = Integer.parseInt(matcher.group("y"));
-        Tile tile;
-
-        if ((tile = map.getTileByLocation(x, y)) == null)
-            return Message.ADDRESS_OUT_OF_BOUNDS.toString();
-
-        StringBuilder details = new StringBuilder();
-        details.append("The texture: ").append(tile.getTexture().name()).append("\n");
-
-        if (tile.hasBuilding()) {
-            if (tile.getBuilding().getLoyalty() == currentGovernment) {
-                if (tile.getBuilding() instanceof DefensiveBuilding defensiveBuilding)
-                    details.append("you have the building (").append(defensiveBuilding.getDefensiveType().getName()).append(") here!\n");
-
-                else
-                    details.append("You have the building (").append(tile.getBuilding().getType().getName()).append(") here!\n");
-            }
-        } else
-            details.append("You have no buildings here!\n");
-
-        if (tile.getMilitaryUnits().size() == 0)
-            details.append("You have no troops here!\n");
-        else {
-            int troopCounter = 1;
-            int machineCounter = 1;
-            for (MilitaryUnit militaryUnit : tile.getMilitaryUnits()) {
-                if (militaryUnit instanceof Troop) {
-                    if (militaryUnit.getLoyalty() == currentGovernment) {
-                        details.append("Troop ").append(troopCounter).append(": ").append(((Troop) militaryUnit).getType().name()).append("\n");
-                        troopCounter++;
-                    }
-                } else if (militaryUnit instanceof MilitaryMachine) {
-                    if (militaryUnit.getLoyalty() == currentGovernment) {
-                        details.append("Machine ").append(machineCounter).append(": ").append(((MilitaryMachine) militaryUnit).getType().name()).append("\n");
-                        machineCounter++;
-                    }
-                }
+    private void creatMiniMap(Tile[][] tiles) {
+        this.miniMap = new GridPane();
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[0].length; j++) {
+                this.miniMap.add(tiles[i][j].getMiniTile(), i, j);
             }
         }
 
-        return details.toString().trim();
+        this.miniMap.setBorder(new Border(new BorderStroke(
+                Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
+        this.downPane.getChildren().add(this.miniMap);
+    }
+
+    public void goUp() {
+        if (this.mainMap.getLayoutY() == 0)
+            return;
+        this.mainMap.setLayoutY(this.mainMap.getLayoutY() + 20);
+        this.chooserRectangle.setLayoutY(this.chooserRectangle.getLayoutY() - 0.8);
+    }
+
+    public void goLeft() {
+        if (this.mainMap.getLayoutX() == 0)
+            return;
+        this.mainMap.setLayoutX(this.mainMap.getLayoutX() + 20);
+        this.chooserRectangle.setLayoutX(this.chooserRectangle.getLayoutX() - 0.8);
+    }
+
+    public void goDown() {
+        if (this.mainMap.getLayoutY() == -172 * 20)
+            return;
+        this.mainMap.setLayoutY(this.mainMap.getLayoutY() - 20);
+        this.chooserRectangle.setLayoutY(this.chooserRectangle.getLayoutY() + 0.8);
+    }
+
+    public void goRight() {
+        if (this.mainMap.getLayoutX() == -134 * 20)
+            return;
+        this.mainMap.setLayoutX(this.mainMap.getLayoutX() - 20);
+        this.chooserRectangle.setLayoutX(this.chooserRectangle.getLayoutX() + 0.8);
+    }
+
+    public GridPane getMainMap() {
+        return mainMap;
+    }
+
+    public GridPane getMiniMap() {
+        return this.miniMap;
     }
 
 }
-

@@ -5,6 +5,8 @@ import java.io.File;
 import java.util.*;
 
 import controller.viewControllers.GameMenuController;
+import controller.viewControllers.MapController;
+import controller.viewControllers.GameMenuController;
 import controller.viewControllers.MainMenuController;
 import controller.viewControllers.ProfileMenuController;
 import javafx.scene.control.CheckBox;
@@ -12,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import model.buildings.Building;
 import model.buildings.DefensiveBuilding;
@@ -44,6 +47,11 @@ public class MultiMenuFunctions {
                 LoginMenu.class.getResource("/Image/Background/" + filePath)).toExternalForm(),
                 pane.getPrefWidth(), pane.getPrefHeight() + 10, false, false), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
+    }
+
+    public static void setTileImage(Tile tile, Image image) {
+        MapController.getInstance().getMainMap().add(new ImageView(new Image(image.getUrl(),
+                20, 20, false, false)), tile.getLocationX(), tile.getLocationY());
     }
 
     public static void initializePasswordFields(TextField passwordShow, PasswordField passwordField,
