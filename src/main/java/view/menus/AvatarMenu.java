@@ -69,34 +69,33 @@ public class AvatarMenu extends Application {
     }
 
     public void select1(MouseEvent mouseEvent) {
-        User.getCurrentUser().setAvatarURL(ProfileMenuController.getAllAvatarImages().get(0).getAbsolutePath());
+        User.getCurrentUser().setAvatarNum(0);
         currentAvatar.setFill(new ImagePattern(User.getCurrentUser().getAvatar()));
     }
 
     public void select2(MouseEvent mouseEvent) {
-        User.getCurrentUser().setAvatarURL(ProfileMenuController.getAllAvatarImages().get(1).getAbsolutePath());
+        User.getCurrentUser().setAvatarNum(1);
         currentAvatar.setFill(new ImagePattern(User.getCurrentUser().getAvatar()));
     }
 
     public void select3(MouseEvent mouseEvent) {
-        User.getCurrentUser().setAvatarURL(ProfileMenuController.getAllAvatarImages().get(2).getAbsolutePath());
+        User.getCurrentUser().setAvatarNum(2);
         currentAvatar.setFill(new ImagePattern(User.getCurrentUser().getAvatar()));
     }
 
     public void select4(MouseEvent mouseEvent) {
-        User.getCurrentUser().setAvatarURL(ProfileMenuController.getAllAvatarImages().get(3).getAbsolutePath());
+        User.getCurrentUser().setAvatarNum(3);
         currentAvatar.setFill(new ImagePattern(User.getCurrentUser().getAvatar()));
     }
 
     public void select5(MouseEvent mouseEvent) {
-        User.getCurrentUser().setAvatarURL(ProfileMenuController.getAllAvatarImages().get(4).getAbsolutePath());
+        User.getCurrentUser().setAvatarNum(4);
         currentAvatar.setFill(new ImagePattern(User.getCurrentUser().getAvatar()));
     }
 
     public void select6(MouseEvent mouseEvent) {
-        User.getCurrentUser().setAvatarURL(ProfileMenuController.getAllAvatarImages().get(5).getAbsolutePath());
+        User.getCurrentUser().setAvatarNum(5);
         currentAvatar.setFill(new ImagePattern(User.getCurrentUser().getAvatar()));
-
     }
 
     public void enterProfileMenu(MouseEvent mouseEvent) throws Exception {
