@@ -60,9 +60,10 @@ public class AppController {
         Map.loadMaps();
 
         if (loggedInUser != null) {
-            MainMenuController.setCurrentUser(loggedInUser);
 
+            MainMenuController.setCurrentUser(loggedInUser);
             this.mainMenu.start(this.stage);
+            return;
         }
 
         this.loginMenu.start(this.stage);
