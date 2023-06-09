@@ -185,7 +185,7 @@ public class User implements Serializable {
     }
 
     public Image getAvatar() {
-        return new Image(this.avatarURL);
+        return new Image(ProfileMenuController.getAllAvatarImages().get(Integer.parseInt(this.avatarURL)).getAbsolutePath());
     }
 
     public boolean isWrongPassword(String password) {
