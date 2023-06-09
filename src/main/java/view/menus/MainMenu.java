@@ -35,7 +35,7 @@ public class MainMenu extends Application {
         URL url = LoginMenu.class.getResource("/FXML/MainMenu.fxml");
         AnchorPane anchorPane = FXMLLoader.load(Objects.requireNonNull(url));
 
-        MultiMenuFunctions.setBackground(anchorPane, "ProfileBackgrounds/1.png");
+        MultiMenuFunctions.setBackground(anchorPane, "main-menu-background.jpg");
 
         Scene scene = new Scene(anchorPane);
         stage.setScene(scene);
@@ -77,8 +77,7 @@ public class MainMenu extends Application {
                 usernames[index] = split[0];
                 numbers[index] = split[1];
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println(Message.TERRITORY_NOT_ASSIGNED);
             return false;
         }
