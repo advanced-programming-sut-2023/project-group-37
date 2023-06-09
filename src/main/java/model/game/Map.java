@@ -1,6 +1,7 @@
 package model.game;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Map {
@@ -100,6 +101,25 @@ public class Map {
             return null;
 
         return this.field[x][y];
+    }
+
+    public Tile getTileByXY(double x, double y) {
+        return this.field[(int) x/20][(int) y/20];
+    }
+
+    public ArrayList<Tile> getRectangleTilesByXY(double firstX, double firstY, double secondX, double secondY) {
+        Tile firstTile = this.getTileByXY(firstX, firstY);
+        Tile secondTile = this.getTileByXY(secondX, secondY);
+        ArrayList<Tile> rectangleTiles = new ArrayList<>();
+
+        for (int i = Math.min(firstTile.getLocationX(), secondTile.getLocationX());
+             i <= Math.max(firstTile.getLocationX(), secondTile.getLocationX()); i++) {
+            rectangleTiles.addAll(Arrays.asList(this.field[i]).subList(Math.min(firstTile.getLocationY(), secondTile.getLocationY()), Math.max(firstTile.getLocationY(), secondTile.getLocationY()) + 1));
+        }
+
+        Tile.setSelectedTiles(rectangleTiles);
+
+        return rectangleTiles;
     }
 
     public boolean getPassabilityByLocation(int x, int y) {

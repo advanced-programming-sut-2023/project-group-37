@@ -1,19 +1,18 @@
 package controller.viewControllers;
 
 import controller.MultiMenuFunctions;
-import javafx.event.EventHandler;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import model.buildings.DefensiveBuilding;
 import model.game.Game;
 import model.game.Government;
 import model.game.Map;
 import model.game.Tile;
 import model.people.TroopType;
+
+import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class MapController {
@@ -34,7 +33,8 @@ public class MapController {
     }
 
     private MapController() {
-
+        this.currentX = 0;
+        this.currentY = 0;
     }
 
     public static MapController getInstance() {
@@ -52,7 +52,8 @@ public class MapController {
 
     public void setGamePane(Pane gamePane) {
         Map.loadMaps();
-        Tile[][] tiles = Map.getMaps().get(0).getField(); // todo : wtf ?
+        this.map =  Map.getMaps().get(0); // todo : wtf ?
+        Tile[][] tiles = this.map.getField();
 
         gamePane.setPrefHeight(740); // 37 tiles
         gamePane.setPrefWidth(1300); // 65 tiles
@@ -78,41 +79,69 @@ public class MapController {
 
         gamePane.getChildren().add(this.mainMap);
 
-        this.mainMap.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                String keyName = keyEvent.getCode().getName();
+        this.mainMap.setOnKeyPressed(keyEvent -> {
+            String keyName = keyEvent.getCode().getName();
 
-                switch (keyName) {
-                    case "Left" -> goLeft();
-                    case "Right" -> goRight();
-                    case "Up" -> goUp();
-                    case "Down" -> goDown();
+            switch (keyName) {
+                case "Left" -> {
+                    goLeft(); goLeft(); goLeft();
+                }
+                case "Right" -> {
+                    goRight(); goRight(); goRight();
+                }
+                case "Up" -> {
+                    goUp(); goUp(); goUp();
+                }
+                case "Down" -> {
+                    goDown(); goDown(); goDown();
                 }
             }
         });
 
+        AtomicBoolean isNotDragged = new AtomicBoolean(true);
+
         final double[] startX = new double[1];
         final double[] startY = new double[1];
-        this.mainMap.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                startX[0] = mouseEvent.getSceneX();
-                startY[0] = mouseEvent.getSceneY();
-            }
+        this.mainMap.setOnMousePressed(mouseEvent -> {
+            startX[0] = mouseEvent.getSceneX();
+            startY[0] = mouseEvent.getSceneY();
         });
 
-        this.mainMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                double x = mouseEvent.getSceneX();
-                double y = mouseEvent.getSceneY();
-                if (x > startX[0]) goLeft();
-                else if (x < startX[0]) goRight();
-                else if (y < startY[0]) goDown();
-                else if (y > startY[0]) goUp();
+        this.mainMap.setOnMouseDragged(mouseEvent -> {
+            double x = mouseEvent.getSceneX();
+            double y = mouseEvent.getSceneY();
 
+            ArrayList<Tile> rectangleTiles = this.map.getRectangleTilesByXY(startX[0], startY[0], x, y);
+
+            Tile firstTile = this.map.getTileByXY(startX[0], startY[0]);
+            Tile secondTile = this.map.getTileByXY(x, y);
+
+            for (Tile rectangleTile : rectangleTiles) {
+                if (rectangleTile.getLocationX() == Math.min(firstTile.getLocationX(), secondTile.getLocationX()))
+                    rectangleTile.setLeftRectangleEffect();
+
+                else if (rectangleTile.getLocationX() == Math.max(firstTile.getLocationX(), secondTile.getLocationX()))
+                    rectangleTile.setRightRectangleEffect();
+
+                if (rectangleTile.getLocationY() == Math.min(firstTile.getLocationY(), secondTile.getLocationY()))
+                    rectangleTile.setUpRectangleEffect();
+
+                else if (rectangleTile.getLocationY() == Math.max(firstTile.getLocationY(), secondTile.getLocationY()))
+                    rectangleTile.setDownRectangleEffect();
             }
+
+            isNotDragged.set(false);
+        });
+
+        this.mainMap.setOnMouseClicked(mouseEvent -> {
+            if (isNotDragged.get()) {
+                double x = mouseEvent.getX();
+                double y = mouseEvent.getY();
+
+                Tile tile = this.map.getTileByXY(x, y);
+                tile.setSelectedEffect();
+            }
+            isNotDragged.set(true);
         });
     }
 
@@ -204,8 +233,8 @@ public class MapController {
         return mainMap;
     }
 
-    public GridPane getMiniMap() {
-        return this.miniMap;
+    public Pane getDetailPane() {
+        return this.detailPane;
     }
 
 }
