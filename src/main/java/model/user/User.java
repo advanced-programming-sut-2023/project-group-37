@@ -5,7 +5,6 @@ import com.google.gson.reflect.TypeToken;
 import controller.viewControllers.ProfileMenuController;
 import javafx.scene.image.Image;
 import model.utils.PasswordHashing;
-import view.menus.ProfileMenu;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -28,7 +27,7 @@ public class User implements Serializable {
     private String recoveryAnswer;
     private int highScore;
     private int rank;
-    private String avatarURL;
+    private int avatarNum;
     private static ArrayList<User> users = new ArrayList<>();
 
     public static User getCurrentUser() {
@@ -48,7 +47,7 @@ public class User implements Serializable {
         this.slogan = slogan;
         this.nickname = nickname;
         this.rank = users.size() + 1;
-        this.avatarURL = ProfileMenuController.getRandomAvatarURL();
+        this.avatarNum = ProfileMenuController.getRandomAvatarURL();
         users.add(this);
     }
 
@@ -109,7 +108,7 @@ public class User implements Serializable {
         this.recoveryQuestion = recoveryQuestion;
         this.recoveryAnswer = recoveryAnswer;
         this.highScore = 0;
-        this.avatarURL = ProfileMenuController.getRandomAvatarURL();
+        this.avatarNum = ProfileMenuController.getRandomAvatarURL();
 
         users.add(this);
         User.updateDatabase();
@@ -171,8 +170,8 @@ public class User implements Serializable {
         this.recoveryQuestion = RecoveryQuestion.getQuestion(questionNumber);
     }
 
-    public void setAvatarURL(String avatarURL) {
-        this.avatarURL = avatarURL;
+    public void setAvatarNum(int avatarNum) {
+        this.avatarNum = avatarNum;
     }
 
     public void setRecoveryAnswer(String recoveryAnswer) {
@@ -185,7 +184,7 @@ public class User implements Serializable {
     }
 
     public Image getAvatar() {
-        return new Image(ProfileMenuController.getAllAvatarImages().get(Integer.parseInt(this.avatarURL)).getAbsolutePath());
+        return new Image(ProfileMenuController.getAllAvatarImages().get(this.avatarNum).getAbsolutePath());
     }
 
     public boolean isWrongPassword(String password) {
