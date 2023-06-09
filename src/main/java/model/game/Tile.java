@@ -13,6 +13,7 @@ import model.people.*;
 import java.util.ArrayList;
 
 public class Tile extends Rectangle {
+    private static int tileSize;
     private final int x;
     private final int y;
     private Texture texture;
@@ -25,9 +26,12 @@ public class Tile extends Rectangle {
     private Territory territory;
     public int number;
     private boolean hasBuilding;
+    {
+        tileSize = 20;
+    }
 
     public Tile(int x, int y) {
-        super(20, 20);
+        super(tileSize, tileSize);
         this.x = x;
         this.y = y;
         this.texture = Texture.GROUND;
@@ -47,6 +51,17 @@ public class Tile extends Rectangle {
         this.x = bigTile.x;
         this.y = bigTile.y;
         this.texture = bigTile.texture;
+    }
+
+    public static void zoom() {
+        tileSize += 0.1;
+    }
+
+    public static void zoomOut() {
+        tileSize -= 0.1;
+    }
+
+    public void updateSize() {
 
     }
 

@@ -13,7 +13,7 @@ import model.game.Game;
 import model.game.Government;
 import model.game.Map;
 import model.game.Tile;
-
+import model.people.TroopType;
 
 
 public class MapController {
