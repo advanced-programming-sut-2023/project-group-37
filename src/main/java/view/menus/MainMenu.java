@@ -90,11 +90,11 @@ public class MainMenu extends Application {
         return message.equals(Message.GAME_STARTED.toString());
     }
 
-    public void enterProfileMenu(MouseEvent mouseEvent) throws Exception {
+    public void enterProfileMenu() throws Exception {
         appController.runMenu(Result.ENTER_PROFILE_MENU);
     }
 
-    public void exit(MouseEvent mouseEvent) {
+    public void exit() {
         User.updateDatabase();
         System.exit(0);
     }
