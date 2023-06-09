@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 public class Tile extends Rectangle {
     private static int tileSize;
+    private static ArrayList<Tile> selectedTiles;
     private final int x;
     private final int y;
     private Texture texture;
@@ -26,8 +27,10 @@ public class Tile extends Rectangle {
     private Territory territory;
     public int number;
     private boolean hasBuilding;
-    {
+
+    static {
         tileSize = 20;
+        selectedTiles = new ArrayList<>();
     }
 
     public Tile(int x, int y) {
@@ -43,14 +46,27 @@ public class Tile extends Rectangle {
         this.building = null;
         this.isPassable = true;
         this.hasBuilding = false;
-
     }
 
     public Tile(Tile bigTile) { // for creating miniTile
-        super(0.5, 0.5);
+        super((double) tileSize/40, (double) tileSize/40);
         this.x = bigTile.x;
         this.y = bigTile.y;
         this.texture = bigTile.texture;
+    }
+
+    private static void removeSelectedTiles() {
+        for (Tile selectedTile : selectedTiles) {
+            selectedTile.setWidth(20);
+            selectedTile.setHeight(20);
+            selectedTile.strokeProperty().set(null);
+        }
+        selectedTiles = new ArrayList<>();
+    }
+
+    public static void setSelectedTiles(ArrayList<Tile> selectedTiles) {
+        removeSelectedTiles();
+        Tile.selectedTiles.addAll(selectedTiles);
     }
 
     public static void zoom() {
@@ -63,6 +79,35 @@ public class Tile extends Rectangle {
 
     public void updateSize() {
 
+    }
+
+    // Effects :
+    public void setRectangleSelectedEffect() {
+        this.setWidth(19);
+        this.setHeight(19);
+        this.setStroke(Color.GREEN);
+        selectedTiles.add(this);
+    }
+
+    public void setSelectedEffect() {
+        removeSelectedTiles();
+        this.setWidth(19);
+        this.setHeight(19);
+        this.setStroke(Color.GREEN);
+        selectedTiles.add(this);
+    }
+
+    public void setUpRectangleEffect() {
+        this.setRectangleSelectedEffect();
+    }
+    public void setDownRectangleEffect() {
+        this.setRectangleSelectedEffect();
+    }
+    public void setLeftRectangleEffect() {
+        this.setRectangleSelectedEffect();
+    }
+    public void setRightRectangleEffect() {
+        this.setRectangleSelectedEffect();
     }
 
     public int getLocationX() {
@@ -244,4 +289,5 @@ public class Tile extends Rectangle {
     public boolean hasBuilding() {
         return hasBuilding;
     }
+
 }
