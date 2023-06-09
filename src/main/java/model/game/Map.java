@@ -84,6 +84,20 @@ public class Map {
         }
     }
 
+    public void updateSizes() {
+        for (Tile[] tiles : this.field) {
+            for (int j = 0; j < this.field[0].length; j++)
+                tiles[j].updateSize();
+        }
+    }
+
+    public void decreaseSize() {
+        for (Tile[] tiles : this.field) {
+            for (int j = 0; j < this.field[0].length; j++)
+                tiles[j].updateSize();
+        }
+    }
+
     public void setTilesPassability() {
         for (int i = 0; i < this.size; i++)
             for (int j = 0; j < this.size; j++)
@@ -104,7 +118,7 @@ public class Map {
     }
 
     public Tile getTileByXY(double x, double y) {
-        return this.field[(int) x/20][(int) y/20];
+        return this.field[(int) x/Tile.getTileSize()][(int) y/Tile.getTileSize()];
     }
 
     public ArrayList<Tile> getRectangleTilesByXY(double firstX, double firstY, double secondX, double secondY) {
