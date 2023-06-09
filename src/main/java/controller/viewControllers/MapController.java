@@ -12,6 +12,7 @@ import model.game.Tile;
 import model.people.TroopType;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
@@ -62,8 +63,6 @@ public class MapController {
         this.createDetailPane(gamePane);
         this.createChooserRectangle();
         this.creatMiniMap(tiles);
-        // todo : remove this :
-        MultiMenuFunctions.setTileImage(tiles[20][15], TroopType.ARCHER.getImage());
     }
 
     private void createMainMap(Pane gamePane, Tile[][] tiles) {
@@ -73,7 +72,6 @@ public class MapController {
                 this.mainMap.add(tiles[i][j], i, j);
             }
         }
-
         this.mainMap.setLayoutX(0);
         this.mainMap.setLayoutY(0);
 
@@ -95,6 +93,14 @@ public class MapController {
                 case "Down" -> {
                     goDown(); goDown(); goDown();
                 }
+                case "Z" -> {
+                    Tile.zoom();
+                    this.map.updateSizes();
+                }
+                case "X" -> {
+                    Tile.zoomOut();
+                    this.map.updateSizes();
+                }
             }
         });
 
@@ -103,13 +109,13 @@ public class MapController {
         final double[] startX = new double[1];
         final double[] startY = new double[1];
         this.mainMap.setOnMousePressed(mouseEvent -> {
-            startX[0] = mouseEvent.getSceneX();
-            startY[0] = mouseEvent.getSceneY();
+            startX[0] = mouseEvent.getX();
+            startY[0] = mouseEvent.getY();
         });
 
         this.mainMap.setOnMouseDragged(mouseEvent -> {
-            double x = mouseEvent.getSceneX();
-            double y = mouseEvent.getSceneY();
+            double x = mouseEvent.getX();
+            double y = mouseEvent.getY();
 
             ArrayList<Tile> rectangleTiles = this.map.getRectangleTilesByXY(startX[0], startY[0], x, y);
 
@@ -143,14 +149,15 @@ public class MapController {
             }
             isNotDragged.set(true);
         });
+
     }
 
     public void goTo(int x, int y) {
         if (x < 32 || y < 18 || x > this.map.getSize() - 34 || y > this.map.getSize() - 29)
             return;
 
-        this.mainMap.setLayoutX((32 - x) * 20);
-        this.mainMap.setLayoutY((18 - y) * 20);
+        this.mainMap.setLayoutX((32 - x) * Tile.getTileSize());
+        this.mainMap.setLayoutY((18 - y) * Tile.getTileSize());
     }
 
     public void createDetailPane(Pane gamePane) {
@@ -199,33 +206,35 @@ public class MapController {
                 Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
         this.downPane.getChildren().add(this.miniMap);
+
+        this.map.updateImages();
     }
 
     public void goUp() {
-        if (this.mainMap.getLayoutY() == 0)
+        if (this.mainMap.getLayoutY() >= 0)
             return;
-        this.mainMap.setLayoutY(this.mainMap.getLayoutY() + 20);
+        this.mainMap.setLayoutY(this.mainMap.getLayoutY() + Tile.getTileSize());
         this.chooserRectangle.setLayoutY(this.chooserRectangle.getLayoutY() - 0.8);
     }
 
     public void goLeft() {
-        if (this.mainMap.getLayoutX() == 0)
+        if (this.mainMap.getLayoutX() >= 0)
             return;
-        this.mainMap.setLayoutX(this.mainMap.getLayoutX() + 20);
+        this.mainMap.setLayoutX(this.mainMap.getLayoutX() + Tile.getTileSize());
         this.chooserRectangle.setLayoutX(this.chooserRectangle.getLayoutX() - 0.8);
     }
 
     public void goDown() {
-        if (this.mainMap.getLayoutY() == -172 * 20)
+        if (this.mainMap.getLayoutY() <= -172 * Tile.getTileSize())
             return;
-        this.mainMap.setLayoutY(this.mainMap.getLayoutY() - 20);
+        this.mainMap.setLayoutY(this.mainMap.getLayoutY() - Tile.getTileSize());
         this.chooserRectangle.setLayoutY(this.chooserRectangle.getLayoutY() + 0.8);
     }
 
     public void goRight() {
-        if (this.mainMap.getLayoutX() == -134 * 20)
+        if (this.mainMap.getLayoutX() <= -134 * Tile.getTileSize())
             return;
-        this.mainMap.setLayoutX(this.mainMap.getLayoutX() - 20);
+        this.mainMap.setLayoutX(this.mainMap.getLayoutX() - Tile.getTileSize());
         this.chooserRectangle.setLayoutX(this.chooserRectangle.getLayoutX() + 0.8);
     }
 

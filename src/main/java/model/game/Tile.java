@@ -13,11 +13,12 @@ import model.people.*;
 import java.util.ArrayList;
 
 public class Tile extends Rectangle {
-    private static int tileSize;
+    private static Integer tileSize;
     private static ArrayList<Tile> selectedTiles;
     private final int x;
     private final int y;
     private Texture texture;
+    private Texture treeTexture;
     private Image image;
     private Tile miniTile;
     private ArrayList<Person> people;
@@ -46,6 +47,10 @@ public class Tile extends Rectangle {
         this.building = null;
         this.isPassable = true;
         this.hasBuilding = false;
+
+        //todo : remove this :
+        if (y == 15 && x <= 20 && x>= 10)
+            this.militaryUnits.add(new Troop(null ,TroopType.ARCHER, this));
     }
 
     public Tile(Tile bigTile) { // for creating miniTile
@@ -70,29 +75,37 @@ public class Tile extends Rectangle {
     }
 
     public static void zoom() {
-        tileSize += 0.1;
+        if (tileSize <= 40)
+            tileSize += 4;
     }
 
     public static void zoomOut() {
-        tileSize -= 0.1;
+        if (tileSize >= 23)
+            tileSize -= 4;
+    }
+
+    public static int getTileSize() {
+        return tileSize;
     }
 
     public void updateSize() {
-
+        this.setHeight(tileSize);
+        this.setWidth(tileSize);
+        this.updateImage();
     }
 
     // Effects :
     public void setRectangleSelectedEffect() {
-        this.setWidth(19);
-        this.setHeight(19);
+        this.setWidth(tileSize - 1);
+        this.setHeight(tileSize - 1);
         this.setStroke(Color.GREEN);
         selectedTiles.add(this);
     }
 
     public void setSelectedEffect() {
         removeSelectedTiles();
-        this.setWidth(19);
-        this.setHeight(19);
+        this.setWidth(tileSize - 1);
+        this.setHeight(tileSize - 1);
         this.setStroke(Color.GREEN);
         selectedTiles.add(this);
     }
@@ -128,7 +141,10 @@ public class Tile extends Rectangle {
 
     public void changeTexture(Texture texture) {
         this.texture = texture;
-        this.updateImage();
+    }
+
+    public void changeTreeTexture(Texture treeTexture) {
+        this.treeTexture = treeTexture;
     }
 
     public ArrayList<MilitaryUnit> getMilitaryUnits() {
@@ -200,6 +216,11 @@ public class Tile extends Rectangle {
 
     public void updateImage() {
         this.setImage(this.texture.getImage());
+
+        if (this.treeTexture != null) {
+            MultiMenuFunctions.setTileImage(this, treeTexture.getImage());
+            this.miniTile.setFill(Color.DARKGREEN);
+        }
 
         if (this.militaryUnits.size() > 0) {
             for (MilitaryUnit militaryUnit : this.militaryUnits) {
