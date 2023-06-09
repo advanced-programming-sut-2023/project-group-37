@@ -6,12 +6,12 @@ import javafx.scene.paint.Color;
 import java.util.Objects;
 
 public enum Texture {
-    GROUND("ground", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/desert.jpg")).toExternalForm()), true, true),
+    GROUND("ground", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/ground.jpg")).toExternalForm()), true, true),
     PEBBLE("pebble", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/desert.jpg")).toExternalForm()), false, true),
     // Rock is resource of stone!
-    ROCK("rock", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/desert.jpg")).toExternalForm()), false, true),
-    STONE("stone", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/desert.jpg")).toExternalForm()), false, false),
-    IRON("iron", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/desert.jpg")).toExternalForm()), false, true),
+    ROCK("rock", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/rock.jpg")).toExternalForm()), false, true),
+    STONE("stone", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/stone.jpg")).toExternalForm()), false, false),
+    IRON("iron", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/iron.jpg")).toExternalForm()), false, true),
     GRASS("grass", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/grass.jpg")).toExternalForm()), true, true),
     MEADOW("meadow", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/desert.jpg")).toExternalForm()), true, true),
     DENSE_MEADOW("dense meadow", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/grass.jpg")).toExternalForm()), true, true),
@@ -20,7 +20,7 @@ public enum Texture {
     OLIVE_TREE("olive tree", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/desert.jpg")).toExternalForm()), false, false),
     COCONUT_PALM("coconut palm", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/desert.jpg")).toExternalForm()), false, false),
     DATE_PALM("date palm", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/desert.jpg")).toExternalForm()), false, false),
-    OIL("oil" , new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/desert.jpg")).toExternalForm()), false, true),
+    OIL("oil" , new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/oil.jpg")).toExternalForm()), false, true),
     PLAIN("plain", new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/desert.jpg")).toExternalForm()), true, true),
     // This is a channel way through rivers!
     SHALLOW_RIVER("shallow river",  new Image(Objects.requireNonNull(Texture.class.getResource("/Image/Texture/desert.jpg")).toExternalForm()), false, true),
