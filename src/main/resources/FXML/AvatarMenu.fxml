@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.menus.AvatarMenu">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../CSS/registration.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.menus.AvatarMenu">
    <children>
       <Label layoutX="39.0" layoutY="61.0" prefHeight="57.0" prefWidth="216.0" text="Select your avatar:" textFill="WHITE">
          <font>

@@ -171,7 +171,7 @@ public class MapController {
         this.detailPane.setPrefWidth(1138);
         this.detailPane.setPrefHeight(162);
         this.detailPane.setLayoutX(162);
-        MultiMenuFunctions.setBackground(this.detailPane, "details.png");
+        MultiMenuFunctions.setBackground(this.detailPane, "details.jpg");
 
         this.downPane.setBackground(Background.fill(Color.web("#795C32")));
 
