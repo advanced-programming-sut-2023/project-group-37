@@ -2,21 +2,16 @@ package view.menus;
 
 import controller.AppController;
 import controller.viewControllers.GameMenuController;
-import controller.viewControllers.MapController;
+import controller.MapController;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.game.ItemCategory;
-import model.game.Map;
 import view.enums.Result;
-import model.game.Tile;
 import view.enums.Command;
 import view.enums.Message;
 
-import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -37,7 +32,6 @@ public class GameMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
         Pane gamePane = new Pane();
         this.mapController.setGamePane(gamePane);
 

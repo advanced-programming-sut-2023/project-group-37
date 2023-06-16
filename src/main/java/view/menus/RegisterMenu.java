@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -27,13 +28,15 @@ public class RegisterMenu extends Application {
     private final RegisterMenuController registerMenuController;
     private final CaptchaController captchaController;
 
-    // choiceBoxes :
+    // choiceBoxes && Buttons :
     @FXML
     private ChoiceBox<String> recoveryQuestions;
     @FXML
     private ChoiceBox<String> sloganChoiceBox;
     @FXML
     private CheckBox showPassword;
+    @FXML
+    private Label refreshLabel;
 
     // fields :
     @FXML
@@ -209,6 +212,10 @@ public class RegisterMenu extends Application {
                 this.recoveryAnswerError.setText(Error.NECESSARY_FIELD.toString());
             else this.recoveryAnswerError.setText("");
         });
+
+        this.refreshLabel.setGraphic(new ImageView(new Image(Objects.requireNonNull(RegisterMenu.class.getResource(
+                "/Image/graphic/refresh.png")).toExternalForm(), this.refreshLabel.getPrefHeight() + 20,
+                this.refreshLabel.getPrefHeight(), false, false)));
     }
 
     private void initializeErrors() { // TODO : is this function necessary ?

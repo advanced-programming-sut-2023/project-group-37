@@ -1,6 +1,5 @@
-package controller.viewControllers;
+package controller;
 
-import controller.MultiMenuFunctions;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.GridPane;
@@ -9,10 +8,8 @@ import model.game.Game;
 import model.game.Government;
 import model.game.Map;
 import model.game.Tile;
-import model.people.TroopType;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
@@ -23,7 +20,7 @@ public class MapController {
     private GridPane mainMap;
     private Pane downPane;
     private Pane detailPane;
-    private GridPane miniMap;
+    private Pane stripPane;
     private Pane chooserRectangle;
     private Government currentGovernment;
     private int currentX;
@@ -60,7 +57,7 @@ public class MapController {
         gamePane.setPrefWidth(1300); // 65 tiles
 
         this.createMainMap(gamePane, tiles);
-        this.createDetailPane(gamePane);
+        this.createDownPane(gamePane);
         this.createChooserRectangle();
         this.creatMiniMap(tiles);
     }
@@ -160,7 +157,7 @@ public class MapController {
         this.mainMap.setLayoutY((18 - y) * Tile.getTileSize());
     }
 
-    public void createDetailPane(Pane gamePane) {
+    public void createDownPane(Pane gamePane) {
         this.downPane = new Pane();
 
         this.downPane.setPrefWidth(gamePane.getPrefWidth());
@@ -173,9 +170,18 @@ public class MapController {
         this.detailPane.setLayoutX(162);
         MultiMenuFunctions.setBackground(this.detailPane, "details.jpg");
 
+        this.stripPane = new Pane();
+        this.stripPane.setPrefWidth(890);
+        this.stripPane.setPrefHeight(101);
+
+        this.stripPane.setLayoutX(196);
+        this.stripPane.setLayoutY(61);
+
+        this.stripPane.setBackground(Background.fill(Color.BLUE));
         this.downPane.setBackground(Background.fill(Color.web("#795C32")));
 
         this.downPane.getChildren().add(this.detailPane);
+        this.downPane.getChildren().add(this.stripPane);
         gamePane.getChildren().add(this.downPane);
     }
 
@@ -195,17 +201,17 @@ public class MapController {
     }
 
     private void creatMiniMap(Tile[][] tiles) {
-        this.miniMap = new GridPane();
+        GridPane miniMap = new GridPane();
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[0].length; j++) {
-                this.miniMap.add(tiles[i][j].getMiniTile(), i, j);
+                miniMap.add(tiles[i][j].getMiniTile(), i, j);
             }
         }
 
-        this.miniMap.setBorder(new Border(new BorderStroke(
+        miniMap.setBorder(new Border(new BorderStroke(
                 Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
-        this.downPane.getChildren().add(this.miniMap);
+        this.downPane.getChildren().add(miniMap);
 
         this.map.updateImages();
     }
@@ -242,8 +248,8 @@ public class MapController {
         return mainMap;
     }
 
-    public Pane getDetailPane() {
-        return this.detailPane;
+    public Pane getStripPane() {
+        return this.stripPane;
     }
 
 }
