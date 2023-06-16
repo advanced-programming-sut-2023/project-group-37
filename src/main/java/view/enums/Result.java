@@ -6,6 +6,7 @@ public enum Result {
     ENTER_LOGIN_MENU,
     ENTER_PROFILE_MENU,
     ENTER_MAIN_MENU,
+    ENTER_START_GAME_MENU,
     ENTER_GAME_MENU,
 
     //GameMenu

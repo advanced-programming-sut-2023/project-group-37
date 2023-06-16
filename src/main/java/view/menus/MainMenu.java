@@ -98,12 +98,12 @@ public class MainMenu extends Application {
         System.exit(0);
     }
 
-    public void logout(MouseEvent mouseEvent) throws Exception {
+    public void logout() throws Exception {
         appController.runMenu(Result.ENTER_LOGIN_MENU);
     }
 
-    public void startGame(MouseEvent mouseEvent) throws Exception {
+    public void startGame() throws Exception {
         // TODO : select map and users menu
-        appController.runMenu(Result.ENTER_GAME_MENU);
+        appController.runMenu(Result.ENTER_START_GAME_MENU);
     }
 }
