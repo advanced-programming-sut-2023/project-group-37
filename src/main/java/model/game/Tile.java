@@ -219,7 +219,7 @@ public class Tile extends Rectangle {
     }
 
     private void checkForImage(Image image , Color color) {
-        if (image != this.upperImage.getImage()) {
+        if (this.upperImage == null || image != this.upperImage.getImage()) {
             MultiMenuFunctions.removeTileImage(this.upperImage);
             this.upperImage = new ImageView(new Image(image.getUrl(),
                     Tile.getTileSize(), Tile.getTileSize(), false, false));

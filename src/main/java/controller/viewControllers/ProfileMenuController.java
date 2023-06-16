@@ -2,7 +2,6 @@ package controller.viewControllers;
 
 import controller.CaptchaController;
 import controller.MultiMenuFunctions;
-import javafx.scene.image.Image;
 import model.user.User;
 import view.enums.Command;
 import view.enums.Message;
@@ -18,7 +17,7 @@ public class ProfileMenuController {
     private static final ProfileMenuController profileMenuController;
     private static User currentUser;
     private String password;
-    private static ArrayList<File> allAvatarImages;
+    private static final ArrayList<File> allAvatarImages;
     private static final Random random = new Random();
 
     static {
@@ -66,35 +65,35 @@ public class ProfileMenuController {
     }
 
     public Message changeUsername(String username) {
-        if (username == null) {
+        if (username == null)
             return Message.CHANGE_USERNAME_ERROR1;
-        }
+
         username = deleteQuotation(username);
-        if (MultiMenuFunctions.checkUsernameNotOK(username)) {
+        if (MultiMenuFunctions.checkUsernameNotOK(username))
             return Message.CHANGE_USERNAME_ERROR2;
-        }
-        if (username.equals(currentUser.getUsername())) {
+
+        if (username.equals(currentUser.getUsername()))
             return Message.CHANGE_USERNAME_ERROR3;
-        }
+
         currentUser.setUsername(username);
         return Message.CHANGE_USERNAME;
     }
 
     public Message changeNickName(String nickname) {
-        if (nickname == null) {
+        if (nickname == null)
             return Message.CHANGE_NICKNAME_ERROR1;
-        }
-        if (nickname.equals(currentUser.getNickName())) {
+
+        if (nickname.equals(currentUser.getNickName()))
             return Message.CHANGE_NICKNAME_ERROR2;
-        }
+
         currentUser.setNickName(nickname);
         return Message.CHANGE_NICKNAME;
     }
 
     public Message changePass(String oldPass, String newPass) {
-        if (currentUser.isWrongPassword(oldPass)) {
+        if (currentUser.isWrongPassword(oldPass))
             return Message.CHANGE_PASSWORD_ERROR2;
-        }
+
         currentUser.changePassword(newPass);
         return Message.CHANGE_PASSWORD;
     }
@@ -102,15 +101,15 @@ public class ProfileMenuController {
     public String changePassword(String oldPass, String newPass) { // #delete this method
         MultiMenuFunctions.deleteQuotations(oldPass);
         MultiMenuFunctions.deleteQuotations(newPass);
-        if (oldPass == null || newPass == null) {
+        if (oldPass == null || newPass == null)
             return Message.CHANGE_PASSWORD_ERROR1.toString();
-        }
-        if (currentUser.isWrongPassword(oldPass)) {
+
+        if (currentUser.isWrongPassword(oldPass))
             return Message.CHANGE_PASSWORD_ERROR2.toString();
-        }
-        if (MultiMenuFunctions.checkPasswordNotOK(newPass)) {
+
+        if (MultiMenuFunctions.checkPasswordNotOK(newPass))
             return Message.CHANGE_PASSWORD_ERROR4.toString();
-        }
+
         password = newPass;
         return Message.ENTER_PASSWORD_AGAIN.toString();
     }
@@ -129,23 +128,23 @@ public class ProfileMenuController {
 
 
     public Message changeEmail(String newEmail) {
-        if (newEmail.isEmpty()) {
+        if (newEmail.isEmpty())
             return Message.CHANGE_EMAIL_ERROR3;
-        }
-        if (MultiMenuFunctions.checkEmailNotOK(newEmail)) {
+
+        if (MultiMenuFunctions.checkEmailNotOK(newEmail))
             return Message.CHANGE_EMAIL_ERROR1;
-        }
-        if (User.getUserByEmail(newEmail) != null) {
+
+        if (User.getUserByEmail(newEmail) != null)
             return Message.EMAIL_ALREADY_EXISTS;
-        }
+
         currentUser.setEmail(newEmail);
         return Message.CHANGE_EMAIL;
     }
 
     public Message changeSlogan(String newSlogan) {
-        if (newSlogan.isEmpty()) {
+        if (newSlogan.isEmpty())
             return Message.CHANGE_SLOGAN_ERROR1;
-        }
+
         currentUser.setSlogan(newSlogan);
         return Message.CHANGE_SLOGAN;
     }
@@ -164,9 +163,9 @@ public class ProfileMenuController {
     }
 
     public String showSlogan() {
-        if (currentUser.getSlogan() == null) {
+        if (currentUser.getSlogan() == null)
             return "Empty slogan!";
-        }
+
         return currentUser.getSlogan();
     }
 

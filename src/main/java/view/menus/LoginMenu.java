@@ -139,10 +139,9 @@ public class LoginMenu extends Application {
 
         Message message = this.loginMenuController.login(this.usernameField.getText(), this.passwordField.getText(),
                 this.stayLoggedIn.isSelected());
-        if (message == Message.LOGIN_SUCCESSFUL) {
-            MultiMenuFunctions.setAllCurrentUsers(User.getUserByUsername(this.usernameField.getText()));
+
+        if (message == Message.LOGIN_SUCCESSFUL)
             this.appController.runMenu(Result.ENTER_MAIN_MENU);
-        }
 
         else new Alert(Alert.AlertType.ERROR, Message.CANT_LOGIN.toString()).show();
     }

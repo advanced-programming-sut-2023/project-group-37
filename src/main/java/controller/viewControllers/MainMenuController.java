@@ -1,5 +1,6 @@
 package controller.viewControllers;
 
+import controller.MultiMenuFunctions;
 import model.game.Color;
 import model.game.Game;
 import model.game.Government;
@@ -33,7 +34,6 @@ public class MainMenuController {
     }
 
     public Message enterProfileMenu() {
-        ProfileMenuController.setCurrentUser(currentUser);
         return Message.ENTERED_PROFILE_MENU;
     }
 
@@ -82,7 +82,7 @@ public class MainMenuController {
     }
 
     public Message logout() {
-        setCurrentUser(null);
+        MultiMenuFunctions.setAllCurrentUsers(null);
         User.setStayLoggedIn(null);
         return Message.LOGOUT_SUCCESSFUL;
     }

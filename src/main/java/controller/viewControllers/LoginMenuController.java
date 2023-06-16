@@ -1,5 +1,6 @@
 package controller.viewControllers;
 
+import controller.MultiMenuFunctions;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -34,7 +35,7 @@ public class LoginMenuController {
         if (user.isWrongPassword(password))
             return Message.INCORRECT_PASSWORD;
 
-        MainMenuController.setCurrentUser(user);
+        MultiMenuFunctions.setAllCurrentUsers(user);
         if (stayLoggedIn)
             User.setStayLoggedIn(user);
 
