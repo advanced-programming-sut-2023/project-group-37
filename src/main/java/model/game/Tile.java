@@ -2,6 +2,7 @@ package model.game;
 
 import controller.MultiMenuFunctions;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -19,7 +20,8 @@ public class Tile extends Rectangle {
     private final int y;
     private Texture texture;
     private Texture treeTexture;
-    private Image image;
+    private Image tileImage;
+    private ImageView upperImage;
     private Tile miniTile;
     private ArrayList<Person> people;
     private ArrayList<MilitaryUnit> militaryUnits;
@@ -39,7 +41,7 @@ public class Tile extends Rectangle {
         this.x = x;
         this.y = y;
         this.texture = Texture.GROUND;
-        this.setImage(this.texture.getImage());
+        this.setTileImage(this.texture.getImage());
         this.miniTile = new Tile(this);
 
         this.people = new ArrayList<>();
@@ -186,17 +188,19 @@ public class Tile extends Rectangle {
         this.building = null;
     }
 
-    private void setImage(Image inputImage) {
-        this.image = inputImage;
-        this.setFill(new ImagePattern(inputImage));
+    private void setTileImage(Image inputImage) {
+        if (this.tileImage != inputImage) {
+            this.tileImage = inputImage;
+            this.setFill(new ImagePattern(inputImage));
 
-        if (this.miniTile != null)
-            this.miniTile.setImage(this);
+            if (this.miniTile != null)
+                this.miniTile.setTileImage(this);
+        }
     }
 
-    private void setImage(Tile tile) {
-        this.image = tile.image;
-        this.setFill(new ImagePattern(this.image));
+    private void setTileImage(Tile tile) {
+        this.tileImage = tile.tileImage;
+        this.setFill(new ImagePattern(this.tileImage));
     }
 
     public void setBuilding(Building building) {
@@ -207,45 +211,45 @@ public class Tile extends Rectangle {
             this.updateImage();
 
             if (building instanceof DefensiveBuilding defensiveBuilding)
-                this.setImage(defensiveBuilding.getDefensiveType().getImage());
-            else this.setImage(building.getType().getImage());
+                this.setTileImage(defensiveBuilding.getDefensiveType().getImage());
+            else this.setTileImage(building.getType().getImage());
         }
 
         else this.hasBuilding = false;
     }
 
-    public void updateImage() {
-        this.setImage(this.texture.getImage());
+    private void checkForImage(Image image , Color color) {
+        if (image != this.upperImage.getImage()) {
+            MultiMenuFunctions.removeTileImage(this.upperImage);
+            this.upperImage = new ImageView(new Image(image.getUrl(),
+                    Tile.getTileSize(), Tile.getTileSize(), false, false));
 
-        if (this.treeTexture != null) {
-            MultiMenuFunctions.setTileImage(this, treeTexture.getImage());
-            this.miniTile.setFill(Color.DARKGREEN);
+            MultiMenuFunctions.setTileImage(this, this.upperImage);
+            this.miniTile.setFill(color);
         }
+    }
+
+    public void updateImage() {
+        this.setTileImage(this.texture.getImage());
+        Image image;
 
         if (this.militaryUnits.size() > 0) {
-            for (MilitaryUnit militaryUnit : this.militaryUnits) {
-                if (militaryUnit instanceof MilitaryMachine militaryMachine) {
-                    MultiMenuFunctions.setTileImage(this, militaryMachine.getType().getImage());
-                    return;
-                }
-            }
-
-            MultiMenuFunctions.setTileImage(this,
-                    ((Troop) this.militaryUnits.get(this.militaryUnits.size() -1)).getType().getImage());
-            this.miniTile.setFill(Color.HOTPINK);
+            image = ((Troop) this.militaryUnits.get(this.militaryUnits.size() -1)).getType().getImage();
+            this.checkForImage(image, Color.HOTPINK);
             return;
         }
 
         if (this.hasBuilding) {
-            if (this.building instanceof DefensiveBuilding defensiveBuilding) {
-                MultiMenuFunctions.setTileImage(this, defensiveBuilding.getDefensiveType().getImage());
-                this.miniTile.setFill(Color.WHITESMOKE);
-            }
-            else {
-                MultiMenuFunctions.setTileImage(this, this.building.getType().getImage());
-                this.miniTile.setFill(Color.LIGHTYELLOW);
-            }
+            if (this.building instanceof DefensiveBuilding defensiveBuilding)
+                this.checkForImage(defensiveBuilding.getDefensiveType().getImage(), Color.WHITESMOKE);
+            else
+                this.checkForImage(this.building.getType().getImage(), Color.LIGHTYELLOW);
+
+            return;
         }
+
+        if (this.treeTexture != null)
+            this.checkForImage(this.treeTexture.getImage(), Color.DARKGREEN);
     }
 
     public boolean isPassable() {

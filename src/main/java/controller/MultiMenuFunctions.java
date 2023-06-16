@@ -49,9 +49,12 @@ public class MultiMenuFunctions {
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
     }
 
-    public static void setTileImage(Tile tile, Image image) {
-        MapController.getInstance().getMainMap().add(new ImageView(new Image(image.getUrl(),
-                Tile.getTileSize(), Tile.getTileSize(), false, false)), tile.getLocationX(), tile.getLocationY());
+    public static void setTileImage(Tile tile, ImageView imageView) {
+        MapController.getInstance().getMainMap().add(imageView, tile.getLocationX(), tile.getLocationY());
+    }
+
+    public static void removeTileImage(ImageView imageView) {
+        MapController.getInstance().getMainMap().getChildren().remove(imageView);
     }
 
     public static void initializePasswordFields(TextField passwordShow, PasswordField passwordField,
