@@ -51,6 +51,8 @@ public class LoginMenu extends Application {
     private Label passwordError;
     @FXML
     private Label captchaError;
+    @FXML
+    private Label refreshLabel;
 
     // Images :
     @FXML
@@ -92,6 +94,10 @@ public class LoginMenu extends Application {
         });
 
         MultiMenuFunctions.initializePasswordFields(this.passwordShow, this.passwordField, this.passwordError, this.showPassword);
+
+        this.refreshLabel.setGraphic(new ImageView(new Image(Objects.requireNonNull(RegisterMenu.class.getResource(
+                "/Image/graphic/refresh.png")).toExternalForm(), this.refreshLabel.getPrefHeight() + 20,
+                this.refreshLabel.getPrefHeight(), false, false)));
     }
 
     private void initializeErrors() {

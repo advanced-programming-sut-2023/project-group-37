@@ -33,6 +33,6 @@ Button:pressed {
     -fx-background-color: linear-gradient(lightgreen, darkcyan);
 }
 
-.Label {
+.ErrorLabel {
     -fx-text-fill: #ebebfc;
 }

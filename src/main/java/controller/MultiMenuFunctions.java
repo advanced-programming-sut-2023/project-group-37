@@ -4,9 +4,6 @@ package controller;
 import java.io.File;
 import java.util.*;
 
-import controller.viewControllers.GameMenuController;
-import controller.viewControllers.MapController;
-import controller.viewControllers.GameMenuController;
 import controller.viewControllers.MainMenuController;
 import controller.viewControllers.ProfileMenuController;
 import javafx.scene.control.CheckBox;
@@ -25,7 +22,6 @@ import model.people.MilitaryUnit;
 import model.user.User;
 import view.enums.Error;
 import view.menus.LoginMenu;
-import view.menus.MainMenu;
 
 public class MultiMenuFunctions {
 

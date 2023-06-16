@@ -212,6 +212,7 @@ public class Tile extends Rectangle {
         }
 
         else this.hasBuilding = false;
+        this.updateImage();
     }
 
     public void updateImage() {

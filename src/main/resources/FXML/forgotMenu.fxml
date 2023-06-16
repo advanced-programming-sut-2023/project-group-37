@@ -9,7 +9,7 @@
     <VBox layoutX="190.0" layoutY="43.0" prefHeight="362.0" prefWidth="220.0" spacing="7.5">
 
         <TextField fx:id="usernameField" prefHeight="18.0" prefWidth="220.0" promptText="Username" />
-        <Label fx:id="questionLabel" prefHeight="18.0" prefWidth="251.0" styleClass="Label">
+        <Label fx:id="questionLabel" prefHeight="18.0" prefWidth="251.0" styleClass="ErrorLabel">
             <VBox.margin>
                 <Insets top="20.0" />
             </VBox.margin>
@@ -34,7 +34,7 @@
         </Button>
       <HBox prefHeight="30.0" prefWidth="220.0">
          <children>
-            <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="118.0" styleClass="Label" text="Did you regret ?  " />
+            <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="118.0" styleClass="ErrorLabel" text="Did you regret ?  " />
             <Hyperlink onAction="#enterLoginMenu" prefHeight="77.0" prefWidth="98.0" text="Back to login" />
          </children>
       </HBox>
