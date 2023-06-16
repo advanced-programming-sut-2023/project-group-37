@@ -55,9 +55,6 @@ public class MainMenu extends Application {
             } else if ((matcher = Command.START_GAME.getMatcher(command)) != null) {
                 if (startGame(matcher))
                     return Result.ENTER_GAME_MENU;
-            } else if (command.matches(Command.LOGOUT.toString())) {
-                System.out.println(this.mainMenuController.logout());
-                return Result.ENTER_LOGIN_MENU;
             } else if (command.matches(Command.EXIT.toString())) {
                 return Result.EXIT;
             } else
@@ -99,6 +96,7 @@ public class MainMenu extends Application {
     }
 
     public void logout() throws Exception {
+        this.mainMenuController.logout();
         appController.runMenu(Result.ENTER_LOGIN_MENU);
     }
 

@@ -81,9 +81,8 @@ public class MainMenuController {
         return Message.GAME_STARTED.toString();
     }
 
-    public Message logout() {
+    public void logout() {
         setCurrentUser(null);
         User.setStayLoggedIn(null);
-        return Message.LOGOUT_SUCCESSFUL;
     }
 }

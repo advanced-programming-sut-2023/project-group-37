@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.menus.StartGameMenu"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../CSS/GameStyle.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <HBox spacing="15.0">
+            <children>
+                <Label text="Select user to add : ">
+               <padding>
+                  <Insets top="5.0" />
+               </padding></Label>
+                <Label text="Username : ">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin></Label>
+                <TextField fx:id="username" prefHeight="26.0" prefWidth="91.0" />
+                <Label text="Territory number : ">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin></Label>
+                <TextField fx:id="territoryNumber" prefHeight="26.0" prefWidth="27.0" />
+                <Button minHeight="36.0" minWidth="147.0" prefHeight="36.0" prefWidth="180.0" text="Add" />
+            </children>
 
-</AnchorPane>
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+            </BorderPane.margin>
+        </HBox>
+    </top>
+
+    <center>
+        <TableView prefHeight="200.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn prefWidth="75.0" text="C1" />
+                <TableColumn prefWidth="75.0" text="C2" />
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>
