@@ -214,7 +214,7 @@ public class RegisterMenu extends Application {
         });
 
         this.refreshLabel.setGraphic(new ImageView(new Image(Objects.requireNonNull(RegisterMenu.class.getResource(
-                "/Image/graphic/refresh.png")).toExternalForm(), this.refreshLabel.getPrefHeight() + 20,
+                "/Image/Graphic/refresh.png")).toExternalForm(), this.refreshLabel.getPrefHeight() + 20,
                 this.refreshLabel.getPrefHeight(), false, false)));
     }
 

@@ -13,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.user.User;
 import view.enums.Error;
@@ -22,8 +21,6 @@ import view.enums.Message;
 
 import java.net.URL;
 import java.util.Objects;
-import java.util.Scanner;
-import java.util.regex.Matcher;
 
 public class LoginMenu extends Application {
     private final AppController appController;
@@ -96,7 +93,7 @@ public class LoginMenu extends Application {
         MultiMenuFunctions.initializePasswordFields(this.passwordShow, this.passwordField, this.passwordError, this.showPassword);
 
         this.refreshLabel.setGraphic(new ImageView(new Image(Objects.requireNonNull(RegisterMenu.class.getResource(
-                "/Image/graphic/refresh.png")).toExternalForm(), this.refreshLabel.getPrefHeight() + 20,
+                "/Image/Graphic/refresh.png")).toExternalForm(), this.refreshLabel.getPrefHeight() + 20,
                 this.refreshLabel.getPrefHeight(), false, false)));
     }
 

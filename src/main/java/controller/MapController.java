@@ -1,13 +1,11 @@
 package controller;
 
+import javafx.scene.Cursor;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import model.game.Game;
-import model.game.Government;
-import model.game.Map;
-import model.game.Tile;
+import model.game.*;
+import model.graphic.CursorType;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -19,12 +17,15 @@ public class MapController {
     private Map map;
     private GridPane mainMap;
     private Pane downPane;
-    private Pane detailPane;
-    private Pane stripPane;
     private Pane chooserRectangle;
+    private Label goldLabel;
     private Government currentGovernment;
+
+    private ArrayList<Tile> selectedTiles;
     private int currentX;
     private int currentY;
+    private int cursorRight;
+    private int cursorDown;
 
     static {
         MAP_CONTROLLER = new MapController();
@@ -33,6 +34,8 @@ public class MapController {
     private MapController() {
         this.currentX = 0;
         this.currentY = 0;
+        this.cursorDown = 0;
+        this.cursorRight = 0;
     }
 
     public static MapController getInstance() {
@@ -98,6 +101,8 @@ public class MapController {
                     Tile.zoomOut();
                     this.map.updateSizes();
                 }
+                case "M" -> this.setCursorOn(CursorType.SELECT_MOVE_DESTINATION);
+                case "A" -> this.setCursorOn(CursorType.SELECT_ATTACK_DESTINATION);
             }
         });
 
@@ -114,9 +119,11 @@ public class MapController {
             double x = mouseEvent.getX();
             double y = mouseEvent.getY();
 
-            ArrayList<Tile> rectangleTiles = this.map.getRectangleTilesByXY(startX[0], startY[0], x, y);
+            ArrayList<Tile> rectangleTiles = this.map.getRectangleTilesByXY(startX[0] + 20 * this.cursorRight,
+                    startY[0] + 20 * this.cursorDown, x + 20 * this.cursorRight, y + 20 * this.cursorDown);
 
-            Tile firstTile = this.map.getTileByXY(startX[0], startY[0]);
+            Tile firstTile = this.map.getTileByXY(startX[0] + 20 * this.cursorRight,
+                    startY[0] + 20 * this.cursorDown);
             Tile secondTile = this.map.getTileByXY(x, y);
 
             for (Tile rectangleTile : rectangleTiles) {
@@ -131,6 +138,8 @@ public class MapController {
 
                 else if (rectangleTile.getLocationY() == Math.max(firstTile.getLocationY(), secondTile.getLocationY()))
                     rectangleTile.setDownRectangleEffect();
+
+                this.setSelectedTiles(rectangleTiles);
             }
 
             isNotDragged.set(false);
@@ -141,8 +150,13 @@ public class MapController {
                 double x = mouseEvent.getX();
                 double y = mouseEvent.getY();
 
-                Tile tile = this.map.getTileByXY(x, y);
+                Tile tile = this.map.getTileByXY(x + 20 * this.cursorRight,
+                        y + 20 * this.cursorDown);
+
                 tile.setSelectedEffect();
+                ArrayList<Tile> selectedTiles = new ArrayList<>();
+                selectedTiles.add(tile);
+                this.setSelectedTiles(selectedTiles);
             }
             isNotDragged.set(true);
         });
@@ -164,25 +178,35 @@ public class MapController {
         this.downPane.setPrefHeight(162);
         this.downPane.setLayoutY(gamePane.getPrefHeight() - this.downPane.getPrefHeight());
 
-        this.detailPane = new Pane();
-        this.detailPane.setPrefWidth(1138);
-        this.detailPane.setPrefHeight(162);
-        this.detailPane.setLayoutX(162);
-        MultiMenuFunctions.setBackground(this.detailPane, "details.jpg");
+        Pane detailPane = new Pane();
+        detailPane.setPrefWidth(1138);
+        detailPane.setPrefHeight(162);
+        detailPane.setLayoutX(162);
+        MultiMenuFunctions.setBackground(detailPane, "details.jpg");
+        this.createDetailLabels(detailPane);
 
-        this.stripPane = new Pane();
-        this.stripPane.setPrefWidth(890);
-        this.stripPane.setPrefHeight(101);
+        Pane stripPane = new Pane();
+        stripPane.setPrefWidth(890);
+        stripPane.setPrefHeight(101);
 
-        this.stripPane.setLayoutX(196);
-        this.stripPane.setLayoutY(61);
+        stripPane.setLayoutX(196);
+        stripPane.setLayoutY(61);
 
-        this.stripPane.setBackground(Background.fill(Color.BLUE));
+        stripPane.setBackground(Background.fill(Color.BLUE));
         this.downPane.setBackground(Background.fill(Color.web("#795C32")));
 
-        this.downPane.getChildren().add(this.detailPane);
-        this.downPane.getChildren().add(this.stripPane);
+        this.downPane.getChildren().add(detailPane);
+        this.downPane.getChildren().add(stripPane);
         gamePane.getChildren().add(this.downPane);
+    }
+
+    private void createDetailLabels(Pane detailPane) {
+        this.goldLabel = new Label(String.valueOf(100)); // todo : set with currentGovernment
+        this.goldLabel.setLayoutX(978);
+        this.goldLabel.setLayoutY(93);
+        this.goldLabel.setTextFill(Color.DARKGOLDENROD);
+        this.goldLabel.setStyle("-fx-font-style: italic; -fx-font-size: 12;");
+        detailPane.getChildren().add(this.goldLabel);
     }
 
     private void createChooserRectangle() {
@@ -214,6 +238,20 @@ public class MapController {
         this.downPane.getChildren().add(miniMap);
 
         this.map.updateImages();
+    }
+
+    private void setCursorOn(CursorType cursorType) {
+        this.mainMap.setCursor(cursorType.getImageCursor());
+        this.cursorRight = 1;
+        this.cursorDown = 1;
+    }
+
+    private void setSelectedTiles(ArrayList<Tile> selectedTiles) {
+        this.selectedTiles = selectedTiles;
+        this.cursorRight = 0;
+        this.cursorDown = 0;
+
+        this.mainMap.setCursor(CursorType.DEFAULT.getImageCursor());
     }
 
     public void goUp() {
@@ -248,8 +286,8 @@ public class MapController {
         return mainMap;
     }
 
-    public Pane getStripPane() {
-        return this.stripPane;
+    public void updateDetails() { // todo : use this in all changes for gold & popularity
+        this.goldLabel.setText(String.valueOf(currentGovernment.getGold()));
     }
 
 }
