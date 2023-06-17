@@ -2,7 +2,6 @@ package controller.viewControllers;
 
 import controller.CaptchaController;
 import controller.MultiMenuFunctions;
-import javafx.scene.image.Image;
 import model.user.User;
 import view.enums.Command;
 import view.enums.Message;
@@ -30,7 +29,7 @@ public class ProfileMenuController {
 
         File file;
         try {
-            file = new File(Objects.requireNonNull(CaptchaController.class.getResource("/Image/Avatars")).toURI());
+            file = new File(Objects.requireNonNull(CaptchaController.class.getResource("/Image/Avatar")).toURI());
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
