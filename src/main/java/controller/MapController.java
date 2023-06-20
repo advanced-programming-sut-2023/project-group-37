@@ -19,6 +19,7 @@ public class MapController {
     private Pane downPane;
     private Pane chooserRectangle;
     private Label goldLabel;
+    private Label popularityLabel;
     private Government currentGovernment;
 
     private ArrayList<Tile> selectedTiles;
@@ -201,12 +202,20 @@ public class MapController {
     }
 
     private void createDetailLabels(Pane detailPane) {
-        this.goldLabel = new Label(String.valueOf(100)); // todo : set with currentGovernment
+        // todo : set with currentGovernment :
+        this.goldLabel = new Label(String.valueOf(100));
+        this.popularityLabel = new Label(String.valueOf(100));
+
         this.goldLabel.setLayoutX(978);
         this.goldLabel.setLayoutY(93);
-        this.goldLabel.setTextFill(Color.DARKGOLDENROD);
-        this.goldLabel.setStyle("-fx-font-style: italic; -fx-font-size: 12;");
+        this.popularityLabel.setLayoutX(965);
+        this.popularityLabel.setLayoutY(113);
+
+        this.goldLabel.setStyle("-fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: green;");
+        this.popularityLabel.setStyle("-fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: green;");
+
         detailPane.getChildren().add(this.goldLabel);
+        detailPane.getChildren().add(this.popularityLabel);
     }
 
     private void createChooserRectangle() {
@@ -251,7 +260,7 @@ public class MapController {
         this.cursorRight = 0;
         this.cursorDown = 0;
 
-        this.mainMap.setCursor(CursorType.DEFAULT.getImageCursor());
+//        this.mainMap.setCursor(CursorType.DEFAULT.getImageCursor());
     }
 
     public void goUp() {
