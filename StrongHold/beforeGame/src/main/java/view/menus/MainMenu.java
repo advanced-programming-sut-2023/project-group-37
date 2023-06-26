@@ -42,26 +42,6 @@ public class MainMenu extends Application {
         stage.show();
     }
 
-    public Result run() {
-        String command;
-        Matcher matcher;
-
-        while (true) {
-            command = scanner.nextLine();
-
-            if (command.matches(Command.ENTER_PROFILE_MENU.toString())) {
-                System.out.println(this.mainMenuController.enterProfileMenu());
-                return Result.ENTER_PROFILE_MENU;
-            } else if ((matcher = Command.START_GAME.getMatcher(command)) != null) {
-                if (startGame(matcher))
-                    return Result.ENTER_GAME_MENU;
-            } else if (command.matches(Command.EXIT.toString())) {
-                return Result.EXIT;
-            } else
-                System.out.println(Message.INVALID_COMMAND);
-        }
-    }
-
     private boolean startGame(Matcher matcher) {
         String[] parts = MultiMenuFunctions.deleteQuotations(matcher.group("users")).trim().split("\\s*&\\s*");
         String[] usernames = new String[parts.length];
@@ -100,8 +80,7 @@ public class MainMenu extends Application {
         appController.runMenu(Result.ENTER_LOGIN_MENU);
     }
 
-    public void startGame() throws Exception {
-        // TODO : select map and users menu
-        appController.runMenu(Result.ENTER_START_GAME_MENU);
+    public void startGame() {
+        appController.goToStartGame();
     }
 }

@@ -87,4 +87,8 @@ public class AppController {
             // todo : how to show game parts menu ??
         }
     }
+
+    public void goToStartGame() {
+        // todo : go to next project : core
+    }
 }
