@@ -10,7 +10,7 @@ assignees: Arman17Babaei
 <div dir="rtl" align='right'>
 
 # فاز 1
-**نام و نام خانوادگی راهنما:**
+**نام و نام خانوادگی راهنما:ترانه خسروجردی
 
 ## کارهایی که باید در فاز 1 انجام دهید
 
@@ -26,7 +26,7 @@ assignees: Arman17Babaei
 
   1. [ ] شروع نشده
   2. [ ] در حال انجام
-  3. [ ] تمام شده
+  3. [X] تمام شده
   </div>
 </details>
 
@@ -39,49 +39,182 @@ assignees: Arman17Babaei
   
   1. [ ] شروع نشده
   2. [ ] در حال انجام
-  3. [ ] تمام شده
+  3. [X] تمام شده
      </div>
 </details>
 
 ## تسک‌های نفر اول
 
-  **نام و نام خانوادگی:**
+  **نام و نام خانوادگی:محمد عرفان محمودی
 <details>
-  <summary>تسک مربوطه</summary>
+  <summary>هندل کردن fight</summary>
 
   <div dir="ltr" align='right'>
 
   1. [ ] شروع نشده
   2. [ ] در حال انجام
-  3. [ ] تمام شده
+  3. [X] تمام شده
+  </div>
+</details>
+  <details>
+  <summary>route finder</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
+  <details>
+  <summary>توابع unit menu</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
+   <details>
+  <summary>هندل کردن ladder man</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
+  <details>
+  <summary>هندل کردن stance</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
+  <details>
+  <summary>دستور show map رنگی</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
   </div>
 </details>
 
 ## تسک‌های نفر دوم
 
-  **نام و نام خانوادگی:**
+  **نام و نام خانوادگی:مهرشاد دهقانی
 <details>
-  <summary>تسک مربوطه</summary>
+  <summary>ساخت map</summary>
 
   <div dir="ltr" align='right'>
 
   1. [ ] شروع نشده
   2. [ ] در حال انجام
-  3. [ ] تمام شده
+  3. [X] تمام شده
+  </div>
+</details>
+  <details>
+  <summary> بخشی از توابع trade menu و shop menu</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
+  <details>
+  <summary> بخشی از توابع game menu</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
+  <details>
+  <summary> Unit test</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
+  </details>
+  <details>
+  <summary>Captcha</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
+</details>
+  <details>
+  <summary>Password Hash</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
   </div>
 </details>
 
+
 ## تسک‌های نفر سوم
 
-  **نام و نام خانوادگی:**
+  **نام و نام خانوادگی:بردیا ماندگار
 <details>
-  <summary>تسک مربوطه</summary>
+  <summary> model کامل کردن کلاس های (troop و building)</summary>
 
   <div dir="ltr" align='right'>
 
   1. [ ] شروع نشده
   2. [ ] در حال انجام
-  3. [ ] تمام شده
+  3. [X] تمام شده
+  </div>
+</details>
+<details>
+  <summary> کامل کردن قسمت fight</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
+<details>
+  <summary> Building Menu</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
+  </div>
+</details>
+<details>
+  <summary> constants</summary>
+
+  <div dir="ltr" align='right'>
+
+  1. [ ] شروع نشده
+  2. [ ] در حال انجام
+  3. [X] تمام شده
   </div>
 </details>
 </div>

@@ -1,0 +1,4 @@
+rootProject.name = 'StrongHold'
+include 'desktop'
+include 'core'
+
