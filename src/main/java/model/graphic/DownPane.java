@@ -24,7 +24,7 @@ public class DownPane extends Pane {
         stripPane = new Pane();
     }
 
-    public void initialize(Pane gamePane) {
+    public void initialize(Pane gamePane) throws URISyntaxException {
         this.setPrefWidth(gamePane.getPrefWidth());
         this.setPrefHeight(162);
         this.setLayoutY(gamePane.getPrefHeight() - this.getPrefHeight());
@@ -47,19 +47,46 @@ public class DownPane extends Pane {
 
         this.getChildren().add(detailPane);
         this.getChildren().add(stripPane);
+        addButtons();
         gamePane.getChildren().add(this);
     }
 
     public void addBuildingIcons() {
 
     }
+
     public void addButtons() throws URISyntaxException {
         File file = new File(Objects.requireNonNull(CaptchaController.class.getResource("/Image/MenuBuildings")).toURI());
         ArrayList<File> buildings = MultiMenuFunctions.getAllImageFilesFromFolder(file);
-        Image image = new Image(buildings.get(0).getAbsolutePath());
 
-        Rectangle rectangle = new Rectangle();
-        rectangle.setFill(new ImagePattern(image));
+        Rectangle CastleBuildings = createRec(210, null, "Castle");
+        Rectangle TownBuildings = createRec(270, null, "Town");
+        Rectangle FarmBuildings = createRec(330, null, "Farm");
+        Rectangle IndustryBuildings = createRec(390, null, "Industry");
+        Rectangle WeaponsBuildings = createRec(450, null, "Weapon");
+        Rectangle FoodBuildings = createRec(510, null, "Food");
+
+    }
+
+    public Rectangle createRec(double x, String absoluteAddress, String buttonName) {
+        Rectangle r = new Rectangle(40, 40);
+        r.setId(buttonName);
+        r.setLayoutX(x);
+        r.setLayoutY(10);
+        r.setFill(Color.WHITE);//Todo : image
+        this.getChildren().add(r);
+        setAction(r);
+        return r;
+    }
+
+    public void setAction(Rectangle r) {
+        r.setOnMouseClicked(mouseEvent -> {
+            updateStripPane(stripPane, r.getId());
+        });
+    }
+
+    public void updateStripPane(Pane stripPane, String buttonName) {
+        //TODO
     }
 
 }
