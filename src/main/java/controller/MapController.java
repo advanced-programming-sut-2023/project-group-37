@@ -10,6 +10,7 @@ import model.game.Tile;
 import model.graphic.CursorType;
 import model.graphic.DownPane;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -55,7 +56,7 @@ public class MapController {
         this.map = game.getMap();
     }
 
-    public void setGamePane(Pane gamePane) {
+    public void setGamePane(Pane gamePane) throws URISyntaxException {
         Map.loadMaps();
         this.map =  Map.getMaps().get(0); // todo : wtf ?
         Tile[][] tiles = this.map.getField();
@@ -175,9 +176,10 @@ public class MapController {
         this.mainMap.setLayoutY((18 - y) * Tile.getTileSize());
     }
 
-    public void createDownPane(Pane gamePane) {
+    public void createDownPane(Pane gamePane) throws URISyntaxException {
         this.downPane = new DownPane(this);
         this.downPane.initialize(gamePane);
+
     }
 
     public void createDetailLabels(Pane detailPane) {
