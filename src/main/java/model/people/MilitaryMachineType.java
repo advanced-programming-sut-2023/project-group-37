@@ -9,8 +9,7 @@ public enum MilitaryMachineType {
     SIEGE_TOWER("siege tower", 150, 250, 0, 1, 50, 4),
     CATAPULT("catapult", 150, 80, 100, 35, 45, 2),
     TREBUCHET("trebuchet", 150, 80, 125, 45, 0, 3),
-    FIRE_BALLISTA("fire ballista", 150, 75, 40, 30, 30, 2),
-    ;
+    FIRE_BALLISTA("fire ballista", 150, 75, 40, 30, 30, 2);
     private final String name;
     private final int cost;
     private final int maxHitpoints;
