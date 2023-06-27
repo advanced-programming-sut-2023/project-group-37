@@ -49,7 +49,7 @@ public enum DefensiveBuildingType {
                           double rangeRate, int capacity) {
         this.name = name;
         this.category = category;
-        this.image = new Image(Objects.requireNonNull(DefensiveBuildingType.class.getResource(imageName))
+        this.image = new Image(Objects.requireNonNull(DefensiveBuildingType.class.getResource("/Image/Buildings/" + imageName))
                 .toExternalForm());
         this.cost = 0;
         this.maxHitpoints = maxHitpoints;

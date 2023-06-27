@@ -8,8 +8,8 @@ import java.util.Objects;
 
 public enum TroopType {
 
-    //LORD:
-    LORD("", "lord.png", null, 0, 100, 100, 55, 1,
+    //LORD: todo : image for lord ?
+    LORD("", "european/archer.png", null, 0, 100, 100, 55, 1,
             null, null, false, false),
 
     // Barracks:
@@ -19,7 +19,7 @@ public enum TroopType {
     SPEARMAN("spearman", "european/spearman.png", BuildingType.BARRACKS, 8, 50,
             50, 60, 1, Item.SPEAR, null, true, true),
 
-    MaceMan("maceman", "european/maceman.png", BuildingType.BARRACKS, 20, 70,
+    MaceMan("maceman", "european/maecman.png", BuildingType.BARRACKS, 20, 70,
             75, 85, 1, Item.MACE, Item.LEATHER_ARMOR, true, true),
 
     CROSSBOWMAN("crossbowman", "european/crossbowman.png", BuildingType.BARRACKS, 20,

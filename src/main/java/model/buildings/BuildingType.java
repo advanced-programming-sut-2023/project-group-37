@@ -122,7 +122,7 @@ public enum BuildingType {
     SIEGE_TENT("", null, "siege-tent.png", 150, null,
             0, true, false, false),
 
-    TUNNEL_ENTRANCE("tunnel entrance", null, "tunnel-entrance", 150,
+    TUNNEL_ENTRANCE("tunnel entrance", null, "tunnel-entrance.png", 150,
             null, 0, true, false, false),
 
     // Our stockpile has hitpoints & can be destroyed!
