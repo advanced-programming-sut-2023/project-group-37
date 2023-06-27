@@ -2,30 +2,55 @@ package model.buildings;
 
 import javafx.scene.image.Image;
 
+import java.util.Objects;
+
 public enum DefensiveBuildingType {
 
-    KEEP("", 1, 0, 0, 16),
-    WALL("wall", 250, 1, 1.1, 1),
-    STAIRS("stairs", 150, 1, 0, 1),
-    SMALL_GATEHOUSE("small gatehouse", 350, 10, 1.2, 8),
-    LARGE_GATEHOUSE("large gatehouse", 450, 20, 1.4, 12),
-    LOOKOUT_TOWER("lookout tower", 250, 10, 2.2, 4),
-    PERIMETER_TOWER("perimeter tower", 350, 10, 1.6, 6),
-    DEFENCE_TOWER("defence tower", 350, 15, 1.6, 6),
-    SQUARE_TOWER("square tower", 450, 35, 2, 10),
-    ROUND_TOWER("round tower", 450, 40, 1.8, 10),
-    ;
+    KEEP("", null, "keep.png", 1, 0, 0, 16),
+
+    WALL("wall", BuildingCategory.CASTLE_BUILDINGS, "wall.png", 250, 1,
+            1.1, 1),
+
+    STAIRS("stairs", BuildingCategory.CASTLE_BUILDINGS, "stairs.jpg", 150, 1,
+            0, 1),
+
+    SMALL_GATEHOUSE("small gatehouse", BuildingCategory.GATEHOUSES, "small-gatehouse.png",
+            350, 10, 1.2, 8),
+
+    LARGE_GATEHOUSE("large gatehouse", BuildingCategory.GATEHOUSES, "large-gatehouse.png",
+            450, 20, 1.4, 12),
+
+    LOOKOUT_TOWER("lookout tower", BuildingCategory.TOWERS, "lookout-tower.png", 250,
+            10, 2.2, 4),
+
+    PERIMETER_TOWER("perimeter tower", BuildingCategory.TOWERS, "perimeter-tower.png", 350,
+            10, 1.6, 6),
+
+    DEFENCE_TOWER("defence tower", BuildingCategory.TOWERS, "defence-tower.png", 350,
+            15, 1.6, 6),
+
+    SQUARE_TOWER("square tower", BuildingCategory.TOWERS, "square-tower.png", 450,
+            35, 2, 10),
+
+    ROUND_TOWER("round tower", BuildingCategory.TOWERS, "round-tower.png", 450,
+            40, 1.8, 10);
+
     private final String name;
+    private final BuildingCategory category;
+    private final Image image;
     private final int cost;
     private final int maxHitpoints;
     private final int stoneAmount;
     private final double rangeRate;
     private final int capacity;
     private final boolean isRepairable;
-    private Image image;
 
-    DefensiveBuildingType(String name, int maxHitpoints, int stoneAmount, double rangeRate, int capacity) {
+    DefensiveBuildingType(String name, BuildingCategory category, String imageName, int maxHitpoints, int stoneAmount,
+                          double rangeRate, int capacity) {
         this.name = name;
+        this.category = category;
+        this.image = new Image(Objects.requireNonNull(DefensiveBuildingType.class.getResource(imageName))
+                .toExternalForm());
         this.cost = 0;
         this.maxHitpoints = maxHitpoints;
         this.stoneAmount = stoneAmount;
@@ -43,6 +68,14 @@ public enum DefensiveBuildingType {
 
     public String getName() {
         return this.name;
+    }
+
+    public BuildingCategory getCategory() {
+        return this.category;
+    }
+
+    public Image getImage() {
+        return this.image;
     }
 
     public int getCost() {
@@ -63,10 +96,6 @@ public enum DefensiveBuildingType {
 
     public int getCapacity() {
         return this.capacity;
-    }
-
-    public Image getImage() {
-        return image;
     }
 
     public boolean isRepairable() {
