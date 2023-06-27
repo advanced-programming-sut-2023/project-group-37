@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import model.buildings.BuildingCategory;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -62,22 +63,24 @@ public class DownPane extends Pane {
         File file = new File(Objects.requireNonNull(CaptchaController.class.getResource("/Image/Buildings")).toURI());
         ArrayList<File> buildings = MultiMenuFunctions.getAllImageFilesFromFolder(file);
 
-        createRec(210, null, "CastleBuildings");
-        createRec(270, null, "TownBuildings");
-        createRec(330, null, "FarmBuildings");
-        createRec(390, null, "IndustryBuildings");
-        createRec(450, null, "WeaponBuildings");
-        createRec(510, null, "FoodProcessingBuildings");
+        createRec(210, null, BuildingCategory.CASTLE_BUILDINGS);
+        createRec(270, null, BuildingCategory.TOWERS);
+        createRec(330, null, BuildingCategory.MILITARY_BUILDINGS);
+        createRec(390, null, BuildingCategory.GATEHOUSES);
+        createRec(440, null, BuildingCategory.TOWN_BUILDINGS);
+        createRec(500, null, BuildingCategory.FARM_BUILDINGS);
+        createRec(560, null, BuildingCategory.INDUSTRY_BUILDINGS);
+        createRec(620, null, BuildingCategory.WEAPON_BUILDINGS);
+        createRec(680, null, BuildingCategory.FOOD_PROCESSING_BUILDINGS);
     }
 
-    public void createRec(double x, String absoluteAddress, String buttonName) {
+    public void createRec(double x, String absoluteAddress, BuildingCategory category) {
         Rectangle rectangle = new Rectangle(40, 40);
-        rectangle.setId(buttonName);
         rectangle.setLayoutX(x);
         rectangle.setLayoutY(15);
 //        rectangle.setFill(new ImagePattern(new Image(absoluteAddress)));
-        rectangle.setFill(Color.WHITE);
+        rectangle.setAccessibleText(category.getName());
         this.getChildren().add(rectangle);
-        rectangle.setOnMouseClicked(mouseEvent -> this.stripPaneController.insertImages(rectangle.getId()));
+        rectangle.setOnMouseClicked(mouseEvent -> this.stripPaneController.insertImages(category));
     }
 }
