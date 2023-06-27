@@ -1,5 +1,7 @@
 package model.game;
 
+import controller.MultiMenuFunctions;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -78,6 +80,8 @@ public class Map {
     }
 
     public void updateImages() {
+        MultiMenuFunctions.removeAllImages();
+
         for (Tile[] tiles : this.field) {
             for (int j = 0; j < this.field[0].length; j++)
                 tiles[j].updateImage();
@@ -118,7 +122,7 @@ public class Map {
     }
 
     public Tile getTileByXY(double x, double y) {
-        return this.field[(int) x/Tile.getTileSize()][(int) y/Tile.getTileSize()];
+        return this.getTileByLocation((int) x/20, (int) y/20);
     }
 
     public ArrayList<Tile> getRectangleTilesByXY(double firstX, double firstY, double secondX, double secondY) {

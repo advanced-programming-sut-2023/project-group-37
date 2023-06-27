@@ -6,6 +6,7 @@ import java.util.*;
 
 import controller.viewControllers.MainMenuController;
 import controller.viewControllers.ProfileMenuController;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -46,8 +47,17 @@ public class MultiMenuFunctions {
     }
 
     public static void setTileImage(Tile tile, Image image) {
-        MapController.getInstance().getMainMap().add(new ImageView(new Image(image.getUrl(),
-                Tile.getTileSize(), Tile.getTileSize(), false, false)), tile.getLocationX(), tile.getLocationY());
+        ImageView imageView = new ImageView(new Image(image.getUrl(),
+                Tile.getTileSize(), Tile.getTileSize(), false, false));
+
+        imageView.setLayoutX(tile.getLayoutX());
+        imageView.setLayoutY(tile.getLayoutY());
+
+        MapController.getInstance().getMainMap().getChildren().add(imageView);
+    }
+
+    public static void removeAllImages() {
+        MapController.getInstance().getMainMap().getChildren().removeIf(node -> node instanceof ImageView);
     }
 
     public static void initializePasswordFields(TextField passwordShow, PasswordField passwordField,

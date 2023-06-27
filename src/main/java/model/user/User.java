@@ -244,7 +244,7 @@ public class User implements Serializable {
     }
 
     public static void loadUsersFromFile() {
-        String filePath = "./src/main/resources/database/userDatabase.json";
+        String filePath = "./src/main/resources/Database/userDatabase.json";
         try {
             String json = new String(Files.readAllBytes(Paths.get(filePath)));
             ArrayList<User> createdUsers = gson.fromJson(json, new TypeToken<List<User>>() {
@@ -264,7 +264,7 @@ public class User implements Serializable {
     }
 
     public static User loadStayLoggedIn() {
-        String filePath = "./src/main/resources/database/stayLoggedIn.json";
+        String filePath = "./src/main/resources/Database/stayLoggedIn.json";
         try {
             String json = new String(Files.readAllBytes(Paths.get(filePath)));
 
@@ -284,7 +284,7 @@ public class User implements Serializable {
     }
 
     public static void setStayLoggedIn(User loggedInUser) {
-        String filePath = "./src/main/resources/database/stayLoggedIn.json";
+        String filePath = "./src/main/resources/Database/stayLoggedIn.json";
         try {
             FileWriter fileWriter = new FileWriter(filePath);
             fileWriter.write(gson.toJson(loggedInUser));
@@ -300,7 +300,7 @@ public class User implements Serializable {
     }
 
     public static void saveUsersToFile() {
-        String filePath = "./src/main/resources/database/userDatabase.json";
+        String filePath = "./src/main/resources/Database/userDatabase.json";
         try {
             FileWriter fileWriter = new FileWriter(filePath);
             fileWriter.write(gson.toJson(users));

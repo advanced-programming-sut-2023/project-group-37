@@ -10,6 +10,7 @@ import model.game.Tile;
 import model.graphic.CursorType;
 import model.graphic.DownPane;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -18,7 +19,7 @@ public class MapController {
     private static final MapController MAP_CONTROLLER;
     private Game game;
     private Map map;
-    private GridPane mainMap;
+    private AnchorPane mainMap;
     private DownPane downPane;
     private Pane chooserRectangle;
     private Label goldLabel;
@@ -55,7 +56,7 @@ public class MapController {
         this.map = game.getMap();
     }
 
-    public void setGamePane(Pane gamePane) {
+    public void setGamePane(Pane gamePane) throws URISyntaxException {
         Map.loadMaps();
         this.map =  Map.getMaps().get(0); // todo : wtf ?
         Tile[][] tiles = this.map.getField();
@@ -70,10 +71,10 @@ public class MapController {
     }
 
     private void createMainMap(Pane gamePane, Tile[][] tiles) {
-        this.mainMap = new GridPane();
-        for (int i = 0; i < tiles.length; i++) {
+        this.mainMap = new AnchorPane();
+        for (Tile[] value : tiles) {
             for (int j = 0; j < tiles[0].length; j++) {
-                this.mainMap.add(tiles[i][j], i, j);
+                this.mainMap.getChildren().add(value[j]);
             }
         }
         this.mainMap.setLayoutX(0);
@@ -100,10 +101,12 @@ public class MapController {
                 case "Z" -> {
                     Tile.zoom();
                     this.map.updateSizes();
+                    this.map.updateImages();
                 }
                 case "X" -> {
                     Tile.zoomOut();
                     this.map.updateSizes();
+                    this.map.updateImages();
                 }
                 case "M" -> this.setCursorOn(CursorType.SELECT_MOVE_DESTINATION);
                 case "A" -> this.setCursorOn(CursorType.SELECT_ATTACK_DESTINATION);
@@ -123,11 +126,12 @@ public class MapController {
             double x = mouseEvent.getX();
             double y = mouseEvent.getY();
 
-            ArrayList<Tile> rectangleTiles = this.map.getRectangleTilesByXY(startX[0] + 20 * this.cursorRight,
-                    startY[0] + 20 * this.cursorDown, x + 20 * this.cursorRight, y + 20 * this.cursorDown);
+            ArrayList<Tile> rectangleTiles = this.map.getRectangleTilesByXY(startX[0] + Tile.getTileSize() * this.cursorRight,
+                    startY[0] + Tile.getTileSize() * this.cursorDown, x + Tile.getTileSize()
+                            * this.cursorRight, y + Tile.getTileSize() * this.cursorDown);
 
-            Tile firstTile = this.map.getTileByXY(startX[0] + 20 * this.cursorRight,
-                    startY[0] + 20 * this.cursorDown);
+            Tile firstTile = this.map.getTileByXY(startX[0] + Tile.getTileSize() * this.cursorRight,
+                    startY[0] + Tile.getTileSize() * this.cursorDown);
             Tile secondTile = this.map.getTileByXY(x, y);
 
             for (Tile rectangleTile : rectangleTiles) {
@@ -154,8 +158,8 @@ public class MapController {
                 double x = mouseEvent.getX();
                 double y = mouseEvent.getY();
 
-                Tile tile = this.map.getTileByXY(x + 20 * this.cursorRight,
-                        y + 20 * this.cursorDown);
+                Tile tile = this.map.getTileByXY(x + Tile.getTileSize() * this.cursorRight,
+                        y + Tile.getTileSize() * this.cursorDown);
 
                 tile.setSelectedEffect();
                 ArrayList<Tile> selectedTiles = new ArrayList<>();
@@ -175,9 +179,10 @@ public class MapController {
         this.mainMap.setLayoutY((18 - y) * Tile.getTileSize());
     }
 
-    public void createDownPane(Pane gamePane) {
+    public void createDownPane(Pane gamePane) throws URISyntaxException {
         this.downPane = new DownPane(this);
         this.downPane.initialize(gamePane);
+
     }
 
     public void createDetailLabels(Pane detailPane) {
@@ -203,8 +208,8 @@ public class MapController {
         this.chooserRectangle.setBorder(new Border(new BorderStroke(
                 Color.DARKRED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
-        this.chooserRectangle.setPrefWidth(65 * 0.8);
-        this.chooserRectangle.setPrefHeight(27 * 0.8);
+        this.chooserRectangle.setPrefWidth(65 * 0.04 * Tile.getTileSize());
+        this.chooserRectangle.setPrefHeight(27 * 0.04 * Tile.getTileSize());
 
         this.chooserRectangle.setLayoutX(1);
         this.chooserRectangle.setLayoutY(1);
@@ -246,31 +251,31 @@ public class MapController {
         if (this.mainMap.getLayoutY() >= 0)
             return;
         this.mainMap.setLayoutY(this.mainMap.getLayoutY() + Tile.getTileSize());
-        this.chooserRectangle.setLayoutY(this.chooserRectangle.getLayoutY() - 0.8);
+        this.chooserRectangle.setLayoutY(this.chooserRectangle.getLayoutY() - 0.04 * Tile.getTileSize());
     }
 
     public void goLeft() {
         if (this.mainMap.getLayoutX() >= 0)
             return;
         this.mainMap.setLayoutX(this.mainMap.getLayoutX() + Tile.getTileSize());
-        this.chooserRectangle.setLayoutX(this.chooserRectangle.getLayoutX() - 0.8);
+        this.chooserRectangle.setLayoutX(this.chooserRectangle.getLayoutX() - 0.04 * Tile.getTileSize());
     }
 
     public void goDown() {
-        if (this.mainMap.getLayoutY() <= -172 * Tile.getTileSize())
+        if (this.mainMap.getLayoutY() <= -172 * 20)
             return;
         this.mainMap.setLayoutY(this.mainMap.getLayoutY() - Tile.getTileSize());
-        this.chooserRectangle.setLayoutY(this.chooserRectangle.getLayoutY() + 0.8);
+        this.chooserRectangle.setLayoutY(this.chooserRectangle.getLayoutY() + 0.04 * Tile.getTileSize());
     }
 
     public void goRight() {
-        if (this.mainMap.getLayoutX() <= -134 * Tile.getTileSize())
+        if (this.mainMap.getLayoutX() <= -134 * 20)
             return;
         this.mainMap.setLayoutX(this.mainMap.getLayoutX() - Tile.getTileSize());
-        this.chooserRectangle.setLayoutX(this.chooserRectangle.getLayoutX() + 0.8);
+        this.chooserRectangle.setLayoutX(this.chooserRectangle.getLayoutX() + 0.04 * Tile.getTileSize());
     }
 
-    public GridPane getMainMap() {
+    public AnchorPane getMainMap() {
         return mainMap;
     }
 

@@ -3,11 +3,10 @@ package model.graphic;
 import controller.CaptchaController;
 import controller.MapController;
 import controller.MultiMenuFunctions;
-import javafx.scene.image.Image;
+import controller.StripPaneController;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.io.File;
@@ -16,15 +15,17 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class DownPane extends Pane {
-    private MapController mapController;
-    private Pane stripPane;
+    private final MapController mapController;
+    private final Pane stripPane;
+    private final StripPaneController stripPaneController;
 
     public DownPane(MapController mapController) {
         this.mapController = mapController;
-        stripPane = new Pane();
+        this.stripPane = new Pane();
+        this.stripPaneController = new StripPaneController(this.stripPane);
     }
 
-    public void initialize(Pane gamePane) {
+    public void initialize(Pane gamePane) throws URISyntaxException {
         this.setPrefWidth(gamePane.getPrefWidth());
         this.setPrefHeight(162);
         this.setLayoutY(gamePane.getPrefHeight() - this.getPrefHeight());
@@ -47,19 +48,33 @@ public class DownPane extends Pane {
 
         this.getChildren().add(detailPane);
         this.getChildren().add(stripPane);
+        addButtons();
         gamePane.getChildren().add(this);
     }
 
     public void addBuildingIcons() {
 
     }
-    public void addButtons() throws URISyntaxException {
-        File file = new File(Objects.requireNonNull(CaptchaController.class.getResource("/Image/MenuBuildings")).toURI());
-        ArrayList<File> buildings = MultiMenuFunctions.getAllImageFilesFromFolder(file);
-        Image image = new Image(buildings.get(0).getAbsolutePath());
 
-        Rectangle rectangle = new Rectangle();
-        rectangle.setFill(new ImagePattern(image));
+    public void addButtons() throws URISyntaxException {
+        File file = new File(Objects.requireNonNull(CaptchaController.class.getResource("/Image/Buildings")).toURI());
+        ArrayList<File> buildings = MultiMenuFunctions.getAllImageFilesFromFolder(file);
+
+        createRec(210, null, "CastleBuildings");
+        createRec(270, null, "TownBuildings");
+        createRec(330, null, "FarmBuildings");
+        createRec(390, null, "IndustryBuildings");
+        createRec(450, null, "WeaponBuildings");
+        createRec(510, null, "FoodProcessingBuildings");
     }
 
+    public void createRec(double x, String absoluteAddress, String buttonName) {
+        Rectangle rectangle = new Rectangle(40, 40);
+        rectangle.setId(buttonName);
+        rectangle.setLayoutX(x);
+        rectangle.setLayoutY(10);
+        rectangle.setFill(Color.WHITE);//Todo : image
+        this.getChildren().add(rectangle);
+        rectangle.setOnMouseClicked(mouseEvent -> this.stripPaneController.insertImages(rectangle.getId()));
+    }
 }
