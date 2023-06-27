@@ -1,23 +1,27 @@
 package model.game;
 
 public enum Color {
-    RED("\033[41m"),
-    CYAN("\033[46m"),
-    BLUE("\033[44m"),
-    YELLOW("\033[43m"),
-    GREEN("\033[42m"),
-    WHITE("\033[47m"),
-    BROWN("\033[45m"),
-    BLACK("\033[40m");
+    RED(javafx.scene.paint.Color.RED),
+    CYAN(javafx.scene.paint.Color.CYAN),
+    BLUE(javafx.scene.paint.Color.BLUE),
+    YELLOW(javafx.scene.paint.Color.YELLOW),
+    GREEN(javafx.scene.paint.Color.GREEN),
+    WHITE(javafx.scene.paint.Color.WHITE),
+    BROWN(javafx.scene.paint.Color.BROWN),
+    BLACK(javafx.scene.paint.Color.BLACK);
 
-    private final String string;
+    private final javafx.scene.paint.Color color;
 
-    Color(String string) {
-        this.string = string;
+    Color(javafx.scene.paint.Color color) {
+        this.color = color;
+    }
+
+    public javafx.scene.paint.Color getColor() {
+        return this.color;
     }
 
     @Override
     public String toString() {
-        return this.string;
+        return "";
     }
 }

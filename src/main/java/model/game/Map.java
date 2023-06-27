@@ -1,6 +1,7 @@
 package model.game;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Map {
@@ -9,7 +10,7 @@ public class Map {
     private final int size;
     private final Tile[][] field;
     private final boolean[][] tilesPassability;
-    private HashMap<Integer, Territory> territories;
+    private final HashMap<Integer, Territory> territories;
 
     static {
         maps = new ArrayList<>();
@@ -76,10 +77,25 @@ public class Map {
         return this.territories;
     }
 
-    public void setTilesState() {
-        for (int i = 0; i < this.size; i++)
-            for (int j = 0; j < this.size; j++)
-                this.field[i][j].setState();
+    public void updateImages() {
+        for (Tile[] tiles : this.field) {
+            for (int j = 0; j < this.field[0].length; j++)
+                tiles[j].updateImage();
+        }
+    }
+
+    public void updateSizes() {
+        for (Tile[] tiles : this.field) {
+            for (int j = 0; j < this.field[0].length; j++)
+                tiles[j].updateSize();
+        }
+    }
+
+    public void decreaseSize() {
+        for (Tile[] tiles : this.field) {
+            for (int j = 0; j < this.field[0].length; j++)
+                tiles[j].updateSize();
+        }
     }
 
     public void setTilesPassability() {
@@ -99,6 +115,25 @@ public class Map {
             return null;
 
         return this.field[x][y];
+    }
+
+    public Tile getTileByXY(double x, double y) {
+        return this.field[(int) x/Tile.getTileSize()][(int) y/Tile.getTileSize()];
+    }
+
+    public ArrayList<Tile> getRectangleTilesByXY(double firstX, double firstY, double secondX, double secondY) {
+        Tile firstTile = this.getTileByXY(firstX, firstY);
+        Tile secondTile = this.getTileByXY(secondX, secondY);
+        ArrayList<Tile> rectangleTiles = new ArrayList<>();
+
+        for (int i = Math.min(firstTile.getLocationX(), secondTile.getLocationX());
+             i <= Math.max(firstTile.getLocationX(), secondTile.getLocationX()); i++) {
+            rectangleTiles.addAll(Arrays.asList(this.field[i]).subList(Math.min(firstTile.getLocationY(), secondTile.getLocationY()), Math.max(firstTile.getLocationY(), secondTile.getLocationY()) + 1));
+        }
+
+        Tile.setSelectedTiles(rectangleTiles);
+
+        return rectangleTiles;
     }
 
     public boolean getPassabilityByLocation(int x, int y) {

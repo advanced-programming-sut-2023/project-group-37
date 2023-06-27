@@ -16,8 +16,9 @@ public enum Message {
     INVALID_COMMAND("Invalid command!"),
 
     // SignupMenu:
+    CANT_LOGIN("Username or password incorrect!"),
     CANCEL("The process canceled successfully!"),
-    EMPTY_FIELD("Please fill all necessary fields!"),
+    EMPTY_FIELD("Please fill all necessary fields correctly!"),
     INCORRECT_USERNAME_FORM("Incorrect username format!"),
     USERNAME_ALREADY_EXISTS("Username already exists"),
     INCORRECT_EMAIL_FORM("Incorrect email format!"),
@@ -52,6 +53,7 @@ public enum Message {
 
     // ProfileMenu:
     CHANGE_USERNAME("Username changed successfully!"),
+    CHANGE_SUCCESSFUL("change was successful!"),
     CHANGE_USERNAME_ERROR1("Please enter a username (empty field)!"),
     CHANGE_USERNAME_ERROR2("Invalid format for username!"),
     CHANGE_USERNAME_ERROR3("Please enter a new username!"),
@@ -67,7 +69,7 @@ public enum Message {
     ENTER_PASSWORD_AGAIN("Please enter new password again!"),
     CHANGE_EMAIL("Email changed successfully!"),
     CHANGE_EMAIL_ERROR1("Invalid format for email!"),
-    CHANGE_EMAIL_ERROR2("Email already exists!"),
+    EMAIL_ALREADY_EXISTS("Email already exists!"),
     CHANGE_EMAIL_ERROR3("Please enter an email!"),
     CHANGE_SLOGAN("Slogan changed successfully!"),
     CHANGE_SLOGAN_ERROR1("Please enter a slogan! (empty field)"),
@@ -169,7 +171,7 @@ public enum Message {
     TAX_RATE_SET("Tax rate has been set to"),
     INVALID_FEAR_RATE("You have to enter a rate between -5 to 5"),
     FEAR_RATE_SET("Fear rate has been set to"),
-    ;
+    TERRITORY_EXISTS("Territory number already exists !");
 
     private final String message;
 

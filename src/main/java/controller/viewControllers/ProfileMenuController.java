@@ -1,23 +1,55 @@
 package controller.viewControllers;
 
+import controller.CaptchaController;
 import controller.MultiMenuFunctions;
 import model.user.User;
-import model.utils.PasswordHashing;
 import view.enums.Command;
 import view.enums.Message;
+
+import java.io.File;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Random;
 
 
 public class ProfileMenuController {
     private static final ProfileMenuController profileMenuController;
     private static User currentUser;
     private String password;
+    private static ArrayList<File> allAvatarImages;
+    private static final Random random = new Random();
 
     static {
         profileMenuController = new ProfileMenuController();
     }
 
+    static {
+        allAvatarImages = new ArrayList<>();
+
+        File file;
+        try {
+            file = new File(Objects.requireNonNull(CaptchaController.class.getResource("/Image/Avatar")).toURI());
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+        allAvatarImages.addAll(MultiMenuFunctions.getAllImageFilesFromFolder(file));
+    }
+
     private ProfileMenuController() {
 
+    }
+
+    public static ArrayList<File> getAllAvatarImages() {
+        return allAvatarImages;
+    }
+
+    public static int getRandomAvatarURL() {
+        return random.nextInt(allAvatarImages.size());
+    }
+
+    public static User getCurrentUser() {
+        return currentUser;
     }
 
     public static ProfileMenuController getInstance() {
@@ -58,7 +90,15 @@ public class ProfileMenuController {
         return Message.CHANGE_NICKNAME;
     }
 
-    public String changePassword(String oldPass, String newPass) {
+    public Message changePass(String oldPass, String newPass) {
+        if (currentUser.isWrongPassword(oldPass)) {
+            return Message.CHANGE_PASSWORD_ERROR2;
+        }
+        currentUser.changePassword(newPass);
+        return Message.CHANGE_PASSWORD;
+    }
+
+    public String changePassword(String oldPass, String newPass) { // #delete this method
         MultiMenuFunctions.deleteQuotations(oldPass);
         MultiMenuFunctions.deleteQuotations(newPass);
         if (oldPass == null || newPass == null) {
@@ -74,14 +114,15 @@ public class ProfileMenuController {
         return Message.ENTER_PASSWORD_AGAIN.toString();
     }
 
-    public String checkPasswordAgain(String newPassword) {
+
+    public String checkPasswordAgain(String newPassword) {  // #delete this method
         if (Command.CANCEL.getMatcher(newPassword) != null)
             return Message.CANCEL.toString();
 
         if (!newPassword.equals(password))
             return Message.CHANGE_PASSWORD_ERROR5.toString();
-        String encoded = PasswordHashing.encode(newPassword);
-        currentUser.setHashedPassword(encoded);
+
+        currentUser.setPassword(newPassword);
         return Message.CHANGE_PASSWORD.toString();
     }
 
@@ -94,7 +135,7 @@ public class ProfileMenuController {
             return Message.CHANGE_EMAIL_ERROR1;
         }
         if (User.getUserByEmail(newEmail) != null) {
-            return Message.CHANGE_EMAIL_ERROR2;
+            return Message.EMAIL_ALREADY_EXISTS;
         }
         currentUser.setEmail(newEmail);
         return Message.CHANGE_EMAIL;

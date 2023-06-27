@@ -1,44 +1,55 @@
 package controller;
 
+import controller.viewControllers.ChangeMenuController;
 import controller.viewControllers.MainMenuController;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import model.game.Map;
 import model.user.User;
 import view.enums.Result;
 import view.menus.*;
 
+import java.util.Objects;
+
 public class AppController {
     private static AppController appController;
     private final Stage stage;
     private final LoginMenu loginMenu;
+    private final ForgotMenu forgotMenu;
     private final RegisterMenu registerMenu;
-    private final CaptchaMenu captchaMenu;
     private final MainMenu mainMenu;
     private final ProfileMenu profileMenu;
+    private final StartGameMenu startGameMenu;
     private final GameMenu gameMenu;
     private final BuildingMenu buildingMenu;
-    private final MapMenu mapMenu;
     private final ShopMenu shopMenu;
     private final TradeMenu tradeMenu;
     private final UnitMenu unitMenu;
+    private final ChangeMenu changeMenu;
+    private final ChangePasswordMenu changePasswordMenu;
+    private final AvatarMenu avatarMenu;
 
     public AppController(Stage stage) {
         this.stage = stage;
+        this.stage.setResizable(false);
 
         if (appController == null)
             appController = this;
 
         this.loginMenu = new LoginMenu();
+        this.forgotMenu = new ForgotMenu();
         this.registerMenu = new RegisterMenu();
-        this.captchaMenu = new CaptchaMenu();
         this.mainMenu = new MainMenu();
         this.profileMenu = new ProfileMenu();
+        this.startGameMenu = new StartGameMenu();
         this.gameMenu = new GameMenu();
         this.buildingMenu = new BuildingMenu();
-        this.mapMenu = new MapMenu();
         this.shopMenu = new ShopMenu();
         this.tradeMenu = new TradeMenu();
         this.unitMenu = new UnitMenu();
+        this.changeMenu = new ChangeMenu();
+        this.changePasswordMenu = new ChangePasswordMenu();
+        this.avatarMenu = new AvatarMenu();
     }
 
     public static AppController getInstance() {
@@ -52,23 +63,32 @@ public class AppController {
 
         if (loggedInUser != null) {
             MainMenuController.setCurrentUser(loggedInUser);
-
-            this.mainMenu.start(stage);
+            this.mainMenu.start(this.stage);
+            return;
         }
 
-        this.loginMenu.start(stage);
+        this.loginMenu.start(this.stage);
     }
 
     public void runMenu(Result result) throws Exception {
+
         switch (result) {
-            case ENTER_LOGIN_MENU -> this.loginMenu.start(stage);
-            case ENTER_REGISTER_MENU -> this.registerMenu.start(stage);
-            case GO_FOR_CAPTCHA -> this.captchaMenu.start(stage);
-            case ENTER_PROFILE_MENU -> this.profileMenu.start(stage);
-            case ENTER_MAIN_MENU -> this.mainMenu.start(stage);
-            case ENTER_GAME_MENU -> this.gameMenu.start(stage);
+            case ENTER_LOGIN_MENU -> this.loginMenu.start(this.stage);
+            case ENTER_FORGOT_MENU -> this.forgotMenu.start(this.stage);
+            case ENTER_REGISTER_MENU -> this.registerMenu.start(this.stage);
+            case ENTER_PROFILE_MENU -> this.profileMenu.start(this.stage);
+            case ENTER_MAIN_MENU -> this.mainMenu.start(this.stage);
+            case ENTER_START_GAME_MENU -> this.startGameMenu.start(this.stage);
+            case ENTER_GAME_MENU -> this.gameMenu.start(this.stage);
+            case ENTER_CHANGE_MENU -> this.changeMenu.start(this.stage);
+            case ENTER_CHANGE_PASSWORD_MENU -> this.changePasswordMenu.start(this.stage);
+            case ENTER_AVATAR_MENU -> this.avatarMenu.start(this.stage);
 
             // todo : how to show game parts menu ??
         }
+    }
+
+    public void goToStartGame() {
+        // todo : go to next project : core
     }
 }

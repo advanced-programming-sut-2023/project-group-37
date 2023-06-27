@@ -87,7 +87,7 @@ public class Game {
                         MilitaryMachine machine = new MilitaryMachine(government,
                                 ((SiegeTent) building).getFormingMachine(), building.getLocation());
                         government.getBuildings().remove(building);
-                        building.getLocation().setBuilding(null);
+                        building.getLocation().removeBuilding();
                         int operatorsNeeded = ((SiegeTent) building).getFormingMachine().getOperatorsNeeded();
                         for (int i = building.getLocation().getMilitaryUnits().size() - 1; i >= 0; i--) {
                             government.getMilitaryUnits().remove(building.getLocation().getMilitaryUnits().get(i));
@@ -178,23 +178,23 @@ public class Game {
 
                                 if (Math.sqrt(i * i + j * j) < range + 0.2) {
                                     // i : + AND j : +
-                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getX() + i,
-                                            militaryUnit.getLocation().getY() + j);
+                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getLocationX() + i,
+                                            militaryUnit.getLocation().getLocationY() + j);
 
                                     if (setEnemyTargetForDefence(target, government, militaryUnit)) break firstFor;
                                     // i : - AND j : +
-                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getX() - i,
-                                            militaryUnit.getLocation().getY() + j);
+                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getLocationX() - i,
+                                            militaryUnit.getLocation().getLocationY() + j);
 
                                     if (setEnemyTargetForDefence(target, government, militaryUnit)) break;
                                     // i : + AND j : -
-                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getX() + i,
-                                            militaryUnit.getLocation().getY() - j);
+                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getLocationX() + i,
+                                            militaryUnit.getLocation().getLocationY() - j);
 
                                     if (setEnemyTargetForDefence(target, government, militaryUnit)) break;
                                     // i : - AND j : -
-                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getX() - i,
-                                            militaryUnit.getLocation().getY() - j);
+                                    target = this.map.getTileByLocation(militaryUnit.getLocation().getLocationX() - i,
+                                            militaryUnit.getLocation().getLocationY() - j);
 
                                     if (setEnemyTargetForDefence(target, government, militaryUnit)) break;
                                 }
@@ -225,6 +225,8 @@ public class Game {
                             ((DefensiveBuilding) building).getDefensiveType() == DefensiveBuildingType.SMALL_GATEHOUSE ||
                                     ((DefensiveBuilding) building).getDefensiveType() == DefensiveBuildingType.LARGE_GATEHOUSE))
                         ((DefensiveBuilding) building).setOwner();
+
+            map.updateImages();
         }
         do {
             this.index = (this.index + 1) % this.governments.size();

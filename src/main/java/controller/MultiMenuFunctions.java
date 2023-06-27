@@ -1,15 +1,27 @@
 package controller;
 
 
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.io.File;
+import java.util.*;
 
+import controller.viewControllers.MainMenuController;
+import controller.viewControllers.ProfileMenuController;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import model.buildings.Building;
 import model.buildings.DefensiveBuilding;
 import model.game.Texture;
 import model.game.Tile;
 import model.game.Map;
 import model.people.MilitaryUnit;
+import model.user.User;
+import view.enums.Error;
+import view.menus.LoginMenu;
 
 public class MultiMenuFunctions {
 
@@ -26,12 +38,110 @@ public class MultiMenuFunctions {
         return !email.matches("[A-Za-z0-9_.]+@[a-zA-Z0-9_]+\\.[A-Za-z0-9_.]+");
     }
 
-    public static void wait(int ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
+    public static void setBackground(Pane pane, String filePath) {
+        pane.setBackground(new Background(new BackgroundImage(new Image(Objects.requireNonNull(
+                LoginMenu.class.getResource("/Image/Background/" + filePath)).toExternalForm(),
+                pane.getPrefWidth(), pane.getPrefHeight() + 10, false, false), BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
+    }
+
+    public static void setTileImage(Tile tile, Image image) {
+        MapController.getInstance().getMainMap().add(new ImageView(new Image(image.getUrl(),
+                Tile.getTileSize(), Tile.getTileSize(), false, false)), tile.getLocationX(), tile.getLocationY());
+    }
+
+    public static void initializePasswordFields(TextField passwordShow, PasswordField passwordField,
+                                                Label passwordError, CheckBox showPassword) {
+
+        passwordField.textProperty().addListener((observable, oldText, newText) -> {
+            passwordShow.setText(newText);
+            if (newText.isEmpty())
+                passwordError.setText(Error.NECESSARY_FIELD.toString());
+            else passwordError.setText("");
+        });
+
+        passwordShow.textProperty().addListener((observable, oldText, newText) ->
+                passwordField.setText(newText));
+
+        passwordShow.managedProperty().bind(showPassword.selectedProperty());
+        passwordShow.visibleProperty().bind(showPassword.selectedProperty());
+
+        passwordField.managedProperty().bind(showPassword.selectedProperty().not());
+        passwordField.visibleProperty().bind(showPassword.selectedProperty().not());
+    }
+
+    public static void initializePasswordFieldsWithConfirm(
+            TextField passwordShow, TextField passwordConfirmShow,
+            PasswordField passwordField, PasswordField passwordConfirmField, Label passwordError,
+            Label passwordConfirmError, CheckBox showPassword) {
+
+        passwordShow.textProperty().addListener((observable, oldText, newText) ->
+                passwordField.setText(newText));
+
+        passwordField.textProperty().addListener((observable, oldText, newText) -> {
+            passwordShow.setText(newText);
+
+            if (MultiMenuFunctions.checkPasswordNotOK(newText))
+                passwordError.setText(Error.WEAK_PASSWORD.toString());
+
+            else if (newText.isEmpty())
+                passwordError.setText(Error.NECESSARY_FIELD.toString());
+
+            else passwordError.setText("");
+        });
+
+        passwordConfirmShow.textProperty().addListener((observable, oldText, newText) ->
+                passwordConfirmField.setText(newText));
+
+        passwordConfirmField.textProperty().addListener((observable, oldText, newText) -> {
+            passwordConfirmShow.setText(newText);
+
+            if (!passwordField.getText().equals(newText))
+                passwordConfirmError.setText(Error.INCOMPATIBLE_PASSWORDS.toString());
+
+            else if (newText.isEmpty())
+                passwordConfirmError.setText(Error.NECESSARY_FIELD.toString());
+
+            else passwordConfirmError.setText("");
+        });
+
+        passwordShow.managedProperty().bind(showPassword.selectedProperty());
+        passwordShow.visibleProperty().bind(showPassword.selectedProperty());
+
+        passwordField.managedProperty().bind(showPassword.selectedProperty().not());
+        passwordField.visibleProperty().bind(showPassword.selectedProperty().not());
+
+        passwordConfirmShow.managedProperty().bind(showPassword.selectedProperty());
+        passwordConfirmShow.visibleProperty().bind(showPassword.selectedProperty());
+
+        passwordConfirmField.managedProperty().bind(showPassword.selectedProperty().not());
+        passwordConfirmField.visibleProperty().bind(showPassword.selectedProperty().not());
+    }
+
+    public static ArrayList<File> getAllImageFilesFromFolder(File directory) {
+        //Get all the files from the folder
+        File[] allFiles = directory.listFiles();
+        if (allFiles == null || allFiles.length == 0) {
+            throw new RuntimeException("No files present in the directory: " + directory.getAbsolutePath());
         }
+
+        //Set the required image extensions here.
+        List<String> supportedImageExtensions = Arrays.asList("jpg", "png", "gif", "webp");
+
+        //Filter out only image files
+        ArrayList<File> acceptedImages = new ArrayList<>();
+        for (File file : allFiles) {
+            //Parse the file extension
+            String fileExtension = file.getName().substring(file.getName().lastIndexOf(".") + 1);
+            //Check if the extension is listed in the supportedImageExtensions
+            if (supportedImageExtensions.stream().anyMatch(fileExtension::equalsIgnoreCase)) {
+                //Add the image to the filtered list
+                acceptedImages.add(file);
+            }
+        }
+
+        //Return the filtered images
+        return acceptedImages;
     }
 
     public static String deleteQuotations(String string) {
@@ -55,35 +165,36 @@ public class MultiMenuFunctions {
     private static ArrayList<Tile> setNextNumber(ArrayList<Tile> targets, int nextNumber, boolean[][] tilePassability, Map map) {
         ArrayList<Tile> result = new ArrayList<>();
         Tile nextTile;
-        int x,y;
+        int x, y;
 
         for (Tile tile : targets) {
-            x = tile.getX(); y = tile.getY();
+            x = tile.getLocationX();
+            y = tile.getLocationY();
 
-            nextTile = map.getTileByLocation(x+1,y);
+            nextTile = map.getTileByLocation(x + 1, y);
             if (nextTile != null) {
-                if (nextTile.number == 0 && tilePassability[x+1][y]) {
+                if (nextTile.number == 0 && tilePassability[x + 1][y]) {
                     nextTile.number = nextNumber;
                     result.add(nextTile);
                 }
             }
-            nextTile = map.getTileByLocation(x-1,y);
+            nextTile = map.getTileByLocation(x - 1, y);
             if (nextTile != null) {
-                if (nextTile.number == 0 && tilePassability[x-1][y]) {
+                if (nextTile.number == 0 && tilePassability[x - 1][y]) {
                     nextTile.number = nextNumber;
                     result.add(nextTile);
                 }
             }
-            nextTile = map.getTileByLocation(x,y+1);
+            nextTile = map.getTileByLocation(x, y + 1);
             if (nextTile != null) {
-                if (nextTile.number == 0 && tilePassability[x][y+1]) {
+                if (nextTile.number == 0 && tilePassability[x][y + 1]) {
                     nextTile.number = nextNumber;
                     result.add(nextTile);
                 }
             }
-            nextTile = map.getTileByLocation(x,y-1);
+            nextTile = map.getTileByLocation(x, y - 1);
             if (nextTile != null) {
-                if (nextTile.number == 0 && tilePassability[x][y-1]) {
+                if (nextTile.number == 0 && tilePassability[x][y - 1]) {
                     nextTile.number = nextNumber;
                     result.add(nextTile);
                 }
@@ -93,11 +204,11 @@ public class MultiMenuFunctions {
     }
 
     private static boolean isNeighbor(Tile neighbor, Tile tile) {
-        if (tile.getX() - neighbor.getX() == 1 || neighbor.getX() - tile.getX() == 1)
-            return tile.getY() == neighbor.getY();
+        if (tile.getLocationX() - neighbor.getLocationX() == 1 || neighbor.getLocationX() - tile.getLocationX() == 1)
+            return tile.getLocationY() == neighbor.getLocationY();
 
-        if (tile.getY() - neighbor.getY() == 1 || neighbor.getY() - tile.getY() == 1)
-            return tile.getX() == neighbor.getX();
+        if (tile.getLocationY() - neighbor.getLocationY() == 1 || neighbor.getLocationY() - tile.getLocationY() == 1)
+            return tile.getLocationX() == neighbor.getLocationX();
 
         return false;
     }
@@ -108,7 +219,7 @@ public class MultiMenuFunctions {
             if (isNeighbor(neighbor, tile))
                 return neighbor;
         }
-        System.out.println(tile.getX() + " " + tile.getY() + " " + tile.number);
+        System.out.println(tile.getLocationX() + " " + tile.getLocationY() + " " + tile.number);
         return null;
     }
 
@@ -124,8 +235,8 @@ public class MultiMenuFunctions {
         targets.get(0).add(origin);
 
         int number = 1;
-        while (targets.get(number-1).size() > 0 && !targets.get(number-1).contains(destination)) {
-            targets.add(setNextNumber(targets.get(targets.size()-1), number, tilePassability, map));
+        while (targets.get(number - 1).size() > 0 && !targets.get(number - 1).contains(destination)) {
+            targets.add(setNextNumber(targets.get(targets.size() - 1), number, tilePassability, map));
             number++;
         }
 
@@ -160,7 +271,7 @@ public class MultiMenuFunctions {
                 }
             }
         }
-        if (!tilePassability[destination.getX()][destination.getY()])
+        if (!tilePassability[destination.getLocationX()][destination.getLocationY()])
             return null;
 
         ArrayList<ArrayList<Tile>> targets = new ArrayList<>();
@@ -168,8 +279,8 @@ public class MultiMenuFunctions {
         targets.get(0).add(origin);
 
         int number = 1;
-        while (targets.get(number-1).size() > 0 && !targets.get(number-1).contains(destination)) {
-            targets.add(setNextNumber(targets.get(targets.size()-1), number, tilePassability, map));
+        while (targets.get(number - 1).size() > 0 && !targets.get(number - 1).contains(destination)) {
+            targets.add(setNextNumber(targets.get(targets.size() - 1), number, tilePassability, map));
             number++;
         }
         if (targets.get(targets.size() - 1).size() == 0)
@@ -185,7 +296,7 @@ public class MultiMenuFunctions {
 
         Tile preTile;
         Tile tile = destination;
-        int index = targets.size() -2;
+        int index = targets.size() - 2;
         while (index > 0) {
             preTile = getNeighbor(tile, targets.get(index));
             result.add(1, preTile);
@@ -197,21 +308,21 @@ public class MultiMenuFunctions {
     }
 
     public static double distance(Tile tile1, Tile tile2) {
-        int x1 = tile1.getX(), y1 = tile1.getY(), x2 = tile2.getX(), y2 = tile2.getY();
+        int x1 = tile1.getLocationX(), y1 = tile1.getLocationY(), x2 = tile2.getLocationX(), y2 = tile2.getLocationY();
         return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
     }
 
     public static Tile getMiddle(Tile tile1, Tile tile2, Map map) {
-        int x = (tile2.getX() - tile1.getX()) / 2;
-        int y = (tile2.getY() - tile1.getY()) / 2;
+        int x = (tile2.getLocationX() - tile1.getLocationX()) / 2;
+        int y = (tile2.getLocationY() - tile1.getLocationY()) / 2;
         return map.getTileByLocation(x, y);
     }
 
     public static Tile getNearestPassableTileByLocation(Tile tile, Map map) {
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
-                if (map.getPassabilityByLocation(tile.getX() + i, tile.getY() + j))
-                    return map.getTileByLocation(tile.getX() + i, tile.getY() + j);
+                if (map.getPassabilityByLocation(tile.getLocationX() + i, tile.getLocationY() + j))
+                    return map.getTileByLocation(tile.getLocationX() + i, tile.getLocationY() + j);
             }
         }
         return tile;
@@ -221,10 +332,16 @@ public class MultiMenuFunctions {
         Tile target;
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
-                if ((target = map.getTileByLocation(tile.getX() + i, tile.getY() + j)).getTexture() == Texture.MOAT)
+                if ((target = map.getTileByLocation(tile.getLocationX() + i, tile.getLocationY() + j)).getTexture() == Texture.MOAT)
                     return target;
             }
         }
         return tile;
+    }
+
+    public static void setAllCurrentUsers(User user) {
+        User.setCurrentUser(user);
+        ProfileMenuController.setCurrentUser(user);
+        MainMenuController.setCurrentUser(user);
     }
 }

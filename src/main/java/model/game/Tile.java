@@ -1,46 +1,138 @@
 package model.game;
 
+import controller.MultiMenuFunctions;
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import model.buildings.Building;
 import model.buildings.BuildingType;
 import model.buildings.DefensiveBuilding;
-import model.people.MilitaryUnit;
-import model.people.Person;
-import model.people.Troop;
-import model.people.TroopType;
+import model.people.*;
 
 import java.util.ArrayList;
 
-public class Tile {
-
+public class Tile extends Rectangle {
+    private static Integer tileSize;
+    private static ArrayList<Tile> selectedTiles;
     private final int x;
     private final int y;
     private Texture texture;
-    private final ArrayList<Person> people;
+    private Texture treeTexture;
+    private Image image;
+    private Tile miniTile;
+    private ArrayList<Person> people;
     private ArrayList<MilitaryUnit> militaryUnits;
     private Building building;
-    private Character state;
     private boolean isPassable;
     private Territory territory;
     public int number;
     private boolean hasBuilding;
 
+    static {
+        tileSize = 20;
+        selectedTiles = new ArrayList<>();
+    }
+
     public Tile(int x, int y) {
+        super(tileSize, tileSize);
         this.x = x;
         this.y = y;
         this.texture = Texture.GROUND;
+        this.setImage(this.texture.getImage());
+        this.miniTile = new Tile(this);
+
         this.people = new ArrayList<>();
         this.militaryUnits = new ArrayList<>();
         this.building = null;
         this.isPassable = true;
         this.hasBuilding = false;
+
+        //todo : remove this :
+        if (y == 15 && x <= 20 && x>= 10)
+            this.militaryUnits.add(new Troop(null ,TroopType.ARCHER, this));
     }
 
-    public int getX() {
+    public Tile(Tile bigTile) { // for creating miniTile
+        super((double) tileSize/40, (double) tileSize/40);
+        this.x = bigTile.x;
+        this.y = bigTile.y;
+        this.texture = bigTile.texture;
+    }
+
+    private static void removeSelectedTiles() {
+        for (Tile selectedTile : selectedTiles) {
+            selectedTile.setWidth(20);
+            selectedTile.setHeight(20);
+            selectedTile.strokeProperty().set(null);
+        }
+        selectedTiles = new ArrayList<>();
+    }
+
+    public static void setSelectedTiles(ArrayList<Tile> selectedTiles) {
+        removeSelectedTiles();
+        Tile.selectedTiles.addAll(selectedTiles);
+    }
+
+    public static void zoom() {
+        if (tileSize <= 40)
+            tileSize += 4;
+    }
+
+    public static void zoomOut() {
+        if (tileSize >= 23)
+            tileSize -= 4;
+    }
+
+    public static int getTileSize() {
+        return tileSize;
+    }
+
+    public void updateSize() {
+        this.setHeight(tileSize);
+        this.setWidth(tileSize);
+        this.updateImage();
+    }
+
+    // Effects :
+    public void setRectangleSelectedEffect() {
+        this.setWidth(tileSize - 1);
+        this.setHeight(tileSize - 1);
+        this.setStroke(Color.GREEN);
+        selectedTiles.add(this);
+    }
+
+    public void setSelectedEffect() {
+        removeSelectedTiles();
+        this.setWidth(tileSize - 1);
+        this.setHeight(tileSize - 1);
+        this.setStroke(Color.GREEN);
+        selectedTiles.add(this);
+    }
+
+    public void setUpRectangleEffect() {
+        this.setRectangleSelectedEffect();
+    }
+    public void setDownRectangleEffect() {
+        this.setRectangleSelectedEffect();
+    }
+    public void setLeftRectangleEffect() {
+        this.setRectangleSelectedEffect();
+    }
+    public void setRightRectangleEffect() {
+        this.setRectangleSelectedEffect();
+    }
+
+    public int getLocationX() {
         return x;
     }
 
-    public int getY() {
+    public int getLocationY() {
         return y;
+    }
+
+    public Tile getMiniTile() {
+        return this.miniTile;
     }
 
     public Texture getTexture() {
@@ -49,6 +141,10 @@ public class Tile {
 
     public void changeTexture(Texture texture) {
         this.texture = texture;
+    }
+
+    public void changeTreeTexture(Texture treeTexture) {
+        this.treeTexture = treeTexture;
     }
 
     public ArrayList<MilitaryUnit> getMilitaryUnits() {
@@ -72,7 +168,7 @@ public class Tile {
             }
         }
 
-        if (damage == firstDamage && this.building != null ) {
+        if (damage == firstDamage && this.building != null) {
             if (!(this.building instanceof DefensiveBuilding) && this.building.getType() != BuildingType.KILLING_PIT &&
                     this.building.getLoyalty() != government)
                 this.building.takeDamage(damage);
@@ -90,13 +186,67 @@ public class Tile {
         this.building = null;
     }
 
-    public void setBuilding(Building building) {
-        this.building = building;
-        this.hasBuilding = true;
+    private void setImage(Image inputImage) {
+        this.image = inputImage;
+        this.setFill(new ImagePattern(inputImage));
+
+        if (this.miniTile != null)
+            this.miniTile.setImage(this);
     }
 
-    public Character getState() {
-        return state;
+    private void setImage(Tile tile) {
+        this.image = tile.image;
+        this.setFill(new ImagePattern(this.image));
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
+
+        if (building != null) {
+            this.hasBuilding = true;
+            this.updateImage();
+
+            if (building instanceof DefensiveBuilding defensiveBuilding)
+                this.setImage(defensiveBuilding.getDefensiveType().getImage());
+            else this.setImage(building.getType().getImage());
+        }
+
+        else this.hasBuilding = false;
+        this.updateImage();
+    }
+
+    public void updateImage() {
+        this.setImage(this.texture.getImage());
+
+        if (this.treeTexture != null) {
+            MultiMenuFunctions.setTileImage(this, treeTexture.getImage());
+            this.miniTile.setFill(Color.DARKGREEN);
+        }
+
+        if (this.militaryUnits.size() > 0) {
+            for (MilitaryUnit militaryUnit : this.militaryUnits) {
+                if (militaryUnit instanceof MilitaryMachine militaryMachine) {
+                    MultiMenuFunctions.setTileImage(this, militaryMachine.getType().getImage());
+                    return;
+                }
+            }
+
+            MultiMenuFunctions.setTileImage(this,
+                    ((Troop) this.militaryUnits.get(this.militaryUnits.size() -1)).getType().getImage());
+            this.miniTile.setFill(Color.HOTPINK);
+            return;
+        }
+
+        if (this.hasBuilding) {
+            if (this.building instanceof DefensiveBuilding defensiveBuilding) {
+                MultiMenuFunctions.setTileImage(this, defensiveBuilding.getDefensiveType().getImage());
+                this.miniTile.setFill(Color.WHITESMOKE);
+            }
+            else {
+                MultiMenuFunctions.setTileImage(this, this.building.getType().getImage());
+                this.miniTile.setFill(Color.LIGHTYELLOW);
+            }
+        }
     }
 
     public boolean isPassable() {
@@ -107,38 +257,6 @@ public class Tile {
         return this.territory;
     }
 
-    public void setState() {
-        boolean hasLord = false;
-        for (MilitaryUnit militaryUnit : this.militaryUnits) {
-            if (militaryUnit instanceof Troop troop) {
-                if (troop.getType() == TroopType.LORD) {
-                    hasLord = true;
-                    break;
-                }
-            }
-        }
-        if (hasLord)
-            this.state = 'L';
-
-        else if (this.militaryUnits.size() > 0) {
-            for (MilitaryUnit militaryUnit : this.militaryUnits) {
-                if (militaryUnit.isOnMove() || militaryUnit.isOnPatrol()) {
-                    this.state = 'M';
-                    return;
-                }
-            }
-            this.state = 'S';
-        } else if (this.hasBuilding) {
-            if (this.building instanceof DefensiveBuilding)
-                this.state = 'W';
-            else this.state = 'B';
-        }
-
-        else if (this.texture == Texture.OLIVE_TREE || texture == Texture.DESERT_TREE) {
-            this.state = 'T';
-        } else this.state = 'N';
-    }
-
     public ArrayList<Person> getPeople() {
         return this.people;
     }
@@ -147,16 +265,17 @@ public class Tile {
         this.people.add(person);
     }
 
-    public void addMilitaryUnit(MilitaryUnit troop){
+    public void addMilitaryUnit(MilitaryUnit troop) {
         this.militaryUnits.add(troop);
+        this.updateImage();
     }
 
     public void setPassability(boolean passability) {
         isPassable = passability;
     }
 
-    public boolean isTotallyEmpty() {
-        return this.people.isEmpty() && this.militaryUnits.isEmpty() && this.getBuilding() == null;
+    public boolean isTotallyNotEmpty() {
+        return !this.people.isEmpty() || !this.militaryUnits.isEmpty() || this.getBuilding() != null;
     }
 
     public boolean hasEnemy(Government government) {
@@ -183,8 +302,7 @@ public class Tile {
         if (texture == Texture.MOAT) {
             texture = Texture.GROUND;
             this.isPassable = true;
-        }
-        else {
+        } else {
             texture = Texture.MOAT;
             this.isPassable = false;
         }
@@ -193,4 +311,5 @@ public class Tile {
     public boolean hasBuilding() {
         return hasBuilding;
     }
+
 }

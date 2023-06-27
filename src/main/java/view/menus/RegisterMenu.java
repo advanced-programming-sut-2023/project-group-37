@@ -1,6 +1,7 @@
 package view.menus;
 
 import controller.AppController;
+import controller.CaptchaController;
 import controller.MultiMenuFunctions;
 import controller.viewControllers.RegisterMenuController;
 import javafx.application.Application;
@@ -9,11 +10,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.user.RecoveryQuestion;
 import model.user.User;
 import view.enums.Error;
+import view.enums.Message;
 import view.enums.Result;
 
 import java.net.URL;
@@ -22,14 +26,17 @@ import java.util.Objects;
 public class RegisterMenu extends Application {
     private final AppController appController;
     private final RegisterMenuController registerMenuController;
+    private final CaptchaController captchaController;
 
-    // choiceBoxes :
+    // choiceBoxes && Buttons :
     @FXML
     private ChoiceBox<String> recoveryQuestions;
     @FXML
     private ChoiceBox<String> sloganChoiceBox;
     @FXML
     private CheckBox showPassword;
+    @FXML
+    private Label refreshLabel;
 
     // fields :
     @FXML
@@ -50,6 +57,8 @@ public class RegisterMenu extends Application {
     private TextField recoveryAnswerField;
     @FXML
     private TextField sloganField;
+    @FXML
+    private TextField captchaField;
 
     // Error labels :
     @FXML
@@ -68,16 +77,26 @@ public class RegisterMenu extends Application {
     private Label recoveryAnswerError;
     @FXML
     private Label sloganError;
+    @FXML
+    private Label captchaError;
+
+    // Images :
+    @FXML
+    private ImageView captchaImage;
 
     public RegisterMenu() {
         this.appController = AppController.getInstance();
         this.registerMenuController = RegisterMenuController.getInstance();
+        this.captchaController = new CaptchaController();
     }
 
     @Override
     public void start(Stage stage) throws Exception {
         URL url = LoginMenu.class.getResource("/FXML/registerMenu.fxml");
         AnchorPane anchorPane = FXMLLoader.load(Objects.requireNonNull(url));
+        anchorPane.setPrefHeight(anchorPane.getPrefHeight() + 30);
+        MultiMenuFunctions.setBackground(anchorPane, "registration-bg.jpg");
+
         Scene scene = new Scene(anchorPane);
         stage.setScene(scene);
         stage.show();
@@ -85,9 +104,10 @@ public class RegisterMenu extends Application {
 
     @FXML
     private void initialize() {
-        initializeFields();
-        initializeErrors();
-        initializeSlogan();
+        this.initializeFields();
+        this.initializeErrors();
+        this.initializeSlogan();
+        this.initializeCaptcha();
 
         for (RecoveryQuestion recoveryQuestion : RecoveryQuestion.values()) {
             this.recoveryQuestions.getItems().add(recoveryQuestion.getQuestion());
@@ -128,6 +148,22 @@ public class RegisterMenu extends Application {
         });
     }
 
+    private void initializeCaptcha() {
+        this.generateCaptcha();
+
+        this.captchaError.setText(Error.INCORRECT_CAPTCHA.toString());
+
+        this.captchaField.textProperty().addListener((
+                ObservableValue<? extends String> ov, String old_val, String new_val) -> {
+            if (this.captchaController.isCaptchaInCorrect(new_val))
+                this.captchaError.setText(Error.INCORRECT_CAPTCHA.toString());
+
+            else if (new_val.isEmpty()) this.captchaError.setText(Error.NECESSARY_FIELD.toString());
+
+            else this.captchaError.setText("");
+        });
+    }
+
     private void initializeFields() {
         this.usernameField.textProperty().addListener((observable, oldText, newText) -> {
             if (MultiMenuFunctions.checkUsernameNotOK(newText))
@@ -143,63 +179,27 @@ public class RegisterMenu extends Application {
             }
         });
 
-        this.passwordShow.textProperty().addListener((observable, oldText, newText) ->
-                this.passwordField.setText(newText));
-
-        this.passwordField.textProperty().addListener((observable, oldText, newText) -> {
-            this.passwordShow.setText(newText);
-
-            if (MultiMenuFunctions.checkPasswordNotOK(newText))
-                this.passwordError.setText(Error.WEAK_PASSWORD.toString());
-
-            else if (newText.isEmpty())
-                this.passwordError.setText(Error.NECESSARY_FIELD.toString());
-
-            else this.passwordError.setText("");
-        });
-
-        this.passwordConfirmShow.textProperty().addListener((observable, oldText, newText) ->
-                this.passwordConfirmField.setText(newText));
-
-        this.passwordConfirmField.textProperty().addListener((observable, oldText, newText) -> {
-            passwordConfirmShow.setText(newText);
-
-            if (!passwordField.getText().equals(newText))
-                this.passwordConfirmError.setText(Error.INCOMPATIBLE_PASSWORDS.toString());
-
-            else if (newText.isEmpty())
-                this.passwordConfirmError.setText(Error.NECESSARY_FIELD.toString());
-
-            else this.passwordConfirmError.setText("");
-        });
-
-        this.passwordShow.managedProperty().bind(this.showPassword.selectedProperty());
-        this.passwordShow.visibleProperty().bind(this.showPassword.selectedProperty());
-
-        this.passwordField.managedProperty().bind(this.showPassword.selectedProperty().not());
-        this.passwordField.visibleProperty().bind(this.showPassword.selectedProperty().not());
-
-        this.passwordConfirmShow.managedProperty().bind(this.showPassword.selectedProperty());
-        this.passwordConfirmShow.visibleProperty().bind(this.showPassword.selectedProperty());
-
-        this.passwordConfirmField.managedProperty().bind(this.showPassword.selectedProperty().not());
-        this.passwordConfirmField.visibleProperty().bind(this.showPassword.selectedProperty().not());
-
+        MultiMenuFunctions.initializePasswordFieldsWithConfirm(this.passwordShow, this.passwordConfirmShow,
+                this.passwordField, this.passwordConfirmField, this.passwordError, this.passwordConfirmError,
+                this.showPassword);
 
         this.nicknameField.textProperty().addListener((observable, oldText, newText) -> {
             if (newText.isEmpty())
-                nicknameError.setText(Error.NECESSARY_FIELD.toString());
-            else nicknameError.setText("");
+                this.nicknameError.setText(Error.NECESSARY_FIELD.toString());
+            else this.nicknameError.setText("");
         });
 
         this.emailField.textProperty().addListener((observable, oldText, newText) -> {
             if (MultiMenuFunctions.checkEmailNotOK(newText))
                 this.emailError.setText(Error.INCORRECT_EMAIL_FORM.toString());
 
-            else if (newText.isEmpty())
-                emailError.setText(Error.NECESSARY_FIELD.toString());
+            else if (User.getUserByEmail(newText) != null)
+                this.emailError.setText(Error.EMAIL_ALREADY_EXISTS.toString());
 
-            else emailError.setText("");
+            else if (newText.isEmpty())
+                this.emailError.setText(Error.NECESSARY_FIELD.toString());
+
+            else this.emailError.setText("");
         });
 
         this.recoveryQuestions.setOnAction(actionEvent -> {
@@ -209,42 +209,70 @@ public class RegisterMenu extends Application {
 
         this.recoveryAnswerField.textProperty().addListener((observable, oldText, newText) -> {
             if (newText.isEmpty())
-                recoveryAnswerError.setText(Error.NECESSARY_FIELD.toString());
-            else recoveryAnswerError.setText("");
+                this.recoveryAnswerError.setText(Error.NECESSARY_FIELD.toString());
+            else this.recoveryAnswerError.setText("");
         });
+
+        this.refreshLabel.setGraphic(new ImageView(new Image(Objects.requireNonNull(RegisterMenu.class.getResource(
+                "/Image/Graphic/refresh.png")).toExternalForm(), this.refreshLabel.getPrefHeight() + 20,
+                this.refreshLabel.getPrefHeight(), false, false)));
     }
 
     private void initializeErrors() { // TODO : is this function necessary ?
-        usernameError.setText(Error.NECESSARY_FIELD.toString());
-        passwordError.setText(Error.NECESSARY_FIELD.toString());
-        passwordConfirmError.setText(Error.NECESSARY_FIELD.toString());
-        nicknameError.setText(Error.NECESSARY_FIELD.toString());
-        emailError.setText(Error.NECESSARY_FIELD.toString());
-        recoveryQuestionError.setText(Error.NECESSARY_FIELD.toString());
-        recoveryAnswerError.setText(Error.NECESSARY_FIELD.toString());
+        this.usernameError.setText(Error.NECESSARY_FIELD.toString());
+        this.passwordError.setText(Error.NECESSARY_FIELD.toString());
+        this.passwordConfirmError.setText(Error.NECESSARY_FIELD.toString());
+        this.nicknameError.setText(Error.NECESSARY_FIELD.toString());
+        this.emailError.setText(Error.NECESSARY_FIELD.toString());
+        this.recoveryQuestionError.setText(Error.NECESSARY_FIELD.toString());
+        this.recoveryAnswerError.setText(Error.NECESSARY_FIELD.toString());
     }
 
     private boolean checkForErrors() {
-        return usernameError.getText().isEmpty() && passwordError.getText().isEmpty() &&
-                passwordConfirmError.getText().isEmpty() && nicknameError.getText().isEmpty() &&
-                emailError.getText().isEmpty() && recoveryQuestionError.getText().isEmpty() &&
-                recoveryAnswerError.getText().isEmpty() && sloganError.getText().isEmpty();
+        return this.usernameError.getText().isEmpty() && this.passwordError.getText().isEmpty() &&
+                this.passwordConfirmError.getText().isEmpty() && this.nicknameError.getText().isEmpty() &&
+                this.emailError.getText().isEmpty() && this.recoveryQuestionError.getText().isEmpty() &&
+                this.recoveryAnswerError.getText().isEmpty() && this.sloganError.getText().isEmpty() &&
+                this.captchaError.getText().isEmpty();
     }
 
-    public void register() throws Exception {
-        if (!this.checkForErrors())
+    private void generateCaptcha() {
+        this.captchaController.generateCaptcha();
+        this.captchaImage.setImage(captchaController.getCaptchaImage());
+    }
+
+    @FXML
+    private void register() throws Exception {
+        if (!this.checkForErrors()) {
+            new Alert(Alert.AlertType.ERROR, Message.EMPTY_FIELD.toString()).show();
             return;
+        }
 
-        this.registerMenuController.register(usernameField.getText(), passwordField.getText(),
-                nicknameField.getText(), emailField.getText(), recoveryQuestions.getValue(),
-                recoveryAnswerField.getText(), sloganField.getText());
-
-        this.appController.runMenu(Result.GO_FOR_CAPTCHA);
+        Message message = this.registerMenuController.register(this.usernameField.getText(), this.passwordField.getText(),
+                this.nicknameField.getText(), this.emailField.getText(), this.recoveryQuestions.getValue(),
+                this.recoveryAnswerField.getText(), this.sloganField.getText());
+        this.appController.runMenu(Result.ENTER_LOGIN_MENU);
+        new Alert(Alert.AlertType.INFORMATION, message.toString()).show();
     }
 
-    public void generateRandomPassword() {
+    @FXML
+    private void generateRandomPassword() {
         this.passwordField.setText(registerMenuController.generateRandomPassword());
         this.showPassword.setSelected(true);
     }
 
+    @FXML
+    private void refreshCaptcha() {
+        this.generateCaptcha();
+
+        if (this.captchaController.isCaptchaInCorrect(this.captchaField.getText()))
+            this.captchaError.setText(Error.INCORRECT_CAPTCHA.toString());
+
+        else this.captchaError.setText("");
+    }
+
+    @FXML
+    private void enterLoginMenu() throws Exception {
+        this.appController.runMenu(Result.ENTER_LOGIN_MENU);
+    }
 }

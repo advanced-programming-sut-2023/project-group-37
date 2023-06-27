@@ -1,8 +1,8 @@
 module Stronghold {
     requires javafx.controls;
     requires javafx.fxml;
-    requires com.google.gson;
     requires spring.security.crypto;
+    requires com.google.gson;
 
     exports view;
     exports model.buildings;

@@ -74,6 +74,8 @@ public class BuildingMenuController {
 
         int count = Integer.parseInt(matcher.group("count"));
 
+        // todo : what about machines ?
+
         TroopType troopType = TroopType.getTroopTypeByName(MultiMenuFunctions.deleteQuotations(matcher.group("type")));
         if (troopType == null)
             return Message.TYPE_NOT_EXISTS.toString();

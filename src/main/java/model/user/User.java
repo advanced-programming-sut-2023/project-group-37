@@ -2,6 +2,8 @@ package model.user;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import controller.viewControllers.ProfileMenuController;
+import javafx.scene.image.Image;
 import model.utils.PasswordHashing;
 
 import java.io.File;
@@ -25,6 +27,7 @@ public class User implements Serializable {
     private String recoveryAnswer;
     private int highScore;
     private int rank;
+    private int avatarNum;
     private static ArrayList<User> users = new ArrayList<>();
 
     public static User getCurrentUser() {
@@ -44,6 +47,7 @@ public class User implements Serializable {
         this.slogan = slogan;
         this.nickname = nickname;
         this.rank = users.size() + 1;
+        this.avatarNum = ProfileMenuController.getRandomAvatarURL();
         users.add(this);
     }
 
@@ -104,6 +108,10 @@ public class User implements Serializable {
         this.recoveryQuestion = recoveryQuestion;
         this.recoveryAnswer = recoveryAnswer;
         this.highScore = 0;
+        this.avatarNum = ProfileMenuController.getRandomAvatarURL();
+
+        users.add(this);
+        User.updateDatabase();
     }
 
     public int getRank() {
@@ -142,8 +150,8 @@ public class User implements Serializable {
         this.hashedPassword = PasswordHashing.encode(newPassword);
     }
 
-    public void setHashedPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
+    public void setPassword(String password) {
+        this.hashedPassword = PasswordHashing.encode(password);
     }
 
     public void setNickName(String nickname) {
@@ -162,6 +170,10 @@ public class User implements Serializable {
         this.recoveryQuestion = RecoveryQuestion.getQuestion(questionNumber);
     }
 
+    public void setAvatarNum(int avatarNum) {
+        this.avatarNum = avatarNum;
+    }
+
     public void setRecoveryAnswer(String recoveryAnswer) {
         this.recoveryAnswer = recoveryAnswer;
     }
@@ -171,13 +183,16 @@ public class User implements Serializable {
         setRanks();
     }
 
+    public Image getAvatar() {
+        return new Image(ProfileMenuController.getAllAvatarImages().get(this.avatarNum).getAbsolutePath());
+    }
 
     public boolean isWrongPassword(String password) {
         return !PasswordHashing.checkPassword(password, this.hashedPassword);
     }
 
-    public boolean isCorrectAnswer(String answer) {
-        return this.recoveryAnswer.equals(answer);
+    public boolean isWrongAnswer(String answer) {
+        return !this.recoveryAnswer.equals(answer);
     }
 
     public static void deleteUser(User user) {
@@ -229,7 +244,7 @@ public class User implements Serializable {
     }
 
     public static void loadUsersFromFile() {
-        String filePath = "./src/main/resources/userDatabase.json";
+        String filePath = "StrongHold/beforeGame/src/main/resources/database/userDatabase.json";
         try {
             String json = new String(Files.readAllBytes(Paths.get(filePath)));
             ArrayList<User> createdUsers = gson.fromJson(json, new TypeToken<List<User>>() {
@@ -249,7 +264,7 @@ public class User implements Serializable {
     }
 
     public static User loadStayLoggedIn() {
-        String filePath = "./src/main/resources/stayLoggedIn.json";
+        String filePath = "StrongHold/beforeGame/src/main/resources/database/stayLoggedIn.json";
         try {
             String json = new String(Files.readAllBytes(Paths.get(filePath)));
 
@@ -269,7 +284,7 @@ public class User implements Serializable {
     }
 
     public static void setStayLoggedIn(User loggedInUser) {
-        String filePath = "./src/main/resources/stayLoggedIn.json";
+        String filePath = "StrongHold/beforeGame/src/main/resources/database/stayLoggedIn.json";
         try {
             FileWriter fileWriter = new FileWriter(filePath);
             fileWriter.write(gson.toJson(loggedInUser));
@@ -285,7 +300,7 @@ public class User implements Serializable {
     }
 
     public static void saveUsersToFile() {
-        String filePath = "./src/main/resources/userDatabase.json";
+        String filePath = "StrongHold/beforeGame/src/main/resources/database/userDatabase.json";
         try {
             FileWriter fileWriter = new FileWriter(filePath);
             fileWriter.write(gson.toJson(users));

@@ -2,11 +2,13 @@ package view.menus;
 
 import controller.AppController;
 import controller.viewControllers.GameMenuController;
+import controller.MapController;
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.game.ItemCategory;
 import view.enums.Result;
-import model.game.Tile;
 import view.enums.Command;
 import view.enums.Message;
 
@@ -16,6 +18,7 @@ import java.util.regex.Matcher;
 public class GameMenu extends Application {
     private final AppController appController;
     private final GameMenuController gameMenuController;
+    private final MapController mapController;
     private String message;
 
     private final Scanner scanner;
@@ -24,11 +27,19 @@ public class GameMenu extends Application {
         this.appController = AppController.getInstance();
         this.scanner = new Scanner(System.in);
         this.gameMenuController = GameMenuController.getInstance();
+        this.mapController = MapController.getInstance();
     }
 
     @Override
     public void start(Stage stage) throws Exception {
+        Pane gamePane = new Pane();
+        this.mapController.setGamePane(gamePane);
 
+        Scene scene = new Scene(gamePane);
+        stage.setScene(scene);
+
+        gamePane.getChildren().get(0).requestFocus();
+        stage.show();
     }
 
     public Result run() {
@@ -38,16 +49,7 @@ public class GameMenu extends Application {
         while (true) {
             command = scanner.nextLine();
 
-            if ((matcher = Command.SHOW_MAP.getMatcher(command)) != null) {
-                if (matcher.group("x") == null || matcher.group("y") == null) {
-                    System.out.println(Message.EMPTY_FIELD);
-                } else {
-                    if (showMap(Integer.parseInt(matcher.group("x")), Integer.parseInt(matcher.group("y")))) {
-                        System.out.println(Message.ENTERED_MAP_MENU);
-                        return Result.ENTER_MAP_MENU;
-                    }
-                }
-            } else if (command.matches(Command.SHOW_POPULARITY.toString()))
+            if (command.matches(Command.SHOW_POPULARITY.toString()))
                 System.out.println(this.gameMenuController.showPopularity());
             else if (command.matches(Command.SHOW_POPULARITY_FACTORS.toString()))
                 System.out.println(this.gameMenuController.showPopularityFactors());
@@ -116,17 +118,6 @@ public class GameMenu extends Application {
             } else
                 System.out.println(Message.INVALID_COMMAND);
         }
-    }
-
-    private boolean showMap(int x, int y) {
-        if (gameMenuController.getMap().getTileByLocation(x, y) == null) {
-            System.out.println(Message.ADDRESS_OUT_OF_BOUNDS);
-            return false;
-        }
-
-        Tile[][] tiles = this.gameMenuController.showMap(x, y);
-
-        return MapMenu.showMapWithTiles(tiles);
     }
 
     private boolean selectBuilding(Matcher matcher) {

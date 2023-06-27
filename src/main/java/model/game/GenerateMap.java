@@ -55,8 +55,10 @@ public class GenerateMap {
         for (int i = 65; i < 135; i++) {
             for (int j = 0; j < 200; j++) {
                 if (!(75 < j && j < 125) && (i < 75 || i >= 125) && !((60 <= j && j < 70) || (130 <= j && j < 140))) {
-                    map.getField()[j][i].changeTexture(Texture.OLIVE_TREE);
-                    map.getField()[j][i].setPassability(Texture.OLIVE_TREE.canHaveBuildingAndUnit());
+                    if (j % 2 == 1) {
+                        map.getField()[j][i].changeTreeTexture(Texture.COCONUT_PALM);
+                        map.getField()[j][i].setPassability(Texture.COCONUT_PALM.canHaveBuildingAndUnit());
+                    }
                 }
             }
         }
@@ -110,8 +112,8 @@ public class GenerateMap {
     public static void setTerritory(Tile headQuarter, int territoryNumber) {
         Territory territory = new Territory(map, territoryNumber, headQuarter);
         map.getKeeps().put(territoryNumber, territory);
-        for (int i = headQuarter.getX() - 14; i < headQuarter.getX() + 15; i++) {
-            for (int j = headQuarter.getY() - 14; j < headQuarter.getY() + 15; j++) {
+        for (int i = headQuarter.getLocationX() - 14; i < headQuarter.getLocationX() + 15; i++) {
+            for (int j = headQuarter.getLocationY() - 14; j < headQuarter.getLocationY() + 15; j++) {
                 map.getField()[i][j].setTerritory(territory);
             }
         }

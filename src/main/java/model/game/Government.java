@@ -1,5 +1,6 @@
 package model.game;
 
+import javafx.scene.paint.Color;
 import model.buildings.*;
 import model.people.MilitaryUnit;
 import model.people.Person;
