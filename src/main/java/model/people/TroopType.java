@@ -22,7 +22,7 @@ public enum TroopType {
     MaceMan("maceman", "european/maceman.png", BuildingType.BARRACKS, 20, 70,
             75, 85, 1, Item.MACE, Item.LEATHER_ARMOR, true, true),
 
-    CROSSBOWMAN("crossbowman", "/Image/Troop/european/crossbowman.png", BuildingType.BARRACKS, 20,
+    CROSSBOWMAN("crossbowman", "european/crossbowman.png", BuildingType.BARRACKS, 20,
             75, 70, 55, 8, Item.CROSSBOW, Item.LEATHER_ARMOR, false,
             false),
 
