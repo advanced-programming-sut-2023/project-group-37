@@ -44,5 +44,8 @@ public class DownPane extends Pane {
     public void addBuildingIcons() {
 
     }
+    public void addButtons() {
+
+    }
 
 }
