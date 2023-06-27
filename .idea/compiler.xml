@@ -15,7 +15,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Stronghold" options="--add-exports java.datatransfer/java.awt=Stronghold --add-exports java.base/java=Stronghold" />
+      <module name="Stronghold" options="" />
     </option>
   </component>
 </project>
