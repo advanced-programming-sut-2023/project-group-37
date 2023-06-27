@@ -1,10 +1,12 @@
 package controller;
 
-import javafx.scene.Cursor;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import model.game.*;
+import model.game.Game;
+import model.game.Government;
+import model.game.Map;
+import model.game.Tile;
 import model.graphic.CursorType;
 import model.graphic.DownPane;
 
