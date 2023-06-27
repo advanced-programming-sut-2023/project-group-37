@@ -6,6 +6,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import model.game.*;
 import model.graphic.CursorType;
+import model.graphic.DownPane;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -16,7 +17,7 @@ public class MapController {
     private Game game;
     private Map map;
     private GridPane mainMap;
-    private Pane downPane;
+    private DownPane downPane;
     private Pane chooserRectangle;
     private Label goldLabel;
     private Label popularityLabel;
@@ -173,35 +174,11 @@ public class MapController {
     }
 
     public void createDownPane(Pane gamePane) {
-        this.downPane = new Pane();
-
-        this.downPane.setPrefWidth(gamePane.getPrefWidth());
-        this.downPane.setPrefHeight(162);
-        this.downPane.setLayoutY(gamePane.getPrefHeight() - this.downPane.getPrefHeight());
-
-        Pane detailPane = new Pane();
-        detailPane.setPrefWidth(1138);
-        detailPane.setPrefHeight(162);
-        detailPane.setLayoutX(162);
-        MultiMenuFunctions.setBackground(detailPane, "details.jpg");
-        this.createDetailLabels(detailPane);
-
-        Pane stripPane = new Pane();
-        stripPane.setPrefWidth(890);
-        stripPane.setPrefHeight(101);
-
-        stripPane.setLayoutX(196);
-        stripPane.setLayoutY(61);
-
-        stripPane.setBackground(Background.fill(Color.BLUE));
-        this.downPane.setBackground(Background.fill(Color.web("#795C32")));
-
-        this.downPane.getChildren().add(detailPane);
-        this.downPane.getChildren().add(stripPane);
-        gamePane.getChildren().add(this.downPane);
+        this.downPane = new DownPane(this);
+        this.downPane.initialize(gamePane);
     }
 
-    private void createDetailLabels(Pane detailPane) {
+    public void createDetailLabels(Pane detailPane) {
         // todo : set with currentGovernment :
         this.goldLabel = new Label(String.valueOf(100));
         this.popularityLabel = new Label(String.valueOf(100));
