@@ -7,8 +7,8 @@ public enum BuildingType {
 
     // Processing:
     STABLE("stable", BuildingCategory.MILITARY_BUILDINGS, 400, 250, Item.WOOD, 20,
-            null, 0, Item.HORSE, 4, 0, false, false,
-            false),
+            null, 0, Item.HORSE, 4, 0, false,
+            false, false),
 
     APPLE_ORCHARD("apple orchard", BuildingCategory.FARM_BUILDINGS, 150, Item.WOOD, 5,
             Item.APPLE, 4, 1, false, false, false),
@@ -149,7 +149,7 @@ public enum BuildingType {
     private Image image;
 
     // storage:
-    BuildingType(String name, BuildingCategory category, int maxHitpoints, int capacity) {
+    BuildingType(String name, String image, BuildingCategory category, int maxHitpoints, int capacity) {
         this.name = name;
         this.category = category;
         this.cost = 0;
