@@ -1,5 +1,7 @@
 package model.game;
 
+import controller.MultiMenuFunctions;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -78,6 +80,8 @@ public class Map {
     }
 
     public void updateImages() {
+        MultiMenuFunctions.removeAllImages();
+
         for (Tile[] tiles : this.field) {
             for (int j = 0; j < this.field[0].length; j++)
                 tiles[j].updateImage();
