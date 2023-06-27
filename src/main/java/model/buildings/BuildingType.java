@@ -9,128 +9,143 @@ import java.util.Objects;
 public enum BuildingType {
 
     // Processing:
-    STABLE("stable", BuildingCategory.MILITARY_BUILDINGS, "stable.png", 400, 250, Item.WOOD, 20,
-            null, 0, Item.HORSE, 4, 0, false,
+    STABLE("stable", BuildingCategory.MILITARY_BUILDINGS, "stable.png", 400, 250,
+            Item.WOOD, 20, null, 0, Item.HORSE, 4, 0,
+            false, false, false),
+
+    APPLE_ORCHARD("apple orchard", BuildingCategory.FARM_BUILDINGS, "apple-orchard.png", 150,
+            Item.WOOD, 5, Item.APPLE, 4, 1, false,
             false, false),
 
-    APPLE_ORCHARD("apple orchard", BuildingCategory.FARM_BUILDINGS, "apple-orchard.png", 150, Item.WOOD, 5,
-            Item.APPLE, 4, 1, false, false, false),
-
-    DIARY_FARMER("diary farmer", BuildingCategory.FARM_BUILDINGS, "dairy-farmer.png", 150, Item.WOOD, 10,
-            Item.CHEESE, 4, 1, false, false, false),
-
-    HOPS_FARMER("hops farmer", BuildingCategory.FARM_BUILDINGS, "hops-farmer.png", 150, Item.WOOD, 15,
-            Item.HOPS, 3, 1, false, false, false),
-
-    HUNTER_POST("hunter post", BuildingCategory.FARM_BUILDINGS, "hunter-post.png", 150, Item.WOOD, 5,
-            Item.MEAT, 4, 1, false, false, false),
-
-    WHEAT_FARMER("wheat farmer", BuildingCategory.FARM_BUILDINGS, "wheat-farmer.png", 150, Item.WOOD, 15,
-            Item.WHEAT, 2, 1, false, false, false),
-
-    BAKERY("bakery", BuildingCategory.FOOD_PROCESSING_BUILDINGS, "bakery.png", 150, Item.WOOD, 10,
-            Item.FLOUR, 4, Item.BREAD, 1, 1, false, false,
-            false),
-
-    BREWER("brewer", BuildingCategory.FOOD_PROCESSING_BUILDINGS, "brewery.png", 150, Item.WOOD, 10,
-            Item.HOPS, 1, Item.ALE, 2, 1, false, false,
-            false),
-
-    INN("inn", BuildingCategory.FOOD_PROCESSING_BUILDINGS, "inn.png", 100, 150, Item.WOOD, 20,
-            Item.ALE, 1, null, 0, 1, false, false,
-            false),
-
-    MILL("mill", BuildingCategory.FOOD_PROCESSING_BUILDINGS, "mill.png", 150, Item.WOOD, 20,
-            Item.WHEAT, 3, Item.FLOUR, 3, 3, false, false,
-            false),
-    IRON_MINE("iron mine", BuildingCategory.INDUSTRY_BUILDINGS, "iron-mine.png", 150, Item.WOOD, 20,
-            Item.IRON, 2, 2, false, false, false),
-
-    PITCH_RIG("pitch rig", BuildingCategory.INDUSTRY_BUILDINGS, "pitch-rig.png", 150, Item.WOOD, 20,
-            Item.PITCH, 1, false, false, false),
-
-    QUARRY("quarry", BuildingCategory.INDUSTRY_BUILDINGS, "quarry.png", 150, Item.WOOD, 20,
-            Item.STONE, 3, false, false, false),
-
-    WOODCUTTER("wood cutter", BuildingCategory.INDUSTRY_BUILDINGS, "woodcutter.png", 150, Item.WOOD, 3,
-            Item.WOOD, 18, 1, false, false, false),
-
-    ARMOURER("armourer", BuildingCategory.WEAPON_BUILDINGS, "armourer.png", 150, Item.WOOD, 20,
-            Item.IRON, 1, Item.METAL_ARMOR, 1, 1, false,
+    DIARY_FARMER("diary farmer", BuildingCategory.FARM_BUILDINGS, "dairy-farmer.png", 150,
+            Item.WOOD, 10, Item.CHEESE, 4, 1, false,
             false, false),
 
-    BLACKSMITH("blacksmith", BuildingCategory.WEAPON_BUILDINGS, "blacksmith.png", 200, 150, Item.WOOD,
-            20, Item.IRON, 1, 1, Item.SWORD, Item.MACE,
-            1, 1, false, false, false),
+    HOPS_FARMER("hops farmer", BuildingCategory.FARM_BUILDINGS, "hops-farmer.png", 150,
+            Item.WOOD, 15, Item.HOPS, 3, 1, false,
+            false, false),
 
-    FLETCHER("fletcher", BuildingCategory.WEAPON_BUILDINGS, "fletcher.png", 100, 150, Item.WOOD,
-            20, Item.WOOD, 2, 3, Item.BOW, Item.CROSSBOW,
-            1, 1, false, false, false),
+    HUNTER_POST("hunter post", BuildingCategory.FARM_BUILDINGS, "hunter-post.png", 150,
+            Item.WOOD, 5, Item.MEAT, 4, 1, false,
+            false, false),
 
-    POLETURNER("pole turner", BuildingCategory.WEAPON_BUILDINGS, "poleturner.png", 100, 150, Item.WOOD,
-            10, Item.WOOD, 1, 2, Item.SPEAR, Item.PIKE,
-            1, 1, false, false, false),
+    WHEAT_FARMER("wheat farmer", BuildingCategory.FARM_BUILDINGS, "wheat-farmer.png", 150,
+            Item.WOOD, 15, Item.WHEAT, 2, 1, false,
+            false, false),
+
+    BAKERY("bakery", BuildingCategory.FOOD_PROCESSING_BUILDINGS, "bakery.png", 150,
+            Item.WOOD, 10, Item.FLOUR, 4, Item.BREAD, 1, 1,
+            false, false, false),
+
+    BREWER("brewer", BuildingCategory.FOOD_PROCESSING_BUILDINGS, "brewery.png", 150,
+            Item.WOOD, 10, Item.HOPS, 1, Item.ALE, 2, 1,
+            false, false, false),
+
+    INN("inn", BuildingCategory.FOOD_PROCESSING_BUILDINGS, "inn.png", 100, 150,
+            Item.WOOD, 20, Item.ALE, 1, null, 0, 1,
+            false, false, false),
+
+    MILL("mill", BuildingCategory.FOOD_PROCESSING_BUILDINGS, "mill.png", 150, Item.WOOD,
+            20, Item.WHEAT, 3, Item.FLOUR, 3, 3,
+            false, false, false),
+    IRON_MINE("iron mine", BuildingCategory.INDUSTRY_BUILDINGS, "iron-mine.png", 150,
+            Item.WOOD, 20, Item.IRON, 2, 2, false,
+            false, false),
+
+    PITCH_RIG("pitch rig", BuildingCategory.INDUSTRY_BUILDINGS, "pitch-rig.png", 150,
+            Item.WOOD, 20, Item.PITCH, 1, false, false,
+            false),
+
+    QUARRY("quarry", BuildingCategory.INDUSTRY_BUILDINGS, "quarry.png", 150, Item.WOOD,
+            20, Item.STONE, 3, false, false, false),
+
+    WOODCUTTER("wood cutter", BuildingCategory.INDUSTRY_BUILDINGS, "woodcutter.png", 150,
+            Item.WOOD, 3, Item.WOOD, 18, 1, false,
+            false, false),
+
+    ARMOURER("armourer", BuildingCategory.WEAPON_BUILDINGS, "armourer.png", 150, Item.WOOD,
+            20, Item.IRON, 1, Item.METAL_ARMOR, 1, 1,
+            false, false, false),
+
+    BLACKSMITH("blacksmith", BuildingCategory.WEAPON_BUILDINGS, "blacksmith.png", 200,
+            150, Item.WOOD, 20, Item.IRON, 1, 1,
+            Item.SWORD, Item.MACE, 1, 1, false, false,
+            false),
+
+    FLETCHER("fletcher", BuildingCategory.WEAPON_BUILDINGS, "fletcher.png", 100, 150,
+            Item.WOOD, 20, Item.WOOD, 2, 3, Item.BOW,
+            Item.CROSSBOW, 1, 1, false, false, false),
+
+    POLETURNER("pole turner", BuildingCategory.WEAPON_BUILDINGS, "poleturner.png", 100,
+            150, Item.WOOD, 10, Item.WOOD, 1, 2,
+            Item.SPEAR, Item.PIKE, 1, 1, false, false,
+            false),
 
     // TODO: change it after implementing cow!
-    TANNER("tanner", BuildingCategory.WEAPON_BUILDINGS, "tanner.png", 100, 150, Item.WOOD, 10,
-            null, 1, Item.LEATHER_ARMOR, 3, 1, false,
-            false, false),
+    TANNER("tanner", BuildingCategory.WEAPON_BUILDINGS, "tanner.png", 100, 150,
+            Item.WOOD, 10, null, 1, Item.LEATHER_ARMOR, 3,
+            1, false, false, false),
 
     // Non processing:
     // TODO: decide not to be destroyable (as real game) or else!
-    DRAWBRIDGE("drawbridge", BuildingCategory.GATEHOUSES, "drawbridge.png", 250, Item.WOOD, 10,
-            false, false, false),
+    DRAWBRIDGE("drawbridge", BuildingCategory.GATEHOUSES, "drawbridge.png", 250, Item.WOOD,
+            10, false, false, false),
 
-    TUNNELER_GUILD("tunneler guild", BuildingCategory.MILITARY_BUILDINGS, "tunneler-guild.png", 100, 250, Item.WOOD,
-            10, 0, true, true, false),
+    TUNNELER_GUILD("tunneler guild", BuildingCategory.MILITARY_BUILDINGS, "tunneler-guild.png",
+            100, 250, Item.WOOD, 10, 0, true,
+            true, false),
 
-    OX_TETHER("ox tether", BuildingCategory.INDUSTRY_BUILDINGS, "ox-tether.png", 150, Item.WOOD, 5,
-            1, false, false, false),
+    OX_TETHER("ox tether", BuildingCategory.INDUSTRY_BUILDINGS, "ox-tether.png", 150,
+            Item.WOOD, 5, 1, false, false, false),
 
-    HOVEL("hovel", BuildingCategory.TOWN_BUILDINGS, "hovel.png", 150, Item.WOOD, 6,
-            false, false, false),
+    HOVEL("hovel", BuildingCategory.TOWN_BUILDINGS, "hovel.png", 150, Item.WOOD,
+            6, false, false, false),
 
-    CHURCH("church", BuildingCategory.TOWN_BUILDINGS, "church.png", 500, null, 0,
-            false, false, false),
-
-    CATHEDRAL("cathedral", BuildingCategory.TOWN_BUILDINGS, "cathedral.png", 1000, null,
+    CHURCH("church", BuildingCategory.TOWN_BUILDINGS, "church.png", 500, null,
             0, false, false, false),
 
+    CATHEDRAL("cathedral", BuildingCategory.TOWN_BUILDINGS, "cathedral.png", 1000,
+            null, 0, false, false, false),
+
     // I set a dummy hp of 1 not to be removed!
-    KILLING_PIT("killing pit", BuildingCategory.GATEHOUSES, "killing-pit.png", 1, Item.WOOD, 6,
-            true, true, false),
+    KILLING_PIT("killing pit", BuildingCategory.GATEHOUSES, "killing-pit.png", 1,
+            Item.WOOD, 6, true, true, false),
 
-    OIL_SMELTER("oil smelter", BuildingCategory.MILITARY_BUILDINGS, "oil-smelter.png", 100, Item.IRON, 10,
-            1, true, false, false),
+    OIL_SMELTER("oil smelter", BuildingCategory.MILITARY_BUILDINGS, "oil-smelter.png", 100,
+            Item.IRON, 10, 1, true, false, false),
 
-    CAGED_WAR_DOGS("caged war dogs", BuildingCategory.MILITARY_BUILDINGS, "caged-war-dogs.png", 100, 150, Item.WOOD,
-            10, 0, false, false, false),
-
-    // TODO: the hell!
-    SIEGE_TENT("", null, "siege-tent.png", 150, null, 0, true,
+    CAGED_WAR_DOGS("caged war dogs", BuildingCategory.MILITARY_BUILDINGS, "caged-war-dogs.png",
+            100, 150, Item.WOOD, 10, 0, false,
             false, false),
 
-    TUNNEL_ENTRANCE("tunnel entrance", null, "tunnel-entrance", 150, null, 0,
-            true, false, false),
+    // TODO: the hell!
+    SIEGE_TENT("", null, "siege-tent.png", 150, null,
+            0, true, false, false),
+
+    TUNNEL_ENTRANCE("tunnel entrance", null, "tunnel-entrance", 150,
+            null, 0, true, false, false),
 
     // Our stockpile has hitpoints & can be destroyed!
-    STOCKPILE("stockpile", BuildingCategory.INDUSTRY_BUILDINGS, "stockpile.png", 250, 150),
+    STOCKPILE("stockpile", BuildingCategory.INDUSTRY_BUILDINGS, "stockpile.png", 250,
+            150),
 
-    GRANARY("granary", BuildingCategory.FOOD_PROCESSING_BUILDINGS, "granary.png", 250, 250),
+    GRANARY("granary", BuildingCategory.FOOD_PROCESSING_BUILDINGS, "granary.png", 250,
+            250),
 
     ARMORY("armory", BuildingCategory.CASTLE_BUILDINGS, "armory.png", 250, 50),
 
-    MERCENARY_POST("mercenary post", BuildingCategory.CASTLE_BUILDINGS, "mercenary-post.png", 250, Item.WOOD,
-            10, true, false, false),
+    MERCENARY_POST("mercenary post", BuildingCategory.CASTLE_BUILDINGS, "mercenary-post.png",
+            250, Item.WOOD, 10, true, false, false),
 
-    BARRACKS("barracks", BuildingCategory.CASTLE_BUILDINGS, "barracks.png", 250, Item.STONE, 15,
-            true, false, false),
+    BARRACKS("barracks", BuildingCategory.CASTLE_BUILDINGS, "barracks.png", 250, Item.STONE,
+            15, true, false, false),
 
-    ENGINEER_GUILD("engineer guild", BuildingCategory.MILITARY_BUILDINGS, "engineer-guild.png", 100, 250, Item.WOOD,
-            10, 0, true, true, false),
+    ENGINEER_GUILD("engineer guild", BuildingCategory.MILITARY_BUILDINGS, "engineer-guild.png",
+            100, 250, Item.WOOD, 10, 0, true,
+            true, false),
 
-    MARKET("market", BuildingCategory.INDUSTRY_BUILDINGS, "market.png", 250, Item.WOOD, 5,
-            1, false, false, false);
+    MARKET("market", BuildingCategory.INDUSTRY_BUILDINGS, "market.png", 250, Item.WOOD,
+            5, 1, false, false, false);
 
     private final String name;
     private final BuildingCategory category;
