@@ -7,8 +7,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class DownPane extends Pane {
-    private MapController mapController;
-    private Pane stripPane;
+    private final MapController mapController;
+    private final Pane stripPane;
 
     public DownPane(MapController mapController) {
         this.mapController = mapController;

@@ -16,7 +16,7 @@ public class MapController {
     private static final MapController MAP_CONTROLLER;
     private Game game;
     private Map map;
-    private GridPane mainMap;
+    private AnchorPane mainMap;
     private DownPane downPane;
     private Pane chooserRectangle;
     private Label goldLabel;
@@ -68,10 +68,10 @@ public class MapController {
     }
 
     private void createMainMap(Pane gamePane, Tile[][] tiles) {
-        this.mainMap = new GridPane();
+        this.mainMap = new AnchorPane();
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[0].length; j++) {
-                this.mainMap.add(tiles[i][j], i, j);
+                this.mainMap.getChildren().add(tiles[i][j]);
             }
         }
         this.mainMap.setLayoutX(0);
@@ -98,9 +98,11 @@ public class MapController {
                 case "Z" -> {
                     Tile.zoom();
                     this.map.updateSizes();
+                    this.map.updateImages();
                 }
                 case "X" -> {
                     Tile.zoomOut();
+                    this.map.updateSizes();
                     this.map.updateSizes();
                 }
                 case "M" -> this.setCursorOn(CursorType.SELECT_MOVE_DESTINATION);
@@ -268,7 +270,7 @@ public class MapController {
         this.chooserRectangle.setLayoutX(this.chooserRectangle.getLayoutX() + 0.8);
     }
 
-    public GridPane getMainMap() {
+    public AnchorPane getMainMap() {
         return mainMap;
     }
 
