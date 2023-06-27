@@ -3,48 +3,81 @@ package controller;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import model.buildings.BuildingCategory;
+import model.buildings.BuildingType;
+import model.buildings.DefensiveBuildingType;
 
-import java.io.File;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.HashMap;
 
 public class StripPaneController {
-    private final static int sizeOfImages;
+    private final int sizeOfImages;
     private final Pane stripPane;
-    private ArrayList<File> buildingMenuImages;
-    static {
-        sizeOfImages = 40;
-    }
+    private final HashMap<BuildingType, ImageView> buildingTypeImages;
+    private final HashMap<DefensiveBuildingType, ImageView> defensiveBuildingTypeImages;
+
     public StripPaneController(Pane stripPane) {
+        this.sizeOfImages = 60;
         this.stripPane = stripPane;
-    }
+        this.buildingTypeImages = new HashMap<>();
+        this.defensiveBuildingTypeImages = new HashMap<>();
 
-    private void setBuildingMenuImages(String dir) {
-        this.buildingMenuImages = new ArrayList<>();
-
-        File file;
-        try {
-            file = new File(Objects.requireNonNull(CaptchaController.class.getResource("/Image/Buildings/" + dir)).toURI());
-        } catch (Exception e) {
-            return;
-        }
-
-        this.buildingMenuImages.addAll(MultiMenuFunctions.getAllImageFilesFromFolder(file));
-    }
-
-    public void insertImages(String dir) {
-        this.stripPane.getChildren().removeAll();
-        this.setBuildingMenuImages(dir);
-
-        int i = 0;
-        for (File imageFile : this.buildingMenuImages) {
-            ImageView imageView = new ImageView(new Image(imageFile.getAbsolutePath(),
+        for (BuildingType buildingType : BuildingType.values()) {
+            ImageView imageView =  new ImageView(new Image(buildingType.getImage().getUrl(),
                     sizeOfImages, sizeOfImages, false, false));
 
-            imageView.setLayoutX(100 + i * (sizeOfImages + 10));
+//            imageView.setOnDragDropped();
+            this.buildingTypeImages.put(buildingType, imageView);
+        }
 
-            i++;
+        for (DefensiveBuildingType defensiveBuildingType : DefensiveBuildingType.values()) {
+            ImageView imageView =  new ImageView(new Image(
+                    defensiveBuildingType.getImage().getUrl(), sizeOfImages, sizeOfImages, false, false));
+//            imageView.setOnDragDropped();
+
+            this.defensiveBuildingTypeImages.put(defensiveBuildingType,imageView);
+        }
+    }
+
+    private ImageView getImageView(BuildingType buildingType) {
+        return this.buildingTypeImages.get(buildingType);
+    }
+
+    private ImageView getImageView(DefensiveBuildingType defensiveBuildingType) {
+        return this.defensiveBuildingTypeImages.get(defensiveBuildingType);
+    }
+
+    public void insertImages(BuildingCategory category) {
+        if (this.stripPane.getChildren().size() > 0)
+            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+
+        int i = 0;
+        for (BuildingType buildingType :BuildingType.values()) {
+            if (buildingType.getCategory() == category) {
+                ImageView imageView = this.getImageView(buildingType);
+                if (imageView == null)
+                    continue;
+
+                imageView.setLayoutX(40 + i * (sizeOfImages + 10));
+                imageView.setLayoutY(20);
+                this.stripPane.getChildren().add(imageView);
+
+                i++;
+            }
+        }
+
+        for (DefensiveBuildingType defensiveBuildingType :DefensiveBuildingType.values()) {
+            if (defensiveBuildingType.getCategory() == category) {
+                ImageView imageView = this.getImageView(defensiveBuildingType);
+                if (imageView == null)
+                    continue;
+
+                imageView.setLayoutX(40 + i * (sizeOfImages + 10));
+                imageView.setLayoutY(20);
+                this.stripPane.getChildren().add(imageView);
+
+                i++;
+            }
         }
     }
 }
