@@ -10,70 +10,68 @@ import java.util.Objects;
 public enum TroopType {
 
     //LORD:
-    LORD("", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Troop/lord.png")).toExternalForm()), null, 0, 100,
-            100, 55, 1, null, null, false, false),
+    LORD("", "lord.png", null, 0, 100, 100, 55, 1,
+            null, null, false, false),
 
     // Barracks:
-    ARCHER("archer", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Troop/european/archer.png")).toExternalForm()), BuildingType.BARRACKS, 12, 45,
+    ARCHER("archer", "european/archer.png", BuildingType.BARRACKS, 12, 45,
             40, 90, 10, Item.BOW, null, true, true),
-    SPEARMAN("spearman", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Troop/european/spearman.png")).toExternalForm()), BuildingType.BARRACKS, 8, 50,
+
+    SPEARMAN("spearman", "european/spearman.png", BuildingType.BARRACKS, 8, 50,
             50, 60, 1, Item.SPEAR, null, true, true),
-    MaceMan("maecman", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Troop/european/maecman.png")).toExternalForm()), BuildingType.BARRACKS, 20, 70,
+
+    MaceMan("maceman", "european/maceman.png", BuildingType.BARRACKS, 20, 70,
             75, 85, 1, Item.MACE, Item.LEATHER_ARMOR, true, true),
-    CROSSBOWMAN("crossbowman", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Troop/european/crossbowman.png")).toExternalForm()), BuildingType.BARRACKS, 20, 75,
-            70, 55, 8, Item.CROSSBOW, Item.LEATHER_ARMOR, false, false),
-    PIKEMAN("pikeman", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Troop/european/pikeman.png")).toExternalForm()), BuildingType.BARRACKS, 20, 77,
+
+    CROSSBOWMAN("crossbowman", "/Image/Troop/european/crossbowman.png", BuildingType.BARRACKS, 20,
+            75, 70, 55, 8, Item.CROSSBOW, Item.LEATHER_ARMOR, false,
+            false),
+
+    PIKEMAN("pikeman", "european/pikeman.png", BuildingType.BARRACKS, 20, 77,
             76, 60, 1, Item.PIKE, Item.METAL_ARMOR, false, true),
-    SWORDSMAN("swordsman", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Troop/european/swordsman.png")).toExternalForm()), BuildingType.BARRACKS, 40, 94,
+
+    SWORDSMAN("swordsman", "european/swordsman.png", BuildingType.BARRACKS, 40, 94,
             94, 40, 1, Item.SWORD, Item.METAL_ARMOR, false, false),
-    KNIGHT("knight", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Troop/european/knight.png")).toExternalForm()), BuildingType.BARRACKS, 40, 90,
-            94, 95, 1, Item.SWORD, Item.METAL_ARMOR, Item.HORSE, false, false),
+
+    KNIGHT("knight", "european/knight.png", BuildingType.BARRACKS, 40, 90, 94,
+            95, 1, Item.SWORD, Item.METAL_ARMOR, Item.HORSE, false, false),
 
     // Mercenary post:
-    ARABIAN_ARCHER("arabian archer", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Troop/arabian/archer.png")).toExternalForm()), BuildingType.MERCENARY_POST, 75,
+    ARABIAN_ARCHER("arabian archer", "arabian/archer.png", BuildingType.MERCENARY_POST, 75,
             45, 45, 90, 12, null, null, false, true),
-    SLAVE("slave", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Troop/arabian/slave.png")).toExternalForm()), BuildingType.MERCENARY_POST, 5,
+
+    SLAVE("slave", "arabian/slave.png", BuildingType.MERCENARY_POST, 5,
             20, 10, 90, 1, null, null, false, true),
-    SLINGER("slinger", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Troop/arabian/slinger.png")).toExternalForm()), BuildingType.MERCENARY_POST, 12,
+
+    SLINGER("slinger", "arabian/slinger.png", BuildingType.MERCENARY_POST, 12,
             20, 36, 90, 6, null, null, false, false),
-    HORSE_ARCHER("horse archer", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Troop/arabian/horse-archer.png")).toExternalForm()), BuildingType.MERCENARY_POST, 80,
+
+    HORSE_ARCHER("horse archer", "arabian/horse-archer.png", BuildingType.MERCENARY_POST, 80,
             55, 50, 95, 12, null, null, false, false),
-    ARABIAN_SWORDSMAN("arabian swordsman", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Troop/arabian/swordsman.png")).toExternalForm()), BuildingType.MERCENARY_POST, 80,
+
+    ARABIAN_SWORDSMAN("arabian swordsman", "arabian/swordsman.png", BuildingType.MERCENARY_POST, 80,
             88, 88, 40, 1, null, null, false, false),
-    ASSASSIN("assassin", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Troop/arabian/assassin.png")).toExternalForm()), BuildingType.MERCENARY_POST, 60,
+
+    ASSASSIN("assassin", "arabian/assassin.png", BuildingType.MERCENARY_POST, 60,
             73, 76, 67, 1, null, null, false, false),
-    FIRE_THROWER("fire thrower", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Troop/arabian/fire-thrower.png")).toExternalForm()), BuildingType.MERCENARY_POST, 100,
+
+    FIRE_THROWER("fire thrower", "arabian/fire-thrower.png", BuildingType.MERCENARY_POST, 100,
             60, 84, 60, 4, null, null, false, false),
 
     // Engineer guild:
-    ENGINEER("engineer", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Troop/european/engineer.png")).toExternalForm()), BuildingType.ENGINEER_GUILD, 30,
+    ENGINEER("engineer", "european/engineer.png", BuildingType.ENGINEER_GUILD, 30,
             10, 0, 60, 1, null, null, false, false),
-    LADDERMAN("ladderman", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Troop/european/ladderman.png")).toExternalForm()), BuildingType.ENGINEER_GUILD, 4,
+
+    LADDERMAN("ladderman", "european/ladderman.png", BuildingType.ENGINEER_GUILD, 4,
             5, 0, 60, 1, null, null, false, false),
 
     // Tunneler guild:
-    TUNNELER("tunneler", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Troop/european/tunneler.png")).toExternalForm()), BuildingType.TUNNELER_GUILD, 30,
+    TUNNELER("tunneler", "european/tunneler.png", BuildingType.TUNNELER_GUILD, 30,
             20, 0, 60, 20, null, null, false, false);
 
     private final String name;
+    private final Image downPaneImage;
+    private final Image image;
     private final BuildingType trainingCamp;
     private final int cost;
     private final int maxHitpoints;
@@ -85,12 +83,14 @@ public enum TroopType {
     private final Item animal;
     private final boolean canClimbLadder;
     private final boolean canDigMoat;
-    private final Image image;
 
-    TroopType(String name, Image image, BuildingType trainingCamp, int cost, int maxHitpoints, int damage, int speed, int range,
-              Item weapon, Item armor, boolean canClimbLadder, boolean canDigMoat) {
+    TroopType(String name, String imageURL, BuildingType trainingCamp, int cost, int maxHitpoints, int damage,
+              int speed, int range, Item weapon, Item armor, boolean canClimbLadder, boolean canDigMoat) {
         this.name = name;
-        this.image = image;
+        this.downPaneImage = new Image(Objects.requireNonNull(TroopType.class.getResource
+                ("/Image/DownPaneTroops/" + imageURL)).toExternalForm());
+        this.image = new Image(Objects.requireNonNull(TroopType.class.getResource
+                ("/Image/Troop/" + imageURL)).toExternalForm());
         this.trainingCamp = trainingCamp;
         this.cost = cost;
         this.maxHitpoints = maxHitpoints;
@@ -104,10 +104,13 @@ public enum TroopType {
         this.canDigMoat = canDigMoat;
     }
 
-    TroopType(String name, Image image, BuildingType trainingCamp, int cost, int maxHitpoints, int damage, int speed, int range,
+    TroopType(String name, String imageURL, BuildingType trainingCamp, int cost, int maxHitpoints, int damage, int speed, int range,
               Item weapon, Item armor, Item animal, boolean canClimbLadder, boolean canDigMoat) {
         this.name = name;
-        this.image = image;
+        this.downPaneImage = new Image(Objects.requireNonNull(TroopType.class.getResource
+                ("/Image/DownPaneTroops/" + imageURL)).toExternalForm());
+        this.image = new Image(Objects.requireNonNull(TroopType.class.getResource
+                ("/Image/Troop/" + imageURL)).toExternalForm());
         this.trainingCamp = trainingCamp;
         this.cost = cost;
         this.maxHitpoints = maxHitpoints;
@@ -130,6 +133,14 @@ public enum TroopType {
 
     public String getName() {
         return this.name;
+    }
+
+    public Image getDownPaneImage() {
+        return this.downPaneImage;
+    }
+
+    public Image getImage() {
+        return this.image;
     }
 
     public BuildingType getTrainingCamp() {
@@ -166,10 +177,6 @@ public enum TroopType {
 
     public Item getAnimal() {
         return this.animal;
-    }
-
-    public Image getImage() {
-        return image;
     }
 
     public boolean canClimbLadder() {
