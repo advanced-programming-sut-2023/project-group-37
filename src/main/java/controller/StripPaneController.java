@@ -7,7 +7,6 @@ import model.buildings.BuildingCategory;
 import model.buildings.BuildingType;
 import model.buildings.DefensiveBuildingType;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class StripPaneController {
@@ -26,14 +25,14 @@ public class StripPaneController {
             ImageView imageView =  new ImageView(new Image(buildingType.getImage().getUrl(),
                     sizeOfImages, sizeOfImages, false, false));
 
-//            imageView.setOnDragDropped();
+            imageView.setOnMouseClicked(mouseEvent -> System.out.println(buildingType.getName()));
             this.buildingTypeImages.put(buildingType, imageView);
         }
 
         for (DefensiveBuildingType defensiveBuildingType : DefensiveBuildingType.values()) {
             ImageView imageView =  new ImageView(new Image(
                     defensiveBuildingType.getImage().getUrl(), sizeOfImages, sizeOfImages, false, false));
-//            imageView.setOnDragDropped();
+            imageView.setOnMouseClicked(mouseEvent -> System.out.println(defensiveBuildingType.getName()));
 
             this.defensiveBuildingTypeImages.put(defensiveBuildingType,imageView);
         }
@@ -58,7 +57,7 @@ public class StripPaneController {
                 if (imageView == null)
                     continue;
 
-                imageView.setLayoutX(40 + i * (sizeOfImages + 10));
+                imageView.setLayoutX(100 + i * (sizeOfImages + 10));
                 imageView.setLayoutY(20);
                 this.stripPane.getChildren().add(imageView);
 
@@ -72,7 +71,7 @@ public class StripPaneController {
                 if (imageView == null)
                     continue;
 
-                imageView.setLayoutX(40 + i * (sizeOfImages + 10));
+                imageView.setLayoutX(100 + i * (sizeOfImages + 10));
                 imageView.setLayoutY(20);
                 this.stripPane.getChildren().add(imageView);
 

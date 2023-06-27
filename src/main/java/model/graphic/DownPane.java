@@ -67,11 +67,11 @@ public class DownPane extends Pane {
         createRec(270, null, BuildingCategory.TOWERS);
         createRec(330, null, BuildingCategory.MILITARY_BUILDINGS);
         createRec(390, null, BuildingCategory.GATEHOUSES);
-        createRec(440, null, BuildingCategory.TOWN_BUILDINGS);
-        createRec(500, null, BuildingCategory.FARM_BUILDINGS);
-        createRec(560, null, BuildingCategory.INDUSTRY_BUILDINGS);
-        createRec(620, null, BuildingCategory.WEAPON_BUILDINGS);
-        createRec(680, null, BuildingCategory.FOOD_PROCESSING_BUILDINGS);
+        createRec(450, null, BuildingCategory.TOWN_BUILDINGS);
+        createRec(510, null, BuildingCategory.FARM_BUILDINGS);
+        createRec(570, null, BuildingCategory.INDUSTRY_BUILDINGS);
+        createRec(630, null, BuildingCategory.WEAPON_BUILDINGS);
+        createRec(690, null, BuildingCategory.FOOD_PROCESSING_BUILDINGS);
     }
 
     public void createRec(double x, String absoluteAddress, BuildingCategory category) {
@@ -79,7 +79,7 @@ public class DownPane extends Pane {
         rectangle.setLayoutX(x);
         rectangle.setLayoutY(15);
 //        rectangle.setFill(new ImagePattern(new Image(absoluteAddress)));
-        rectangle.setAccessibleText(category.getName());
+        rectangle.setFill(Color.WHITE);
         this.getChildren().add(rectangle);
         rectangle.setOnMouseClicked(mouseEvent -> this.stripPaneController.insertImages(category));
     }
