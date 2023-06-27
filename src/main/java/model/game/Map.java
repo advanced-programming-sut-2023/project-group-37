@@ -122,7 +122,7 @@ public class Map {
     }
 
     public Tile getTileByXY(double x, double y) {
-        return this.field[(int) x/Tile.getTileSize()][(int) y/Tile.getTileSize()];
+        return this.getTileByLocation((int) x/20, (int) y/20);
     }
 
     public ArrayList<Tile> getRectangleTilesByXY(double firstX, double firstY, double secondX, double secondY) {
