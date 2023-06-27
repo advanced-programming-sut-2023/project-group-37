@@ -103,7 +103,7 @@ public class MapController {
                 case "X" -> {
                     Tile.zoomOut();
                     this.map.updateSizes();
-                    this.map.updateSizes();
+                    this.map.updateImages();
                 }
                 case "M" -> this.setCursorOn(CursorType.SELECT_MOVE_DESTINATION);
                 case "A" -> this.setCursorOn(CursorType.SELECT_ATTACK_DESTINATION);
