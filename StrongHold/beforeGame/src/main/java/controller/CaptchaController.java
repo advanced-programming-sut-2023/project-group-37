@@ -14,6 +14,7 @@ public class CaptchaController {
     private String captchaCode;
     private Image captchaImage;
 
+
     static {
         allCaptchaImageFiles = new ArrayList<>();
 
