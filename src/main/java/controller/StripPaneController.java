@@ -14,7 +14,7 @@ public class StripPaneController {
     private final Pane stripPane;
     private ArrayList<File> buildingMenuImages;
     static {
-        sizeOfImages = 40;
+        sizeOfImages = 60;
     }
     public StripPaneController(Pane stripPane) {
         this.stripPane = stripPane;
@@ -34,7 +34,9 @@ public class StripPaneController {
     }
 
     public void insertImages(String dir) {
-        this.stripPane.getChildren().removeAll();
+        if (this.stripPane.getChildren().size() > 0)
+            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+
         this.setBuildingMenuImages(dir);
 
         int i = 0;
@@ -42,7 +44,9 @@ public class StripPaneController {
             ImageView imageView = new ImageView(new Image(imageFile.getAbsolutePath(),
                     sizeOfImages, sizeOfImages, false, false));
 
-            imageView.setLayoutX(100 + i * (sizeOfImages + 10));
+            imageView.setLayoutX(40 + i * (sizeOfImages + 10));
+            imageView.setLayoutY(20);
+            this.stripPane.getChildren().add(imageView);
 
             i++;
         }

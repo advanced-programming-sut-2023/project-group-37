@@ -4,9 +4,12 @@ import controller.CaptchaController;
 import controller.MapController;
 import controller.MultiMenuFunctions;
 import controller.StripPaneController;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.io.File;
@@ -43,7 +46,6 @@ public class DownPane extends Pane {
         stripPane.setLayoutX(196);
         stripPane.setLayoutY(61);
 
-        stripPane.setBackground(Background.fill(Color.BLUE));
         this.setBackground(Background.fill(Color.web("#795C32")));
 
         this.getChildren().add(detailPane);
@@ -72,8 +74,9 @@ public class DownPane extends Pane {
         Rectangle rectangle = new Rectangle(40, 40);
         rectangle.setId(buttonName);
         rectangle.setLayoutX(x);
-        rectangle.setLayoutY(10);
-        rectangle.setFill(Color.WHITE);//Todo : image
+        rectangle.setLayoutY(15);
+//        rectangle.setFill(new ImagePattern(new Image(absoluteAddress)));
+        rectangle.setFill(Color.WHITE);
         this.getChildren().add(rectangle);
         rectangle.setOnMouseClicked(mouseEvent -> this.stripPaneController.insertImages(rectangle.getId()));
     }
