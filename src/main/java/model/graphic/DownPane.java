@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class DownPane extends Pane {
-    private MapController mapController;
-    private Pane stripPane;
+    private final MapController mapController;
+    private final Pane stripPane;
 
     public DownPane(MapController mapController) {
         this.mapController = mapController;

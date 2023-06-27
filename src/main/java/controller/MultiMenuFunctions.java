@@ -46,8 +46,13 @@ public class MultiMenuFunctions {
     }
 
     public static void setTileImage(Tile tile, Image image) {
-        MapController.getInstance().getMainMap().add(new ImageView(new Image(image.getUrl(),
-                Tile.getTileSize(), Tile.getTileSize(), false, false)), tile.getLocationX(), tile.getLocationY());
+        ImageView imageView = new ImageView(new Image(image.getUrl(),
+                Tile.getTileSize(), Tile.getTileSize(), false, false));
+
+        imageView.setLayoutX(tile.getLayoutX());
+        imageView.setLayoutY(tile.getLayoutY());
+
+        MapController.getInstance().getMainMap().getChildren().add(imageView);
     }
 
     public static void initializePasswordFields(TextField passwordShow, PasswordField passwordField,

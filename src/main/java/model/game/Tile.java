@@ -38,6 +38,9 @@ public class Tile extends Rectangle {
         super(tileSize, tileSize);
         this.x = x;
         this.y = y;
+        this.setLayoutX(this.x * tileSize);
+        this.setLayoutY(this.y * tileSize);
+
         this.texture = Texture.GROUND;
         this.setImage(this.texture.getImage());
         this.miniTile = new Tile(this);
