@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -54,7 +53,7 @@ public class MapController {
 
     public void setGamePane(Pane gamePane) {
         Map.loadMaps();
-        this.map =  Map.getMaps().get(0); // todo : wtf ?
+        this.map = Map.getMaps().get(0); // todo : wtf ?
         Tile[][] tiles = this.map.getField();
 
         gamePane.setPrefHeight(740); // 37 tiles
@@ -63,8 +62,9 @@ public class MapController {
         this.createMainMap(gamePane, tiles);
         this.createDownPane(gamePane);
         this.createChooserRectangle();
-        this.creatMiniMap(tiles);
+        this.createMiniMap(tiles);
     }
+
 
     private void createMainMap(Pane gamePane, Tile[][] tiles) {
         this.mainMap = new GridPane();
@@ -83,16 +83,24 @@ public class MapController {
 
             switch (keyName) {
                 case "Left" -> {
-                    goLeft(); goLeft(); goLeft();
+                    goLeft();
+                    goLeft();
+                    goLeft();
                 }
                 case "Right" -> {
-                    goRight(); goRight(); goRight();
+                    goRight();
+                    goRight();
+                    goRight();
                 }
                 case "Up" -> {
-                    goUp(); goUp(); goUp();
+                    goUp();
+                    goUp();
+                    goUp();
                 }
                 case "Down" -> {
-                    goDown(); goDown(); goDown();
+                    goDown();
+                    goDown();
+                    goDown();
                 }
                 case "Z" -> {
                     Tile.zoom();
@@ -233,7 +241,7 @@ public class MapController {
         this.downPane.getChildren().add(this.chooserRectangle);
     }
 
-    private void creatMiniMap(Tile[][] tiles) {
+    private void createMiniMap(Tile[][] tiles) {
         GridPane miniMap = new GridPane();
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[0].length; j++) {

@@ -88,7 +88,8 @@ public class AppController {
         }
     }
 
-    public void goToStartGame() {
+    public void goToStartGame() throws Exception {
+        this.gameMenu.start(stage);
         // todo : go to next project : core
     }
 }

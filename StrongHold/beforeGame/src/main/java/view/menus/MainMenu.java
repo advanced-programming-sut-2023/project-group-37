@@ -80,7 +80,7 @@ public class MainMenu extends Application {
         appController.runMenu(Result.ENTER_LOGIN_MENU);
     }
 
-    public void startGame() {
+    public void startGame() throws Exception {
         appController.goToStartGame();
     }
 }
