@@ -3,7 +3,6 @@ package model.people;
 import javafx.scene.image.Image;
 import model.buildings.BuildingType;
 import model.game.Item;
-import model.game.Texture;
 
 import java.util.Objects;
 

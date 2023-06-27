@@ -57,6 +57,14 @@ public enum MilitaryMachineType {
         return this.name;
     }
 
+    public Image getDownPaneImage() {
+        return this.downPaneImage;
+    }
+
+    public Image getImage() {
+        return this.image;
+    }
+
     public int getCost() {
         return this.cost;
     }
@@ -79,13 +87,5 @@ public enum MilitaryMachineType {
 
     public int getOperatorsNeeded() {
         return this.operatorsNeeded;
-    }
-
-    public Image getDownPaneImage() {
-        return this.downPaneImage;
-    }
-
-    public Image getImage() {
-        return this.image;
     }
 }
