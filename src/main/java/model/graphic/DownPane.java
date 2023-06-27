@@ -8,9 +8,11 @@ import javafx.scene.paint.Color;
 
 public class DownPane extends Pane {
     private MapController mapController;
+    private Pane stripPane;
 
     public DownPane(MapController mapController) {
         this.mapController = mapController;
+        stripPane = new Pane();
     }
 
     public void initialize(Pane gamePane) {
@@ -25,7 +27,6 @@ public class DownPane extends Pane {
         MultiMenuFunctions.setBackground(detailPane, "details.jpg");
         mapController.createDetailLabels(detailPane);
 
-        Pane stripPane = new Pane();
         stripPane.setPrefWidth(890);
         stripPane.setPrefHeight(101);
 
@@ -41,7 +42,7 @@ public class DownPane extends Pane {
     }
 
     public void addBuildingIcons() {
-        this.getChildren().add(null);
+
     }
 
 }
