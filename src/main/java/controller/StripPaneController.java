@@ -266,6 +266,5 @@ public class StripPaneController {
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
 
-
     }
 }

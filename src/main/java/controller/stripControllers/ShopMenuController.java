@@ -42,10 +42,21 @@ public class ShopMenuController {
     }
 
     private void resources() {
+        if (this.stripPane.getChildren().size() > 0)
+            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+        ImageView wood = MultiMenuFunctions.getImageView("/Image/Item/wood.png",50);
+        ImageView rock = MultiMenuFunctions.getImageView("/Image/Item/iron.png",50);
+        ImageView iron = MultiMenuFunctions.getImageView("/Image/Item/rock.png",50);
 
+
+
+        stripPane.getChildren().add(wood);
+        stripPane.getChildren().add(rock);
+        stripPane.getChildren().add(iron);
     }
 
     private void weapons() {
-
+        if (this.stripPane.getChildren().size() > 0)
+            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
     }
 }
