@@ -1,7 +1,6 @@
 package view.menus;
 
 import controller.AppController;
-import controller.viewControllers.BuildingMenuController;
 import view.enums.Command;
 import view.enums.Message;
 

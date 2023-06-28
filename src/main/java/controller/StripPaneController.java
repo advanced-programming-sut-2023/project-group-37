@@ -1,10 +1,13 @@
 package controller;
 
+import controller.stripControllers.BuildingMenuController;
 import controller.stripControllers.ShopMenuController;
+import controller.stripControllers.UnitMenuController;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -22,22 +25,23 @@ public class StripPaneController {
     private final int sizeOfImages;
     private final Pane stripPane;
     private final ShopMenuController shopMenuController;
+    private final UnitMenuController unitMenuController;
+    private final BuildingMenuController buildingMenuController;
     private final GameController gameController;
     private final HashMap<BuildingType, ImageView> buildingTypeImages;
     private final HashMap<DefensiveBuildingType, ImageView> defensiveBuildingTypeImages;
-    private final HashMap<TroopType, ImageView> troopTypeImages;
-    private final HashMap<MilitaryMachineType, ImageView> militaryMachineTypeImages;
 
     public StripPaneController(Pane stripPane) {
-        this.sizeOfImages = 50;
+        this.sizeOfImages = 70;
         this.stripPane = stripPane;
         this.buildingTypeImages = new HashMap<>();
         this.defensiveBuildingTypeImages = new HashMap<>();
-        this.troopTypeImages = new HashMap<>();
-        this.militaryMachineTypeImages = new HashMap<>();
+
         this.mapController = MapController.getInstance();
         this.gameController = GameController.getInstance();
         this.shopMenuController = new ShopMenuController(stripPane);
+        this.unitMenuController = new UnitMenuController(stripPane);
+        this.buildingMenuController = new BuildingMenuController(stripPane);
 
         for (BuildingType buildingType : BuildingType.values()) {
             ImageView imageView = MultiMenuFunctions.getImageView(buildingType.getImage(), this.sizeOfImages);
@@ -71,17 +75,6 @@ public class StripPaneController {
 
             this.defensiveBuildingTypeImages.put(defensiveBuildingType, imageView);
         }
-
-        for (TroopType troopType : TroopType.values()) {
-            ImageView imageView = MultiMenuFunctions.getImageView(troopType.getDownPaneImage(), this.sizeOfImages);
-
-            this.troopTypeImages.put(troopType, imageView);
-        }
-
-//        for (MilitaryMachineType militaryMachineType : MilitaryMachineType.values()) {
-//            ImageView imageView = MultiMenuFunctions.getImageView(militaryMachineType.getDownPaneImage(), this.sizeOfImages);
-//            this.militaryMachineTypeImages.put(militaryMachineType, imageView);
-//        } todo
     }
 
     private ImageView getImageView(BuildingType buildingType) {
@@ -90,14 +83,6 @@ public class StripPaneController {
 
     private ImageView getImageView(DefensiveBuildingType defensiveBuildingType) {
         return this.defensiveBuildingTypeImages.get(defensiveBuildingType);
-    }
-
-    private ImageView getImageView(TroopType troopType) {
-        return this.troopTypeImages.get(troopType);
-    }
-
-    private ImageView getImageView(MilitaryMachineType militaryMachineType) {
-        return this.militaryMachineTypeImages.get(militaryMachineType);
     }
 
     public void insertImages(BuildingCategory category) {
@@ -188,6 +173,9 @@ public class StripPaneController {
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
 
+        if (selectedTiles.size() == 0)
+            return;
+
         boolean hasMilitaryUnit = false;
         for (Tile tile : selectedTiles) {
             if (tile.getMilitaryUnits().size() > 0) {
@@ -205,67 +193,15 @@ public class StripPaneController {
                 }
             }
             if (building != null)
-                this.uploadBuildingMenu(building);
-        } else {
-            ArrayList<MilitaryUnit> militaryUnits = new ArrayList<>();
-            for (Tile tile : selectedTiles)
-                militaryUnits.addAll(tile.getMilitaryUnits());
-
-            HashMap<TroopType, Integer> troopTypeCounts = new HashMap<>();
-            HashMap<MilitaryMachineType, Integer> militaryMachineTypeCounts = new HashMap<>();
-
-            for (MilitaryUnit militaryUnit : militaryUnits) {
-                if (militaryUnit instanceof  Troop troop)
-                    troopTypeCounts.put(troop.getType(), troopTypeCounts.getOrDefault(troop.getType(), 0) + 1);
-
-                else if (militaryUnit instanceof MilitaryMachine militaryMachine)
-                    militaryMachineTypeCounts.put(militaryMachine.getType(),
-                            militaryMachineTypeCounts.getOrDefault(militaryMachine.getType(), 0) + 1);
-            }
-
-            int i = 0;
-            for (TroopType troopType : troopTypeCounts.keySet()) {
-                ImageView imageView = this.getImageView(troopType);
-                if (imageView == null)
-                    continue;
-
-                imageView.setLayoutX(70 + i * (sizeOfImages + 50));
-                imageView.setLayoutY(20);
-
-                Label label = new Label(String.valueOf(troopTypeCounts.get(troopType)));
-                label.setLayoutY(30 + sizeOfImages);
-                label.setLayoutX(70 + i * (sizeOfImages + 50) - sizeOfImages/2f);
-
-                this.stripPane.getChildren().add(label);
-                this.stripPane.getChildren().add(imageView);
-
-                i++;
-            }
-
-            for (MilitaryMachineType militaryMachineType : militaryMachineTypeCounts.keySet()) {
-                ImageView imageView = this.getImageView(militaryMachineType);
-                if (imageView == null)
-                    continue;
-
-                imageView.setLayoutX(70 + i * (sizeOfImages + 50));
-                imageView.setLayoutY(20);
-
-                Label label = new Label(String.valueOf(troopTypeCounts.get(militaryMachineType)));
-                label.setLayoutY(30 + sizeOfImages);
-                label.setLayoutX(70 + i * (sizeOfImages + 50) - sizeOfImages / 2f);
-
-                this.stripPane.getChildren().add(label);
-                this.stripPane.getChildren().add(imageView);
-
-                i++;
-            }
+                this.buildingMenuController.run(building);
         }
+        else
+            this.unitMenuController.run(selectedTiles);
     }
 
     public void setForTradeMenu() {
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
-
 
     }
 }

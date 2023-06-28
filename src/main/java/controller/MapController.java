@@ -269,7 +269,7 @@ public class MapController {
         this.cursorDown = 0;
 //        this.mainMap.setCursor(CursorType.DEFAULT.getImageCursor());
 
-        if (!this.isSelectedForMoveOrAttack)
+        if (!this.isSelectedForMoveOrAttack && selectedTiles != null)
             this.downPane.setForTiles(selectedTiles);
     }
 
