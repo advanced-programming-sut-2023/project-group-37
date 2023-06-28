@@ -21,10 +21,6 @@ public class AppController {
     private final ProfileMenu profileMenu;
     private final StartGameMenu startGameMenu;
     private final GameMenu gameMenu;
-    private final BuildingMenu buildingMenu;
-    private final ShopMenu shopMenu;
-    private final TradeMenu tradeMenu;
-    private final UnitMenu unitMenu;
     private final ChangeMenu changeMenu;
     private final ChangePasswordMenu changePasswordMenu;
     private final AvatarMenu avatarMenu;
@@ -43,10 +39,6 @@ public class AppController {
         this.profileMenu = new ProfileMenu();
         this.startGameMenu = new StartGameMenu();
         this.gameMenu = new GameMenu();
-        this.buildingMenu = new BuildingMenu();
-        this.shopMenu = new ShopMenu();
-        this.tradeMenu = new TradeMenu();
-        this.unitMenu = new UnitMenu();
         this.changeMenu = new ChangeMenu();
         this.changePasswordMenu = new ChangePasswordMenu();
         this.avatarMenu = new AvatarMenu();
