@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import java.util.Objects;
 
 public enum CursorType {
-    DEFAULT(""), // todo
+//    DEFAULT(""), // todo
     SELECT_MOVE_DESTINATION(Objects.requireNonNull(CursorType.class.getResource(
             "/Image/Cursor/selectDestination.png")).toExternalForm()),
 
