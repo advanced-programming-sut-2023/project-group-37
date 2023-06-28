@@ -64,7 +64,7 @@ public class StartGameMenu extends Application {
 
     @FXML
     private void initialize() throws IOException {
-        back.setImage(new Image(Objects.requireNonNull(this.getClass().getResource("Image/Button/back1.png")).openStream()));
+        back.setImage(new Image(Objects.requireNonNull(RegisterMenu.class.getResource("/Image/Button/back1.png")).toExternalForm()));
         createLabel(User.getCurrentUser().getUsername(), "1");
     }
 
