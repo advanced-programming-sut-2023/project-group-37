@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import model.game.Game;
@@ -13,6 +14,7 @@ import model.graphic.DownPane;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 public class MapController {
@@ -129,6 +131,7 @@ public class MapController {
                     this.setCursorOn(CursorType.SELECT_ATTACK_DESTINATION);
                     this.isSelectedForMoveOrAttack = true;
                 }
+                case "T" -> this.downPane.setForTradeMenu();
             }
         });
 
@@ -141,19 +144,21 @@ public class MapController {
             startY[0] = mouseEvent.getY();
         });
 
+        AtomicReference<ArrayList<Tile>> rectangleTiles = new AtomicReference<>();
+
         this.mainMap.setOnMouseDragged(mouseEvent -> {
             double x = mouseEvent.getX();
             double y = mouseEvent.getY();
 
-            ArrayList<Tile> rectangleTiles = this.map.getRectangleTilesByXY(startX[0] + Tile.getTileSize() * this.cursorRight,
+            rectangleTiles.set(this.map.getRectangleTilesByXY(startX[0] + Tile.getTileSize() * this.cursorRight,
                     startY[0] + Tile.getTileSize() * this.cursorDown, x + Tile.getTileSize()
-                            * this.cursorRight, y + Tile.getTileSize() * this.cursorDown);
+                            * this.cursorRight, y + Tile.getTileSize() * this.cursorDown));
 
             Tile firstTile = this.map.getTileByXY(startX[0] + Tile.getTileSize() * this.cursorRight,
                     startY[0] + Tile.getTileSize() * this.cursorDown);
             Tile secondTile = this.map.getTileByXY(x, y);
 
-            for (Tile rectangleTile : rectangleTiles) {
+            for (Tile rectangleTile : rectangleTiles.get()) {
                 if (rectangleTile.getLocationX() == Math.min(firstTile.getLocationX(), secondTile.getLocationX()))
                     rectangleTile.setLeftRectangleEffect();
 
@@ -167,9 +172,11 @@ public class MapController {
                     rectangleTile.setDownRectangleEffect();
             }
 
-//            this.setSelectedTiles(rectangleTiles);
-
             isNotDragged.set(false);
+        });
+
+        this.mainMap.setOnMouseReleased((MouseEvent mouseEvent) -> {
+            this.setSelectedTiles(rectangleTiles.get());
         });
 
         this.mainMap.setOnMouseClicked(mouseEvent -> {

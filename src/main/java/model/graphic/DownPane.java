@@ -88,4 +88,8 @@ public class DownPane extends Pane {
     public void setForTiles(ArrayList<Tile> selectedTiles) {
         this.stripPaneController.insertSelectedTiles(selectedTiles);
     }
+
+    public void setForTradeMenu() {
+        this.stripPaneController.setForTradeMenu();
+    }
 }

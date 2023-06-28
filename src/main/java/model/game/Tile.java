@@ -18,7 +18,7 @@ public class Tile extends Rectangle {
     private final int x;
     private final int y;
     private Texture texture;
-    private Texture treeTexture;
+    private Texture treeRockTexture;
     private Image image;
     private Tile miniTile;
     private ArrayList<Person> people;
@@ -146,8 +146,8 @@ public class Tile extends Rectangle {
         this.texture = texture;
     }
 
-    public void changeTreeTexture(Texture treeTexture) {
-        this.treeTexture = treeTexture;
+    public void changeTreeRockTexture(Texture treeRockTexture) {
+        this.treeRockTexture = treeRockTexture;
     }
 
     public ArrayList<MilitaryUnit> getMilitaryUnits() {
@@ -221,8 +221,8 @@ public class Tile extends Rectangle {
     public void updateImage() {
         this.setImage(this.texture.getImage());
 
-        if (this.treeTexture != null) {
-            MultiMenuFunctions.setTileImage(this, treeTexture.getImage());
+        if (this.treeRockTexture != null) {
+            MultiMenuFunctions.setTileImage(this, treeRockTexture.getImage());
             this.miniTile.setFill(Color.DARKGREEN);
         }
 

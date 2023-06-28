@@ -11,7 +11,7 @@ public enum DefensiveBuildingType {
     WALL("wall", BuildingCategory.CASTLE_BUILDINGS, "wall.png", 250, 1,
             1.1, 1),
 
-    STAIRS("stairs", BuildingCategory.CASTLE_BUILDINGS, "stairs.jpg", 150, 1,
+    STAIRS("stairs", BuildingCategory.CASTLE_BUILDINGS, "stairs.png", 150, 1,
             0, 1),
 
     SMALL_GATEHOUSE("small gatehouse", BuildingCategory.GATEHOUSES, "small-gatehouse.png",
