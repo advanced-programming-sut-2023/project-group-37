@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -24,6 +26,7 @@ import model.user.User;
 import view.enums.Message;
 import view.enums.Result;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +35,8 @@ import java.util.Objects;
 
 public class StartGameMenu extends Application {
     private final AppController appController = AppController.getInstance();
+    @FXML
+    private ImageView back;
     @FXML
     private TextField mapName;
     @FXML
@@ -58,7 +63,8 @@ public class StartGameMenu extends Application {
     }
 
     @FXML
-    private void initialize() {
+    private void initialize() throws IOException {
+        back.setImage(new Image(Objects.requireNonNull(RegisterMenu.class.getResource("/Image/Button/back1.png")).toExternalForm()));
         createLabel(User.getCurrentUser().getUsername(), "1");
     }
 
