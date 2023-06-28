@@ -117,6 +117,7 @@ public class MapController {
                     this.setCursorOn(CursorType.SELECT_ATTACK_DESTINATION);
                     this.isSelectedForMoveOrAttack = true;
                 }
+                case "T" -> this.downPane.setForTradeMenu();
             }
         });
 
