@@ -19,8 +19,8 @@ public class ShopMenuController {
                 ("/Image/Item/resources.png")).toExternalForm()));
         ImageView weapons = new ImageView(new Image(Objects.requireNonNull(RegisterMenu.class.getResource
                 ("/Image/Item/weapons.png")).toExternalForm()));
-        resources.setFitHeight();
-        resources.setFitWidth();
+//        resources.setFitHeight();
+//        resources.setFitWidth();
 
         stripPane.getChildren().add(resources);
         stripPane.getChildren().add(weapons);
