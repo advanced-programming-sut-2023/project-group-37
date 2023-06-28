@@ -86,7 +86,25 @@ public class DownPane extends Pane {
     }
 
     public void updateStripPane(Pane stripPane, String buttonName) {
-        //TODO
-    }
+        switch (buttonName) {
+            case "Castle": {
 
+            }
+            case "Town": {
+
+            }
+            case "Farm": {
+
+            }
+            case "Industry": {
+
+            }
+            case "Weapon": {
+
+            }
+            case "Food": {
+
+            }
+        }
+    }
 }
