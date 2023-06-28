@@ -17,18 +17,4 @@ public class GameController {
         return gameController;
     }
 
-    public Message repair(DefensiveBuilding defensiveBuilding) {
-        if (!defensiveBuilding.getType().isRepairable())
-            return Message.BUILDING_NOT_REPAIRABLE;
-
-        int stoneNeededToRepair = (int)
-                (1 - (double) (defensiveBuilding.getHitpoints() / defensiveBuilding.getMaxHitpoints())) *
-                defensiveBuilding.getType().getRawMaterialUsesForSecond();
-
-        if (!this.currentGovernment.removeItem(Item.STONE, stoneNeededToRepair))
-            return Message.NOT_ENOUGH_STONE;
-
-        defensiveBuilding.setHitpoints(defensiveBuilding.getMaxHitpoints());
-        return Message.REPAIR_SUCCESS;
-    }
 }

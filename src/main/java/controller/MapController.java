@@ -27,10 +27,7 @@ public class MapController {
     private Label goldLabel;
     private Label popularityLabel;
     private Government currentGovernment;
-
     private ArrayList<Tile> selectedTiles;
-    private int currentX;
-    private int currentY;
     private int cursorRight;
     private int cursorDown;
     private boolean isSelectedForMoveOrAttack;
@@ -44,8 +41,6 @@ public class MapController {
     }
 
     private MapController() {
-        this.currentX = 0;
-        this.currentY = 0;
         this.cursorDown = 0;
         this.cursorRight = 0;
     }
@@ -270,7 +265,7 @@ public class MapController {
         this.cursorDown = 0;
 //        this.mainMap.setCursor(CursorType.DEFAULT.getImageCursor());
 
-        if (!this.isSelectedForMoveOrAttack)
+        if (!this.isSelectedForMoveOrAttack && selectedTiles != null)
             this.downPane.setForTiles(selectedTiles);
     }
 
@@ -303,7 +298,7 @@ public class MapController {
     }
 
     public Tile getTileByXY(double x, double y) {
-        return this.map.getTileByXY(x, y);
+        return this.map.getTileByXY(x - mainMap.getLayoutX(), y - mainMap.getLayoutY());
     }
 
     public Government getCurrentGovernment() {

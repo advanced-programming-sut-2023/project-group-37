@@ -24,7 +24,6 @@ public class GameMenuController {
     private final MapController mapController;
     private final ShopMenuController shopMenuController;
     private final TradeMenuController tradeMenuController;
-    private final BuildingMenuController buildingMenuController;
     private final UnitMenuController unitMenuController;
     private Government currentGovernment;
 
@@ -36,9 +35,7 @@ public class GameMenuController {
         mapController = MapController.getInstance();
         shopMenuController = ShopMenuController.getInstance();
         tradeMenuController = TradeMenuController.getInstance();
-        buildingMenuController = BuildingMenuController.getInstance();
         unitMenuController = UnitMenuController.getInstance();
-
     }
 
     public static GameMenuController getInstance() {
@@ -51,7 +48,6 @@ public class GameMenuController {
         this.tradeMenuController.setGovernment(government);
         this.mapController.setCurrentGovernment(government);
         this.unitMenuController.setCurrentGovernment(government);
-        this.buildingMenuController.setCurrentGovernment(government);
     }
 
     public void setCurrentGame(Game game) {
@@ -59,7 +55,6 @@ public class GameMenuController {
         tradeMenuController.setGame(game);
         mapController.setGame(game);
         unitMenuController.setCurrentGame(game);
-        buildingMenuController.setCurrentGame(game);
     }
 
     public Map getMap() {
@@ -302,8 +297,6 @@ public class GameMenuController {
         if (building.getLoyalty() != this.currentGovernment)
             return Message.BUILDING_NOT_YOURS.toString();
 
-        this.buildingMenuController.setCurrentBuilding(this.currentGame.getMap().getTileByLocation(x, y).getBuilding());
-        this.buildingMenuController.setCurrentGovernment(this.currentGovernment);
         return building.getType().toString() + " selected!\n" + Message.ENTERED_BUILDING_MENU;
     }
 
