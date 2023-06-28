@@ -1,8 +1,11 @@
 package controller;
 
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.buildings.Building;
 import model.buildings.BuildingCategory;
@@ -33,15 +36,60 @@ public class StripPaneController {
         this.mapController = MapController.getInstance();
 
         for (BuildingType buildingType : BuildingType.values()) {
-            ImageView imageView =  new ImageView(new Image(buildingType.getImage().getUrl(),
+            ImageView imageView = new ImageView(new Image(buildingType.getImage().getUrl(),
                     sizeOfImages, sizeOfImages, false, false));
+            imageView.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    System.out.println("pressed");
+                }
+            });
+            imageView.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    System.out.println("dragged");
+                    Tile tile = mapController.getTileByXY(mouseEvent.getSceneX(), mouseEvent.getSceneY());
+                    if (tile == null) return;
+                    mapController.getGame().getGameMenuController().dropBuilding(tile, buildingType.getName());
+                }
+            });
 
+            imageView.setOnMouseReleased(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    System.out.println("vel shod");
+                }
+            });
             this.buildingTypeImages.put(buildingType, imageView);
         }
 
         for (DefensiveBuildingType defensiveBuildingType : DefensiveBuildingType.values()) {
-            ImageView imageView =  new ImageView(new Image(
+            ImageView imageView = new ImageView(new Image(
                     defensiveBuildingType.getImage().getUrl(), sizeOfImages, sizeOfImages, false, false));
+            imageView.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    System.out.println("pressed");
+                }
+            });
+            imageView.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    System.out.println("dragged");
+
+                    Tile tile = mapController.getTileByXY(mouseEvent.getSceneX(), mouseEvent.getSceneY());
+                    if (tile == null) return;
+                    mapController.getGame().getGameMenuController().dropBuilding(tile, defensiveBuildingType.getName());
+
+                }
+            });
+
+            imageView.setOnMouseReleased(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    System.out.println("vel shod");
+                }
+            });
 
             this.defensiveBuildingTypeImages.put(defensiveBuildingType, imageView);
         }
@@ -84,7 +132,7 @@ public class StripPaneController {
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
 
         int i = 0;
-        for (BuildingType buildingType :BuildingType.values()) {
+        for (BuildingType buildingType : BuildingType.values()) {
             if (buildingType.getCategory() == category) {
                 ImageView imageView = this.getImageView(buildingType);
                 if (imageView == null)
@@ -98,7 +146,7 @@ public class StripPaneController {
             }
         }
 
-        for (DefensiveBuildingType defensiveBuildingType :DefensiveBuildingType.values()) {
+        for (DefensiveBuildingType defensiveBuildingType : DefensiveBuildingType.values()) {
             if (defensiveBuildingType.getCategory() == category) {
                 ImageView imageView = this.getImageView(defensiveBuildingType);
                 if (imageView == null)
@@ -139,9 +187,7 @@ public class StripPaneController {
             }
             if (building != null)
                 this.uploadBuildingMenu(building);
-        }
-
-        else {
+        } else {
             ArrayList<MilitaryUnit> militaryUnits = new ArrayList<>();
             for (Tile tile : selectedTiles)
                 militaryUnits.addAll(tile.getMilitaryUnits());
@@ -161,7 +207,7 @@ public class StripPaneController {
 
                 Label label = new Label(String.valueOf(militaryUnitCounts.get(militaryUnit)));
                 label.setLayoutY(30 + sizeOfImages);
-                label.setLayoutX(100 + i * (sizeOfImages + 50) - sizeOfImages/2f);
+                label.setLayoutX(100 + i * (sizeOfImages + 50) - sizeOfImages / 2f);
 
                 this.stripPane.getChildren().add(label);
                 this.stripPane.getChildren().add(imageView);

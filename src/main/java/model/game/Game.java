@@ -29,6 +29,10 @@ public class Game {
         this.index = 0;
     }
 
+    public GameMenuController getGameMenuController() {
+        return gameMenuController;
+    }
+
     public Government getGovernmentByUsername(String username) {
         for (Government government : this.governments) {
             if (government.getUser().getUsername().equals(username))

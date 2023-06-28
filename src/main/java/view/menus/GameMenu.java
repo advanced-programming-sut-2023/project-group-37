@@ -42,7 +42,7 @@ public class GameMenu extends Application {
         stage.show();
     }
 
-    public Result run() {
+    /*public Result run() {
         String command;
         Matcher matcher;
 
@@ -118,7 +118,7 @@ public class GameMenu extends Application {
             } else
                 System.out.println(Message.INVALID_COMMAND);
         }
-    }
+    }*/
 
     private boolean selectBuilding(Matcher matcher) {
         this.message = this.gameMenuController.selectBuilding(matcher);

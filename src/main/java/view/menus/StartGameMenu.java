@@ -1,5 +1,6 @@
 package view.menus;
 
+import controller.AppController;
 import controller.MultiMenuFunctions;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 import model.game.Color;
 import model.user.User;
 import view.enums.Message;
+import view.enums.Result;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class StartGameMenu extends Application {
+    private final AppController appController = AppController.getInstance();
     @FXML
     private VBox usernames;
     @FXML
@@ -94,5 +97,13 @@ public class StartGameMenu extends Application {
         l2.setTextFill(Color.BLUE.getColor());
         territories.getChildren().add(l2);
         userTerritory.put(Integer.parseInt(territory), username);
+    }
+
+    public void back(MouseEvent mouseEvent) throws Exception {
+        appController.runMenu(Result.ENTER_MAIN_MENU);
+    }
+
+    public void startGame(MouseEvent mouseEvent) throws Exception {
+        appController.runMenu(Result.ENTER_GAME_MENU);
     }
 }

@@ -27,6 +27,7 @@ public class GameMenuController {
     private final BuildingMenuController buildingMenuController;
     private final UnitMenuController unitMenuController;
     private Government currentGovernment;
+
     static {
         gameMenuController = new GameMenuController();
     }
@@ -136,26 +137,13 @@ public class GameMenuController {
         return "Fear rate: " + this.currentGovernment.getFearRate();
     }
 
-    public String dropBuilding(Matcher matcher) {
-        if (matcher.group("x") == null || matcher.group("y") == null)
-            return Message.EMPTY_FIELD.toString();
-
-        int x = Integer.parseInt(matcher.group("x"));
-        int y = Integer.parseInt(matcher.group("y"));
-        Tile tile;
-        if ((tile = this.currentGame.getMap().getTileByLocation(x, y)) == null)
+    public String dropBuilding(Tile tile, String typeName) {
+        if (tile == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        Object type = BuildingType.getBuildingTypeByName(MultiMenuFunctions.deleteQuotations(matcher.group("type")));
+        Object type = BuildingType.getBuildingTypeByName(typeName);
         if (type == null)
             return Message.INVALID_BUILDING_TYPE.toString();
-
-        char direction;
-        try {
-            direction = matcher.group("direction").charAt(0);
-        } catch (Exception ignored) {
-            direction = 'v';
-        }
 
         if (!tile.getTexture().canHaveBuildingAndUnit())
             return Message.CANNOT_PLACE_BUILDING_ON_TEXTURE.toString();
@@ -244,7 +232,7 @@ public class GameMenuController {
             else
                 building = new Building(this.currentGovernment, tile, (BuildingType) type);
         } else if (type instanceof DefensiveBuildingType) {
-            building = new DefensiveBuilding(this.currentGovernment, tile, (DefensiveBuildingType) type, direction);
+            building = new DefensiveBuilding(this.currentGovernment, tile, (DefensiveBuildingType) type, 'a');
 
             for (Building neighborBuilding : neighborBuildings)
                 if (neighborBuilding instanceof DefensiveBuilding) {
