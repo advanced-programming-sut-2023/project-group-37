@@ -17,7 +17,7 @@ public enum Texture {
             ("/Image/Texture/rock.jpg")).toExternalForm()), false, true),
 
     STONE("stone", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Texture/stone1.jpg")).toExternalForm()), false, false),
+            ("/Image/Texture/stone1.png")).toExternalForm()), false, false),
 
     IRON("iron", new Image(Objects.requireNonNull(Texture.class.getResource
             ("/Image/Texture/iron.jpg")).toExternalForm()), false, true),
@@ -54,7 +54,7 @@ public enum Texture {
 
     // This is a channel way through rivers!
     SHALLOW_RIVER("shallow river",  new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Texture/see.jpg")).toExternalForm()), false, true),
+            ("/Image/Texture/sea.jpg")).toExternalForm()), false, true),
 
     RIVER("river",  new Image(Objects.requireNonNull(Texture.class.getResource
             ("/Image/Texture/sea.jpg")).toExternalForm()), false, false),
@@ -63,7 +63,7 @@ public enum Texture {
             ("/Image/Texture/sea.jpg")).toExternalForm()), false, false),
 
     DEEP_POND("deep pond",  new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Texture/see.jpg")).toExternalForm()), false, false),
+            ("/Image/Texture/sea.jpg")).toExternalForm()), false, false),
 
     BEACH("beach", new Image(Objects.requireNonNull(Texture.class.getResource
             ("/Image/Texture/ground.jpg")).toExternalForm()), true, true),
@@ -72,7 +72,7 @@ public enum Texture {
             ("/Image/Texture/sea.jpg")).toExternalForm()), false, false),
 
     MOAT("moat", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Texture/see.jpg")).toExternalForm()), false, false);
+            ("/Image/Texture/sea.jpg")).toExternalForm()), false, false);
 
     private final String name;
     private final Image image;

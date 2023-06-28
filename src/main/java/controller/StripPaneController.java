@@ -41,25 +41,16 @@ public class StripPaneController {
         for (BuildingType buildingType : BuildingType.values()) {
             ImageView imageView = new ImageView(new Image(buildingType.getImage().getUrl(),
                     sizeOfImages, sizeOfImages, false, false));
-            imageView.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
+            imageView.setOnMousePressed(mouseEvent -> {
 
-                }
             });
-            imageView.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                }
+            imageView.setOnMouseDragged(mouseEvent -> {
             });
 
-            imageView.setOnMouseReleased(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    Tile tile = mapController.getTileByXY(mouseEvent.getSceneX(), mouseEvent.getSceneY());
-                    if (tile == null) return;
-                    System.out.println(mapController.getGame().getGameMenuController().dropBuilding(tile, buildingType.getName()));
-                }
+            imageView.setOnMouseReleased(mouseEvent -> {
+                Tile tile = mapController.getTileByXY(mouseEvent.getSceneX(), mouseEvent.getSceneY());
+                if (tile == null) return;
+                System.out.println(mapController.getGame().getGameMenuController().dropBuilding(tile, buildingType.getName()));
             });
             this.buildingTypeImages.put(buildingType, imageView);
         }
@@ -67,25 +58,16 @@ public class StripPaneController {
         for (DefensiveBuildingType defensiveBuildingType : DefensiveBuildingType.values()) {
             ImageView imageView = new ImageView(new Image(
                     defensiveBuildingType.getImage().getUrl(), sizeOfImages, sizeOfImages, false, false));
-            imageView.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
+            imageView.setOnMousePressed(mouseEvent -> {
 
-                }
             });
-            imageView.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                }
+            imageView.setOnMouseDragged(mouseEvent -> {
             });
 
-            imageView.setOnMouseReleased(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    Tile tile = mapController.getTileByXY(mouseEvent.getSceneX(), mouseEvent.getSceneY());
-                    if (tile == null) return;
-                    mapController.getGame().getGameMenuController().dropBuilding(tile, defensiveBuildingType.getName());
-                }
+            imageView.setOnMouseReleased(mouseEvent -> {
+                Tile tile = mapController.getTileByXY(mouseEvent.getSceneX(), mouseEvent.getSceneY());
+                if (tile == null) return;
+                mapController.getGame().getGameMenuController().dropBuilding(tile, defensiveBuildingType.getName());
             });
 
             this.defensiveBuildingTypeImages.put(defensiveBuildingType, imageView);
