@@ -1,6 +1,8 @@
 package view.menus;
 
+import controller.AppController;
 import controller.MultiMenuFunctions;
+import controller.viewControllers.GameMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,8 +17,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.game.Color;
+import model.game.Game;
+import model.game.Government;
+import model.game.Map;
 import model.user.User;
 import view.enums.Message;
+import view.enums.Result;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,6 +31,9 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class StartGameMenu extends Application {
+    private final AppController appController = AppController.getInstance();
+    @FXML
+    private TextField mapName;
     @FXML
     private VBox usernames;
     @FXML
@@ -94,5 +103,36 @@ public class StartGameMenu extends Application {
         l2.setTextFill(Color.BLUE.getColor());
         territories.getChildren().add(l2);
         userTerritory.put(Integer.parseInt(territory), username);
+    }
+
+    public void back(MouseEvent mouseEvent) throws Exception {
+        appController.runMenu(Result.ENTER_MAIN_MENU);
+    }
+
+    public void startGame(MouseEvent mouseEvent) throws Exception {
+        createGame(userTerritory);
+    }
+
+    private void createGame(HashMap<Integer, String> userTerritory) throws Exception {
+        if (mapName.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, Message.EMPTY_FIELD.toString()).show();
+            return;
+        }
+        appController.runMenu(Result.ENTER_GAME_MENU);
+        ArrayList<Government> governments = new ArrayList<>();
+        Map map = Map.getMapCopyByName(mapName.getText());
+
+        assert map != null;
+        governments.add(new Government(User.getCurrentUser(), Color.RED.getColor(), map, 1));
+
+        int index = 1;
+        for (java.util.Map.Entry<Integer, String> integerStringEntry : userTerritory.entrySet()) {
+            String username = integerStringEntry.getValue();
+            Integer territory = integerStringEntry.getKey();
+            governments.add(new Government(User.getUserByUsername(username), Color.values()[index].getColor(), map, territory));
+        }
+
+        Game game = new Game(map, governments);
+        GameMenuController.getInstance().setCurrentGame(game);
     }
 }

@@ -13,20 +13,23 @@ import java.util.ArrayList;
 public class Game {
     private final GameMenuController gameMenuController;
     private final Map map;
-    private final int turns;
+    //private final int turns;
     private final ArrayList<Government> governments;
     private Government currentTurnGovernment;
     private int index;
     private int turnNumber;
 
-    public Game(GameMenuController gameMenuController, Map map, int turns, ArrayList<Government> governments) {
+    public Game(Map map, ArrayList<Government> governments) {
         this.map = map;
-        this.turns = turns;
         this.governments = governments;
         this.currentTurnGovernment = governments.get(0);
-        this.gameMenuController = gameMenuController;
+        this.gameMenuController = GameMenuController.getInstance();
         this.gameMenuController.setCurrentGovernment(this.currentTurnGovernment);
         this.index = 0;
+    }
+
+    public GameMenuController getGameMenuController() {
+        return gameMenuController;
     }
 
     public Government getGovernmentByUsername(String username) {
@@ -49,9 +52,9 @@ public class Game {
         return this.map;
     }
 
-    public int getTurns() {
-        return this.turns;
-    }
+//    public int getTurns() {
+//        return this.turns;
+//    }
 
     public ArrayList<Government> getGovernments() {
         return this.governments;

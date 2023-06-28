@@ -27,6 +27,7 @@ public class GameMenuController {
     private final BuildingMenuController buildingMenuController;
     private final UnitMenuController unitMenuController;
     private Government currentGovernment;
+
     static {
         gameMenuController = new GameMenuController();
     }
@@ -136,26 +137,14 @@ public class GameMenuController {
         return "Fear rate: " + this.currentGovernment.getFearRate();
     }
 
-    public String dropBuilding(Matcher matcher) {
-        if (matcher.group("x") == null || matcher.group("y") == null)
-            return Message.EMPTY_FIELD.toString();
-
-        int x = Integer.parseInt(matcher.group("x"));
-        int y = Integer.parseInt(matcher.group("y"));
-        Tile tile;
-        if ((tile = this.currentGame.getMap().getTileByLocation(x, y)) == null)
+    public String dropBuilding(Tile tile, String typeName) {
+        System.out.println(currentGovernment.getItemAmount(Item.WOOD));
+        if (tile == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
-        Object type = BuildingType.getBuildingTypeByName(MultiMenuFunctions.deleteQuotations(matcher.group("type")));
+        Object type = BuildingType.getBuildingTypeByName(typeName);
         if (type == null)
             return Message.INVALID_BUILDING_TYPE.toString();
-
-        char direction;
-        try {
-            direction = matcher.group("direction").charAt(0);
-        } catch (Exception ignored) {
-            direction = 'v';
-        }
 
         if (!tile.getTexture().canHaveBuildingAndUnit())
             return Message.CANNOT_PLACE_BUILDING_ON_TEXTURE.toString();
@@ -177,9 +166,11 @@ public class GameMenuController {
             return Message.TILE_ALREADY_HAS_BUILDING.toString();
 
         // Check territory for defensiveBuildings
-        if (type instanceof DefensiveBuildingType &&
-                this.currentGovernment.getTerritory().getTerritoryNumber() != tile.getTerritory().getTerritoryNumber())
-            return Message.NOT_IN_TERRITORY.toString();
+        if (tile.getTerritory() != null) {
+            if (type instanceof DefensiveBuildingType &&
+                    this.currentGovernment.getTerritory().getTerritoryNumber() != tile.getTerritory().getTerritoryNumber())
+                return Message.NOT_IN_TERRITORY.toString();
+        }
 
         // Check enough gold and resource:
         if (type instanceof BuildingType) {
@@ -244,7 +235,7 @@ public class GameMenuController {
             else
                 building = new Building(this.currentGovernment, tile, (BuildingType) type);
         } else if (type instanceof DefensiveBuildingType) {
-            building = new DefensiveBuilding(this.currentGovernment, tile, (DefensiveBuildingType) type, direction);
+            building = new DefensiveBuilding(this.currentGovernment, tile, (DefensiveBuildingType) type, 'a');
 
             for (Building neighborBuilding : neighborBuildings)
                 if (neighborBuilding instanceof DefensiveBuilding) {
@@ -547,15 +538,15 @@ public class GameMenuController {
         return this.tradeMenuController.showNewTrades();
     }
 
-    public String goNextTurn() {
+    /*public String goNextTurn() {
         this.currentGame.goToNextTurn();
         if (gameEndMessage() != null)
             return gameEndMessage();
 
         return "Now its " + currentGame.getCurrentTurnGovernment().getUser().getUsername() + " turn";
-    }
+    }*/
 
-    private String gameEndMessage() {
+    /*private String gameEndMessage() {
         ArrayList<Government> remainingGovernments = new ArrayList<>();
         for (Government government : this.currentGame.getGovernments()) {
             if (government.getLord().getHitpoints() > 0)
@@ -571,7 +562,7 @@ public class GameMenuController {
             return Message.GAME_END_ALL_DESTROYED.toString();
         else
             return Message.GAME_END_WITH_WINNER + remainingGovernments.get(0).getUser().getUsername();
-    }
+    }*/
 
     public String endGame() {
         Government winner = this.currentGame.getGovernments().get(0);

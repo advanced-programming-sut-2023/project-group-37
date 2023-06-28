@@ -13,9 +13,11 @@ public class MainMenuController {
     private static final MainMenuController mainMenuController;
     private static User currentUser;
     private final GameMenuController gameMenuController;
+
     static {
         mainMenuController = new MainMenuController();
     }
+
     {
         gameMenuController = GameMenuController.getInstance();
     }
@@ -63,7 +65,7 @@ public class MainMenuController {
         if (map == null)
             return Message.INVALID_MAP_NAME.toString();
 
-        governments.add(new Government(currentUser, Color.RED.getColor(), map,1));
+        governments.add(new Government(currentUser, Color.RED.getColor(), map, 1));
 
         int index = 1;
         for (String username : usernames) {
@@ -71,11 +73,11 @@ public class MainMenuController {
             if (user == null)
                 return Message.USERNAME_NOT_FOUND.toString();
 
-            governments.add(new Government(user, Color.values()[index].getColor(), map,territories[index-1]));
+            governments.add(new Government(user, Color.values()[index].getColor(), map, territories[index - 1]));
             index++;
         }
 
-        Game game = new Game(gameMenuController, map, Integer.parseInt(turns), governments);
+        Game game = new Game(map, governments);
         gameMenuController.setCurrentGame(game);
 
         return Message.GAME_STARTED.toString();
