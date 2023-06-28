@@ -65,6 +65,10 @@ public enum Item {
         return allItems;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
     public String getName() {
         return this.name;
     }
