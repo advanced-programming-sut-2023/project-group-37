@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -15,6 +16,9 @@ import model.user.User;
 import view.enums.Message;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class StartGameMenu extends Application {
@@ -26,6 +30,8 @@ public class StartGameMenu extends Application {
     private TextField territory;
     @FXML
     private TextField username;
+
+    private HashMap<Integer, String> userTerritory = new HashMap<>();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -57,6 +63,19 @@ public class StartGameMenu extends Application {
             return;
         }
 
+        if (userTerritory.containsKey(Integer.parseInt(territory))) {
+            new Alert(Alert.AlertType.ERROR, Message.TERRITORY_EXISTS.toString()).show();
+            return;
+        }
+
+        if (userTerritory.containsValue(username)) {
+            new Alert(Alert.AlertType.ERROR, Message.USERNAME_ALREADY_EXISTS.toString()).show();
+            return;
+        }
+
+        userTerritory.put(Integer.parseInt(territory), username);
+        usernames.getChildren().add(new Label(username));
+        territories.getChildren().add(new Label(territory));
 
     }
 }
