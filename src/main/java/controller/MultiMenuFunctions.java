@@ -23,6 +23,7 @@ import model.people.MilitaryUnit;
 import model.user.User;
 import view.enums.Error;
 import view.menus.LoginMenu;
+import view.menus.RegisterMenu;
 
 public class MultiMenuFunctions {
 
@@ -130,6 +131,13 @@ public class MultiMenuFunctions {
 
     public static ImageView getImageView(Image image, int size) {
         ImageView imageView = new ImageView(new Image(image.getUrl(), size, size, false, false));
+        // todo : cursor clicker
+        return imageView;
+    }
+
+    public static ImageView getImageView(String imageAddress, int size) {
+        ImageView imageView = new ImageView(new Image(Objects.requireNonNull(RegisterMenu.class.getResource(imageAddress))
+                .toExternalForm(), size, size, false, false));
         // todo : cursor clicker
         return imageView;
     }

@@ -92,4 +92,8 @@ public class DownPane extends Pane {
     public void setForTradeMenu() {
         this.stripPaneController.setForTradeMenu();
     }
+
+    public void setForShopMenu() {
+        this.stripPaneController.runShopMenu();
+    }
 }

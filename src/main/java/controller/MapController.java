@@ -132,6 +132,7 @@ public class MapController {
                     this.isSelectedForMoveOrAttack = true;
                 }
                 case "T" -> this.downPane.setForTradeMenu();
+                case "S" -> this.downPane.setForShopMenu();
             }
         });
 
