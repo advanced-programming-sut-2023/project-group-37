@@ -62,7 +62,7 @@ public class StartGameMenu extends Application {
         createLabel(User.getCurrentUser().getUsername(), "1");
     }
 
-    public void addPlayer(MouseEvent mouseEvent) {
+    public void addPlayer() {
         String username = this.username.getText();
         String territory = this.territory.getText();
         if (username.isEmpty() || territory.isEmpty()) {
@@ -114,7 +114,7 @@ public class StartGameMenu extends Application {
     }
 
     private void createGame(HashMap<Integer, String> userTerritory) throws Exception {
-        if (mapName.getText().isEmpty()) {
+        if (mapName.getText().isEmpty() || Map.getMapCopyByName(mapName.getText()) == null) {
             new Alert(Alert.AlertType.ERROR, Message.EMPTY_FIELD.toString()).show();
             return;
         }

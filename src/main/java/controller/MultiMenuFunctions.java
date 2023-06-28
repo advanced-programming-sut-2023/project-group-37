@@ -128,6 +128,12 @@ public class MultiMenuFunctions {
         passwordConfirmField.visibleProperty().bind(showPassword.selectedProperty().not());
     }
 
+    public static ImageView getImageView(Image image, int size) {
+        ImageView imageView = new ImageView(new Image(image.getUrl(), size, size, false, false));
+        // todo : cursor clicker
+        return imageView;
+    }
+
     public static ArrayList<File> getAllImageFilesFromFolder(File directory) {
         //Get all the files from the folder
         File[] allFiles = directory.listFiles();

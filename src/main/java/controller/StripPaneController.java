@@ -1,13 +1,10 @@
 package controller;
 
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.buildings.*;
@@ -29,7 +26,7 @@ public class StripPaneController {
     private final HashMap<MilitaryMachineType, ImageView> militaryMachineTypeImages;
 
     public StripPaneController(Pane stripPane) {
-        this.sizeOfImages = 70;
+        this.sizeOfImages = 50;
         this.stripPane = stripPane;
         this.buildingTypeImages = new HashMap<>();
         this.defensiveBuildingTypeImages = new HashMap<>();
@@ -39,8 +36,7 @@ public class StripPaneController {
         this.gameController = GameController.getInstance();
 
         for (BuildingType buildingType : BuildingType.values()) {
-            ImageView imageView = new ImageView(new Image(buildingType.getImage().getUrl(),
-                    sizeOfImages, sizeOfImages, false, false));
+            ImageView imageView = MultiMenuFunctions.getImageView(buildingType.getImage(), this.sizeOfImages);
             imageView.setOnMousePressed(mouseEvent -> {
 
             });
@@ -56,8 +52,7 @@ public class StripPaneController {
         }
 
         for (DefensiveBuildingType defensiveBuildingType : DefensiveBuildingType.values()) {
-            ImageView imageView = new ImageView(new Image(
-                    defensiveBuildingType.getImage().getUrl(), sizeOfImages, sizeOfImages, false, false));
+            ImageView imageView = MultiMenuFunctions.getImageView(defensiveBuildingType.getImage(), this.sizeOfImages);
             imageView.setOnMousePressed(mouseEvent -> {
 
             });
@@ -74,16 +69,13 @@ public class StripPaneController {
         }
 
         for (TroopType troopType : TroopType.values()) {
-            ImageView imageView = new ImageView(new Image(
-                    troopType.getImage().getUrl(), sizeOfImages, sizeOfImages, false, false));
+            ImageView imageView = MultiMenuFunctions.getImageView(troopType.getDownPaneImage(), this.sizeOfImages);
 
             this.troopTypeImages.put(troopType, imageView);
         }
 
 //        for (MilitaryMachineType militaryMachineType : MilitaryMachineType.values()) {
-//            ImageView imageView = new ImageView(new Image(
-//                    militaryMachineType.getImage().getUrl(), sizeOfImages, sizeOfImages, false, false));
-//
+//            ImageView imageView = MultiMenuFunctions.getImageView(militaryMachineType.getDownPaneImage(), this.sizeOfImages);
 //            this.militaryMachineTypeImages.put(militaryMachineType, imageView);
 //        } todo
     }
@@ -96,14 +88,12 @@ public class StripPaneController {
         return this.defensiveBuildingTypeImages.get(defensiveBuildingType);
     }
 
-    private ImageView getImageView(MilitaryUnit militaryUnit) {
-        if (militaryUnit instanceof Troop troop)
-            return this.troopTypeImages.get(troop.getType());
+    private ImageView getImageView(TroopType troopType) {
+        return this.troopTypeImages.get(troopType);
+    }
 
-        else if (militaryUnit instanceof MilitaryMachine militaryMachine)
-            return this.militaryMachineTypeImages.get(militaryMachine.getType());
-
-        return null;
+    private ImageView getImageView(MilitaryMachineType militaryMachineType) {
+        return this.militaryMachineTypeImages.get(militaryMachineType);
     }
 
     public void insertImages(BuildingCategory category) {
@@ -215,20 +205,46 @@ public class StripPaneController {
             for (Tile tile : selectedTiles)
                 militaryUnits.addAll(tile.getMilitaryUnits());
 
-            HashMap<MilitaryUnit, Integer> militaryUnitCounts = new HashMap<>();
-            for (MilitaryUnit militaryUnit : militaryUnits)
-                militaryUnitCounts.put(militaryUnit, militaryUnitCounts.getOrDefault(militaryUnit, 0) + 1);
+            HashMap<TroopType, Integer> troopTypeCounts = new HashMap<>();
+            HashMap<MilitaryMachineType, Integer> militaryMachineTypeCounts = new HashMap<>();
+
+            for (MilitaryUnit militaryUnit : militaryUnits) {
+                if (militaryUnit instanceof  Troop troop)
+                    troopTypeCounts.put(troop.getType(), troopTypeCounts.getOrDefault(troop.getType(), 0) + 1);
+
+                else if (militaryUnit instanceof MilitaryMachine militaryMachine)
+                    militaryMachineTypeCounts.put(militaryMachine.getType(),
+                            militaryMachineTypeCounts.getOrDefault(militaryMachine.getType(), 0) + 1);
+            }
 
             int i = 0;
-            for (MilitaryUnit militaryUnit : militaryUnitCounts.keySet()) {
-                ImageView imageView = this.getImageView(militaryUnit);
+            for (TroopType troopType : troopTypeCounts.keySet()) {
+                ImageView imageView = this.getImageView(troopType);
                 if (imageView == null)
                     continue;
 
                 imageView.setLayoutX(70 + i * (sizeOfImages + 50));
                 imageView.setLayoutY(20);
 
-                Label label = new Label(String.valueOf(militaryUnitCounts.get(militaryUnit)));
+                Label label = new Label(String.valueOf(troopTypeCounts.get(troopType)));
+                label.setLayoutY(30 + sizeOfImages);
+                label.setLayoutX(70 + i * (sizeOfImages + 50) - sizeOfImages/2f);
+
+                this.stripPane.getChildren().add(label);
+                this.stripPane.getChildren().add(imageView);
+
+                i++;
+            }
+
+            for (MilitaryMachineType militaryMachineType : militaryMachineTypeCounts.keySet()) {
+                ImageView imageView = this.getImageView(militaryMachineType);
+                if (imageView == null)
+                    continue;
+
+                imageView.setLayoutX(70 + i * (sizeOfImages + 50));
+                imageView.setLayoutY(20);
+
+                Label label = new Label(String.valueOf(troopTypeCounts.get(militaryMachineType)));
                 label.setLayoutY(30 + sizeOfImages);
                 label.setLayoutX(70 + i * (sizeOfImages + 50) - sizeOfImages/2f);
 
@@ -243,7 +259,6 @@ public class StripPaneController {
     public void setForTradeMenu() {
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
-
 
     }
 }

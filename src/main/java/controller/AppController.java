@@ -63,6 +63,7 @@ public class AppController {
 
         if (loggedInUser != null) {
             MainMenuController.setCurrentUser(loggedInUser);
+            User.setCurrentUser(loggedInUser);
             this.mainMenu.start(this.stage);
             return;
         }

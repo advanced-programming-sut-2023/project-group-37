@@ -175,9 +175,7 @@ public class MapController {
             isNotDragged.set(false);
         });
 
-        this.mainMap.setOnMouseReleased((MouseEvent mouseEvent) -> {
-            this.setSelectedTiles(rectangleTiles.get());
-        });
+        this.mainMap.setOnMouseReleased((MouseEvent mouseEvent) -> this.setSelectedTiles(rectangleTiles.get()));
 
         this.mainMap.setOnMouseClicked(mouseEvent -> {
             if (isNotDragged.get()) {
