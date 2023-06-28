@@ -43,7 +43,7 @@ public class StripPaneController {
         this.gameController = GameController.getInstance();
         this.shopMenuController = new ShopMenuController(stripPane);
         this.unitMenuController = new UnitMenuController(stripPane);
-        this.buildingMenuController = new BuildingMenuController(stripPane);
+        this.buildingMenuController = new BuildingMenuController(stripPane, this);
         this.tradeMenuController = new TradeMenuController(stripPane);
 
         for (BuildingType buildingType : BuildingType.values()) {
@@ -122,51 +122,7 @@ public class StripPaneController {
         }
     }
 
-    private void uploadTroopImages(BuildingType buildingType) {
-
-    }
-
-    private void uploadBuildingMenu(Building building) {
-        Label healthLabel = new Label("Health");
-        ProgressBar healthBar = new ProgressBar(1);
-        double health = building.getHitpoints() / (double) building.getMaxHitpoints();
-        healthBar.setProgress(health);
-        if (health < 0.33)
-            healthBar.setStyle("-fx-progress-color: red");
-        else if (health < 0.66)
-            healthBar.setStyle("-fx-progress-color: yellow");
-        else healthBar.setStyle("-fx-progress-color: green");
-
-        healthLabel.setLayoutY(10);
-        healthLabel.setLayoutX(10);
-        healthBar.setLayoutY(10);
-        healthBar.setLayoutX(60);
-
-        this.stripPane.getChildren().add(healthLabel);
-        this.stripPane.getChildren().add(healthBar);
-
-        if (building instanceof DefensiveBuilding defensiveBuilding) {
-            Button repairButton = new Button();
-            repairButton.setGraphic(new ImageView()); // todo
-            repairButton.setOnMouseClicked((MouseEvent mouseEvent) -> {
-                Message message = this.gameController.repair(defensiveBuilding);
-                if (message == Message.REPAIR_SUCCESS) {
-                    // todo : image
-                    repairButton.setDisable(true);
-                }
-            });
-        }
-
-        switch (building.getType()) {
-            case BARRACKS -> uploadTroopImages(BuildingType.BARRACKS);
-            case MERCENARY_POST -> uploadTroopImages(BuildingType.MERCENARY_POST);
-            case ENGINEER_GUILD -> uploadTroopImages(BuildingType.ENGINEER_GUILD);
-            case TUNNELER_GUILD -> uploadTroopImages(BuildingType.TUNNELER_GUILD);
-            case MARKET -> this.runShopMenu();
-        }
-    }
-
-    private void runShopMenu() {
+    public void runShopMenu() {
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
         shopMenuController.run();
