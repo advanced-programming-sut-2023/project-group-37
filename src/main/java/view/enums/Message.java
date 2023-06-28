@@ -160,6 +160,7 @@ public enum Message {
     NOT_IN_TERRITORY("You can place defensive buildings only in your own territory!"),
     NOT_ENOUGH_PEASANT("Peasant not enough!"),
     NOT_ENOUGH_RESOURCE("Not enough resources!"),
+    NOT_ENOUGH_STONE("Not enough stone!"),
     BUILDING_IS_UNIQUE("This building can be placed once!"),
     STORAGE_NOT_NEIGHBOR("You have to place this storage near the other ones!"),
     DROP_BUILDING_SUCCESS("Building has been dropped successfully!"),

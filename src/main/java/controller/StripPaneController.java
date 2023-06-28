@@ -1,15 +1,16 @@
 package controller;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import model.buildings.Building;
-import model.buildings.BuildingCategory;
-import model.buildings.BuildingType;
-import model.buildings.DefensiveBuildingType;
+import model.buildings.*;
 import model.game.Tile;
 import model.people.*;
+import view.enums.Message;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class StripPaneController {
     private final MapController mapController;
     private final int sizeOfImages;
     private final Pane stripPane;
+    private final GameController gameController;
     private final HashMap<BuildingType, ImageView> buildingTypeImages;
     private final HashMap<DefensiveBuildingType, ImageView> defensiveBuildingTypeImages;
     private final HashMap<TroopType, ImageView> troopTypeImages;
@@ -31,6 +33,7 @@ public class StripPaneController {
         this.troopTypeImages = new HashMap<>();
         this.militaryMachineTypeImages = new HashMap<>();
         this.mapController = MapController.getInstance();
+        this.gameController = GameController.getInstance();
 
         for (BuildingType buildingType : BuildingType.values()) {
             ImageView imageView =  new ImageView(new Image(buildingType.getImage().getUrl(),
@@ -113,8 +116,52 @@ public class StripPaneController {
         }
     }
 
+    private void uploadTroopImages(BuildingType buildingType) {
+
+    }
+
     private void uploadBuildingMenu(Building building) {
-        // todo
+        Label healthLabel = new Label("Health");
+        ProgressBar healthBar = new ProgressBar(1);
+        double health = building.getHitpoints() / (double) building.getMaxHitpoints();
+        healthBar.setProgress(health);
+        if (health < 0.33)
+            healthBar.setStyle("-fx-progress-color: red");
+        else if (health < 0.66)
+            healthBar.setStyle("-fx-progress-color: yellow");
+        else healthBar.setStyle("-fx-progress-color: green");
+
+        healthLabel.setLayoutY(10);
+        healthLabel.setLayoutX(10);
+        healthBar.setLayoutY(10);
+        healthBar.setLayoutX(30);
+
+        this.stripPane.getChildren().add(healthLabel);
+        this.stripPane.getChildren().add(healthBar);
+
+        if (building instanceof DefensiveBuilding defensiveBuilding) {
+            Button repairButton = new Button();
+            repairButton.setGraphic(new ImageView()); // todo
+            repairButton.setOnMouseClicked((MouseEvent mouseEvent) -> {
+                Message message = this.gameController.repair(defensiveBuilding);
+                if (message == Message.REPAIR_SUCCESS) {
+                    // todo : image
+                    repairButton.setDisable(true);
+                }
+            });
+        }
+
+        switch (building.getType()) {
+            case BARRACKS -> uploadTroopImages(BuildingType.BARRACKS);
+            case MERCENARY_POST -> uploadTroopImages(BuildingType.MERCENARY_POST);
+            case ENGINEER_GUILD -> uploadTroopImages(BuildingType.ENGINEER_GUILD);
+            case TUNNELER_GUILD -> uploadTroopImages(BuildingType.TUNNELER_GUILD);
+            case MARKET -> this.runShopMenu();
+        }
+    }
+
+    private void runShopMenu() {
+
     }
 
     public void insertSelectedTiles(ArrayList<Tile> selectedTiles) {
@@ -156,12 +203,12 @@ public class StripPaneController {
                 if (imageView == null)
                     continue;
 
-                imageView.setLayoutX(100 + i * (sizeOfImages + 50));
+                imageView.setLayoutX(70 + i * (sizeOfImages + 50));
                 imageView.setLayoutY(20);
 
                 Label label = new Label(String.valueOf(militaryUnitCounts.get(militaryUnit)));
                 label.setLayoutY(30 + sizeOfImages);
-                label.setLayoutX(100 + i * (sizeOfImages + 50) - sizeOfImages/2f);
+                label.setLayoutX(70 + i * (sizeOfImages + 50) - sizeOfImages/2f);
 
                 this.stripPane.getChildren().add(label);
                 this.stripPane.getChildren().add(imageView);
@@ -175,6 +222,6 @@ public class StripPaneController {
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
 
-        // todo
+
     }
 }
