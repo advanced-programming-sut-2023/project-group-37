@@ -138,6 +138,7 @@ public class GameMenuController {
     }
 
     public String dropBuilding(Tile tile, String typeName) {
+        System.out.println(currentGovernment.getItemAmount(Item.WOOD));
         if (tile == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
@@ -165,9 +166,11 @@ public class GameMenuController {
             return Message.TILE_ALREADY_HAS_BUILDING.toString();
 
         // Check territory for defensiveBuildings
-        if (type instanceof DefensiveBuildingType &&
-                this.currentGovernment.getTerritory().getTerritoryNumber() != tile.getTerritory().getTerritoryNumber())
-            return Message.NOT_IN_TERRITORY.toString();
+        if (tile.getTerritory() != null) {
+            if (type instanceof DefensiveBuildingType &&
+                    this.currentGovernment.getTerritory().getTerritoryNumber() != tile.getTerritory().getTerritoryNumber())
+                return Message.NOT_IN_TERRITORY.toString();
+        }
 
         // Check enough gold and resource:
         if (type instanceof BuildingType) {
@@ -535,15 +538,15 @@ public class GameMenuController {
         return this.tradeMenuController.showNewTrades();
     }
 
-    public String goNextTurn() {
+    /*public String goNextTurn() {
         this.currentGame.goToNextTurn();
         if (gameEndMessage() != null)
             return gameEndMessage();
 
         return "Now its " + currentGame.getCurrentTurnGovernment().getUser().getUsername() + " turn";
-    }
+    }*/
 
-    private String gameEndMessage() {
+    /*private String gameEndMessage() {
         ArrayList<Government> remainingGovernments = new ArrayList<>();
         for (Government government : this.currentGame.getGovernments()) {
             if (government.getLord().getHitpoints() > 0)
@@ -559,7 +562,7 @@ public class GameMenuController {
             return Message.GAME_END_ALL_DESTROYED.toString();
         else
             return Message.GAME_END_WITH_WINNER + remainingGovernments.get(0).getUser().getUsername();
-    }
+    }*/
 
     public String endGame() {
         Government winner = this.currentGame.getGovernments().get(0);

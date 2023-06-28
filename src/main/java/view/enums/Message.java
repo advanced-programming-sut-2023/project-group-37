@@ -171,7 +171,8 @@ public enum Message {
     TAX_RATE_SET("Tax rate has been set to"),
     INVALID_FEAR_RATE("You have to enter a rate between -5 to 5"),
     FEAR_RATE_SET("Fear rate has been set to"),
-    TERRITORY_EXISTS("Territory number already exists !");
+    TERRITORY_EXISTS("Territory number already exists !"),
+    START_GAME_ERROR("Start Error");
 
     private final String message;
 

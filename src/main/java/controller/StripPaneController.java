@@ -48,9 +48,6 @@ public class StripPaneController {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     System.out.println("dragged");
-                    Tile tile = mapController.getTileByXY(mouseEvent.getSceneX(), mouseEvent.getSceneY());
-                    if (tile == null) return;
-                    mapController.getGame().getGameMenuController().dropBuilding(tile, buildingType.getName());
                 }
             });
 
@@ -58,6 +55,9 @@ public class StripPaneController {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     System.out.println("vel shod");
+                    Tile tile = mapController.getTileByXY(mouseEvent.getSceneX(), mouseEvent.getSceneY());
+                    if (tile == null) return;
+                    System.out.println(mapController.getGame().getGameMenuController().dropBuilding(tile, buildingType.getName()));
                 }
             });
             this.buildingTypeImages.put(buildingType, imageView);
@@ -77,10 +77,6 @@ public class StripPaneController {
                 public void handle(MouseEvent mouseEvent) {
                     System.out.println("dragged");
 
-                    Tile tile = mapController.getTileByXY(mouseEvent.getSceneX(), mouseEvent.getSceneY());
-                    if (tile == null) return;
-                    mapController.getGame().getGameMenuController().dropBuilding(tile, defensiveBuildingType.getName());
-
                 }
             });
 
@@ -88,6 +84,9 @@ public class StripPaneController {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     System.out.println("vel shod");
+                    Tile tile = mapController.getTileByXY(mouseEvent.getSceneX(), mouseEvent.getSceneY());
+                    if (tile == null) return;
+                    mapController.getGame().getGameMenuController().dropBuilding(tile, defensiveBuildingType.getName());
                 }
             });
 

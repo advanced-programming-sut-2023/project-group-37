@@ -139,9 +139,9 @@ public class GameMenu extends Application {
         return Message.UNIT_SELECTED.equals(message);
     }
 
-    private boolean goNextTurn() {
+    /*private boolean goNextTurn() {
         String message = gameMenuController.goNextTurn();
         System.out.println(message);
         return message.contains("ended");
-    }
+    }*/
 }
