@@ -1,47 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" stylesheets="@../CSS/GameStyle.css" xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/1">
-    <top>
-        <HBox spacing="15.0">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            stylesheets="@../CSS/GameStyle.css" fx:controller="view.menus.StartGameMenu">
+    <children>
+        <TextField layoutX="200.0" layoutY="50.0" prefHeight="26.0" prefWidth="196.0" promptText="username" fx:id="username"/>
+        <TextField layoutX="200.0" layoutY="91.0" prefHeight="26.0" prefWidth="196.0" promptText="territory" fx:id="territory"/>
+        <Button layoutX="439.0" layoutY="68.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="112.0" text="Add"
+                onMouseClicked="#addPlayer"/>
+        <Label alignment="CENTER" layoutX="73.0" layoutY="50.0" prefHeight="26.0" prefWidth="65.0" text="Username:"/>
+        <VBox layoutX="106.0" layoutY="176.0" prefHeight="168.0" prefWidth="89.0" spacing="20.0"
+              stylesheets="@../CSS/GameStyle.css" fx:id="usernames">
             <children>
-                <Label text="Select user to add : ">
-                    <padding>
-                        <Insets top="5.0"/>
-                    </padding>
-                </Label>
-                <Label text="Username : ">
-                    <HBox.margin>
-                        <Insets top="5.0"/>
-                    </HBox.margin>
-                </Label>
-                <TextField fx:id="username" prefHeight="26.0" prefWidth="91.0"/>
-                <Label text="Territory number : ">
-                    <HBox.margin>
-                        <Insets top="5.0"/>
-                    </HBox.margin>
-                </Label>
-                <TextField fx:id="territoryNumber" prefHeight="26.0" prefWidth="27.0"/>
-                <Button minHeight="36.0" minWidth="147.0" prefHeight="36.0" prefWidth="180.0" text="Add"/>
+                <Label alignment="CENTER" prefHeight="26.0" prefWidth="91.0" text="Username"/>
             </children>
-
-            <BorderPane.margin>
-                <Insets bottom="10.0" left="30.0" right="30.0" top="10.0"/>
-            </BorderPane.margin>
-        </HBox>
-    </top>
-
-    <center>
-        <TableView prefHeight="200.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-            <columns>
-                <TableColumn prefWidth="75.0" text="C1"/>
-                <TableColumn prefWidth="75.0" text="C2"/>
-            </columns>
-        </TableView>
-    </center>
-</BorderPane>
+        </VBox>
+        <VBox layoutX="254.0" layoutY="176.0" prefHeight="168.0" prefWidth="90.0" spacing="20.0" fx:id="territories">
+            <children>
+                <Label alignment="CENTER" prefHeight="26.0" prefWidth="94.0" text="Territory"/>
+            </children>
+        </VBox>
+        <Label alignment="CENTER" layoutX="59.0" layoutY="91.0" prefHeight="26.0" prefWidth="94.0" text="Territory:"/>
+    </children>
+</AnchorPane>
