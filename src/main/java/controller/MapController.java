@@ -31,6 +31,7 @@ public class MapController {
     private int currentY;
     private int cursorRight;
     private int cursorDown;
+    private boolean isSelectedForMoveOrAttack;
 
     static {
         MAP_CONTROLLER = new MapController();
@@ -108,8 +109,14 @@ public class MapController {
                     this.map.updateSizes();
                     this.map.updateImages();
                 }
-                case "M" -> this.setCursorOn(CursorType.SELECT_MOVE_DESTINATION);
-                case "A" -> this.setCursorOn(CursorType.SELECT_ATTACK_DESTINATION);
+                case "M" -> {
+                    this.setCursorOn(CursorType.SELECT_MOVE_DESTINATION);
+                    this.isSelectedForMoveOrAttack = true;
+                }
+                case "A" -> {
+                    this.setCursorOn(CursorType.SELECT_ATTACK_DESTINATION);
+                    this.isSelectedForMoveOrAttack = true;
+                }
             }
         });
 
@@ -146,9 +153,9 @@ public class MapController {
 
                 else if (rectangleTile.getLocationY() == Math.max(firstTile.getLocationY(), secondTile.getLocationY()))
                     rectangleTile.setDownRectangleEffect();
-
-                this.setSelectedTiles(rectangleTiles);
             }
+
+//            this.setSelectedTiles(rectangleTiles);
 
             isNotDragged.set(false);
         });
@@ -243,8 +250,10 @@ public class MapController {
         this.selectedTiles = selectedTiles;
         this.cursorRight = 0;
         this.cursorDown = 0;
-
 //        this.mainMap.setCursor(CursorType.DEFAULT.getImageCursor());
+
+        if (!this.isSelectedForMoveOrAttack)
+            this.downPane.setForTiles(selectedTiles);
     }
 
     public void goUp() {
@@ -273,6 +282,14 @@ public class MapController {
             return;
         this.mainMap.setLayoutX(this.mainMap.getLayoutX() - Tile.getTileSize());
         this.chooserRectangle.setLayoutX(this.chooserRectangle.getLayoutX() + 0.04 * Tile.getTileSize());
+    }
+
+    public Tile getTileByXY(double x, double y) {
+        return this.map.getTileByXY(x,y);
+    }
+
+    public Government getCurrentGovernment() {
+        return this.currentGovernment;
     }
 
     public AnchorPane getMainMap() {

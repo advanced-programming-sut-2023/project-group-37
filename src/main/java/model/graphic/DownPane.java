@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import model.buildings.BuildingCategory;
+import model.game.Tile;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -82,5 +83,9 @@ public class DownPane extends Pane {
         rectangle.setFill(Color.WHITE);
         this.getChildren().add(rectangle);
         rectangle.setOnMouseClicked(mouseEvent -> this.stripPaneController.insertImages(category));
+    }
+
+    public void setForTiles(ArrayList<Tile> selectedTiles) {
+        this.stripPaneController.insertSelectedTiles(selectedTiles);
     }
 }

@@ -41,9 +41,10 @@ public enum MilitaryMachineType {
         this.speed = speed;
         this.operatorsNeeded = engineersNeeded;
         this.downPaneImage = new Image(Objects.requireNonNull(MilitaryMachineType.class.getResource
-                ("/Image/DownPaneTroops/MilitaryMachine" + imageName)).toExternalForm());
-        this.image = new Image(Objects.requireNonNull(MilitaryMachineType.class.getResource
-                ("/Image/Troop/MilitaryMachine" + imageName)).toExternalForm());
+                ("/Image/DownPaneTroops/MilitaryMachine/" + imageName)).toExternalForm());
+//        this.image = new Image(Objects.requireNonNull(MilitaryMachineType.class.getResource
+//                ("/Image/Troop/MilitaryMachine/" + imageName)).toExternalForm());
+        this.image = null;
     }
 
     public static MilitaryMachineType getMilitaryMachineTypeByName(String name) {
