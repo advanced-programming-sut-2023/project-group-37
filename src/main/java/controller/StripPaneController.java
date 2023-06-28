@@ -1,5 +1,6 @@
 package controller;
 
+import controller.stripControllers.ShopMenuController;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,6 +23,7 @@ public class StripPaneController {
     private final MapController mapController;
     private final int sizeOfImages;
     private final Pane stripPane;
+    private final ShopMenuController shopMenuController;
     private final GameController gameController;
     private final HashMap<BuildingType, ImageView> buildingTypeImages;
     private final HashMap<DefensiveBuildingType, ImageView> defensiveBuildingTypeImages;
@@ -37,6 +39,7 @@ public class StripPaneController {
         this.militaryMachineTypeImages = new HashMap<>();
         this.mapController = MapController.getInstance();
         this.gameController = GameController.getInstance();
+        this.shopMenuController = new ShopMenuController(stripPane);
 
         for (BuildingType buildingType : BuildingType.values()) {
             ImageView imageView = new ImageView(new Image(buildingType.getImage().getUrl(),
@@ -158,7 +161,7 @@ public class StripPaneController {
         healthLabel.setLayoutY(10);
         healthLabel.setLayoutX(10);
         healthBar.setLayoutY(10);
-        healthBar.setLayoutX(30);
+        healthBar.setLayoutX(60);
 
         this.stripPane.getChildren().add(healthLabel);
         this.stripPane.getChildren().add(healthBar);
@@ -185,7 +188,9 @@ public class StripPaneController {
     }
 
     private void runShopMenu() {
-
+        if (this.stripPane.getChildren().size() > 0)
+            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+        shopMenuController.run();
     }
 
     public void insertSelectedTiles(ArrayList<Tile> selectedTiles) {
@@ -230,7 +235,7 @@ public class StripPaneController {
 
                 Label label = new Label(String.valueOf(militaryUnitCounts.get(militaryUnit)));
                 label.setLayoutY(30 + sizeOfImages);
-                label.setLayoutX(70 + i * (sizeOfImages + 50) - sizeOfImages/2f);
+                label.setLayoutX(70 + i * (sizeOfImages + 50) - sizeOfImages / 2f);
 
                 this.stripPane.getChildren().add(label);
                 this.stripPane.getChildren().add(imageView);
