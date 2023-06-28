@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import model.game.Color;
 import model.user.User;
 import view.enums.Message;
 
@@ -85,10 +86,12 @@ public class StartGameMenu extends Application {
 
     private void createLabel(String username, String territory) {
         Label l1 = new Label(username);
-        l1.setFont(new Font("Segoe Print", 14));
+        l1.setFont(new Font("Arial Black", 14));
+        l1.setTextFill(Color.BLUE.getColor());
         usernames.getChildren().add(l1);
         Label l2 = new Label(territory);
-        l2.setFont(new Font("Segoe Print", 14));
+        l2.setFont(new Font("Arial Black", 14));
+        l2.setTextFill(Color.BLUE.getColor());
         territories.getChildren().add(l2);
         userTerritory.put(Integer.parseInt(territory), username);
     }
