@@ -1,0 +1,5 @@
+Rectangle {
+    -fx-border-style: solid none none none;
+    -fx-border-width: 4;
+    -fx-border-color: green;
+}

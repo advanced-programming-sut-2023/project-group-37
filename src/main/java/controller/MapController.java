@@ -37,6 +37,10 @@ public class MapController {
         MAP_CONTROLLER = new MapController();
     }
 
+    public Game getGame() {
+        return game;
+    }
+
     private MapController() {
         this.currentX = 0;
         this.currentY = 0;
@@ -59,7 +63,7 @@ public class MapController {
 
     public void setGamePane(Pane gamePane) throws URISyntaxException {
         Map.loadMaps();
-        this.map =  Map.getMaps().get(0); // todo : wtf ?
+        this.map = Map.getMaps().get(0); // todo : wtf ?
         Tile[][] tiles = this.map.getField();
 
         gamePane.setPrefHeight(740); // 37 tiles
@@ -88,16 +92,24 @@ public class MapController {
 
             switch (keyName) {
                 case "Left" -> {
-                    goLeft(); goLeft(); goLeft();
+                    goLeft();
+                    goLeft();
+                    goLeft();
                 }
                 case "Right" -> {
-                    goRight(); goRight(); goRight();
+                    goRight();
+                    goRight();
+                    goRight();
                 }
                 case "Up" -> {
-                    goUp(); goUp(); goUp();
+                    goUp();
+                    goUp();
+                    goUp();
                 }
                 case "Down" -> {
-                    goDown(); goDown(); goDown();
+                    goDown();
+                    goDown();
+                    goDown();
                 }
                 case "Z" -> {
                     Tile.zoom();
@@ -285,7 +297,7 @@ public class MapController {
     }
 
     public Tile getTileByXY(double x, double y) {
-        return this.map.getTileByXY(x,y);
+        return this.map.getTileByXY(x, y);
     }
 
     public Government getCurrentGovernment() {
