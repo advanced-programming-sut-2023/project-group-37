@@ -77,14 +77,20 @@ public class Tile extends Rectangle {
         Tile.selectedTiles.addAll(selectedTiles);
     }
 
-    public static void zoom() {
-        if (tileSize <= 40)
+    public static boolean zoom() {
+        if (tileSize <= 40) {
             tileSize += 4;
+            return true;
+        }
+        return false;
     }
 
-    public static void zoomOut() {
-        if (tileSize >= 23)
+    public static boolean zoomOut() {
+        if (tileSize >= 23) {
             tileSize -= 4;
+            return true;
+        }
+        return false;
     }
 
     public static int getTileSize() {

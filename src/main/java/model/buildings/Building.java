@@ -46,6 +46,9 @@ public class Building {
     }
 
     public int getMaxHitpoints() {
+        if (this instanceof DefensiveBuilding defensiveBuilding) {
+            return defensiveBuilding.getDefensiveType().getMaxHitpoints();
+        }
         return this.type.getMaxHitpoints();
     }
 

@@ -109,14 +109,17 @@ public class MapController {
                     goDown();
                 }
                 case "Z" -> {
-                    Tile.zoom();
-                    this.map.updateSizes();
-                    this.map.updateImages();
+                    if (Tile.zoom()) {
+                        this.map.updateSizes();
+                        this.map.updateImages();
+                    }
                 }
                 case "X" -> {
-                    Tile.zoomOut();
-                    this.map.updateSizes();
-                    this.map.updateImages();
+                    if (Tile.zoomOut()) {
+                        this.map.updateSizes();
+                        this.map.updateImages();
+                    }
+
                 }
                 case "M" -> {
                     this.setCursorOn(CursorType.SELECT_MOVE_DESTINATION);
