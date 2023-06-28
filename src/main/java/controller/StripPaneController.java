@@ -32,8 +32,6 @@ public class StripPaneController {
     private final GameController gameController;
     private final HashMap<BuildingType, ImageView> buildingTypeImages;
     private final HashMap<DefensiveBuildingType, ImageView> defensiveBuildingTypeImages;
-    private final HashMap<TroopType, ImageView> troopTypeImages;
-    private final HashMap<MilitaryMachineType, ImageView> militaryMachineTypeImages;
 
     public StripPaneController(Pane stripPane) {
         this.sizeOfImages = 70;
