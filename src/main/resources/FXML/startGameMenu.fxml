@@ -5,30 +5,40 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            stylesheets="@../CSS/GameStyle.css" fx:controller="view.menus.StartGameMenu">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../CSS/GameStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.menus.StartGameMenu">
     <children>
-        <TextField layoutX="200.0" layoutY="50.0" prefHeight="26.0" prefWidth="196.0" promptText="username"
-                   fx:id="username"/>
-        <TextField layoutX="200.0" layoutY="91.0" prefHeight="26.0" prefWidth="196.0" promptText="territory"
-                   fx:id="territory"/>
-        <Button layoutX="439.0" layoutY="68.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="112.0" text="Add"
-                onMouseClicked="#addPlayer"/>
-        <Label alignment="CENTER" layoutX="73.0" layoutY="50.0" prefHeight="26.0" prefWidth="65.0" text="Username:"/>
-        <VBox layoutX="254.0" layoutY="176.0" prefHeight="168.0" prefWidth="89.0" spacing="20.0"
-              stylesheets="@../CSS/GameStyle.css" fx:id="usernames">
+        <TextField fx:id="username" layoutX="175.0" layoutY="50.0" prefHeight="26.0" prefWidth="162.0" promptText="username" />
+        <TextField fx:id="territory" layoutX="175.0" layoutY="91.0" prefHeight="26.0" prefWidth="162.0" promptText="territory" />
+        <Button layoutX="359.0" layoutY="49.0" mnemonicParsing="false" onMouseClicked="#addPlayer" prefHeight="26.0" prefWidth="112.0" text="Add" />
+        <Label alignment="CENTER" layoutX="25.0" layoutY="46.0" prefHeight="36.0" prefWidth="118.0" text="Username:" textFill="#005e06">
+            <font>
+                <Font name="Segoe Print" size="17.0" />
+            </font>
+        </Label>
+        <VBox fx:id="usernames" alignment="TOP_CENTER" layoutX="139.0" layoutY="179.0" prefHeight="168.0" prefWidth="89.0" spacing="20.0" stylesheets="@../CSS/GameStyle.css">
             <children>
-                <Label alignment="CENTER" prefHeight="26.0" prefWidth="91.0" text="Username"/>
+                <Label alignment="CENTER" prefHeight="26.0" prefWidth="91.0" text="Username" textFill="#005e06">
+                    <font>
+                        <Font name="Segoe Print" size="17.0" />
+                    </font>
+                </Label>
             </children>
         </VBox>
-        <VBox layoutX="106.0" layoutY="176.0" prefHeight="168.0" prefWidth="90.0" spacing="20.0" fx:id="territories">
+        <VBox fx:id="territories" alignment="TOP_CENTER" layoutX="33.0" layoutY="177.0" prefHeight="168.0" prefWidth="90.0" spacing="20.0">
             <children>
-                <Label alignment="CENTER" prefHeight="26.0" prefWidth="94.0" text="Territory"/>
+                <Label alignment="CENTER" prefHeight="26.0" prefWidth="94.0" text="Territory" textFill="#005e06">
+                    <font>
+                        <Font name="Segoe Print" size="17.0" />
+                    </font>
+                </Label>
             </children>
         </VBox>
-        <Label alignment="CENTER" layoutX="59.0" layoutY="91.0" prefHeight="26.0" prefWidth="94.0" text="Territory:"/>
+        <Label alignment="CENTER" layoutX="26.0" layoutY="82.0" prefHeight="36.0" prefWidth="117.0" text="Territory:" textFill="#005e06">
+            <font>
+                <Font name="Segoe Print" size="17.0" />
+            </font>
+        </Label>
     </children>
 </AnchorPane>

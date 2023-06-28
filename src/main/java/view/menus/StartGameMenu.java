@@ -9,8 +9,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.user.User;
 import view.enums.Message;
@@ -36,13 +38,18 @@ public class StartGameMenu extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         URL url = LoginMenu.class.getResource("/FXML/startGameMenu.fxml");
-        BorderPane borderPane = FXMLLoader.load(Objects.requireNonNull(url));
-        borderPane.setPrefHeight(borderPane.getPrefHeight() + 30);
-        MultiMenuFunctions.setBackground(borderPane, "main-menu-background.jpg");
+        AnchorPane anchorPane = FXMLLoader.load(Objects.requireNonNull(url));
+        anchorPane.setPrefHeight(anchorPane.getPrefHeight() + 30);
+        MultiMenuFunctions.setBackground(anchorPane, "main-menu-background.jpg");
 
-        Scene scene = new Scene(borderPane);
+        Scene scene = new Scene(anchorPane);
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    private void initialize() {
+        createLabel(User.getCurrentUser().getUsername(), "1");
     }
 
     public void addPlayer(MouseEvent mouseEvent) {
@@ -73,9 +80,16 @@ public class StartGameMenu extends Application {
             return;
         }
 
-        userTerritory.put(Integer.parseInt(territory), username);
-        usernames.getChildren().add(new Label(username));
-        territories.getChildren().add(new Label(territory));
+        createLabel(username, territory);
+    }
 
+    private void createLabel(String username, String territory) {
+        Label l1 = new Label(username);
+        l1.setFont(new Font("Segoe Print", 14));
+        usernames.getChildren().add(l1);
+        Label l2 = new Label(territory);
+        l2.setFont(new Font("Segoe Print", 14));
+        territories.getChildren().add(l2);
+        userTerritory.put(Integer.parseInt(territory), username);
     }
 }
