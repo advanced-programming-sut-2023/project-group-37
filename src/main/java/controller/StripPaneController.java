@@ -41,20 +41,18 @@ public class StripPaneController {
             imageView.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    System.out.println("pressed");
+
                 }
             });
             imageView.setOnMouseDragged(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    System.out.println("dragged");
                 }
             });
 
             imageView.setOnMouseReleased(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    System.out.println("vel shod");
                     Tile tile = mapController.getTileByXY(mouseEvent.getSceneX(), mouseEvent.getSceneY());
                     if (tile == null) return;
                     System.out.println(mapController.getGame().getGameMenuController().dropBuilding(tile, buildingType.getName()));
@@ -69,21 +67,18 @@ public class StripPaneController {
             imageView.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    System.out.println("pressed");
+
                 }
             });
             imageView.setOnMouseDragged(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    System.out.println("dragged");
-
                 }
             });
 
             imageView.setOnMouseReleased(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    System.out.println("vel shod");
                     Tile tile = mapController.getTileByXY(mouseEvent.getSceneX(), mouseEvent.getSceneY());
                     if (tile == null) return;
                     mapController.getGame().getGameMenuController().dropBuilding(tile, defensiveBuildingType.getName());
