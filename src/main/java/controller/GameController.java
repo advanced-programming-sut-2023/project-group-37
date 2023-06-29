@@ -54,6 +54,7 @@ public class GameController {
 
     public void setCurrentGame(Game game) {
         BuildingMenuController.setGame(game);
+        controller.stripControllers.ShopMenuController.setGame(game);
         controller.stripControllers.UnitMenuController.setGame(game);
         this.currentGame = game;
         this.tradeMenuController.setGame(game);

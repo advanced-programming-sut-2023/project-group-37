@@ -123,8 +123,6 @@ public class StripPaneController {
     }
 
     public void runShopMenu() {
-        if (this.stripPane.getChildren().size() > 0)
-            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
         shopMenuController.run();
     }
 

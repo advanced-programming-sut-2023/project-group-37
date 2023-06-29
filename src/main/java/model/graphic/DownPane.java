@@ -80,7 +80,6 @@ public class DownPane extends Pane {
         rectangle.setLayoutX(x);
         rectangle.setLayoutY(15);
         rectangle.setFill(new ImagePattern(new Image(absoluteAddress)));
-        //rectangle.setFill(Color.WHITE);
         this.getChildren().add(rectangle);
         rectangle.setOnMouseClicked(mouseEvent -> this.stripPaneController.insertImages(category));
     }

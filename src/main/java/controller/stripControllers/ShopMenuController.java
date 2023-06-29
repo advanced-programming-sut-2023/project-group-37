@@ -6,19 +6,28 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import model.game.Color;
 import model.game.Game;
 import model.game.Item;
 import model.game.ItemCategory;
 
 public class ShopMenuController {
     private Pane stripPane;
-    private Game game;
+    private static Game game;
+
 
     public ShopMenuController(Pane stripPane) {
         this.stripPane = stripPane;
     }
 
+    public static void setGame(Game game) {
+        ShopMenuController.game = game;
+    }
+
     public void run() {
+        if (this.stripPane.getChildren().size() > 0)
+            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+
         ImageView resources = MultiMenuFunctions.getImageView("/Image/Button/resources.png", 70);
         ImageView weapons = MultiMenuFunctions.getImageView("/Image/Button/weapons.png", 70);
         ImageView foods = MultiMenuFunctions.getImageView("/Image/Button/food.jpg", 70);
@@ -79,6 +88,7 @@ public class ShopMenuController {
                 i++;
             }
         }
+        addBackButton();
     }
 
     private void weapons() {
@@ -103,6 +113,7 @@ public class ShopMenuController {
                 i++;
             }
         }
+        addBackButton();
     }
 
     private void foods() {
@@ -127,6 +138,8 @@ public class ShopMenuController {
                 i++;
             }
         }
+        addBackButton();
+
     }
 
     private void goToItem(Item item) {
@@ -135,15 +148,56 @@ public class ShopMenuController {
 
         ImageView imageView = MultiMenuFunctions.getImageView(item.getImageUrl(), 65);
 
-        imageView.setLayoutX(100);
+        imageView.setLayoutX(130);
         imageView.setLayoutY(15);
 
-        Label amount = new Label("null");
-        amount.setLayoutX(150);
+        Label amount = new Label(Integer.toString(game.getCurrentTurnGovernment().getItemAmount(item)));
+        amount.setStyle("-fx-font-size: 20");
+
+        if (Integer.toString(game.getCurrentTurnGovernment().getItemAmount(item)).equals("0"))
+            amount.setTextFill(Color.RED.getColor());
+        else amount.setTextFill(Color.GREEN.getColor());
+
+
+        amount.setLayoutX(230);
         amount.setLayoutY(15);
 
 
         stripPane.getChildren().add(imageView);
         stripPane.getChildren().add(amount);
+
+        addBackButton(item);
+    }
+
+    private void addBackButton() {
+        ImageView back = MultiMenuFunctions.getImageView("/Image/Button/back1.png", 45);
+        back.setLayoutX(30);
+        back.setLayoutY(50);
+
+        stripPane.getChildren().add(back);
+        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                run();
+            }
+        });
+    }
+
+    private void addBackButton(Item item) {
+        ImageView back = MultiMenuFunctions.getImageView("/Image/Button/back1.png", 45);
+        back.setLayoutX(30);
+        back.setLayoutY(50);
+
+        stripPane.getChildren().add(back);
+        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                switch (item.getCategory()) {
+                    case FOODS -> foods();
+                    case WEAPONS -> weapons();
+                    case RESOURCES -> resources();
+                }
+            }
+        });
     }
 }
