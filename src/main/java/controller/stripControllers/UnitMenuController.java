@@ -167,8 +167,10 @@ public class UnitMenuController {
     }
 
     public PopUp move(Tile target) {
-        if (militaryUnits.size() == 0)
+        if (this.militaryUnits == null || this.militaryUnits.size() == 0)
             return PopUp.NO_UNIT_SELECTED;
+
+        System.out.println(this.militaryUnits.get(0).getHitpoints());
 
         LinkedList<Tile> routeCheck = MultiMenuFunctions.routeFinder(
                 this.militaryUnits.get(0).getLocation(), target, game.getMap());
@@ -184,7 +186,7 @@ public class UnitMenuController {
     }
 
     public PopUp attack(Tile target) {
-        if (this.militaryUnits.size() == 0)
+        if (this.militaryUnits == null || this.militaryUnits.size() == 0)
             return PopUp.NO_UNIT_SELECTED;
 
         boolean isEnemy = false;

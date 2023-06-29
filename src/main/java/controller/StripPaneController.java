@@ -185,7 +185,6 @@ public class StripPaneController {
     }
 
     public void attack(Tile tile) {
-        System.out.println("YES");
         this.unitMenuController.attack(tile).show();
     }
 

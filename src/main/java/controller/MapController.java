@@ -28,8 +28,8 @@ public class MapController {
     private Label popularityLabel;
     private Government currentGovernment;
     private ArrayList<Tile> selectedTiles;
-    private int cursorRight;
-    private int cursorDown;
+    private double cursorRight;
+    private double cursorDown;
     private boolean isOnAttack;
     private boolean isOnMove;
 
@@ -152,12 +152,12 @@ public class MapController {
             double x = mouseEvent.getX();
             double y = mouseEvent.getY();
 
-            rectangleTiles.set(this.map.getRectangleTilesByXY(startX[0] + Tile.getTileSize() * this.cursorRight,
-                    startY[0] + Tile.getTileSize() * this.cursorDown, x + Tile.getTileSize()
-                            * this.cursorRight, y + Tile.getTileSize() * this.cursorDown));
+            rectangleTiles.set(this.map.getRectangleTilesByXY(startX[0] + this.cursorRight,
+                    startY[0] + this.cursorDown, x + this.cursorRight,
+                    y + this.cursorDown));
 
-            Tile firstTile = this.map.getTileByXY(startX[0] + Tile.getTileSize() * this.cursorRight,
-                    startY[0] + Tile.getTileSize() * this.cursorDown);
+            Tile firstTile = this.map.getTileByXY(startX[0] + this.cursorRight,
+                    startY[0] + this.cursorDown);
             Tile secondTile = this.map.getTileByXY(x, y);
 
             for (Tile rectangleTile : rectangleTiles.get()) {
@@ -184,8 +184,8 @@ public class MapController {
                 double x = mouseEvent.getX();
                 double y = mouseEvent.getY();
 
-                Tile tile = this.map.getTileByXY(x + Tile.getTileSize() * this.cursorRight,
-                        y + Tile.getTileSize() * this.cursorDown);
+                Tile tile = this.map.getTileByXY(x + this.cursorRight,
+                        y + this.cursorDown);
 
                 tile.setSelectedEffect();
                 ArrayList<Tile> selectedTiles = new ArrayList<>();
@@ -261,14 +261,12 @@ public class MapController {
 
     private void setCursorOn(CursorType cursorType) {
         this.mainMap.setCursor(cursorType.getImageCursor());
-        this.cursorRight = 2;
-        this.cursorDown = 2;
+        this.cursorRight = 20;
+        this.cursorDown = 14;
     }
 
     private void setSelectedTiles(ArrayList<Tile> selectedTiles) {
         this.selectedTiles = selectedTiles;
-        this.cursorRight = 0;
-        this.cursorDown = 0;
 //        this.mainMap.setCursor(CursorType.DEFAULT.getImageCursor());
 
         if (selectedTiles == null)
@@ -284,6 +282,8 @@ public class MapController {
         }
         else this.downPane.setForTiles(selectedTiles);
 
+        this.cursorRight = 0;
+        this.cursorDown = 0;
         this.isOnMove = false;
         this.isOnAttack = false;
     }
