@@ -3,6 +3,7 @@ package controller.stripControllers;
 import controller.MultiMenuFunctions;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -10,6 +11,9 @@ import model.game.Color;
 import model.game.Game;
 import model.game.Item;
 import model.game.ItemCategory;
+import view.menus.RegisterMenu;
+
+import java.util.Objects;
 
 public class ShopMenuController {
     private Pane stripPane;
@@ -161,15 +165,11 @@ public class ShopMenuController {
         amount.setLayoutX(230);
         amount.setLayoutY(15);
 
-        ImageView buySell  = MultiMenuFunctions.getImageView("/Image/Button/buy and sell.png",70);
-        buySell.setLayoutX(330);
-        buySell.setLayoutY(15);
-
 
         stripPane.getChildren().add(imageView);
         stripPane.getChildren().add(amount);
-        stripPane.getChildren().add(buySell);
 
+        addBuySellButtons();
         addBackButton(item);
     }
 
@@ -203,5 +203,42 @@ public class ShopMenuController {
                 }
             }
         });
+    }
+
+    private void addBuySellButtons() {
+        ImageView buy = new ImageView(new Image(Objects.requireNonNull(RegisterMenu.class.getResource("/Image/Button/buy.png"))
+                .toExternalForm(), 324 * 0.7, 63 * 0.7, false, false));
+        buy.setLayoutX(330);
+        buy.setLayoutY(10);
+
+        buy.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                buy();
+            }
+        });
+
+        ImageView sell = new ImageView(new Image(Objects.requireNonNull(RegisterMenu.class.getResource("/Image/Button/sell.png"))
+                .toExternalForm(), 324 * 0.7, 63 * 0.7, false, false));
+        sell.setLayoutX(330);
+        sell.setLayoutY(50);
+
+        sell.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                sell();
+            }
+        });
+
+        stripPane.getChildren().add(buy);
+        stripPane.getChildren().add(sell);
+    }
+
+    private void buy() {
+
+    }
+
+    private void sell() {
+
     }
 }
