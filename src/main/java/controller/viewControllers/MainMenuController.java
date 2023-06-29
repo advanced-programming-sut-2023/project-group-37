@@ -1,5 +1,6 @@
 package controller.viewControllers;
 
+import controller.GameController;
 import model.game.Color;
 import model.game.Game;
 import model.game.Government;
@@ -12,14 +13,14 @@ import java.util.ArrayList;
 public class MainMenuController {
     private static final MainMenuController mainMenuController;
     private static User currentUser;
-    private final GameMenuController gameMenuController;
+    private final GameController gameController;
 
     static {
         mainMenuController = new MainMenuController();
     }
 
     {
-        gameMenuController = GameMenuController.getInstance();
+        gameController = GameController.getInstance();
     }
 
     private MainMenuController() {
@@ -78,7 +79,7 @@ public class MainMenuController {
         }
 
         Game game = new Game(map, governments);
-        gameMenuController.setCurrentGame(game);
+        gameController.setCurrentGame(game);
 
         return Message.GAME_STARTED.toString();
     }

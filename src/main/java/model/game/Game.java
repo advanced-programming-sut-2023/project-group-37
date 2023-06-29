@@ -1,6 +1,6 @@
 package model.game;
 
-import controller.viewControllers.GameMenuController;
+import controller.GameController;
 import controller.MultiMenuFunctions;
 import model.buildings.*;
 import model.people.MilitaryMachine;
@@ -11,7 +11,7 @@ import model.people.Troop;
 import java.util.ArrayList;
 
 public class Game {
-    private final GameMenuController gameMenuController;
+    private final GameController gameController;
     private final Map map;
     //private final int turns;
     private final ArrayList<Government> governments;
@@ -23,13 +23,13 @@ public class Game {
         this.map = map;
         this.governments = governments;
         this.currentTurnGovernment = governments.get(0);
-        this.gameMenuController = GameMenuController.getInstance();
-        this.gameMenuController.setCurrentGovernment(this.currentTurnGovernment);
+        this.gameController = GameController.getInstance();
+        this.gameController.setCurrentGovernment(this.currentTurnGovernment);
         this.index = 0;
     }
 
-    public GameMenuController getGameMenuController() {
-        return gameMenuController;
+    public GameController getGameMenuController() {
+        return gameController;
     }
 
     public Government getGovernmentByUsername(String username) {
@@ -235,7 +235,7 @@ public class Game {
             this.index = (this.index + 1) % this.governments.size();
         } while (this.governments.get(index).isDead());
         this.currentTurnGovernment = this.governments.get(this.index);
-        this.gameMenuController.setCurrentGovernment(this.currentTurnGovernment);
+        this.gameController.setCurrentGovernment(this.currentTurnGovernment);
         this.turnNumber++;
     }
 

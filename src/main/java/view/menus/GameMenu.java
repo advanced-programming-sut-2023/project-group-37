@@ -1,15 +1,12 @@
 package view.menus;
 
 import controller.AppController;
-import controller.viewControllers.GameMenuController;
+import controller.GameController;
 import controller.MapController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import model.game.ItemCategory;
-import view.enums.Result;
-import view.enums.Command;
 import view.enums.Message;
 
 import java.util.Scanner;
@@ -17,7 +14,7 @@ import java.util.regex.Matcher;
 
 public class GameMenu extends Application {
     private final AppController appController;
-    private final GameMenuController gameMenuController;
+    private final GameController gameController;
     private final MapController mapController;
     private String message;
 
@@ -26,7 +23,7 @@ public class GameMenu extends Application {
     public GameMenu() {
         this.appController = AppController.getInstance();
         this.scanner = new Scanner(System.in);
-        this.gameMenuController = GameMenuController.getInstance();
+        this.gameController = GameController.getInstance();
         this.mapController = MapController.getInstance();
     }
 
@@ -121,7 +118,7 @@ public class GameMenu extends Application {
     }*/
 
     private boolean selectBuilding(Matcher matcher) {
-        this.message = this.gameMenuController.selectBuilding(matcher);
+        this.message = this.gameController.selectBuilding(matcher);
         System.out.println(this.message);
         return message.contains(Message.ENTERED_BUILDING_MENU.toString());
     }
@@ -132,7 +129,7 @@ public class GameMenu extends Application {
             return false;
         }
 
-        this.message = this.gameMenuController.selectUnit(Integer.parseInt(matcher.group("x")),
+        this.message = this.gameController.selectUnit(Integer.parseInt(matcher.group("x")),
                 Integer.parseInt(matcher.group("y")));
         System.out.println(this.message);
 
