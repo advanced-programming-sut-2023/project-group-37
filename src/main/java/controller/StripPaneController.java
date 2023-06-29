@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import model.buildings.*;
 import model.game.Tile;
 import model.people.*;
@@ -33,6 +34,10 @@ public class StripPaneController {
     private final GameController gameController;
     private final HashMap<BuildingType, ImageView> buildingTypeImages;
     private final HashMap<DefensiveBuildingType, ImageView> defensiveBuildingTypeImages;
+
+    private Rectangle towerRec;
+    private Rectangle gateHouseRec;
+    private Rectangle militaryRec;
 
     public StripPaneController(Pane stripPane) {
         this.sizeOfImages = 70;
@@ -89,9 +94,26 @@ public class StripPaneController {
         return this.defensiveBuildingTypeImages.get(defensiveBuildingType);
     }
 
+    public void getRectangles(Rectangle towerRec, Rectangle militaryRec, Rectangle gateHouseRec) {
+        towerRec.setLayoutX(760);
+        towerRec.setLayoutY(10);
+        militaryRec.setLayoutX(800);
+        militaryRec.setLayoutY(10);
+        gateHouseRec.setLayoutX(800);
+        gateHouseRec.setLayoutY(55);
+
+        this.towerRec = towerRec; this.militaryRec = militaryRec; this.gateHouseRec = gateHouseRec;
+    }
+
     public void insertImages(BuildingCategory category) {
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+
+        if (category == BuildingCategory.CASTLE_BUILDINGS) {
+            this.stripPane.getChildren().add(this.towerRec);
+            this.stripPane.getChildren().add(this.gateHouseRec);
+            this.stripPane.getChildren().add(this.militaryRec);
+        }
 
         int i = 0;
         for (BuildingType buildingType : BuildingType.values()) {
@@ -170,4 +192,4 @@ public class StripPaneController {
     public void move(Tile tile) {
         this.unitMenuController.move(tile).show();
     }
- }
+}

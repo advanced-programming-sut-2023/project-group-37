@@ -12,8 +12,10 @@ public enum PopUp {
 
     // building menu:
     NOT_ENOUGH_GOLD("Not enough gold !"),
-
-    NOT_ENOUGH_RESOURCE("Not enough resources!");
+    NOT_ENOUGH_RESOURCE("Not enough resources!"),
+    // Shop Menu :
+    MARKET_NOT_EXISTS("Market not exists!"),
+    ;
     private final Alert alert;
     PopUp(String message) {
         this.alert = new Alert(Alert.AlertType.ERROR, message);

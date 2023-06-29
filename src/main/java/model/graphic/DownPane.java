@@ -1,11 +1,9 @@
 package model.graphic;
 
-import controller.CaptchaController;
 import controller.MapController;
 import controller.MultiMenuFunctions;
 import controller.StripPaneController;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -15,7 +13,6 @@ import model.buildings.BuildingCategory;
 import model.game.Tile;
 import view.menus.RegisterMenu;
 
-import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -57,31 +54,35 @@ public class DownPane extends Pane {
         gamePane.getChildren().add(this);
     }
 
-    public void addBuildingIcons() {
-
-    }
-
     public void addButtons() throws URISyntaxException {
         String address = Objects.requireNonNull(RegisterMenu.class.getResource("/Image/Button/")).toExternalForm();
 
         createRec(210, address + "castle.jpg", BuildingCategory.CASTLE_BUILDINGS);
-        createRec(570, address + "tower.jpg", BuildingCategory.TOWERS);
-        createRec(630, address + "military.jpg", BuildingCategory.MILITARY_BUILDINGS);
-        createRec(690, address + "gatehouse.jpg", BuildingCategory.GATEHOUSES);
         createRec(270, address + "town.jpg", BuildingCategory.TOWN_BUILDINGS);
         createRec(330, address + "farm.jpg", BuildingCategory.FARM_BUILDINGS);
         createRec(390, address + "industry.jpg", BuildingCategory.INDUSTRY_BUILDINGS);
         createRec(450, address + "weapon.jpg", BuildingCategory.WEAPON_BUILDINGS);
         createRec(510, address + "food-processing.jpg", BuildingCategory.FOOD_PROCESSING_BUILDINGS);
+
+        Rectangle towerRec = createRec(570, address + "tower.jpg", BuildingCategory.TOWERS);
+        Rectangle militaryRec = createRec(630, address + "military.jpg", BuildingCategory.MILITARY_BUILDINGS);
+        Rectangle gateHouseRec = createRec(690, address + "gatehouse.jpg", BuildingCategory.GATEHOUSES);
+
+        this.stripPaneController.getRectangles(towerRec, militaryRec, gateHouseRec);
     }
 
-    public void createRec(double x, String absoluteAddress, BuildingCategory category) {
+    public Rectangle createRec(double x, String absoluteAddress, BuildingCategory category) {
         Rectangle rectangle = new Rectangle(40, 40);
         rectangle.setLayoutX(x);
         rectangle.setLayoutY(15);
         rectangle.setFill(new ImagePattern(new Image(absoluteAddress)));
-        this.getChildren().add(rectangle);
+        if (category != BuildingCategory.TOWERS && category != BuildingCategory.MILITARY_BUILDINGS
+                && category != BuildingCategory.GATEHOUSES)
+            this.getChildren().add(rectangle);
+
         rectangle.setOnMouseClicked(mouseEvent -> this.stripPaneController.insertImages(category));
+
+        return rectangle;
     }
 
     public void setForTiles(ArrayList<Tile> selectedTiles) {

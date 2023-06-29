@@ -261,8 +261,8 @@ public class MapController {
 
     private void setCursorOn(CursorType cursorType) {
         this.mainMap.setCursor(cursorType.getImageCursor());
-        this.cursorRight = 1;
-        this.cursorDown = 1;
+        this.cursorRight = 2;
+        this.cursorDown = 2;
     }
 
     private void setSelectedTiles(ArrayList<Tile> selectedTiles) {

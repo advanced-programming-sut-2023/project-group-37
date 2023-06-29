@@ -18,7 +18,6 @@ import java.util.LinkedList;
 
 public class UnitMenuController {
     private static Game game;
-    private static Government currentGovernment;
     private final Pane stripPane;
     private final int sizeOfImages;
     private ArrayList<MilitaryUnit> militaryUnits;
@@ -46,11 +45,6 @@ public class UnitMenuController {
 
     public static void setGame(Game game) {
         UnitMenuController.game = game;
-        UnitMenuController.currentGovernment = game.getCurrentTurnGovernment();
-    }
-
-    public static void setCurrentGovernment(Government currentGovernment) {
-        UnitMenuController.currentGovernment = currentGovernment;
     }
 
     private ImageView getImageView(TroopType troopType) {
@@ -195,13 +189,13 @@ public class UnitMenuController {
 
         boolean isEnemy = false;
         if (target.getBuilding() != null)
-            if (target.getBuilding().getLoyalty() != currentGovernment)
+            if (target.getBuilding().getLoyalty() != game.getCurrentTurnGovernment())
                 isEnemy = true;
 
         if (!isEnemy) {
             if (target.getMilitaryUnits().size() != 0) {
                 for (MilitaryUnit militaryUnit : target.getMilitaryUnits())
-                    if (militaryUnit.getLoyalty() != currentGovernment) {
+                    if (militaryUnit.getLoyalty() != game.getCurrentTurnGovernment()) {
                         isEnemy = true;
                         break;
                     }

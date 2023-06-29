@@ -43,8 +43,6 @@ public class GameController {
     }
 
     public void setCurrentGovernment(Government government) {
-        BuildingMenuController.setCurrentGovernment(government);
-        UnitMenuController.setCurrentGovernment(government);
         this.currentGovernment = government;
         this.shopMenuController.setGovernment(government);
         this.tradeMenuController.setGovernment(government);

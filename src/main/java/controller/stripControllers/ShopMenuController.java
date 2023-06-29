@@ -8,11 +8,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import model.buildings.BuildingType;
 import model.game.Color;
 import model.game.Game;
 import model.game.Item;
 import model.game.ItemCategory;
 import view.enums.Message;
+import view.enums.PopUp;
 import view.menus.RegisterMenu;
 
 import java.util.Objects;
@@ -35,6 +37,11 @@ public class ShopMenuController {
     }
 
     public void run() {
+        if (game.getCurrentTurnGovernment().getUniqueBuilding(BuildingType.MARKET) == null) {
+            PopUp.MARKET_NOT_EXISTS.show();
+            return;
+        }
+
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
 
@@ -42,26 +49,11 @@ public class ShopMenuController {
         ImageView weapons = MultiMenuFunctions.getImageView("/Image/Button/weapons.png", 70);
         ImageView foods = MultiMenuFunctions.getImageView("/Image/Button/food.jpg", 70);
 
-        resources.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                resources();
-            }
-        });
+        resources.setOnMouseClicked(mouseEvent -> resources());
 
-        weapons.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                weapons();
-            }
-        });
+        weapons.setOnMouseClicked(mouseEvent -> weapons());
 
-        foods.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                foods();
-            }
-        });
+        foods.setOnMouseClicked(mouseEvent -> foods());
 
         resources.setLayoutX(150);
         resources.setLayoutY(15);
@@ -84,15 +76,10 @@ public class ShopMenuController {
         for (Item item : Item.getAllItems()) {
             if (item.getCategory().equals(ItemCategory.RESOURCES)) {
                 ImageView imageView = MultiMenuFunctions.getImageView(item.getImageUrl(), 60);
-                imageView.setLayoutX(100 + (i * 75));
+                imageView.setLayoutX(100 + (i * 90));
                 imageView.setLayoutY(15);
 
-                imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        goToItem(item);
-                    }
-                });
+                imageView.setOnMouseClicked(mouseEvent -> goToItem(item));
 
                 stripPane.getChildren().add(imageView);
                 i++;
@@ -109,15 +96,10 @@ public class ShopMenuController {
         for (Item item : Item.getAllItems()) {
             if (item.getCategory().equals(ItemCategory.WEAPONS)) {
                 ImageView imageView = MultiMenuFunctions.getImageView(item.getImageUrl(), 60);
-                imageView.setLayoutX(100 + (i * 75));
+                imageView.setLayoutX(100 + (i * 90));
                 imageView.setLayoutY(15);
 
-                imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        goToItem(item);
-                    }
-                });
+                imageView.setOnMouseClicked(mouseEvent -> goToItem(item));
 
                 stripPane.getChildren().add(imageView);
                 i++;
@@ -134,15 +116,10 @@ public class ShopMenuController {
         for (Item item : Item.getAllItems()) {
             if (item.getCategory().equals(ItemCategory.FOODS)) {
                 ImageView imageView = MultiMenuFunctions.getImageView(item.getImageUrl(), 60);
-                imageView.setLayoutX(100 + (i * 75));
+                imageView.setLayoutX(100 + i * (120));
                 imageView.setLayoutY(15);
 
-                imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        goToItem(item);
-                    }
-                });
+                imageView.setOnMouseClicked(mouseEvent -> goToItem(item));
 
                 stripPane.getChildren().add(imageView);
                 i++;
@@ -194,14 +171,11 @@ public class ShopMenuController {
         back.setLayoutY(50);
 
         stripPane.getChildren().add(back);
-        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                switch (item.getCategory()) {
-                    case FOODS -> foods();
-                    case WEAPONS -> weapons();
-                    case RESOURCES -> resources();
-                }
+        back.setOnMouseClicked(mouseEvent -> {
+            switch (item.getCategory()) {
+                case FOODS -> foods();
+                case WEAPONS -> weapons();
+                case RESOURCES -> resources();
             }
         });
     }
@@ -210,26 +184,16 @@ public class ShopMenuController {
         ImageView buy = new ImageView(new Image(Objects.requireNonNull(RegisterMenu.class.getResource("/Image/Button/buy.png"))
                 .toExternalForm(), 324 * 0.7, 63 * 0.7, false, false));
         buy.setLayoutX(330);
-        buy.setLayoutY(10);
+        buy.setLayoutY(8);
 
-        buy.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                buy(item);
-            }
-        });
+        buy.setOnMouseClicked(mouseEvent -> buy(item));
 
         ImageView sell = new ImageView(new Image(Objects.requireNonNull(RegisterMenu.class.getResource("/Image/Button/sell.png"))
                 .toExternalForm(), 324 * 0.7, 63 * 0.7, false, false));
         sell.setLayoutX(330);
-        sell.setLayoutY(50);
+        sell.setLayoutY(60);
 
-        sell.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                sell(item);
-            }
-        });
+        sell.setOnMouseClicked(mouseEvent -> sell(item));
 
         stripPane.getChildren().add(buy);
         stripPane.getChildren().add(sell);
@@ -298,7 +262,6 @@ public class ShopMenuController {
 
         stripPane.getChildren().add(gold);
         gold.toFront();
-
 
     }
 

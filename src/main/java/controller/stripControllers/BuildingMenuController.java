@@ -26,7 +26,6 @@ import java.util.Objects;
 
 public class BuildingMenuController {
     private static Game game;
-    private static Government currentGovernment;
     private final Pane stripPane;
     private final StripPaneController stripPaneController;
     private final int sizeOfImages;
@@ -58,11 +57,6 @@ public class BuildingMenuController {
 
     public static void setGame(Game game) {
         BuildingMenuController.game = game;
-        BuildingMenuController.currentGovernment = game.getCurrentTurnGovernment();
-    }
-
-    public static void setCurrentGovernment(Government currentGovernment) {
-        BuildingMenuController.currentGovernment = currentGovernment;
     }
 
     public void run(Building building) {
@@ -154,7 +148,7 @@ public class BuildingMenuController {
                 (1 - (double) (defensiveBuilding.getHitpoints() / defensiveBuilding.getMaxHitpoints())) *
                 defensiveBuilding.getType().getRawMaterialUsesForSecond();
 
-        if (currentGovernment.removeItem(Item.STONE, stoneNeededToRepair))
+        if (game.getCurrentTurnGovernment().removeItem(Item.STONE, stoneNeededToRepair))
             return Message.NOT_ENOUGH_STONE;
 
         defensiveBuilding.setHitpoints(defensiveBuilding.getMaxHitpoints());
@@ -165,25 +159,25 @@ public class BuildingMenuController {
         int goldCost = troopType.getCost();
         Item armor = troopType.getArmor(), weapon = troopType.getWeapon();
 
-        if (goldCost > currentGovernment.getGold())
+        if (goldCost > game.getCurrentTurnGovernment().getGold())
             return PopUp.NOT_ENOUGH_GOLD;
 
         if (armor != null) {
-            if (1 > currentGovernment.getItemAmount(armor))
+            if (1 > game.getCurrentTurnGovernment().getItemAmount(armor))
                 return PopUp.NOT_ENOUGH_RESOURCE;
         }
 
         if (weapon != null) {
-            if (1 > currentGovernment.getItemAmount(weapon))
+            if (1 > game.getCurrentTurnGovernment().getItemAmount(weapon))
                 return PopUp.NOT_ENOUGH_RESOURCE;
         }
 
-        currentGovernment.removeItem(armor, 1);
-        currentGovernment.removeItem(weapon, 1);
-        currentGovernment.setGold(currentGovernment.getGold() - goldCost);
+        game.getCurrentTurnGovernment().removeItem(armor, 1);
+        game.getCurrentTurnGovernment().removeItem(weapon, 1);
+        game.getCurrentTurnGovernment().setGold(game.getCurrentTurnGovernment().getGold() - goldCost);
 
-        Troop troop = new Troop(currentGovernment, troopType, currentBuilding.getLocation());
-        currentGovernment.getMilitaryUnits().add(troop);
+        Troop troop = new Troop(game.getCurrentTurnGovernment(), troopType, currentBuilding.getLocation());
+        game.getCurrentTurnGovernment().getMilitaryUnits().add(troop);
         this.mapController.getTileByLocation(currentBuilding.getLocation().getLocationX(),
                 currentBuilding.getLocation().getLocationY() + 1).addMilitaryUnit(troop);
 
