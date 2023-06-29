@@ -13,6 +13,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import model.buildings.BuildingCategory;
 import model.game.Tile;
+import view.menus.RegisterMenu;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -61,26 +62,25 @@ public class DownPane extends Pane {
     }
 
     public void addButtons() throws URISyntaxException {
-        File file = new File(Objects.requireNonNull(CaptchaController.class.getResource("/Image/Buildings")).toURI());
-        ArrayList<File> buildings = MultiMenuFunctions.getAllImageFilesFromFolder(file);
+        String address = Objects.requireNonNull(RegisterMenu.class.getResource("/Image/Button/")).toExternalForm();
 
-        createRec(210, null, BuildingCategory.CASTLE_BUILDINGS);
-        createRec(270, null, BuildingCategory.TOWERS);
-        createRec(330, null, BuildingCategory.MILITARY_BUILDINGS);
-        createRec(390, null, BuildingCategory.GATEHOUSES);
-        createRec(450, null, BuildingCategory.TOWN_BUILDINGS);
-        createRec(510, null, BuildingCategory.FARM_BUILDINGS);
-        createRec(570, null, BuildingCategory.INDUSTRY_BUILDINGS);
-        createRec(630, null, BuildingCategory.WEAPON_BUILDINGS);
-        createRec(690, null, BuildingCategory.FOOD_PROCESSING_BUILDINGS);
+        createRec(210, address + "castle.jpg", BuildingCategory.CASTLE_BUILDINGS);
+        createRec(570, address + "tower.jpg", BuildingCategory.TOWERS);
+        createRec(630, address + "military.jpg", BuildingCategory.MILITARY_BUILDINGS);
+        createRec(690, address + "gatehouse.jpg", BuildingCategory.GATEHOUSES);
+        createRec(270, address + "town.jpg", BuildingCategory.TOWN_BUILDINGS);
+        createRec(330, address + "farm.jpg", BuildingCategory.FARM_BUILDINGS);
+        createRec(390, address + "industry.jpg", BuildingCategory.INDUSTRY_BUILDINGS);
+        createRec(450, address + "weapon.jpg", BuildingCategory.WEAPON_BUILDINGS);
+        createRec(510, address + "food-processing.jpg", BuildingCategory.FOOD_PROCESSING_BUILDINGS);
     }
 
     public void createRec(double x, String absoluteAddress, BuildingCategory category) {
         Rectangle rectangle = new Rectangle(40, 40);
         rectangle.setLayoutX(x);
         rectangle.setLayoutY(15);
-//        rectangle.setFill(new ImagePattern(new Image(absoluteAddress)));
-        rectangle.setFill(Color.WHITE);
+        rectangle.setFill(new ImagePattern(new Image(absoluteAddress)));
+        //rectangle.setFill(Color.WHITE);
         this.getChildren().add(rectangle);
         rectangle.setOnMouseClicked(mouseEvent -> this.stripPaneController.insertImages(category));
     }

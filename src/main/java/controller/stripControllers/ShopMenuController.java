@@ -6,17 +6,16 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import model.game.Government;
+import model.game.Game;
 import model.game.Item;
 import model.game.ItemCategory;
 
 public class ShopMenuController {
     private Pane stripPane;
-    private Government currentGovernment;
+    private Game game;
 
     public ShopMenuController(Pane stripPane) {
         this.stripPane = stripPane;
-        currentGovernment = null;
     }
 
     public void run() {
@@ -139,9 +138,9 @@ public class ShopMenuController {
         imageView.setLayoutX(100);
         imageView.setLayoutY(15);
 
-        Label amount = new Label(Integer.toString(currentGovernment.getItemAmount(item)));
-        amount.setLayoutX(100);
-        amount.setLayoutY(10);
+        Label amount = new Label("null");
+        amount.setLayoutX(150);
+        amount.setLayoutY(15);
 
 
         stripPane.getChildren().add(imageView);

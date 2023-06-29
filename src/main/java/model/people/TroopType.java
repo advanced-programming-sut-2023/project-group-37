@@ -19,7 +19,7 @@ public enum TroopType {
     SPEARMAN("spearman", "european/spearman.png", BuildingType.BARRACKS, 8, 50,
             50, 60, 1, Item.SPEAR, null, true, true),
 
-    MaceMan("maceman", "european/maceman.png", BuildingType.BARRACKS, 20, 70,
+    MACEMAN("maceman", "european/maceman.png", BuildingType.BARRACKS, 20, 70,
             75, 85, 1, Item.MACE, Item.LEATHER_ARMOR, true, true),
 
     CROSSBOWMAN("crossbowman", "european/crossbowman.png", BuildingType.BARRACKS, 20,
