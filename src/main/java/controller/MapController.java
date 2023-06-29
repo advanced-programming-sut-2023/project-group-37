@@ -4,6 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import model.game.Game;
 import model.game.Government;
 import model.game.Map;
@@ -208,7 +209,6 @@ public class MapController {
     public void createDownPane(Pane gamePane) throws URISyntaxException {
         this.downPane = new DownPane(this);
         this.downPane.initialize(gamePane);
-
     }
 
     public void createDetailLabels(Pane detailPane) {
@@ -295,9 +295,10 @@ public class MapController {
 
         this.attackingLabel = new Label("Attacking");
         this.attackingLabel.setTextFill(Color.RED);
+        this.attackingLabel.setFont(new Font(30));
 
-        this.attackingLabel.setLayoutX(800);
-        this.attackingLabel.setLayoutY(5);
+        this.attackingLabel.setLayoutX(950);
+        this.attackingLabel.setLayoutY(15);
         this.downPane.getChildren().add(this.attackingLabel);
     }
 
