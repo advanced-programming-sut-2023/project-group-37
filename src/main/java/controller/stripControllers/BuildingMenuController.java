@@ -60,6 +60,10 @@ public class BuildingMenuController {
         BuildingMenuController.currentGovernment = game.getCurrentTurnGovernment();
     }
 
+    public static void setCurrentGovernment(Government currentGovernment) {
+        BuildingMenuController.currentGovernment = currentGovernment;
+    }
+
     public void run(Building building) {
         this.currentBuilding = building;
         Label healthLabel = new Label("Health");
