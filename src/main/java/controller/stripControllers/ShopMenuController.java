@@ -158,13 +158,17 @@ public class ShopMenuController {
             amount.setTextFill(Color.RED.getColor());
         else amount.setTextFill(Color.GREEN.getColor());
 
-
         amount.setLayoutX(230);
         amount.setLayoutY(15);
+
+        ImageView buySell  = MultiMenuFunctions.getImageView("/Image/Button/buy and sell.png",70);
+        buySell.setLayoutX(330);
+        buySell.setLayoutY(15);
 
 
         stripPane.getChildren().add(imageView);
         stripPane.getChildren().add(amount);
+        stripPane.getChildren().add(buySell);
 
         addBackButton(item);
     }
