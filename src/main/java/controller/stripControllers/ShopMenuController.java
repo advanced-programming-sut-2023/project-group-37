@@ -20,8 +20,9 @@ public class ShopMenuController {
     }
 
     public void run() {
-        ImageView resources = MultiMenuFunctions.getImageView("/Image/Item/resources.png", 70);
-        ImageView weapons = MultiMenuFunctions.getImageView("/Image/Item/weapons.png", 70);
+        ImageView resources = MultiMenuFunctions.getImageView("/Image/Button/resources.png", 70);
+        ImageView weapons = MultiMenuFunctions.getImageView("/Image/Button/weapons.png", 70);
+        ImageView foods = MultiMenuFunctions.getImageView("/Image/Button/food.jpg", 70);
 
         resources.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -37,13 +38,23 @@ public class ShopMenuController {
             }
         });
 
+        foods.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                foods();
+            }
+        });
+
         resources.setLayoutX(150);
         resources.setLayoutY(15);
         weapons.setLayoutX(250);
         weapons.setLayoutY(15);
+        foods.setLayoutX(350);
+        foods.setLayoutY(15);
 
         stripPane.getChildren().add(resources);
         stripPane.getChildren().add(weapons);
+        stripPane.getChildren().add(foods);
 
     }
 
@@ -78,6 +89,30 @@ public class ShopMenuController {
         int i = 0;
         for (Item item : Item.getAllItems()) {
             if (item.getCategory().equals(ItemCategory.WEAPONS)) {
+                ImageView imageView = MultiMenuFunctions.getImageView(item.getImageUrl(), 60);
+                imageView.setLayoutX(100 + (i * 75));
+                imageView.setLayoutY(15);
+
+                imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        goToItem(item);
+                    }
+                });
+
+                stripPane.getChildren().add(imageView);
+                i++;
+            }
+        }
+    }
+
+    private void foods() {
+        if (this.stripPane.getChildren().size() > 0)
+            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+
+        int i = 0;
+        for (Item item : Item.getAllItems()) {
+            if (item.getCategory().equals(ItemCategory.FOODS)) {
                 ImageView imageView = MultiMenuFunctions.getImageView(item.getImageUrl(), 60);
                 imageView.setLayoutX(100 + (i * 75));
                 imageView.setLayoutY(15);
