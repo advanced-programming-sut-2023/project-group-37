@@ -2,6 +2,7 @@ package controller.stripControllers;
 
 import controller.MultiMenuFunctions;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,12 +12,14 @@ import model.game.Color;
 import model.game.Game;
 import model.game.Item;
 import model.game.ItemCategory;
+import view.enums.Message;
 import view.menus.RegisterMenu;
 
 import java.util.Objects;
 
 public class ShopMenuController {
     private Pane stripPane;
+    private Label amount;
     private static Game game;
 
 
@@ -155,7 +158,7 @@ public class ShopMenuController {
         imageView.setLayoutX(130);
         imageView.setLayoutY(15);
 
-        Label amount = new Label(Integer.toString(game.getCurrentTurnGovernment().getItemAmount(item)));
+        this.amount = new Label(Integer.toString(game.getCurrentTurnGovernment().getItemAmount(item)));
         amount.setStyle("-fx-font-size: 20");
 
         if (Integer.toString(game.getCurrentTurnGovernment().getItemAmount(item)).equals("0"))
@@ -169,7 +172,7 @@ public class ShopMenuController {
         stripPane.getChildren().add(imageView);
         stripPane.getChildren().add(amount);
 
-        addBuySellButtons();
+        addBuySellButtons(item);
         addBackButton(item);
     }
 
@@ -205,7 +208,7 @@ public class ShopMenuController {
         });
     }
 
-    private void addBuySellButtons() {
+    private void addBuySellButtons(Item item) {
         ImageView buy = new ImageView(new Image(Objects.requireNonNull(RegisterMenu.class.getResource("/Image/Button/buy.png"))
                 .toExternalForm(), 324 * 0.7, 63 * 0.7, false, false));
         buy.setLayoutX(330);
@@ -214,7 +217,7 @@ public class ShopMenuController {
         buy.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                buy();
+                buy(item);
             }
         });
 
@@ -226,7 +229,7 @@ public class ShopMenuController {
         sell.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                sell();
+                sell(item);
             }
         });
 
@@ -234,11 +237,31 @@ public class ShopMenuController {
         stripPane.getChildren().add(sell);
     }
 
-    private void buy() {
+    private void buy(Item item) {
+        if (game.getCurrentTurnGovernment().getGold() < item.getBuyCost()) {
+            new Alert(Alert.AlertType.ERROR, Message.NOT_ENOUGH_GOLD.toString()).show();
+            return;
+        }
 
+        if (game.getCurrentTurnGovernment().getFreeSpace(game.getCurrentTurnGovernment().getTargetRepository(item)) == 0) {
+            new Alert(Alert.AlertType.ERROR, Message.NOT_ENOUGH_SPACE.toString()).show();
+            return;
+        }
+
+        game.getCurrentTurnGovernment().buyItem(item, 1);
+        updateLabel(item);
     }
 
-    private void sell() {
+    private void sell(Item item) {
+        if (game.getCurrentTurnGovernment().getItemAmount(item) == 0) {
+            new Alert(Alert.AlertType.ERROR, Message.NOT_ENOUGH_AMOUNT.toString()).show();
+            return;
+        }
+        game.getCurrentTurnGovernment().sellItem(item, 1);
+        updateLabel(item);
+    }
 
+    private void updateLabel(Item item) {
+        this.amount.setText(Integer.toString(game.getCurrentTurnGovernment().getItemAmount(item)));
     }
 }
