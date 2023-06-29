@@ -2,7 +2,7 @@ package view.menus;
 
 import controller.AppController;
 import controller.MultiMenuFunctions;
-import controller.viewControllers.GameMenuController;
+import controller.GameController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +14,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -29,7 +28,6 @@ import view.enums.Result;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -139,6 +137,6 @@ public class StartGameMenu extends Application {
         }
 
         Game game = new Game(map, governments);
-        GameMenuController.getInstance().setCurrentGame(game);
+        GameController.getInstance().setCurrentGame(game);
     }
 }

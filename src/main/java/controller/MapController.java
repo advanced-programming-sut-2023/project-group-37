@@ -304,6 +304,10 @@ public class MapController {
         return this.map.getTileByXY(x - mainMap.getLayoutX(), y - mainMap.getLayoutY());
     }
 
+    public Tile getTileByLocation(int x, int y) {
+        return this.map.getTileByLocation(x,y);
+    }
+
     public Government getCurrentGovernment() {
         return this.currentGovernment;
     }
