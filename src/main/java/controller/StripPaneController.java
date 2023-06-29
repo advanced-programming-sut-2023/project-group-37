@@ -57,7 +57,7 @@ public class StripPaneController {
             imageView.setOnMouseReleased(mouseEvent -> {
                 Tile tile = mapController.getTileByXY(mouseEvent.getSceneX(), mouseEvent.getSceneY());
                 if (tile == null) return;
-                System.out.println(mapController.getGame().getGameMenuController().dropBuilding(tile, buildingType.getName()));
+                mapController.getGame().getGameMenuController().dropBuilding(tile, buildingType.getName());
             });
             this.buildingTypeImages.put(buildingType, imageView);
         }
@@ -151,8 +151,7 @@ public class StripPaneController {
             }
             if (building != null)
                 this.buildingMenuController.run(building);
-        }
-        else
+        } else
             this.unitMenuController.run(selectedTiles);
     }
 

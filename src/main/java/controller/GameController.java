@@ -138,7 +138,6 @@ public class GameController {
     }
 
     public String dropBuilding(Tile tile, String typeName) {
-        System.out.println(currentGovernment.getItemAmount(Item.WOOD));
         if (tile == null)
             return Message.ADDRESS_OUT_OF_BOUNDS.toString();
 
