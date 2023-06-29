@@ -22,6 +22,7 @@ import view.enums.PopUp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class StripPaneController {
     private final MapController mapController;
@@ -159,29 +160,52 @@ public class StripPaneController {
         boolean hasMilitaryUnit = false;
         for (Tile tile : selectedTiles) {
             if (tile.getMilitaryUnits().size() > 0) {
-                hasMilitaryUnit = true;
-                break;
+                if (tile.getMilitaryUnits().get(0).getLoyalty() == gameController.getCurrentGame().getCurrentTurnGovernment()) {
+                    hasMilitaryUnit = true;
+                    break;
+                }
             }
         }
 
-        if (!hasMilitaryUnit) {
-            Building building = null;
-            for (Tile tile : selectedTiles) {
-                if (tile.hasBuilding()) {
+        Building building = null;
+        for (Tile tile : selectedTiles) {
+            if (tile.hasBuilding()) {
+                if (Objects.equals(tile.getBuilding().getLoyalty().getUser().getUsername(),
+                        gameController.getCurrentGame().getCurrentTurnGovernment().getUser().getUsername())) {
+
                     building = tile.getBuilding();
                     break;
                 }
             }
-            if (building != null)
-                this.buildingMenuController.run(building);
-        } else
+        }
+
+        if (hasMilitaryUnit) {
             this.unitMenuController.run(selectedTiles);
+            if (building != null) {
+                ImageView imageView;
+                if (building instanceof DefensiveBuilding defensiveBuilding)
+                    imageView = MultiMenuFunctions.getImageView(defensiveBuilding.getDefensiveType().getImage(), this.sizeOfImages);
+
+                else imageView = MultiMenuFunctions.getImageView(building.getType().getImage(), this.sizeOfImages);
+
+                Building finalBuilding = building;
+                imageView.setOnMouseClicked((MouseEvent mouseEvent) -> {
+                    this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+                    this.buildingMenuController.run(finalBuilding);
+                });
+
+                imageView.setLayoutY(20);
+                imageView.setLayoutX(750);
+                this.stripPane.getChildren().add(imageView);
+            }
+        }
+        else if (building != null)
+            this.buildingMenuController.run(building);
     }
 
     public void setForTradeMenu() {
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
-
     }
 
     public boolean attack(Tile tile) {

@@ -63,6 +63,10 @@ public class GameController {
         return currentGame.getMap();
     }
 
+    public Game getCurrentGame() {
+        return this.currentGame;
+    }
+
     public String enterShopMenu() {
         if (this.currentGovernment.getUniqueBuilding(BuildingType.MARKET) != null)
             return Message.ENTERED_SHOP_MENU.toString();
