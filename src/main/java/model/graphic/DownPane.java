@@ -96,4 +96,12 @@ public class DownPane extends Pane {
     public void setForShopMenu() {
         this.stripPaneController.runShopMenu();
     }
+
+    public void attack(Tile tile) {
+        this.stripPaneController.attack(tile);
+    }
+
+    public void move(Tile tile) {
+        this.stripPaneController.move(tile);
+    }
 }

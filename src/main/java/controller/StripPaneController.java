@@ -17,6 +17,7 @@ import model.buildings.*;
 import model.game.Tile;
 import model.people.*;
 import view.enums.Message;
+import view.enums.PopUp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -163,4 +164,13 @@ public class StripPaneController {
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
 
     }
-}
+
+    public void attack(Tile tile) {
+        System.out.println("YES");
+        this.unitMenuController.attack(tile).show();
+    }
+
+    public void move(Tile tile) {
+        this.unitMenuController.move(tile).show();
+    }
+ }
