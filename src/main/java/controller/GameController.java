@@ -1,6 +1,7 @@
 package controller;
 
 import controller.stripControllers.BuildingMenuController;
+import controller.stripControllers.PopularityMenuController;
 import controller.stripControllers.UnitMenuController;
 import controller.viewControllers.ShopMenuController;
 import controller.viewControllers.TradeMenuController;
@@ -52,8 +53,8 @@ public class GameController {
     public void setCurrentGame(Game game) {
         BuildingMenuController.setGame(game);
         UnitMenuController.setGame(game);
+        PopularityMenuController.setGame(game);
         controller.stripControllers.ShopMenuController.setGame(game);
-        controller.stripControllers.UnitMenuController.setGame(game);
         this.currentGame = game;
         this.tradeMenuController.setGame(game);
         this.mapController.setGame(game);

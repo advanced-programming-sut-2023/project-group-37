@@ -170,9 +170,7 @@ public class StripPaneController {
         Building building = null;
         for (Tile tile : selectedTiles) {
             if (tile.hasBuilding()) {
-                if (Objects.equals(tile.getBuilding().getLoyalty().getUser().getUsername(),
-                        gameController.getCurrentGame().getCurrentTurnGovernment().getUser().getUsername())) {
-
+                if (tile.getBuilding().getLoyalty() == gameController.getCurrentGame().getCurrentTurnGovernment()) {
                     building = tile.getBuilding();
                     break;
                 }

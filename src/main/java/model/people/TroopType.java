@@ -9,7 +9,7 @@ import java.util.Objects;
 public enum TroopType {
 
     //LORD: todo : image for lord ?
-    LORD("", "european/archer.png", null, 0, 100, 100, 55, 1,
+    LORD("", "european/lord.png", null, 0, 100, 100, 55, 1,
             null, null, false, false),
 
     // Barracks:
@@ -88,8 +88,10 @@ public enum TroopType {
         this.name = name;
         this.downPaneImage = new Image(Objects.requireNonNull(TroopType.class.getResource
                 ("/Image/DownPaneTroops/" + imageURL)).toExternalForm());
+
         this.image = new Image(Objects.requireNonNull(TroopType.class.getResource
                 ("/Image/Troop/" + imageURL)).toExternalForm());
+
         this.trainingCamp = trainingCamp;
         this.cost = cost;
         this.maxHitpoints = maxHitpoints;

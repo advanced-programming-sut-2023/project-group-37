@@ -91,13 +91,14 @@ public class BuildingMenuController {
                 }
             });
         }
-
-        switch (building.getType()) {
-            case BARRACKS -> uploadTroopImages(BuildingType.BARRACKS);
-            case MERCENARY_POST -> uploadTroopImages(BuildingType.MERCENARY_POST);
-            case ENGINEER_GUILD -> uploadTroopImages(BuildingType.ENGINEER_GUILD);
-            case TUNNELER_GUILD -> uploadTroopImages(BuildingType.TUNNELER_GUILD);
-            case MARKET -> this.stripPaneController.runShopMenu();
+        else {
+            switch (building.getType()) {
+                case BARRACKS -> uploadTroopImages(BuildingType.BARRACKS);
+                case MERCENARY_POST -> uploadTroopImages(BuildingType.MERCENARY_POST);
+                case ENGINEER_GUILD -> uploadTroopImages(BuildingType.ENGINEER_GUILD);
+                case TUNNELER_GUILD -> uploadTroopImages(BuildingType.TUNNELER_GUILD);
+                case MARKET -> this.stripPaneController.runShopMenu();
+            }
         }
     }
 

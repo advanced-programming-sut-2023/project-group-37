@@ -21,10 +21,8 @@ import view.menus.RegisterMenu;
 import java.util.Objects;
 
 public class ShopMenuController {
-    private Pane stripPane;
+    private final Pane stripPane;
     private Label amount;
-    private Label buyPrice;
-    private Label sellPrice;
     private Label gold;
     private static Game game;
 
@@ -237,7 +235,7 @@ public class ShopMenuController {
 
         stripPane.getChildren().add(amount);
 
-        this.buyPrice = new Label(Integer.toString(item.getBuyCost()));
+        Label buyPrice = new Label(Integer.toString(item.getBuyCost()));
         buyPrice.setStyle("-fx-font-size: 20");
         buyPrice.setLayoutX(580);
         buyPrice.setLayoutY(15);
@@ -246,7 +244,7 @@ public class ShopMenuController {
         buyPrice.toFront();
 
 
-        this.sellPrice = new Label(Integer.toString(item.getSellCost()));
+        Label sellPrice = new Label(Integer.toString(item.getSellCost()));
         sellPrice.setStyle("-fx-font-size: 20");
         sellPrice.setLayoutX(580);
         sellPrice.setLayoutY(60);
