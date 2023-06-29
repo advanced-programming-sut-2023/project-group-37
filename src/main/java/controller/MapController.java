@@ -30,7 +30,8 @@ public class MapController {
     private ArrayList<Tile> selectedTiles;
     private int cursorRight;
     private int cursorDown;
-    private boolean isSelectedForMoveOrAttack;
+    private boolean isOnAttack;
+    private boolean isOnMove;
 
     static {
         MAP_CONTROLLER = new MapController();
@@ -123,11 +124,13 @@ public class MapController {
                 }
                 case "M" -> {
                     this.setCursorOn(CursorType.SELECT_MOVE_DESTINATION);
-                    this.isSelectedForMoveOrAttack = true;
+                    this.isOnMove = true;
+                    this.isOnAttack = false;
                 }
                 case "A" -> {
                     this.setCursorOn(CursorType.SELECT_ATTACK_DESTINATION);
-                    this.isSelectedForMoveOrAttack = true;
+                    this.isOnAttack = true;
+                    this.isOnMove = false;
                 }
                 case "T" -> this.downPane.setForTradeMenu();
                 case "S" -> this.downPane.setForShopMenu();
@@ -268,8 +271,21 @@ public class MapController {
         this.cursorDown = 0;
 //        this.mainMap.setCursor(CursorType.DEFAULT.getImageCursor());
 
-        if (!this.isSelectedForMoveOrAttack && selectedTiles != null)
-            this.downPane.setForTiles(selectedTiles);
+        if (selectedTiles == null)
+            return;
+
+        if (this.isOnAttack) {
+            if(selectedTiles.size() == 1)
+                this.downPane.attack(selectedTiles.get(0));
+        }
+        else if (this.isOnMove) {
+            if (selectedTiles.size() == 1)
+                this.downPane.move(selectedTiles.get(0));
+        }
+        else this.downPane.setForTiles(selectedTiles);
+
+        this.isOnMove = false;
+        this.isOnAttack = false;
     }
 
     public void goUp() {

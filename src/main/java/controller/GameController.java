@@ -1,9 +1,9 @@
 package controller;
 
 import controller.stripControllers.BuildingMenuController;
+import controller.stripControllers.UnitMenuController;
 import controller.viewControllers.ShopMenuController;
 import controller.viewControllers.TradeMenuController;
-import controller.viewControllers.UnitMenuController;
 import model.buildings.Building;
 import model.buildings.BuildingType;
 import model.buildings.Storage;
@@ -26,7 +26,6 @@ public class GameController {
     private final MapController mapController;
     private final ShopMenuController shopMenuController;
     private final TradeMenuController tradeMenuController;
-    private final UnitMenuController unitMenuController;
     private Government currentGovernment;
 
     static {
@@ -37,7 +36,6 @@ public class GameController {
         mapController = MapController.getInstance();
         shopMenuController = ShopMenuController.getInstance();
         tradeMenuController = TradeMenuController.getInstance();
-        unitMenuController = UnitMenuController.getInstance();
     }
 
     public static GameController getInstance() {
@@ -45,21 +43,22 @@ public class GameController {
     }
 
     public void setCurrentGovernment(Government government) {
+        BuildingMenuController.setCurrentGovernment(government);
+        UnitMenuController.setCurrentGovernment(government);
         this.currentGovernment = government;
         this.shopMenuController.setGovernment(government);
         this.tradeMenuController.setGovernment(government);
         this.mapController.setCurrentGovernment(government);
-        this.unitMenuController.setCurrentGovernment(government);
     }
 
     public void setCurrentGame(Game game) {
         BuildingMenuController.setGame(game);
+        UnitMenuController.setGame(game);
         controller.stripControllers.ShopMenuController.setGame(game);
         controller.stripControllers.UnitMenuController.setGame(game);
         this.currentGame = game;
         this.tradeMenuController.setGame(game);
         this.mapController.setGame(game);
-        this.unitMenuController.setCurrentGame(game);
     }
 
     public Map getMap() {
@@ -320,7 +319,6 @@ public class GameController {
         if (myUnit.size() == 0)
             return Message.UNIT_NOT_EXISTS.toString();
 
-        this.unitMenuController.setUnit(myUnit, tile);
         return Message.UNIT_SELECTED.toString();
     }
 
