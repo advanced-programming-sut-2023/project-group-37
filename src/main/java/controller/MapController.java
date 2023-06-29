@@ -350,8 +350,9 @@ public class MapController {
         return mainMap;
     }
 
-    public void updateDetails() { // todo : use this in all changes for gold & popularity
+    public void updateDetails() {
         this.goldLabel.setText(String.valueOf(currentGovernment.getGold()));
+        this.popularityLabel.setText(String.valueOf(currentGovernment.getPopularity()));
     }
 
 }

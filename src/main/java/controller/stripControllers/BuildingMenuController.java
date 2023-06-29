@@ -151,6 +151,8 @@ public class BuildingMenuController {
         if (game.getCurrentTurnGovernment().removeItem(Item.STONE, stoneNeededToRepair))
             return Message.NOT_ENOUGH_STONE;
 
+        MapController.getInstance().updateDetails();
+
         defensiveBuilding.setHitpoints(defensiveBuilding.getMaxHitpoints());
         return Message.REPAIR_SUCCESS;
     }
@@ -181,6 +183,7 @@ public class BuildingMenuController {
         this.mapController.getTileByLocation(currentBuilding.getLocation().getLocationX(),
                 currentBuilding.getLocation().getLocationY() + 1).addMilitaryUnit(troop);
 
+        MapController.getInstance().updateDetails();
         return null;
     }
 }

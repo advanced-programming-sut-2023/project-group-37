@@ -277,6 +277,8 @@ public class GameController {
                 type == BuildingType.BARRACKS || type == BuildingType.MERCENARY_POST ||
                 type == BuildingType.ENGINEER_GUILD || type == BuildingType.TUNNELER_GUILD ||
                 type == DefensiveBuildingType.SMALL_GATEHOUSE || type == DefensiveBuildingType.LARGE_GATEHOUSE);
+
+        MapController.getInstance().updateDetails();
         return Message.DROP_BUILDING_SUCCESS.toString();
     }
 

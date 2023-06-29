@@ -1,5 +1,6 @@
 package controller.stripControllers;
 
+import controller.MapController;
 import controller.MultiMenuFunctions;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
@@ -268,5 +269,6 @@ public class ShopMenuController {
     private void updateLabel(Item item) {
         this.amount.setText(Integer.toString(game.getCurrentTurnGovernment().getItemAmount(item)));
         this.gold.setText(Integer.toString(game.getCurrentTurnGovernment().getGold()));
+        MapController.getInstance().updateDetails();
     }
 }
