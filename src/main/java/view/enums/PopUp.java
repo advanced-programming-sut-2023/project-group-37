@@ -9,6 +9,7 @@ public enum PopUp {
     OUT_OF_RANGE("Out of range!"),
     CANT_MOVE_THERE("Can not move there !"),
     WILL_MOVE("Unit will move on next turn!", true),
+    WILL_ATTACK("Unit will attack on next turn!", true),
 
     // building menu:
     NOT_ENOUGH_GOLD("Not enough gold !"),

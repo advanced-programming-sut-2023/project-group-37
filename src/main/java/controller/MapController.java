@@ -27,7 +27,7 @@ public class MapController {
     private Label goldLabel;
     private Label popularityLabel;
     private Government currentGovernment;
-    private ArrayList<Tile> selectedTiles;
+    private Label attackingLabel;
     private double cursorRight;
     private double cursorDown;
     private boolean isOnAttack;
@@ -266,15 +266,16 @@ public class MapController {
     }
 
     private void setSelectedTiles(ArrayList<Tile> selectedTiles) {
-        this.selectedTiles = selectedTiles;
-//        this.mainMap.setCursor(CursorType.DEFAULT.getImageCursor());
+        //        this.mainMap.setCursor(CursorType.DEFAULT.getImageCursor());
 
         if (selectedTiles == null)
             return;
 
         if (this.isOnAttack) {
-            if(selectedTiles.size() == 1)
-                this.downPane.attack(selectedTiles.get(0));
+            if(selectedTiles.size() == 1) {
+                if(this.downPane.attack(selectedTiles.get(0)))
+                    this.showAttacking();
+            }
         }
         else if (this.isOnMove) {
             if (selectedTiles.size() == 1)
@@ -286,6 +287,22 @@ public class MapController {
         this.cursorDown = 0;
         this.isOnMove = false;
         this.isOnAttack = false;
+    }
+
+    private void showAttacking() {
+        if (this.attackingLabel != null)
+            this.downPane.getChildren().remove(this.attackingLabel);
+
+        this.attackingLabel = new Label("Attacking");
+        this.attackingLabel.setTextFill(Color.RED);
+
+        this.attackingLabel.setLayoutX(800);
+        this.attackingLabel.setLayoutY(5);
+        this.downPane.getChildren().add(this.attackingLabel);
+    }
+
+    public void stopShowingAttack() {
+        this.downPane.getChildren().remove(this.attackingLabel);
     }
 
     public void goUp() {

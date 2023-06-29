@@ -228,7 +228,7 @@ public class UnitMenuController {
                 militaryUnit.setTarget(target);
         }
 
-        return null;
+        return PopUp.WILL_ATTACK;
     }
 
     public Message stop() {

@@ -184,8 +184,11 @@ public class StripPaneController {
 
     }
 
-    public void attack(Tile tile) {
-        this.unitMenuController.attack(tile).show();
+    public boolean attack(Tile tile) {
+        PopUp popUp = this.unitMenuController.attack(tile);
+        popUp.show();
+
+        return popUp == PopUp.WILL_ATTACK;
     }
 
     public void move(Tile tile) {
