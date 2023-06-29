@@ -20,6 +20,9 @@ import java.util.Objects;
 public class ShopMenuController {
     private Pane stripPane;
     private Label amount;
+    private Label buyPrice;
+    private Label sellPrice;
+    private Label gold;
     private static Game game;
 
 
@@ -158,20 +161,15 @@ public class ShopMenuController {
         imageView.setLayoutX(130);
         imageView.setLayoutY(15);
 
-        this.amount = new Label(Integer.toString(game.getCurrentTurnGovernment().getItemAmount(item)));
-        amount.setStyle("-fx-font-size: 20");
-
-        if (Integer.toString(game.getCurrentTurnGovernment().getItemAmount(item)).equals("0"))
-            amount.setTextFill(Color.RED.getColor());
-        else amount.setTextFill(Color.GREEN.getColor());
-
-        amount.setLayoutX(230);
-        amount.setLayoutY(15);
-
-
         stripPane.getChildren().add(imageView);
-        stripPane.getChildren().add(amount);
 
+        ImageView goldImage = MultiMenuFunctions.getImageView("/Image/Item/gold.png", 70);
+        goldImage.setLayoutX(800);
+        goldImage.setLayoutY(25);
+
+        stripPane.getChildren().add(goldImage);
+
+        addLabels(item);
         addBuySellButtons(item);
         addBackButton(item);
     }
@@ -261,7 +259,51 @@ public class ShopMenuController {
         updateLabel(item);
     }
 
+    private void addLabels(Item item) {
+        this.amount = new Label(Integer.toString(game.getCurrentTurnGovernment().getItemAmount(item)));
+        amount.setStyle("-fx-font-size: 30");
+
+        if (Integer.toString(game.getCurrentTurnGovernment().getItemAmount(item)).equals("0"))
+            amount.setTextFill(Color.RED.getColor());
+        else amount.setTextFill(Color.GREEN.getColor());
+
+        amount.setLayoutX(230);
+        amount.setLayoutY(15);
+
+        stripPane.getChildren().add(amount);
+
+        this.buyPrice = new Label(Integer.toString(item.getBuyCost()));
+        buyPrice.setStyle("-fx-font-size: 20");
+        buyPrice.setLayoutX(580);
+        buyPrice.setLayoutY(15);
+
+        stripPane.getChildren().add(buyPrice);
+        buyPrice.toFront();
+
+
+        this.sellPrice = new Label(Integer.toString(item.getSellCost()));
+        sellPrice.setStyle("-fx-font-size: 20");
+        sellPrice.setLayoutX(580);
+        sellPrice.setLayoutY(60);
+
+        stripPane.getChildren().add(sellPrice);
+        sellPrice.toFront();
+
+
+        this.gold = new Label(Integer.toString(game.getCurrentTurnGovernment().getGold()));
+        gold.setStyle("-fx-font-size: 30");
+        gold.setLayoutX(700);
+        gold.setLayoutY(30);
+        gold.setTextFill(Color.BROWN.getColor());
+
+        stripPane.getChildren().add(gold);
+        gold.toFront();
+
+
+    }
+
     private void updateLabel(Item item) {
         this.amount.setText(Integer.toString(game.getCurrentTurnGovernment().getItemAmount(item)));
+        this.gold.setText(Integer.toString(game.getCurrentTurnGovernment().getGold()));
     }
 }
