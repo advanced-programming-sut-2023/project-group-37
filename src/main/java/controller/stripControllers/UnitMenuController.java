@@ -1,6 +1,8 @@
 package controller.stripControllers;
 
 import controller.MultiMenuFunctions;
+import javafx.event.EventHandler;
+import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
@@ -135,11 +137,11 @@ public class UnitMenuController {
 
         TextInputDialog textInputDialog = new TextInputDialog(String.valueOf(this.militaryUnits.size()));
         textInputDialog.setHeaderText("Number of units");
-        textInputDialog.show();
+        textInputDialog.showAndWait();
 
-        int count = this.militaryUnits.size();
+        int count = militaryUnits.size();
         try {
-            count = Integer.parseInt(textInputDialog.getContentText());
+            count = Integer.parseInt(textInputDialog.getEditor().getText());
         }
         catch (Exception ignored) {
         }
@@ -161,15 +163,14 @@ public class UnitMenuController {
 
         TextInputDialog textInputDialog = new TextInputDialog(String.valueOf(this.militaryUnits.size()));
         textInputDialog.setHeaderText("Number of units");
-        textInputDialog.show();
+        textInputDialog.showAndWait();
 
-        int count = this.militaryUnits.size();
+        int count = militaryUnits.size();
         try {
-            count = Integer.parseInt(textInputDialog.getContentText());
+            count = Integer.parseInt(textInputDialog.getEditor().getText());
         }
         catch (Exception ignored) {
         }
-
         if (militaryUnits.size() > count)
             this.militaryUnits.subList(count, militaryUnits.size()).clear();
 
