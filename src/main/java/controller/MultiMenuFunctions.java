@@ -51,7 +51,7 @@ public class MultiMenuFunctions {
 
     public static void setTileImage(Tile tile, Image image) {
         ImageView imageView = new ImageView(new Image(image.getUrl(),
-                Tile.getTileSize(), Tile.getTileSize(), false, false));
+                3 * Tile.getTileSize(), 3 * Tile.getTileSize(), false, false));
 
         imageView.setLayoutX(tile.getLayoutX());
         imageView.setLayoutY(tile.getLayoutY());

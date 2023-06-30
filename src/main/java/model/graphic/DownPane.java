@@ -93,6 +93,12 @@ public class DownPane extends Pane {
         this.stripPaneController.insertSelectedTiles(selectedTiles);
     }
 
+    public void setForTile(Tile tile) {
+        ArrayList<Tile> arrayList = new ArrayList<>();
+        arrayList.add(tile);
+        this.stripPaneController.insertSelectedTiles(arrayList);
+    }
+
     public void setForTradeMenu() {
         this.stripPaneController.setForTradeMenu();
     }
@@ -107,5 +113,6 @@ public class DownPane extends Pane {
 
     public void move(Tile tile) {
         this.stripPaneController.move(tile);
+        System.out.println(tile.getLocationX() + ", " +tile.getLocationY());
     }
 }
