@@ -83,8 +83,15 @@ public class Map {
         MultiMenuFunctions.removeAllImages();
 
         for (Tile[] tiles : this.field) {
-            for (int j = 0; j < this.field[0].length; j++)
+            for (int j = 0; j < this.field.length; j++) {
                 tiles[j].updateImage();
+            }
+        }
+
+        for (Integer integer : this.territories.keySet()) {
+            Territory territory = this.territories.get(integer);
+            Tile keep = territory.getKeep();
+            this.field[keep.getLocationX()][keep.getLocationY() - 1].updateImage();
         }
     }
 

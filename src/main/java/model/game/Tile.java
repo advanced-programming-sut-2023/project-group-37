@@ -247,16 +247,16 @@ public class Tile extends Rectangle {
             this.setImage(this.texture.getImage());
 
             if (this.treeRockTexture != null) {
-                MultiMenuFunctions.setTileImage(this, treeRockTexture.getImage());
+                MultiMenuFunctions.setTileImage(this, treeRockTexture.getImage(), treeRockTexture.getName());
                 this.miniTile.setFill(Color.DARKGREEN);
             }
 
             if (this.hasBuilding) {
                 if (this.building instanceof DefensiveBuilding defensiveBuilding) {
-                    MultiMenuFunctions.setTileImage(this, defensiveBuilding.getDefensiveType().getImage());
+                    MultiMenuFunctions.setTileImage(this, defensiveBuilding.getDefensiveType().getImage(), this.building.getName());
                     this.miniTile.setFill(Color.WHITESMOKE);
                 } else {
-                    MultiMenuFunctions.setTileImage(this, this.building.getType().getImage());
+                    MultiMenuFunctions.setTileImage(this, this.building.getType().getImage(), this.building.getName());
                     this.miniTile.setFill(Color.LIGHTYELLOW);
                 }
             }
@@ -265,18 +265,15 @@ public class Tile extends Rectangle {
                 for (MilitaryUnit militaryUnit : this.militaryUnits) {
                     if (militaryUnit instanceof MilitaryMachine militaryMachine)
                         MultiMenuFunctions.setTileImage(this, militaryMachine.getType().getImage());
-                    else if (militaryUnit instanceof Troop troop){
-                        MultiMenuFunctions.setTileImage(this, troop.getStandingImage(), troop.getType() == TroopType.LORD);
-                    }
+                    else if (militaryUnit instanceof Troop troop)
+                        MultiMenuFunctions.setTileImage(this, troop.getStandingImage());
                 }
 
-                MultiMenuFunctions.setTileImage(this,
-                        ((Troop) this.militaryUnits.get(this.militaryUnits.size() - 1)).getStandingImage());
                 this.miniTile.setFill(Color.HOTPINK);
             }
+            Tooltip.install(this, new Tooltip(this.getInfo()));
         } catch (Exception ignored) {
         }
-        Tooltip.install(this, new Tooltip(this.getInfo()));
     }
 
     public boolean isPassable() {

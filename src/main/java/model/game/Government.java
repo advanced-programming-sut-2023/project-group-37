@@ -40,11 +40,12 @@ public class Government {
         this.territory = map.getCopyKeepByNumber(this, territoryNumber);
         this.color = color;
         this.gold = 2000;
+        this.territory.getKeep().setBuilding(new DefensiveBuilding(this, this.territory.getKeep(),
+                DefensiveBuildingType.KEEP, 'v'));
+
         this.lord = new Troop(this, TroopType.LORD, this.territory.getMap().getTileByLocation(
                 this.territory.getKeep().getLocationX(), this.territory.getKeep().getLocationY() - 1));
 
-        this.territory.getKeep().setBuilding(new DefensiveBuilding(this, this.territory.getKeep(),
-                DefensiveBuildingType.KEEP, 'v'));
         this.people = new ArrayList<>();
         this.addPeasant(10);
         this.militaryUnits = new ArrayList<>();

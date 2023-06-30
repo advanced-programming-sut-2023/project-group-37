@@ -7,10 +7,7 @@ import java.util.*;
 import controller.viewControllers.MainMenuController;
 import controller.viewControllers.ProfileMenuController;
 import javafx.scene.ImageCursor;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -48,13 +45,12 @@ public class MultiMenuFunctions {
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
     }
 
-    public static void setTileImage(Tile tile, Image image, boolean isFront) {
+    public static void setTileImage(Tile tile, Image image, String string) {
         ImageView imageView = MultiMenuFunctions.getImageView(image, 2.8 * Tile.getTileSize());
 
         imageView.setLayoutX(tile.getLayoutX() - Tile.getTileSize());
         imageView.setLayoutY(tile.getLayoutY() - Tile.getTileSize());
-        if (isFront)
-            imageView.toFront();
+        Tooltip.install(imageView, new Tooltip(string));
 
         MapController.getInstance().getMainMap().getChildren().add(imageView);
     }

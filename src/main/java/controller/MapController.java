@@ -91,7 +91,6 @@ public class MapController {
         gamePane.getChildren().add(this.mainMap);
         this.map.updateImages();
 
-
         this.mainMap.setOnKeyPressed(keyEvent -> {
             String keyName = keyEvent.getCode().getName();
 
