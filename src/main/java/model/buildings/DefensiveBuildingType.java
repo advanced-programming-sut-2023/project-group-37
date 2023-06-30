@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public enum DefensiveBuildingType {
 
-    KEEP("", null, "keep.png", 1, 0, 0, 16),
+    KEEP("Keep", null, "keep.png", 1, 0, 0, 16),
 
     WALL("Wall", BuildingCategory.CASTLE_BUILDINGS, "wall.png", 250, 1,
             1.1, 1),

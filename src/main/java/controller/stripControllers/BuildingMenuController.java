@@ -86,8 +86,6 @@ public class BuildingMenuController {
         this.stripPane.getChildren().add(healthBar);
 
         if (building instanceof DefensiveBuilding defensiveBuilding) {
-            System.out.println("AN");
-            System.out.println(defensiveBuilding.getDefensiveType().getName());
             nameLabel.setText(defensiveBuilding.getDefensiveType().getName());
             Button repairButton = new Button("Repair");
             repairButton.setLayoutY(40);
