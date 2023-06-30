@@ -9,6 +9,8 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import model.buildings.Building;
 import model.buildings.BuildingType;
 import model.buildings.DefensiveBuilding;
@@ -61,37 +63,43 @@ public class BuildingMenuController {
 
     public void run(Building building) {
         this.currentBuilding = building;
-        Label healthLabel = new Label("Health");
+
+        Label nameLabel = new Label();
+        nameLabel.setFont(new Font(20));
+        Label healthLabel = new Label("Health:");
         ProgressBar healthBar = new ProgressBar(1);
         double health = building.getHitpoints() / (double) building.getMaxHitpoints();
         healthBar.setProgress(health);
 
-        if (health < 0.33)
-            healthBar.setStyle("-fx-progress-color: red");
-        else if (health < 0.66)
-            healthBar.setStyle("-fx-progress-color: yellow");
-        else healthBar.setStyle("-fx-progress-color: green");
-
+        nameLabel.setLayoutY(10);
+        nameLabel.setLayoutX(10);
         healthLabel.setLayoutY(10);
-        healthLabel.setLayoutX(10);
+        healthLabel.setLayoutX(80);
         healthBar.setLayoutY(10);
-        healthBar.setLayoutX(60);
+        healthBar.setLayoutX(130);
 
+        this.stripPane.getChildren().add(nameLabel);
         this.stripPane.getChildren().add(healthLabel);
         this.stripPane.getChildren().add(healthBar);
 
         if (building instanceof DefensiveBuilding defensiveBuilding) {
-            Button repairButton = new Button();
-            repairButton.setGraphic(new ImageView()); // todo
+            System.out.println(defensiveBuilding.getDefensiveType().getName());
+            nameLabel.setText(defensiveBuilding.getDefensiveType().getName());
+            Button repairButton = new Button("Repair");
+            repairButton.setLayoutY(40);
+            repairButton.setLayoutX(10);
+
+            repairButton.setDisable(defensiveBuilding.getMaxHitpoints() == defensiveBuilding.getHitpoints());
             repairButton.setOnMouseClicked((MouseEvent mouseEvent) -> {
                 Message message = this.repair(defensiveBuilding);
                 if (message == Message.REPAIR_SUCCESS) {
-                    // todo : image
                     repairButton.setDisable(true);
                 }
             });
+            this.stripPane.getChildren().add(repairButton);
         }
         else {
+            nameLabel.setText(building.getType().getName());
             switch (building.getType()) {
                 case BARRACKS -> uploadTroopImages(BuildingType.BARRACKS);
                 case MERCENARY_POST -> uploadTroopImages(BuildingType.MERCENARY_POST);

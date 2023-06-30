@@ -3,12 +3,12 @@ package model.game;
 import javafx.scene.paint.Color;
 
 public enum GameColor {
+    RED("red", Color.RED),
     BLUE("blue", Color.BLUE),
     GREEN("green", Color.GREEN),
     GREY("grey", Color.GREY),
     ORANGE("orange", Color.ORANGE),
     PURPLE("purple", Color.PURPLE),
-    RED("red", Color.RED),
     SKY_BLUE("sky-blue", Color.SKYBLUE),
     YELLOW("yellow", Color.YELLOW);
 

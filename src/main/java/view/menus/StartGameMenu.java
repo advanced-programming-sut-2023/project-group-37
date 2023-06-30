@@ -126,11 +126,11 @@ public class StartGameMenu extends Application {
 
         assert map != null;
 
-        int index = 1;
+        int index = 0;
         for (java.util.Map.Entry<Integer, String> integerStringEntry : userTerritory.entrySet()) {
             String username = integerStringEntry.getValue();
             Integer territory = integerStringEntry.getKey();
-            governments.add(new Government(User.getUserByUsername(username), GameColor.values()[index], map, territory));
+            governments.add(new Government(User.getUserByUsername(username), GameColor.values()[territory - 1], map, territory));
         }
 
         Game game = new Game(map, governments);

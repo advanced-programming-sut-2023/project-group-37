@@ -8,31 +8,31 @@ public enum DefensiveBuildingType {
 
     KEEP("", null, "keep.png", 1, 0, 0, 16),
 
-    WALL("wall", BuildingCategory.CASTLE_BUILDINGS, "wall.png", 250, 1,
+    WALL("Wall", BuildingCategory.CASTLE_BUILDINGS, "wall.png", 250, 1,
             1.1, 1),
 
-    STAIRS("stairs", BuildingCategory.CASTLE_BUILDINGS, "stairs.png", 150, 1,
+    STAIRS("Stairs", BuildingCategory.CASTLE_BUILDINGS, "stairs.png", 150, 1,
             0, 1),
 
-    SMALL_GATEHOUSE("small gatehouse", BuildingCategory.GATEHOUSES, "small-gatehouse.png",
+    SMALL_GATEHOUSE("Small gatehouse", BuildingCategory.GATEHOUSES, "small-gatehouse.png",
             350, 10, 1.2, 8),
 
-    LARGE_GATEHOUSE("large gatehouse", BuildingCategory.GATEHOUSES, "large-gatehouse.png",
+    LARGE_GATEHOUSE("Large gatehouse", BuildingCategory.GATEHOUSES, "large-gatehouse.png",
             450, 20, 1.4, 12),
 
-    LOOKOUT_TOWER("lookout tower", BuildingCategory.TOWERS, "lookout-tower.png", 250,
+    LOOKOUT_TOWER("Lookout tower", BuildingCategory.TOWERS, "lookout-tower.png", 250,
             10, 2.2, 4),
 
-    PERIMETER_TOWER("perimeter tower", BuildingCategory.TOWERS, "perimeter-tower.png", 350,
+    PERIMETER_TOWER("Perimeter tower", BuildingCategory.TOWERS, "perimeter-tower.png", 350,
             10, 1.6, 6),
 
-    DEFENCE_TOWER("defence tower", BuildingCategory.TOWERS, "defence-tower.png", 350,
+    DEFENCE_TOWER("Defence tower", BuildingCategory.TOWERS, "defence-tower.png", 350,
             15, 1.6, 6),
 
-    SQUARE_TOWER("square tower", BuildingCategory.TOWERS, "square-tower.png", 450,
+    SQUARE_TOWER("Square tower", BuildingCategory.TOWERS, "square-tower.png", 450,
             35, 2, 10),
 
-    ROUND_TOWER("round tower", BuildingCategory.TOWERS, "round-tower.png", 450,
+    ROUND_TOWER("Round tower", BuildingCategory.TOWERS, "round-tower.png", 450,
             40, 1.8, 10);
 
     private final String name;
