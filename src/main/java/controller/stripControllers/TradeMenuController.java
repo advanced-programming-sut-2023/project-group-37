@@ -2,8 +2,6 @@ package controller.stripControllers;
 
 import controller.MultiMenuFunctions;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
-import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
@@ -12,7 +10,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import model.game.*;
-import view.enums.Message;
 import view.enums.PopUp;
 
 import java.util.ArrayList;
