@@ -199,7 +199,7 @@ public class TradeMenuController {
     private void acceptTrade() {
         TextInputDialog textInputDialog = new TextInputDialog("Enter id : ");
         textInputDialog.setHeaderText("Accept Trade");
-        textInputDialog.show();
+        textInputDialog.showAndWait();
         int id = 0;
         try {
             id = Integer.parseInt(textInputDialog.getEditor().getText());
@@ -209,33 +209,22 @@ public class TradeMenuController {
         final String[] reply = new String[1];
 
         int finalId = id;
-        textInputDialog.setOnCloseRequest(new EventHandler<DialogEvent>() {
-            @Override
-            public void handle(DialogEvent dialogEvent) {
-                TextInputDialog t = new TextInputDialog("Enter your Reply : ");
-                t.setHeaderText("Trade Reply");
-                t.show();
-                reply[0] = t.getEditor().getText();
+        TextInputDialog t = new TextInputDialog("Enter your Reply : ");
+        t.setHeaderText("Trade Reply");
+        t.showAndWait();
+        reply[0] = t.getEditor().getText();
 
-                t.setOnCloseRequest(new EventHandler<DialogEvent>() {
-                    @Override
-                    public void handle(DialogEvent dialogEvent) {
-                        ArrayList<TradeRequest> requests = TradeRequest.getRequestsByReceiver(game.getCurrentTurnGovernment());
-                        if (requests.size() < finalId || finalId < 1) {
-                            PopUp.INVALID_ID.show();
-                            return;
-                        }
-                        TradeRequest request = requests.get(finalId - 1);
-                        if (!request.doTrade(reply[0])) {
-                            PopUp.TRADE_FAILED.show();
-                            return;
-                        }
-                        PopUp.TRADE_SUCCESS.show();
-                    }
-                });
-
-            }
-        });
+        ArrayList<TradeRequest> requests = TradeRequest.getRequestsByReceiver(game.getCurrentTurnGovernment());
+        if (requests.size() < finalId || finalId < 1) {
+            PopUp.INVALID_ID.show();
+            return;
+        }
+        TradeRequest request = requests.get(finalId - 1);
+        if (!request.doTrade(reply[0])) {
+            PopUp.TRADE_FAILED.show();
+            return;
+        }
+        PopUp.TRADE_SUCCESS.show();
 
     }
 
@@ -402,47 +391,31 @@ public class TradeMenuController {
 
         TextInputDialog textInputDialog = new TextInputDialog("Enter your message : ");
         textInputDialog.setHeaderText("Donate");
-        textInputDialog.show();
+        textInputDialog.showAndWait();
         String message = textInputDialog.getEditor().getText();
 
-        textInputDialog.setOnCloseRequest(new EventHandler<DialogEvent>() {
-            @Override
-            public void handle(DialogEvent dialogEvent) {
-
-                new TradeRequest(item, tradeAmount, 0, message, game.getCurrentTurnGovernment(),
-                        selectedGovernment, game.getIndex());
-            }
-        });
-
+        new TradeRequest(item, tradeAmount, 0, message, game.getCurrentTurnGovernment(),
+                selectedGovernment, game.getIndex());
 
     }
 
     private void request(Item item, Government selectedGovernment) {
         TextInputDialog price = new TextInputDialog("Enter your price : ");
         price.setHeaderText("Request");
-        price.show();
+        price.showAndWait();
 
 
         int priceAmount = Integer.parseInt(price.getEditor().getText());
         final String[] message = {""};
 
-        price.setOnCloseRequest(new EventHandler<DialogEvent>() {
-            @Override
-            public void handle(DialogEvent dialogEvent) {
-                TextInputDialog textInputDialog = new TextInputDialog("Enter your message : ");
-                textInputDialog.setHeaderText("Request");
-                textInputDialog.show();
-                message[0] = textInputDialog.getEditor().getText();
-                textInputDialog.setOnCloseRequest(new EventHandler<DialogEvent>() {
-                    @Override
-                    public void handle(DialogEvent dialogEvent) {
-                        new TradeRequest(item, tradeAmount, priceAmount, message[0], game.getCurrentTurnGovernment(),
-                                selectedGovernment, game.getIndex());
-                    }
-                });
+        TextInputDialog textInputDialog = new TextInputDialog("Enter your message : ");
+        textInputDialog.setHeaderText("Request");
+        textInputDialog.showAndWait();
+        message[0] = textInputDialog.getEditor().getText();
 
-            }
-        });
+        new TradeRequest(item, tradeAmount, priceAmount, message[0], game.getCurrentTurnGovernment(),
+                selectedGovernment, game.getIndex());
+
 
     }
 
