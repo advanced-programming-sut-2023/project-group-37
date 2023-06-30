@@ -18,7 +18,7 @@ public enum PopUp {
     MARKET_NOT_EXISTS("Market not exists!"),
 
     //Trade menu
-    NOT_ENOUGH("You don't have more!"),
+    NOT_ENOUGH("You don't have this amount to donate!"),
     ;
     private final Alert alert;
 

@@ -2,16 +2,14 @@ package controller.stripControllers;
 
 import controller.MultiMenuFunctions;
 import javafx.event.EventHandler;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import model.game.Game;
-import model.game.Government;
-import model.game.Item;
-import model.game.ItemCategory;
+import model.game.*;
 import view.enums.PopUp;
 
 public class TradeMenuController {
@@ -102,7 +100,7 @@ public class TradeMenuController {
 
         stripPane.getChildren().add(imageView);
 
-        addLabelsAndButtons(item);
+        addLabelsAndButtons(item, selectedGovernment);
         addBackButton(2, selectedGovernment);
 
     }
@@ -124,10 +122,10 @@ public class TradeMenuController {
         });
     }
 
-    private void addLabelsAndButtons(Item item) {
+    private void addLabelsAndButtons(Item item, Government selectedGovernment) {
         tradeAmount = 0;
 
-        initializeLabels(item);
+        initializeLabels(item, selectedGovernment);
 
         ImageView plus = MultiMenuFunctions.getImageView("/Image/Button/plus.jpg", 40);
         plus.setLayoutX(400);
@@ -166,15 +164,30 @@ public class TradeMenuController {
         forTrade.setText("Trade : " + tradeAmount);
     }
 
-    private void initializeLabels(Item item) {
-        donate.setLayoutX(500);
+    private void initializeLabels(Item item, Government selectedGovernment) {
+        donate.setLayoutX(520);
         donate.setLayoutY(15);
+        donate.setBackground(Background.fill(Color.GREEN));
         donate.setStyle("-fx-font-size: 20");
         stripPane.getChildren().add(donate);
 
-        request.setLayoutX(500);
-        request.setLayoutY(10);
+        donate.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                donate(item, selectedGovernment);
+            }
+        });
+
+        request.setLayoutX(520);
+        request.setLayoutY(50);
+        request.setBackground(Background.fill(Color.BROWN));
         request.setStyle("-fx-font-size: 20");
+        request.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                request(item, selectedGovernment);
+            }
+        });
         stripPane.getChildren().add(request);
 
         amount = new Label("You have : " + game.getCurrentTurnGovernment().getItemAmount(item));
@@ -188,5 +201,38 @@ public class TradeMenuController {
         forTrade.setLayoutY(5);
         forTrade.setStyle("-fx-font-size: 20");
         stripPane.getChildren().add(forTrade);
+    }
+
+    private void donate(Item item, Government selectedGovernment) {
+        if (game.getCurrentTurnGovernment().getItemAmount(item) < tradeAmount) {
+            PopUp.NOT_ENOUGH.show();
+            return;
+        }
+
+        TextInputDialog textInputDialog = new TextInputDialog("Enter your message : ");
+        textInputDialog.setHeaderText("Donate");
+        textInputDialog.show();
+        String message = textInputDialog.getContentText();
+
+        new TradeRequest(item, tradeAmount, 0, message, game.getCurrentTurnGovernment(),
+                selectedGovernment, game.getIndex());
+
+    }
+
+    private void request(Item item, Government selectedGovernment) {
+        TextInputDialog price = new TextInputDialog("Enter your price : ");
+        price.setHeaderText("Request");
+        price.show();
+
+        String message = "";
+
+        if (!price.isShowing()) {
+            TextInputDialog textInputDialog = new TextInputDialog("Enter your message : ");
+            textInputDialog.setHeaderText("Request");
+            textInputDialog.show();
+            message = textInputDialog.getContentText();
+        }
+        new TradeRequest(item, tradeAmount, 10, message, game.getCurrentTurnGovernment(),
+                selectedGovernment, game.getIndex());
     }
 }
