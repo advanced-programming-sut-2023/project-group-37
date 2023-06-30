@@ -14,7 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-import model.game.Color;
+import model.game.GameColor;
 import model.user.User;
 import view.enums.Result;
 import view.enums.Command;
@@ -84,10 +84,10 @@ public class ProfileMenu extends Application {
         else slogan.setText(User.getCurrentUser().getSlogan());
         email.setText(User.getCurrentUser().getEmail());
 
-        username.setTextFill(Color.GREEN.getColor());
-        nickName.setTextFill(Color.RED.getColor());
-        slogan.setTextFill(Color.YELLOW.getColor());
-        email.setTextFill(Color.BLUE.getColor());
+        username.setTextFill(GameColor.GREEN.getColor());
+        nickName.setTextFill(GameColor.RED.getColor());
+        slogan.setTextFill(GameColor.YELLOW.getColor());
+        email.setTextFill(GameColor.BLUE.getColor());
     }
 
     public Result run() {

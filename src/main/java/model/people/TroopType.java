@@ -70,7 +70,6 @@ public enum TroopType {
 
     private final String name;
     private final Image downPaneImage;
-    private final Image image;
     private final BuildingType trainingCamp;
     private final int cost;
     private final int maxHitpoints;
@@ -88,10 +87,8 @@ public enum TroopType {
         this.name = name;
         this.downPaneImage = new Image(Objects.requireNonNull(TroopType.class.getResource
                 ("/Image/DownPaneTroops/" + imageURL)).toExternalForm());
-
-        this.image = new Image(Objects.requireNonNull(TroopType.class.getResource
-                ("/Image/Troop/" + imageURL)).toExternalForm());
-
+//        this.image = new Image(Objects.requireNonNull(TroopType.class.getResource
+//                ("/Image/Troop/" + imageURL)).toExternalForm());
         this.trainingCamp = trainingCamp;
         this.cost = cost;
         this.maxHitpoints = maxHitpoints;
@@ -110,8 +107,8 @@ public enum TroopType {
         this.name = name;
         this.downPaneImage = new Image(Objects.requireNonNull(TroopType.class.getResource
                 ("/Image/DownPaneTroops/" + imageURL)).toExternalForm());
-        this.image = new Image(Objects.requireNonNull(TroopType.class.getResource
-                ("/Image/Troop/" + imageURL)).toExternalForm());
+//        this.image = new Image(Objects.requireNonNull(TroopType.class.getResource
+//                ("/Image/Troop/" + imageURL)).toExternalForm());
         this.trainingCamp = trainingCamp;
         this.cost = cost;
         this.maxHitpoints = maxHitpoints;
@@ -140,9 +137,9 @@ public enum TroopType {
         return this.downPaneImage;
     }
 
-    public Image getImage() {
-        return this.image;
-    }
+//    public Image getImage() {
+//        return this.image;
+//    }
 
     public BuildingType getTrainingCamp() {
         return this.trainingCamp;

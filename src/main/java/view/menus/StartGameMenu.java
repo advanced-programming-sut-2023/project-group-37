@@ -12,12 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import model.game.Color;
+import model.game.GameColor;
 import model.game.Game;
 import model.game.Government;
 import model.game.Map;
@@ -100,11 +99,11 @@ public class StartGameMenu extends Application {
     private void createLabel(String username, String territory) {
         Label l1 = new Label(username);
         l1.setFont(new Font("Arial Black", 14));
-        l1.setTextFill(Color.BLUE.getColor());
+        l1.setTextFill(GameColor.BLUE.getColor());
         usernames.getChildren().add(l1);
         Label l2 = new Label(territory);
         l2.setFont(new Font("Arial Black", 14));
-        l2.setTextFill(Color.BLUE.getColor());
+        l2.setTextFill(GameColor.BLUE.getColor());
         territories.getChildren().add(l2);
         userTerritory.put(Integer.parseInt(territory), username);
     }
@@ -132,7 +131,7 @@ public class StartGameMenu extends Application {
         for (java.util.Map.Entry<Integer, String> integerStringEntry : userTerritory.entrySet()) {
             String username = integerStringEntry.getValue();
             Integer territory = integerStringEntry.getKey();
-            governments.add(new Government(User.getUserByUsername(username), Color.values()[index].getColor(), map, territory));
+            governments.add(new Government(User.getUserByUsername(username), GameColor.values()[index].getColor(), map, territory));
         }
 
         Game game = new Game(map, governments);

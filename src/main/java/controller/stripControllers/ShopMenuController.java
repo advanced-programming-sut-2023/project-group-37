@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.buildings.BuildingType;
-import model.game.Color;
+import model.game.GameColor;
 import model.game.Game;
 import model.game.Item;
 import model.game.ItemCategory;
@@ -227,8 +227,8 @@ public class ShopMenuController {
         amount.setStyle("-fx-font-size: 30");
 
         if (Integer.toString(game.getCurrentTurnGovernment().getItemAmount(item)).equals("0"))
-            amount.setTextFill(Color.RED.getColor());
-        else amount.setTextFill(Color.GREEN.getColor());
+            amount.setTextFill(GameColor.RED.getColor());
+        else amount.setTextFill(GameColor.GREEN.getColor());
 
         amount.setLayoutX(230);
         amount.setLayoutY(15);
@@ -257,7 +257,7 @@ public class ShopMenuController {
         gold.setStyle("-fx-font-size: 30");
         gold.setLayoutX(700);
         gold.setLayoutY(30);
-        gold.setTextFill(Color.BROWN.getColor());
+        gold.setTextFill(GameColor.GREY.getColor());
 
         stripPane.getChildren().add(gold);
         gold.toFront();

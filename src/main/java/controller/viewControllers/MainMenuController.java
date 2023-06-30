@@ -1,7 +1,7 @@
 package controller.viewControllers;
 
 import controller.GameController;
-import model.game.Color;
+import model.game.GameColor;
 import model.game.Game;
 import model.game.Government;
 import model.game.Map;
@@ -66,7 +66,7 @@ public class MainMenuController {
         if (map == null)
             return Message.INVALID_MAP_NAME.toString();
 
-        governments.add(new Government(currentUser, Color.RED.getColor(), map, 1));
+        governments.add(new Government(currentUser, GameColor.RED.getColor(), map, 1));
 
         int index = 1;
         for (String username : usernames) {
@@ -74,7 +74,7 @@ public class MainMenuController {
             if (user == null)
                 return Message.USERNAME_NOT_FOUND.toString();
 
-            governments.add(new Government(user, Color.values()[index].getColor(), map, territories[index - 1]));
+            governments.add(new Government(user, GameColor.values()[index].getColor(), map, territories[index - 1]));
             index++;
         }
 
