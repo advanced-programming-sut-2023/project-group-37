@@ -71,7 +71,7 @@ public class TradeMenuController {
         label.setStyle("-fx-font-size: 20");
         label.setBackground(Background.fill(Color.GRAY));
         label.setLayoutX(20);
-        label.setLayoutY(30);
+        label.setLayoutY(60);
 
         label.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -87,6 +87,8 @@ public class TradeMenuController {
     private void showTrades() {
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+
+
     }
 
     private void gotoGovernment(Government selectedGovernment) {

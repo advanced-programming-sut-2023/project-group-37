@@ -81,6 +81,7 @@ public class MapController {
         this.mainMap = new AnchorPane();
         for (Tile[] value : tiles) {
             for (int j = 0; j < tiles[0].length; j++) {
+                Tooltip.install(value[j], new Tooltip(value[j].getInfo()));
                 this.mainMap.getChildren().add(value[j]);
             }
         }

@@ -45,6 +45,14 @@ public class Building {
         return this.type;
     }
 
+    public String getName() {
+        if (this instanceof DefensiveBuilding defensiveBuilding) {
+            return defensiveBuilding.getDefensiveType().getName();
+        } else {
+            return this.getType().getName();
+        }
+    }
+
     public int getMaxHitpoints() {
         if (this instanceof DefensiveBuilding defensiveBuilding) {
             return defensiveBuilding.getDefensiveType().getMaxHitpoints();

@@ -56,7 +56,6 @@ public class Tile extends Rectangle {
         this.building = null;
         this.isPassable = true;
         this.hasBuilding = false;
-        this.toFront();
     }
 
     public Tile(Tile bigTile) { // for creating miniTile
@@ -64,7 +63,6 @@ public class Tile extends Rectangle {
         this.x = bigTile.x;
         this.y = bigTile.y;
         this.texture = bigTile.texture;
-        this.toFront();
     }
 
     public static void removeSelectedTiles() {
@@ -85,7 +83,7 @@ public class Tile extends Rectangle {
         }
 
         if (this.hasBuilding) {
-            info += "Building Name : " + this.building.getType().getName() + "\n";
+            info += "Building Name : " + this.building.getName() + "\n";
         }
         info = info.trim();
         return info;
@@ -277,6 +275,7 @@ public class Tile extends Rectangle {
             }
         } catch (Exception ignored) {
         }
+        Tooltip.install(this, new Tooltip(this.getInfo()));
     }
 
     public boolean isPassable() {
