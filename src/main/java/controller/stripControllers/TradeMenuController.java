@@ -1,12 +1,16 @@
 package controller.stripControllers;
 
+import controller.MultiMenuFunctions;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import model.game.Game;
 import model.game.Government;
+import model.game.Item;
+import model.game.ItemCategory;
 
 public class TradeMenuController {
     private final Pane stripPane;
@@ -58,6 +62,42 @@ public class TradeMenuController {
     }
 
     private void gotoGovernment(Government government) {
+        if (this.stripPane.getChildren().size() > 0)
+            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
 
+        int i = 0;
+        for (Item item : Item.getAllItems()) {
+            if (!item.getCategory().equals(ItemCategory.ANIMALS)) {
+                ImageView imageView = MultiMenuFunctions.getImageView(item.getImageUrl(), 40);
+                imageView.setLayoutX(50 + ((i % (Item.getAllItems().size() / 2)) * 90));
+                if (i < Item.getAllItems().size() / 2) imageView.setLayoutY(10);
+                else imageView.setLayoutY(60);
+
+                imageView.setOnMouseClicked(mouseEvent -> goToItem(item));
+
+                stripPane.getChildren().add(imageView);
+                i++;
+            }
+        }
+
+        addBackButton();
+    }
+
+    private void goToItem(Item item) {
+
+    }
+
+    private void addBackButton() {
+        ImageView back = MultiMenuFunctions.getImageView("/Image/Button/back1.png", 30);
+        back.setLayoutX(10);
+        back.setLayoutY(60);
+
+        stripPane.getChildren().add(back);
+        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                run();
+            }
+        });
     }
 }
