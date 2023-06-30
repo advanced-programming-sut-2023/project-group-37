@@ -15,7 +15,6 @@ import view.enums.PopUp;
 
 public class TradeMenuController {
     private final Pane stripPane;
-    private final int sizeOfImage;
     private static Game game;
     private Label amount;
     private Label forTrade;
@@ -25,7 +24,7 @@ public class TradeMenuController {
 
     public TradeMenuController(Pane stripPane) {
         this.stripPane = stripPane;
-        this.sizeOfImage = 0;
+
     }
 
     public static void setGame(Game game) {
