@@ -88,6 +88,48 @@ public class TradeMenuController {
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
 
+        Label sent = new Label("Sent");
+        Label received = new Label("Received");
+
+        sent.setStyle("-fx-font-size: 20");
+        sent.setBackground(Background.fill(Color.GREEN));
+        sent.setLayoutX(150);
+        sent.setLayoutY(15);
+
+        sent.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                showSentTrades();
+            }
+        });
+
+        stripPane.getChildren().add(sent);
+
+        received.setStyle("-fx-font-size: 20");
+        received.setBackground(Background.fill(Color.GREEN));
+        received.setLayoutX(150);
+        received.setLayoutY(40);
+
+        received.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                showReceivedTrades();
+            }
+        });
+
+        stripPane.getChildren().add(received);
+
+    }
+
+    private void showSentTrades() {
+        if (this.stripPane.getChildren().size() > 0)
+            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+
+    }
+
+    private void showReceivedTrades() {
+        if (this.stripPane.getChildren().size() > 0)
+            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
 
     }
 
