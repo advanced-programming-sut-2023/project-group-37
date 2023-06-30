@@ -2,6 +2,8 @@ package controller.stripControllers;
 
 import controller.MultiMenuFunctions;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
@@ -10,11 +12,15 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import model.game.*;
+import view.enums.Message;
 import view.enums.PopUp;
+
+import java.util.ArrayList;
 
 public class TradeMenuController {
     private final Pane stripPane;
     private static Game game;
+    private Label amount;
     private Label forTrade;
     private int tradeAmount;
     private final Label donate = new Label("Donate");
@@ -34,6 +40,7 @@ public class TradeMenuController {
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
 
         showGovernments();
+
     }
 
     private void showGovernments() {
@@ -75,7 +82,158 @@ public class TradeMenuController {
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
 
+        Label sent = new Label("Sent");
+        Label received = new Label("Received");
+        Label newTrades = new Label("New Trades");
 
+        sent.setStyle("-fx-font-size: 20");
+        sent.setBackground(Background.fill(Color.GREEN));
+        sent.setLayoutX(150);
+        sent.setLayoutY(15);
+        sent.setPrefWidth(received.getPrefWidth());
+
+        sent.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                showSentTrades();
+            }
+        });
+
+        stripPane.getChildren().add(sent);
+
+        received.setStyle("-fx-font-size: 20");
+        received.setBackground(Background.fill(Color.GREEN));
+        received.setLayoutX(250);
+        received.setLayoutY(15);
+
+        received.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                showReceivedTrades();
+            }
+        });
+
+        stripPane.getChildren().add(received);
+
+        newTrades.setStyle("-fx-font-size: 20");
+        newTrades.setBackground(Background.fill(Color.GREEN));
+        newTrades.setLayoutX(350);
+        newTrades.setLayoutY(15);
+        newTrades.setPrefWidth(received.getPrefWidth());
+
+        newTrades.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                showNewTrades();
+            }
+        });
+
+        stripPane.getChildren().add(newTrades);
+
+    }
+
+    private void showSentTrades() {
+        if (this.stripPane.getChildren().size() > 0)
+            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+
+        Label trades = new Label(createSentTrades());
+        trades.setLayoutX(10);
+        trades.setLayoutY(10);
+        trades.setStyle("-fx-font-size: 15");
+
+        stripPane.getChildren().add(trades);
+
+    }
+
+    private void showReceivedTrades() {
+        if (this.stripPane.getChildren().size() > 0)
+            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+
+        Label trades = new Label(createReceivedHistory());
+        trades.setLayoutX(10);
+        trades.setLayoutY(10);
+        trades.setStyle("-fx-font-size: 15");
+
+        stripPane.getChildren().add(trades);
+
+    }
+
+    private void showNewTrades() {
+        if (this.stripPane.getChildren().size() > 0)
+            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+
+        Label trades = new Label(createNewTrades());
+        trades.setLayoutX(10);
+        trades.setLayoutY(10);
+        trades.setStyle("-fx-font-size: 15");
+
+        stripPane.getChildren().add(trades);
+
+        Label acceptButton = new Label("Accept");
+        acceptButton.setLayoutX(600);
+        acceptButton.setLayoutY(10);
+        acceptButton.setBackground(Background.fill(Color.GREEN));
+        acceptButton.setStyle("-fx-font-size: 20");
+
+        acceptButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                acceptTrade();
+            }
+        });
+
+        stripPane.getChildren().add(acceptButton);
+
+    }
+
+    private void acceptTrade() {
+        TextInputDialog textInputDialog = new TextInputDialog("Enter id : ");
+        textInputDialog.setHeaderText("Accept Trade");
+        textInputDialog.showAndWait();
+        int id = 0;
+        try {
+            id = Integer.parseInt(textInputDialog.getEditor().getText());
+        } catch (NumberFormatException ignored) {
+        }
+
+        final String[] reply = new String[1];
+
+        int finalId = id;
+        TextInputDialog t = new TextInputDialog("Enter your Reply : ");
+        t.setHeaderText("Trade Reply");
+        t.showAndWait();
+        reply[0] = t.getEditor().getText();
+
+        ArrayList<TradeRequest> requests = TradeRequest.getRequestsByReceiver(game.getCurrentTurnGovernment());
+        if (requests.size() < finalId || finalId < 1) {
+            PopUp.INVALID_ID.show();
+            return;
+        }
+        TradeRequest request = requests.get(finalId - 1);
+        if (!request.doTrade(reply[0])) {
+            PopUp.TRADE_FAILED.show();
+            return;
+        }
+        PopUp.TRADE_SUCCESS.show();
+
+    }
+
+    public String createNewTrades() {
+        StringBuilder newTrades = new StringBuilder();
+        newTrades.append("Here's the trades you have received in last turn:\n");
+        int id = 1;
+        for (TradeRequest request : TradeRequest.getRequestsByReceiver(game.getCurrentTurnGovernment())) {
+            if ((request.getTime() == (game.getIndex() - 1)) && !request.isDone()) {
+                newTrades.append("id: ").append(id).append(", Sender: ").append(request.getSender().getUser().getUsername())
+                        .append(", Type: ").append(request.getItem().getName()).append(", Amount: ")
+                        .append(request.getItemAmount())
+                        .append(", Price: ").append(request.getPrice()).append("\n").append("Their Message: ")
+                        .append(request.getSenderMessage()).append("\n");
+            }
+            id++;
+        }
+
+        return newTrades.toString().trim();
     }
 
     private void gotoGovernment(Government selectedGovernment) {
@@ -179,7 +337,7 @@ public class TradeMenuController {
         request.setOnMouseClicked(mouseEvent -> request(item, selectedGovernment));
         stripPane.getChildren().add(request);
 
-        Label amount = new Label("You have : " + game.getCurrentTurnGovernment().getItemAmount(item));
+        amount = new Label("You have : " + game.getCurrentTurnGovernment().getItemAmount(item));
         amount.setLayoutX(230);
         amount.setLayoutY(30);
         amount.setStyle("-fx-font-size: 20");
@@ -200,32 +358,65 @@ public class TradeMenuController {
 
         TextInputDialog textInputDialog = new TextInputDialog("Enter your message : ");
         textInputDialog.setHeaderText("Donate");
-        textInputDialog.show();
+        textInputDialog.showAndWait();
+        String message = textInputDialog.getEditor().getText();
 
-        textInputDialog.setOnCloseRequest(dialogEvent -> {
-            String message = textInputDialog.getContentText();
+        new TradeRequest(item, tradeAmount, 0, message, game.getCurrentTurnGovernment(),
+                selectedGovernment, game.getIndex());
 
-            new TradeRequest(item, tradeAmount, 0, message, game.getCurrentTurnGovernment(),
-                    selectedGovernment, game.getIndex());
-        });
     }
 
     private void request(Item item, Government selectedGovernment) {
         TextInputDialog price = new TextInputDialog("Enter your price : ");
         price.setHeaderText("Request");
-        price.show();
+        price.showAndWait();
 
+
+        int priceAmount = Integer.parseInt(price.getEditor().getText());
         final String[] message = {""};
 
-        price.setOnCloseRequest(dialogEvent -> {
-            TextInputDialog textInputDialog = new TextInputDialog("Enter your message : ");
-            textInputDialog.setHeaderText("Request");
-            textInputDialog.show();
-            textInputDialog.setOnCloseRequest(dialogEvent1 -> {
-                message[0] = textInputDialog.getContentText();
-                new TradeRequest(item, tradeAmount, 10, message[0], game.getCurrentTurnGovernment(),
-                        selectedGovernment, game.getIndex());
-            });
-        });
+        TextInputDialog textInputDialog = new TextInputDialog("Enter your message : ");
+        textInputDialog.setHeaderText("Request");
+        textInputDialog.showAndWait();
+        message[0] = textInputDialog.getEditor().getText();
+
+        new TradeRequest(item, tradeAmount, priceAmount, message[0], game.getCurrentTurnGovernment(),
+                selectedGovernment, game.getIndex());
+
+
+    }
+
+    private String createReceivedHistory() {
+        StringBuilder message = new StringBuilder();
+        message.append("Here's the trades you received and replied:\n");
+        for (TradeRequest request : TradeRequest.getRequestsByReceiver(game.getCurrentTurnGovernment())) {
+            if (request.isDone()) {
+                message.append("Sender: ").append(request.getSender().getUser().getUsername())
+                        .append(", Type: ").append(request.getItem().getName()).append(", Amount: ")
+                        .append(request.getItemAmount())
+                        .append(", Price: ").append(request.getPrice()).append("\n").append("Their Message: ")
+                        .append(request.getSenderMessage()).append("You replied: ")
+                        .append(request.getReceiverMessage()).append("\n");
+            }
+
+        }
+
+        return message.toString().trim();
+    }
+
+    private String createSentTrades() {
+        StringBuilder message = new StringBuilder();
+        message.append("Here's the trades you've sent:\n");
+        for (TradeRequest request : TradeRequest.getRequestsBySender(game.getCurrentTurnGovernment())) {
+            message.append("Receiver: ").append(request.getReceiver().getUser().getUsername())
+                    .append(", Type: ").append(request.getItem().getName()).append(", Amount: ")
+                    .append(request.getItemAmount())
+                    .append(", Price: ").append(request.getPrice()).append("\n").append("Your Message: ")
+                    .append(request.getSenderMessage()).append("\n");
+
+            if (request.isDone())
+                message.append("--isDone ").append("Their reply: ").append(request.getReceiverMessage()).append("\n");
+        }
+        return message.toString().trim();
     }
 }

@@ -19,6 +19,9 @@ public enum PopUp {
 
     //Trade menu
     NOT_ENOUGH("You don't have this amount to donate!"),
+    INVALID_ID("Invalid id!"),
+    TRADE_FAILED("This trade can't be done!"),
+    TRADE_SUCCESS("The trade was successfully completed!"),
     ;
     private final Alert alert;
 
