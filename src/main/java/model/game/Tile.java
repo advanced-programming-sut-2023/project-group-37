@@ -56,7 +56,7 @@ public class Tile extends Rectangle {
         this.building = null;
         this.isPassable = true;
         this.hasBuilding = false;
-        Tooltip.install(this, new Tooltip(this.getInfo()));
+        this.toFront();
     }
 
     public Tile(Tile bigTile) { // for creating miniTile
@@ -64,6 +64,7 @@ public class Tile extends Rectangle {
         this.x = bigTile.x;
         this.y = bigTile.y;
         this.texture = bigTile.texture;
+        this.toFront();
     }
 
     public static void removeSelectedTiles() {
@@ -77,8 +78,10 @@ public class Tile extends Rectangle {
 
     public String getInfo() {
         info = "Texture : " + this.texture.getName() + "\n";
-        for (MilitaryUnit militaryUnit : this.getMilitaryUnits()) {
-            info += "Name : " + militaryUnit.getName() + "\n";
+        if (this.getMilitaryUnits() != null) {
+            for (MilitaryUnit militaryUnit : this.getMilitaryUnits()) {
+                info += "Name : " + militaryUnit.getName() + "\n";
+            }
         }
 
         if (this.hasBuilding) {

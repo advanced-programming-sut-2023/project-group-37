@@ -1,7 +1,9 @@
 package controller;
 
+import javafx.event.EventHandler;
 import javafx.scene.ImageCursor;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -87,6 +89,7 @@ public class MapController {
 
         gamePane.getChildren().add(this.mainMap);
         this.map.updateImages();
+
 
         this.mainMap.setOnKeyPressed(keyEvent -> {
             String keyName = keyEvent.getCode().getName();
@@ -183,7 +186,7 @@ public class MapController {
             isNotDragged.set(false);
         });
 
-        this.mainMap.setOnMouseReleased((MouseEvent mouseEvent) ->{
+        this.mainMap.setOnMouseReleased((MouseEvent mouseEvent) -> {
             if (!isNotDragged.get())
                 this.setSelectedTiles(rectangleTiles.get());
         });
@@ -271,9 +274,7 @@ public class MapController {
         if (this.isOnAttack) {
             if (this.downPane.attack(tile))
                 this.showAttacking();
-        }
-
-        else if (this.isOnMove)
+        } else if (this.isOnMove)
             this.downPane.move(tile);
 
         this.downPane.setForTile(tile);
@@ -369,5 +370,6 @@ public class MapController {
         this.goldLabel.setText(String.valueOf(currentGovernment.getGold()));
         this.popularityLabel.setText(String.valueOf(currentGovernment.getPopularity()));
     }
+
 
 }
