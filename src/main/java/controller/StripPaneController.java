@@ -103,7 +103,9 @@ public class StripPaneController {
         gateHouseRec.setLayoutX(800);
         gateHouseRec.setLayoutY(55);
 
-        this.towerRec = towerRec; this.militaryRec = militaryRec; this.gateHouseRec = gateHouseRec;
+        this.towerRec = towerRec;
+        this.militaryRec = militaryRec;
+        this.gateHouseRec = gateHouseRec;
     }
 
     public void insertImages(BuildingCategory category) {
@@ -196,14 +198,12 @@ public class StripPaneController {
                 imageView.setLayoutX(750);
                 this.stripPane.getChildren().add(imageView);
             }
-        }
-        else if (building != null)
+        } else if (building != null)
             this.buildingMenuController.run(building);
     }
 
     public void setForTradeMenu() {
-        if (this.stripPane.getChildren().size() > 0)
-            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+        tradeMenuController.run();
     }
 
     public boolean attack(Tile tile) {

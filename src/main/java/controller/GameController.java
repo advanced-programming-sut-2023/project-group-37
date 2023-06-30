@@ -55,6 +55,7 @@ public class GameController {
         UnitMenuController.setGame(game);
         PopularityMenuController.setGame(game);
         controller.stripControllers.ShopMenuController.setGame(game);
+        controller.stripControllers.TradeMenuController.setGame(game);
         this.currentGame = game;
         this.tradeMenuController.setGame(game);
         this.mapController.setGame(game);
