@@ -2,6 +2,7 @@ package controller.stripControllers;
 
 import controller.MultiMenuFunctions;
 import javafx.event.EventHandler;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -11,6 +12,7 @@ import model.game.Game;
 import model.game.Government;
 import model.game.Item;
 import model.game.ItemCategory;
+import view.enums.PopUp;
 
 public class TradeMenuController {
     private final Pane stripPane;
@@ -19,6 +21,8 @@ public class TradeMenuController {
     private Label amount;
     private Label forTrade;
     private int tradeAmount;
+    private final Label donate = new Label("Donate");
+    private final Label request = new Label("Request");
 
     public TradeMenuController(Pane stripPane) {
         this.stripPane = stripPane;
@@ -123,18 +127,7 @@ public class TradeMenuController {
     private void addLabelsAndButtons(Item item) {
         tradeAmount = 0;
 
-
-        amount = new Label("You have : " + game.getCurrentTurnGovernment().getItemAmount(item));
-        amount.setLayoutX(230);
-        amount.setLayoutY(30);
-        amount.setStyle("-fx-font-size: 20");
-        stripPane.getChildren().add(amount);
-
-        forTrade = new Label("Trade : " + tradeAmount);
-        forTrade.setLayoutX(230);
-        forTrade.setLayoutY(5);
-        forTrade.setStyle("-fx-font-size: 20");
-        stripPane.getChildren().add(forTrade);
+        initializeLabels(item);
 
         ImageView plus = MultiMenuFunctions.getImageView("/Image/Button/plus.jpg", 40);
         plus.setLayoutX(400);
@@ -163,7 +156,6 @@ public class TradeMenuController {
     }
 
     private void increase(Item item) {
-        if (tradeAmount == game.getCurrentTurnGovernment().getItemAmount(item)) return;
         tradeAmount++;
         forTrade.setText("Trade : " + tradeAmount);
     }
@@ -172,5 +164,29 @@ public class TradeMenuController {
         if (tradeAmount == 0) return;
         tradeAmount--;
         forTrade.setText("Trade : " + tradeAmount);
+    }
+
+    private void initializeLabels(Item item) {
+        donate.setLayoutX(500);
+        donate.setLayoutY(15);
+        donate.setStyle("-fx-font-size: 20");
+        stripPane.getChildren().add(donate);
+
+        request.setLayoutX(500);
+        request.setLayoutY(10);
+        request.setStyle("-fx-font-size: 20");
+        stripPane.getChildren().add(request);
+
+        amount = new Label("You have : " + game.getCurrentTurnGovernment().getItemAmount(item));
+        amount.setLayoutX(230);
+        amount.setLayoutY(30);
+        amount.setStyle("-fx-font-size: 20");
+        stripPane.getChildren().add(amount);
+
+        forTrade = new Label("Trade : " + tradeAmount);
+        forTrade.setLayoutX(230);
+        forTrade.setLayoutY(5);
+        forTrade.setStyle("-fx-font-size: 20");
+        stripPane.getChildren().add(forTrade);
     }
 }
