@@ -202,7 +202,7 @@ public class TradeMenuController {
         textInputDialog.show();
         int id = 0;
         try {
-            id = Integer.parseInt(textInputDialog.getContentText());
+            id = Integer.parseInt(textInputDialog.getEditor().getText());
         } catch (NumberFormatException ignored) {
         }
 
@@ -215,7 +215,7 @@ public class TradeMenuController {
                 TextInputDialog t = new TextInputDialog("Enter your Reply : ");
                 t.setHeaderText("Trade Reply");
                 t.show();
-                reply[0] = t.getContentText();
+                reply[0] = t.getEditor().getText();
 
                 t.setOnCloseRequest(new EventHandler<DialogEvent>() {
                     @Override
@@ -403,7 +403,7 @@ public class TradeMenuController {
         TextInputDialog textInputDialog = new TextInputDialog("Enter your message : ");
         textInputDialog.setHeaderText("Donate");
         textInputDialog.show();
-        String message = textInputDialog.getContentText();
+        String message = textInputDialog.getEditor().getText();
 
         textInputDialog.setOnCloseRequest(new EventHandler<DialogEvent>() {
             @Override
@@ -423,7 +423,7 @@ public class TradeMenuController {
         price.show();
 
 
-        int priceAmount = Integer.parseInt(price.getContentText());
+        int priceAmount = Integer.parseInt(price.getEditor().getText());
         final String[] message = {""};
 
         price.setOnCloseRequest(new EventHandler<DialogEvent>() {
@@ -432,7 +432,7 @@ public class TradeMenuController {
                 TextInputDialog textInputDialog = new TextInputDialog("Enter your message : ");
                 textInputDialog.setHeaderText("Request");
                 textInputDialog.show();
-                message[0] = textInputDialog.getContentText();
+                message[0] = textInputDialog.getEditor().getText();
                 textInputDialog.setOnCloseRequest(new EventHandler<DialogEvent>() {
                     @Override
                     public void handle(DialogEvent dialogEvent) {
