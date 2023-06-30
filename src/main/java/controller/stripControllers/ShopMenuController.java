@@ -3,6 +3,7 @@ package controller.stripControllers;
 import controller.MapController;
 import controller.MultiMenuFunctions;
 import javafx.event.EventHandler;
+import javafx.scene.ImageCursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -185,10 +186,16 @@ public class ShopMenuController {
         buy.setLayoutX(330);
         buy.setLayoutY(8);
 
+        buy.setOnMouseEntered((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.HAND));
+        buy.setOnMouseExited((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.DEFAULT));
         buy.setOnMouseClicked(mouseEvent -> buy(item));
 
         ImageView sell = new ImageView(new Image(Objects.requireNonNull(RegisterMenu.class.getResource("/Image/Button/sell.png"))
                 .toExternalForm(), 324 * 0.7, 63 * 0.7, false, false));
+
+        sell.setOnMouseEntered((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.HAND));
+        sell.setOnMouseExited((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.DEFAULT));
+
         sell.setLayoutX(330);
         sell.setLayoutY(60);
 

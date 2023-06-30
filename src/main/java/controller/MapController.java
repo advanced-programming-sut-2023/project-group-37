@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.scene.ImageCursor;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -216,7 +217,7 @@ public class MapController {
         this.goldLabel = new Label(String.valueOf(currentGovernment.getGold()));
         this.popularityLabel = new Label(String.valueOf(currentGovernment.getPopularity()));
 
-        this.goldLabel.setLayoutX(978);
+        this.goldLabel.setLayoutX(940);
         this.goldLabel.setLayoutY(93);
         this.popularityLabel.setLayoutX(965);
         this.popularityLabel.setLayoutY(113);
@@ -266,7 +267,7 @@ public class MapController {
     }
 
     private void setSelectedTiles(ArrayList<Tile> selectedTiles) {
-        //        this.mainMap.setCursor(CursorType.DEFAULT.getImageCursor());
+        this.mainMap.setCursor(ImageCursor.DEFAULT);
 
         if (selectedTiles == null)
             return;
@@ -348,6 +349,10 @@ public class MapController {
 
     public AnchorPane getMainMap() {
         return mainMap;
+    }
+
+    public DownPane getDownPane() {
+        return downPane;
     }
 
     public void updateDetails() {

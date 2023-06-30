@@ -74,7 +74,7 @@ public class BuildingMenuController {
         double health = building.getHitpoints() / (double) building.getMaxHitpoints();
         healthBar.setProgress(health);
 
-        nameLabel.setLayoutY(5);
+        nameLabel.setLayoutY(2);
         nameLabel.setLayoutX(10);
         healthLabel.setLayoutY(10);
         healthLabel.setLayoutX(160);

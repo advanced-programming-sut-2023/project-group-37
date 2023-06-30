@@ -6,6 +6,7 @@ import java.util.*;
 
 import controller.viewControllers.MainMenuController;
 import controller.viewControllers.ProfileMenuController;
+import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -13,6 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import model.buildings.Building;
 import model.buildings.DefensiveBuilding;
@@ -131,40 +133,34 @@ public class MultiMenuFunctions {
 
     public static ImageView getImageView(Image image, int size) {
         ImageView imageView = new ImageView(new Image(image.getUrl(), size, size, false, false));
-        // todo : cursor clicker
+        imageView.setOnMouseEntered((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.HAND));
+        imageView.setOnMouseExited((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.DEFAULT));
         return imageView;
     }
 
     public static ImageView getImageView(String imageAddress, int size) {
         ImageView imageView = new ImageView(new Image(Objects.requireNonNull(RegisterMenu.class.getResource(imageAddress))
                 .toExternalForm(), size, size, false, false));
-        // todo : cursor clicker
+        imageView.setOnMouseEntered((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.HAND));
+        imageView.setOnMouseExited((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.DEFAULT));
         return imageView;
     }
 
     public static ArrayList<File> getAllImageFilesFromFolder(File directory) {
-        //Get all the files from the folder
         File[] allFiles = directory.listFiles();
         if (allFiles == null || allFiles.length == 0) {
             throw new RuntimeException("No files present in the directory: " + directory.getAbsolutePath());
         }
 
-        //Set the required image extensions here.
         List<String> supportedImageExtensions = Arrays.asList("jpg", "png", "gif", "webp");
 
-        //Filter out only image files
         ArrayList<File> acceptedImages = new ArrayList<>();
         for (File file : allFiles) {
-            //Parse the file extension
             String fileExtension = file.getName().substring(file.getName().lastIndexOf(".") + 1);
-            //Check if the extension is listed in the supportedImageExtensions
-            if (supportedImageExtensions.stream().anyMatch(fileExtension::equalsIgnoreCase)) {
-                //Add the image to the filtered list
+            if (supportedImageExtensions.stream().anyMatch(fileExtension::equalsIgnoreCase))
                 acceptedImages.add(file);
-            }
         }
 
-        //Return the filtered images
         return acceptedImages;
     }
 

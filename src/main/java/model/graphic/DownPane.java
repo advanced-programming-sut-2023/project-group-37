@@ -3,7 +3,9 @@ package model.graphic;
 import controller.MapController;
 import controller.MultiMenuFunctions;
 import controller.StripPaneController;
+import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -81,6 +83,8 @@ public class DownPane extends Pane {
             this.getChildren().add(rectangle);
 
         rectangle.setOnMouseClicked(mouseEvent -> this.stripPaneController.insertImages(category));
+        rectangle.setOnMouseEntered((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.HAND));
+        rectangle.setOnMouseExited((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.DEFAULT));
 
         return rectangle;
     }
