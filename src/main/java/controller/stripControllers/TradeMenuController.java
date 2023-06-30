@@ -403,11 +403,11 @@ public class TradeMenuController {
         TextInputDialog textInputDialog = new TextInputDialog("Enter your message : ");
         textInputDialog.setHeaderText("Donate");
         textInputDialog.show();
+        String message = textInputDialog.getContentText();
 
         textInputDialog.setOnCloseRequest(new EventHandler<DialogEvent>() {
             @Override
             public void handle(DialogEvent dialogEvent) {
-                String message = textInputDialog.getContentText();
 
                 new TradeRequest(item, tradeAmount, 0, message, game.getCurrentTurnGovernment(),
                         selectedGovernment, game.getIndex());
@@ -432,10 +432,10 @@ public class TradeMenuController {
                 TextInputDialog textInputDialog = new TextInputDialog("Enter your message : ");
                 textInputDialog.setHeaderText("Request");
                 textInputDialog.show();
+                message[0] = textInputDialog.getContentText();
                 textInputDialog.setOnCloseRequest(new EventHandler<DialogEvent>() {
                     @Override
                     public void handle(DialogEvent dialogEvent) {
-                        message[0] = textInputDialog.getContentText();
                         new TradeRequest(item, tradeAmount, priceAmount, message[0], game.getCurrentTurnGovernment(),
                                 selectedGovernment, game.getIndex());
                     }
