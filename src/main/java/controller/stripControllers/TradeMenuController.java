@@ -124,7 +124,17 @@ public class TradeMenuController {
         amount.setLayoutX(230);
         amount.setLayoutY(15);
 
+        ImageView plus = MultiMenuFunctions.getImageView("/Image/Button/plus.jpg", 40);
+        plus.setLayoutX(300);
+        plus.setLayoutY(15);
 
+        stripPane.getChildren().add(plus);
+
+        ImageView minus = MultiMenuFunctions.getImageView("/Image/Button/minus.jpg", 40);
+        minus.setLayoutX(350);
+        minus.setLayoutY(15);
+
+        stripPane.getChildren().add(minus);
     }
 
 }
