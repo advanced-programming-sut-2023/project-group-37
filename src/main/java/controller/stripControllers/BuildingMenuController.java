@@ -153,9 +153,6 @@ public class BuildingMenuController {
     }
 
     public Message repair(DefensiveBuilding defensiveBuilding) {
-        if (!defensiveBuilding.getType().isRepairable())
-            return Message.BUILDING_NOT_REPAIRABLE;
-
         int stoneNeededToRepair = (int)
                 (1 - (double) (defensiveBuilding.getHitpoints() / defensiveBuilding.getMaxHitpoints())) *
                 defensiveBuilding.getType().getRawMaterialUsesForSecond();
@@ -190,10 +187,13 @@ public class BuildingMenuController {
         game.getCurrentTurnGovernment().removeItem(weapon, 1);
         game.getCurrentTurnGovernment().setGold(game.getCurrentTurnGovernment().getGold() - goldCost);
 
-        Troop troop = new Troop(game.getCurrentTurnGovernment(), troopType, currentBuilding.getLocation());
+        Troop troop = new Troop(game.getCurrentTurnGovernment(), troopType,
+                this.mapController.getTileByLocation(currentBuilding.getLocation().getLocationX(),
+                currentBuilding.getLocation().getLocationY() + 2));
         game.getCurrentTurnGovernment().getMilitaryUnits().add(troop);
+
         this.mapController.getTileByLocation(currentBuilding.getLocation().getLocationX(),
-                currentBuilding.getLocation().getLocationY() + 1).addMilitaryUnit(troop);
+                currentBuilding.getLocation().getLocationY() + 2).updateImage();
 
         MapController.getInstance().updateDetails();
         return null;

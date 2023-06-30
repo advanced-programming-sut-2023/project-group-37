@@ -33,6 +33,7 @@ public abstract class MilitaryUnit {
     public MilitaryUnit(Government loyalty, Tile location, int hitpoints, int damage, int range, int speed) {
         this.loyalty = loyalty;
         this.location = location;
+        this.location.addMilitaryUnit(this);
         this.hitpoints = hitpoints;
         this.damage = damage;
         this.range = range;
@@ -92,7 +93,6 @@ public abstract class MilitaryUnit {
                         this.loyalty.getMilitaryUnits().remove(this);
                     }
                 } else if (troop.getType() == TroopType.TUNNELER) {
-                    System.out.println(target.get(0).getBuilding());
                     if (target.get(0).getBuilding() instanceof DefensiveBuilding defensiveBuilding) {
                         target.get(0).setPassability(true);
                         if (MultiMenuFunctions.routeFinder(this.location, target.get(0), location.getTerritory().getMap()) != null) {
@@ -166,9 +166,7 @@ public abstract class MilitaryUnit {
     }
 
     public void move() {
-        System.out.println(1);
         if (this.route.size() > 1) {
-            System.out.println(2);
             LinkedList<Tile> route = this.getRoute();
             int speed = this.getSpeed();
             if (route.size() - 1 < speed)

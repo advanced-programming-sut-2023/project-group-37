@@ -7,7 +7,6 @@ import java.util.*;
 import controller.viewControllers.MainMenuController;
 import controller.viewControllers.ProfileMenuController;
 import javafx.scene.ImageCursor;
-import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -49,12 +48,22 @@ public class MultiMenuFunctions {
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
     }
 
-    public static void setTileImage(Tile tile, Image image) {
-        ImageView imageView = new ImageView(new Image(image.getUrl(),
-                3 * Tile.getTileSize(), 3 * Tile.getTileSize(), false, false));
+    public static void setTileImage(Tile tile, Image image, boolean isFront) {
+        ImageView imageView = MultiMenuFunctions.getImageView(image, 2.8 * Tile.getTileSize());
 
-        imageView.setLayoutX(tile.getLayoutX());
-        imageView.setLayoutY(tile.getLayoutY());
+        imageView.setLayoutX(tile.getLayoutX() - Tile.getTileSize());
+        imageView.setLayoutY(tile.getLayoutY() - Tile.getTileSize());
+        if (isFront)
+            imageView.toFront();
+
+        MapController.getInstance().getMainMap().getChildren().add(imageView);
+    }
+
+    public static void setTileImage(Tile tile, Image image) {
+        ImageView imageView = MultiMenuFunctions.getImageView(image, 2.8 * Tile.getTileSize());
+
+        imageView.setLayoutX(tile.getLayoutX() - Tile.getTileSize());
+        imageView.setLayoutY(tile.getLayoutY() - Tile.getTileSize());
 
         MapController.getInstance().getMainMap().getChildren().add(imageView);
     }
@@ -131,14 +140,14 @@ public class MultiMenuFunctions {
         passwordConfirmField.visibleProperty().bind(showPassword.selectedProperty().not());
     }
 
-    public static ImageView getImageView(Image image, int size) {
+    public static ImageView getImageView(Image image, double size) {
         ImageView imageView = new ImageView(new Image(image.getUrl(), size, size, false, false));
         imageView.setOnMouseEntered((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.HAND));
         imageView.setOnMouseExited((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.DEFAULT));
         return imageView;
     }
 
-    public static ImageView getImageView(String imageAddress, int size) {
+    public static ImageView getImageView(String imageAddress, double size) {
         ImageView imageView = new ImageView(new Image(Objects.requireNonNull(RegisterMenu.class.getResource(imageAddress))
                 .toExternalForm(), size, size, false, false));
         imageView.setOnMouseEntered((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.HAND));
@@ -239,7 +248,6 @@ public class MultiMenuFunctions {
             if (isNeighbor(neighbor, tile))
                 return neighbor;
         }
-        System.out.println(tile.getLocationX() + " " + tile.getLocationY() + " " + tile.number);
         return null;
     }
 

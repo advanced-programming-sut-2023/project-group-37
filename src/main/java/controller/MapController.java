@@ -95,7 +95,7 @@ public class MapController {
         this.mainMap.setOnKeyPressed(keyEvent -> {
             String keyName = keyEvent.getCode().getName();
 
-            if (!keyName.equals("D"))
+            if (keyName.equals("M") || keyName.equals("A") || keyName.equals("N"))
                 Tile.removeSelectedTiles();
 
             switch (keyName) {
@@ -278,6 +278,7 @@ public class MapController {
         } else if (this.isOnMove)
             this.downPane.move(tile);
 
+        this.downPane.deselect();
         this.downPane.setForTile(tile);
 
         this.cursorRight = 0;
@@ -293,6 +294,7 @@ public class MapController {
             return;
 
         if (selectedTiles.size() > 1) {
+            this.downPane.deselect();
             this.downPane.setForTiles(selectedTiles);
 
             this.cursorRight = 0;

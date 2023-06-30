@@ -263,9 +263,10 @@ public class Tile extends Rectangle {
 
             if (this.militaryUnits.size() > 0) {
                 for (MilitaryUnit militaryUnit : this.militaryUnits) {
-                    if (militaryUnit instanceof MilitaryMachine militaryMachine) {
+                    if (militaryUnit instanceof MilitaryMachine militaryMachine)
                         MultiMenuFunctions.setTileImage(this, militaryMachine.getType().getImage());
-                        return;
+                    else if (militaryUnit instanceof Troop troop){
+                        MultiMenuFunctions.setTileImage(this, troop.getStandingImage(), troop.getType() == TroopType.LORD);
                     }
                 }
 

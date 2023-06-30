@@ -3,6 +3,7 @@ package model.graphic;
 import controller.MapController;
 import controller.MultiMenuFunctions;
 import controller.StripPaneController;
+import javafx.event.EventHandler;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -113,6 +114,10 @@ public class DownPane extends Pane {
 
     public void move(Tile tile) {
         this.stripPaneController.move(tile);
-        System.out.println(tile.getLocationX() + ", " +tile.getLocationY());
     }
+
+    public void deselect() {
+        this.stripPaneController.deselect();
+    }
+
 }

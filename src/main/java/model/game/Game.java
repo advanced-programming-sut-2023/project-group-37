@@ -95,7 +95,6 @@ public class Game {
                                 break;
                         }
                         government.getMilitaryUnits().add(machine);
-                        building.getLocation().addMilitaryUnit(machine);
                     } else {
                         if (type == BuildingType.INN)
                             innCount++;
