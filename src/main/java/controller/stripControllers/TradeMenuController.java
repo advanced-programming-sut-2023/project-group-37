@@ -1,9 +1,11 @@
 package controller.stripControllers;
 
 import controller.MultiMenuFunctions;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -63,12 +65,7 @@ public class TradeMenuController {
         label.setLayoutX(20);
         label.setLayoutY(60);
 
-        label.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                showTrades();
-            }
-        });
+        label.setOnMouseClicked((MouseEvent mouseEvent) -> showTrades());
 
         stripPane.getChildren().add(label);
 
