@@ -67,6 +67,27 @@ public class TradeMenuController {
                 i++;
             }
         }
+
+        Label label = new Label("Show Trades");
+        label.setStyle("-fx-font-size: 20");
+        label.setBackground(Background.fill(Color.GRAY));
+        label.setLayoutX(20);
+        label.setLayoutY(30);
+
+        label.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                showTrades();
+            }
+        });
+
+        stripPane.getChildren().add(label);
+
+    }
+
+    private void showTrades() {
+        if (this.stripPane.getChildren().size() > 0)
+            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
     }
 
     private void gotoGovernment(Government selectedGovernment) {
