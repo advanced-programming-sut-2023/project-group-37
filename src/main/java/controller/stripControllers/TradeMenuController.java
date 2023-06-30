@@ -2,6 +2,7 @@ package controller.stripControllers;
 
 import controller.MultiMenuFunctions;
 import javafx.event.EventHandler;
+import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
@@ -42,6 +43,7 @@ public class TradeMenuController {
     private void showGovernments() {
         Label l = new Label("Governments : ");
         l.setStyle("-fx-font-size: 20");
+        l.setBackground(Background.fill(Color.SILVER));
         l.setLayoutX(20);
         l.setLayoutY(10);
         stripPane.getChildren().add(l);
@@ -53,6 +55,7 @@ public class TradeMenuController {
                 label.setLayoutX(170 + (i * 80));
                 label.setLayoutY(30);
                 label.setStyle("-fx-font-size: 20");
+                label.setBackground(Background.fill(Color.GOLD));
                 label.setTextFill(Color.BLUE);
                 stripPane.getChildren().add(label);
                 label.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -212,10 +215,17 @@ public class TradeMenuController {
         TextInputDialog textInputDialog = new TextInputDialog("Enter your message : ");
         textInputDialog.setHeaderText("Donate");
         textInputDialog.show();
-        String message = textInputDialog.getContentText();
 
-        new TradeRequest(item, tradeAmount, 0, message, game.getCurrentTurnGovernment(),
-                selectedGovernment, game.getIndex());
+        textInputDialog.setOnCloseRequest(new EventHandler<DialogEvent>() {
+            @Override
+            public void handle(DialogEvent dialogEvent) {
+                String message = textInputDialog.getContentText();
+
+                new TradeRequest(item, tradeAmount, 0, message, game.getCurrentTurnGovernment(),
+                        selectedGovernment, game.getIndex());
+            }
+        });
+
 
     }
 
@@ -224,15 +234,26 @@ public class TradeMenuController {
         price.setHeaderText("Request");
         price.show();
 
-        String message = "";
+        final String[] message = {""};
 
-        if (!price.isShowing()) {
-            TextInputDialog textInputDialog = new TextInputDialog("Enter your message : ");
-            textInputDialog.setHeaderText("Request");
-            textInputDialog.show();
-            message = textInputDialog.getContentText();
-        }
-        new TradeRequest(item, tradeAmount, 10, message, game.getCurrentTurnGovernment(),
-                selectedGovernment, game.getIndex());
+        price.setOnCloseRequest(new EventHandler<DialogEvent>() {
+            @Override
+            public void handle(DialogEvent dialogEvent) {
+                TextInputDialog textInputDialog = new TextInputDialog("Enter your message : ");
+                textInputDialog.setHeaderText("Request");
+                textInputDialog.show();
+                textInputDialog.setOnCloseRequest(new EventHandler<DialogEvent>() {
+                    @Override
+                    public void handle(DialogEvent dialogEvent) {
+                        message[0] = textInputDialog.getContentText();
+                        new TradeRequest(item, tradeAmount, 10, message[0], game.getCurrentTurnGovernment(),
+                                selectedGovernment, game.getIndex());
+                    }
+                });
+
+            }
+        });
+
+
     }
 }
