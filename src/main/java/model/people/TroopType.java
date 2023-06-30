@@ -179,4 +179,8 @@ public enum TroopType {
     public boolean canDigMoat() {
         return this.canDigMoat;
     }
+
+    public Image getImage() {
+        return this.downPaneImage;
+    }
 }
