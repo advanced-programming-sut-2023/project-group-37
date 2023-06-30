@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Troop extends MilitaryUnit {
-
     private final TroopType type;
     private File standingImageFile;
     private ArrayList<File> animationFiles;
@@ -28,9 +27,7 @@ public class Troop extends MilitaryUnit {
                             loyalty.getColor())).toURI()));
             this.standingImageFile = this.animationFiles.get(0);
 
-        } catch (Exception ex) {
-            System.out.println("ERRORED");
-            System.out.println(ex.getLocalizedMessage());
+        } catch (Exception ignored) {
         }
         this.canClimbLadder = type.canClimbLadder();
         this.hasLadder = type == TroopType.LADDERMAN;

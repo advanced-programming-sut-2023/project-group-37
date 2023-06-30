@@ -31,7 +31,6 @@ public class TradeMenuController {
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
 
         showGovernments();
-
     }
 
     private void showGovernments() {

@@ -206,6 +206,10 @@ public class StripPaneController {
         tradeMenuController.run();
     }
 
+    public void deselect() {
+        this.unitMenuController.deselect();
+    }
+
     public boolean attack(Tile tile) {
         PopUp popUp = this.unitMenuController.attack(tile);
         popUp.show();

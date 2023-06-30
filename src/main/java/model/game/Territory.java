@@ -16,9 +16,9 @@ public class Territory {
         this.territoryNumber = territoryNumber;
         this.coveredTiles = new ArrayList<>();
         this.keep = keep;
-        this.village = this.map.getTileByLocation(keep.getLocationX(), keep.getLocationY() - 1);
+        this.village = this.map.getTileByLocation(keep.getLocationX(), keep.getLocationY() - 3);
         this.village.setPassability(false);
-        this.firstStockpileLocation = this.map.getTileByLocation(keep.getLocationX() + 1, keep.getLocationY());
+        this.firstStockpileLocation = this.map.getTileByLocation(keep.getLocationX() + 3 , keep.getLocationY());
     }
 
     public Territory getCopyTerritory(Government owner) {

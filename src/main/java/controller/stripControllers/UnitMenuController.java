@@ -20,6 +20,7 @@ public class UnitMenuController {
     private static Game game;
     private final Pane stripPane;
     private final int sizeOfImages;
+    private ArrayList<Tile> selectedTiles;
     private ArrayList<MilitaryUnit> militaryUnits;
     private final HashMap<TroopType, ImageView> troopTypeImages;
     private final HashMap<MilitaryMachineType, ImageView> militaryMachineTypeImages;
@@ -60,6 +61,7 @@ public class UnitMenuController {
         for (Tile tile : selectedTiles)
             this.militaryUnits.addAll(tile.getMilitaryUnits());
 
+        this.selectedTiles = selectedTiles;
         this.showUnitsInStripPane();
     }
 
@@ -130,6 +132,24 @@ public class UnitMenuController {
             else this.militaryUnits.remove(i);
         }
 
+        ArrayList<Tile> newTiles = new ArrayList<>();
+        Tile.removeSelectedTiles();
+        for (Tile tile : this.selectedTiles) {
+            boolean havUnit = false;
+            for (MilitaryUnit militaryUnit : this.militaryUnits) {
+                if (militaryUnit.getLocation() == tile) {
+                    havUnit = true;
+                    break;
+                }
+            }
+            if (havUnit)
+                newTiles.add(tile);
+        }
+
+        this.selectedTiles = newTiles;
+        for (Tile tile : selectedTiles)
+            tile.setSelectedEffect();
+
         this.showUnitsInStripPane();
     }
 
@@ -169,8 +189,6 @@ public class UnitMenuController {
     public PopUp move(Tile target) {
         if (this.militaryUnits == null || this.militaryUnits.size() == 0)
             return PopUp.NO_UNIT_SELECTED;
-
-        System.out.println(this.militaryUnits.get(0).getHitpoints());
 
         LinkedList<Tile> routeCheck = MultiMenuFunctions.routeFinder(
                 this.militaryUnits.get(0).getLocation(), target, game.getMap());
@@ -229,6 +247,10 @@ public class UnitMenuController {
         }
 
         return PopUp.WILL_ATTACK;
+    }
+
+    public void deselect() {
+        this.militaryUnits = null;
     }
 
     public Message stop() {
