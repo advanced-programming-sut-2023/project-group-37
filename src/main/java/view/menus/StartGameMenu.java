@@ -1,8 +1,8 @@
 package view.menus;
 
 import controller.AppController;
-import controller.MultiMenuFunctions;
 import controller.GameController;
+import controller.MultiMenuFunctions;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,15 +16,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import model.game.GameColor;
 import model.game.Game;
+import model.game.GameColor;
 import model.game.Government;
 import model.game.Map;
 import model.user.User;
 import view.enums.Message;
 import view.enums.Result;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -126,7 +125,6 @@ public class StartGameMenu extends Application {
 
         assert map != null;
 
-        int index = 0;
         for (java.util.Map.Entry<Integer, String> integerStringEntry : userTerritory.entrySet()) {
             String username = integerStringEntry.getValue();
             Integer territory = integerStringEntry.getKey();

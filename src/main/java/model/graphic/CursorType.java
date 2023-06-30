@@ -8,10 +8,10 @@ import java.util.Objects;
 public enum CursorType {
 //    DEFAULT(""), // todo
     SELECT_MOVE_DESTINATION(Objects.requireNonNull(CursorType.class.getResource(
-            "/Image/Cursor/selectDestination.png")).toExternalForm()),
+            "/Image/Cursor/move.gif")).toExternalForm()),
 
     SELECT_ATTACK_DESTINATION(Objects.requireNonNull(CursorType.class.getResource(
-            "/Image/Cursor/selectForAttack.png")).toExternalForm());
+            "/Image/Cursor/attack.gif")).toExternalForm());
     ;
 
     private final ImageCursor imageCursor;

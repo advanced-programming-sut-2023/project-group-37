@@ -113,11 +113,13 @@ public class MapController {
                 }
                 case "Z" -> {
                     if (Tile.zoom()) {
+                        MultiMenuFunctions.removeAllImages();
                         this.map.updateSizes();
                     }
                 }
                 case "X" -> {
                     if (Tile.zoomOut()) {
+                        MultiMenuFunctions.removeAllImages();
                         this.map.updateSizes();
                     }
 

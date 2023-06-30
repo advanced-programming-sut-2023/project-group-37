@@ -9,6 +9,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import model.buildings.Building;
@@ -51,10 +52,10 @@ public class BuildingMenuController {
             this.troopTypeImages.put(troopType, imageView);
         }
 
-//        for (MilitaryMachineType militaryMachineType : MilitaryMachineType.values()) {
-//            ImageView imageView = MultiMenuFunctions.getImageView(militaryMachineType.getDownPaneImage(), this.sizeOfImages);
-//            this.militaryMachineTypeImages.put(militaryMachineType, imageView);
-//        } todo
+        for (MilitaryMachineType militaryMachineType : MilitaryMachineType.values()) {
+            ImageView imageView = MultiMenuFunctions.getImageView(militaryMachineType.getDownPaneImage(), this.sizeOfImages);
+            this.militaryMachineTypeImages.put(militaryMachineType, imageView);
+        }
     }
 
     public static void setGame(Game game) {
@@ -65,24 +66,27 @@ public class BuildingMenuController {
         this.currentBuilding = building;
 
         Label nameLabel = new Label();
+        nameLabel.setTextFill(Color.DARKRED);
         nameLabel.setFont(new Font(20));
         Label healthLabel = new Label("Health:");
+        healthLabel.setTextFill(Color.GREEN);
         ProgressBar healthBar = new ProgressBar(1);
         double health = building.getHitpoints() / (double) building.getMaxHitpoints();
         healthBar.setProgress(health);
 
-        nameLabel.setLayoutY(10);
+        nameLabel.setLayoutY(5);
         nameLabel.setLayoutX(10);
         healthLabel.setLayoutY(10);
-        healthLabel.setLayoutX(80);
+        healthLabel.setLayoutX(160);
         healthBar.setLayoutY(10);
-        healthBar.setLayoutX(130);
+        healthBar.setLayoutX(210);
 
         this.stripPane.getChildren().add(nameLabel);
         this.stripPane.getChildren().add(healthLabel);
         this.stripPane.getChildren().add(healthBar);
 
         if (building instanceof DefensiveBuilding defensiveBuilding) {
+            System.out.println("AN");
             System.out.println(defensiveBuilding.getDefensiveType().getName());
             nameLabel.setText(defensiveBuilding.getDefensiveType().getName());
             Button repairButton = new Button("Repair");
@@ -98,6 +102,7 @@ public class BuildingMenuController {
             });
             this.stripPane.getChildren().add(repairButton);
         }
+
         else {
             nameLabel.setText(building.getType().getName());
             switch (building.getType()) {
