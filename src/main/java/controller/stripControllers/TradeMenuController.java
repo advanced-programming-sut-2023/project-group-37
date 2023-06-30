@@ -182,6 +182,7 @@ public class TradeMenuController {
         Label acceptButton = new Label("Accept");
         acceptButton.setLayoutX(600);
         acceptButton.setLayoutY(10);
+        acceptButton.setBackground(Background.fill(Color.GREEN));
         acceptButton.setStyle("-fx-font-size: 20");
 
         acceptButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -199,11 +200,15 @@ public class TradeMenuController {
         TextInputDialog textInputDialog = new TextInputDialog("Enter id : ");
         textInputDialog.setHeaderText("Accept Trade");
         textInputDialog.show();
+        int id = 0;
+        try {
+            id = Integer.parseInt(textInputDialog.getContentText());
+        } catch (NumberFormatException ignored) {
+        }
 
-
-        int id = Integer.parseInt(textInputDialog.getContentText());
         final String[] reply = new String[1];
 
+        int finalId = id;
         textInputDialog.setOnCloseRequest(new EventHandler<DialogEvent>() {
             @Override
             public void handle(DialogEvent dialogEvent) {
@@ -216,11 +221,11 @@ public class TradeMenuController {
                     @Override
                     public void handle(DialogEvent dialogEvent) {
                         ArrayList<TradeRequest> requests = TradeRequest.getRequestsByReceiver(game.getCurrentTurnGovernment());
-                        if (requests.size() < id || id < 1) {
+                        if (requests.size() < finalId || finalId < 1) {
                             PopUp.INVALID_ID.show();
                             return;
                         }
-                        TradeRequest request = requests.get(id - 1);
+                        TradeRequest request = requests.get(finalId - 1);
                         if (!request.doTrade(reply[0])) {
                             PopUp.TRADE_FAILED.show();
                             return;
