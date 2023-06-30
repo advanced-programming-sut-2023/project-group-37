@@ -3,15 +3,13 @@ package model.people;
 import javafx.scene.image.Image;
 import model.buildings.BuildingType;
 import model.game.Item;
+import model.game.Territory;
 
 import java.util.Objects;
 
 public enum TroopType {
-
-    //LORD: todo : image for lord ?
-    LORD("", "european/lord.png", null, 0, 100, 100, 55, 1,
+    LORD("lord", "european/lord.png", null, 0, 100, 100, 55, 1,
             null, null, false, false),
-
     // Barracks:
     ARCHER("archer", "european/archer.png", BuildingType.BARRACKS, 12, 45,
             40, 90, 10, Item.BOW, null, true, true),
@@ -36,7 +34,7 @@ public enum TroopType {
             95, 1, Item.SWORD, Item.METAL_ARMOR, Item.HORSE, false, false),
 
     // Mercenary post:
-    ARABIAN_ARCHER("arabian archer", "arabian/archer.png", BuildingType.MERCENARY_POST, 75,
+    ARABIAN_ARCHER("arabian-archer", "arabian/archer.png", BuildingType.MERCENARY_POST, 75,
             45, 45, 90, 12, null, null, false, true),
 
     SLAVE("slave", "arabian/slave.png", BuildingType.MERCENARY_POST, 5,
@@ -45,16 +43,16 @@ public enum TroopType {
     SLINGER("slinger", "arabian/slinger.png", BuildingType.MERCENARY_POST, 12,
             20, 36, 90, 6, null, null, false, false),
 
-    HORSE_ARCHER("horse archer", "arabian/horse-archer.png", BuildingType.MERCENARY_POST, 80,
+    HORSE_ARCHER("horse-archer", "arabian/horse-archer.png", BuildingType.MERCENARY_POST, 80,
             55, 50, 95, 12, null, null, false, false),
 
-    ARABIAN_SWORDSMAN("arabian swordsman", "arabian/swordsman.png", BuildingType.MERCENARY_POST, 80,
+    ARABIAN_SWORDSMAN("arabian-swordsman", "arabian/swordsman.png", BuildingType.MERCENARY_POST, 80,
             88, 88, 40, 1, null, null, false, false),
 
     ASSASSIN("assassin", "arabian/assassin.png", BuildingType.MERCENARY_POST, 60,
             73, 76, 67, 1, null, null, false, false),
 
-    FIRE_THROWER("fire thrower", "arabian/fire-thrower.png", BuildingType.MERCENARY_POST, 100,
+    FIRE_THROWER("fire-thrower", "arabian/fire-thrower.png", BuildingType.MERCENARY_POST, 100,
             60, 84, 60, 4, null, null, false, false),
 
     // Engineer guild:
@@ -87,8 +85,7 @@ public enum TroopType {
         this.name = name;
         this.downPaneImage = new Image(Objects.requireNonNull(TroopType.class.getResource
                 ("/Image/DownPaneTroops/" + imageURL)).toExternalForm());
-//        this.image = new Image(Objects.requireNonNull(TroopType.class.getResource
-//                ("/Image/Troop/" + imageURL)).toExternalForm());
+
         this.trainingCamp = trainingCamp;
         this.cost = cost;
         this.maxHitpoints = maxHitpoints;
@@ -107,8 +104,6 @@ public enum TroopType {
         this.name = name;
         this.downPaneImage = new Image(Objects.requireNonNull(TroopType.class.getResource
                 ("/Image/DownPaneTroops/" + imageURL)).toExternalForm());
-//        this.image = new Image(Objects.requireNonNull(TroopType.class.getResource
-//                ("/Image/Troop/" + imageURL)).toExternalForm());
         this.trainingCamp = trainingCamp;
         this.cost = cost;
         this.maxHitpoints = maxHitpoints;

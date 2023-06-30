@@ -50,10 +50,6 @@ public class Tile extends Rectangle {
         this.building = null;
         this.isPassable = true;
         this.hasBuilding = false;
-
-        //todo : remove this :
-        if (y == 15 && x <= 20 && x>= 10)
-            this.militaryUnits.add(new Troop(null ,TroopType.ARCHER, this));
     }
 
     public Tile(Tile bigTile) { // for creating miniTile
@@ -225,36 +221,39 @@ public class Tile extends Rectangle {
     }
 
     public void updateImage() {
-        this.setImage(this.texture.getImage());
+        try {
+            this.setImage(this.texture.getImage());
 
-        if (this.treeRockTexture != null) {
-            MultiMenuFunctions.setTileImage(this, treeRockTexture.getImage());
-            this.miniTile.setFill(Color.DARKGREEN);
-        }
+            if (this.treeRockTexture != null) {
+                MultiMenuFunctions.setTileImage(this, treeRockTexture.getImage());
+                this.miniTile.setFill(Color.DARKGREEN);
+            }
 
-        if (this.militaryUnits.size() > 0) {
-            for (MilitaryUnit militaryUnit : this.militaryUnits) {
-                if (militaryUnit instanceof MilitaryMachine militaryMachine) {
-                    MultiMenuFunctions.setTileImage(this, militaryMachine.getType().getImage());
-                    return;
+            if (this.hasBuilding) {
+                if (this.building instanceof DefensiveBuilding defensiveBuilding) {
+                    MultiMenuFunctions.setTileImage(this, defensiveBuilding.getDefensiveType().getImage());
+                    this.miniTile.setFill(Color.WHITESMOKE);
+                }
+                else {
+                    MultiMenuFunctions.setTileImage(this, this.building.getType().getImage());
+                    this.miniTile.setFill(Color.LIGHTYELLOW);
                 }
             }
 
-            MultiMenuFunctions.setTileImage(this,
-                    ((Troop) this.militaryUnits.get(this.militaryUnits.size() -1)).getType().getImage());
-            this.miniTile.setFill(Color.HOTPINK);
-            return;
-        }
+            if (this.militaryUnits.size() > 0) {
+                for (MilitaryUnit militaryUnit : this.militaryUnits) {
+                    if (militaryUnit instanceof MilitaryMachine militaryMachine) {
+                        MultiMenuFunctions.setTileImage(this, militaryMachine.getType().getImage());
+                        return;
+                    }
+                }
 
-        if (this.hasBuilding) {
-            if (this.building instanceof DefensiveBuilding defensiveBuilding) {
-                MultiMenuFunctions.setTileImage(this, defensiveBuilding.getDefensiveType().getImage());
-                this.miniTile.setFill(Color.WHITESMOKE);
+                MultiMenuFunctions.setTileImage(this,
+                        ((Troop) this.militaryUnits.get(this.militaryUnits.size() -1)).getStandingImage());
+                this.miniTile.setFill(Color.HOTPINK);
             }
-            else {
-                MultiMenuFunctions.setTileImage(this, this.building.getType().getImage());
-                this.miniTile.setFill(Color.LIGHTYELLOW);
-            }
+        }
+        catch (Exception ignored) {
         }
     }
 

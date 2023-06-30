@@ -32,7 +32,6 @@ public enum Item {
     PIKE("pike", ItemCategory.WEAPONS, 36, 18, "/Image/Item/pike.png"),
     SWORD("sword", ItemCategory.WEAPONS, 58, 30, "/Image/Item/sword.png"),
     METAL_ARMOR("metal armor", ItemCategory.WEAPONS, 58, 30, "/Image/Item/metal-amour.png"),
-    // TODO: fill leather after defining cow!
     LEATHER_ARMOR("leather armor", ItemCategory.WEAPONS, 25, 12, "/Image/Item/leather-amour.png");
 
     private final String name;

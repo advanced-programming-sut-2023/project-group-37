@@ -11,10 +11,13 @@ import model.user.User;
 
 import java.util.ArrayList;
 
+import static javafx.scene.paint.Color.BLUE;
+import static javafx.scene.paint.Color.GREEN;
+
 public class Government {
     private final User user;
     private final Territory territory;
-    private final Color color;
+    private final GameColor color;
     private int gold;
     private final Troop lord;
     private final ArrayList<Person> people;
@@ -32,7 +35,7 @@ public class Government {
     private int score;
     private boolean isDead;
 
-    public Government(User user, Color color, Map map, int territoryNumber) {
+    public Government(User user, GameColor color, Map map, int territoryNumber) {
         this.user = user;
         this.territory = map.getCopyKeepByNumber(this, territoryNumber);
         this.color = color;
@@ -71,7 +74,7 @@ public class Government {
         return this.territory;
     }
 
-    public Color getColor() {
+    public GameColor getColor() {
         return this.color;
     }
 

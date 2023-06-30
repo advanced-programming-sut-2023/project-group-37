@@ -218,7 +218,7 @@ public class RegisterMenu extends Application {
                 this.refreshLabel.getPrefHeight(), false, false)));
     }
 
-    private void initializeErrors() { // TODO : is this function necessary ?
+    private void initializeErrors() {
         this.usernameError.setText(Error.NECESSARY_FIELD.toString());
         this.passwordError.setText(Error.NECESSARY_FIELD.toString());
         this.passwordConfirmError.setText(Error.NECESSARY_FIELD.toString());

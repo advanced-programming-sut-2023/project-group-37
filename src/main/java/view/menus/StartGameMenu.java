@@ -60,7 +60,7 @@ public class StartGameMenu extends Application {
     }
 
     @FXML
-    private void initialize() throws IOException {
+    private void initialize() {
         back.setImage(new Image(Objects.requireNonNull(RegisterMenu.class.getResource("/Image/Button/back1.png")).toExternalForm()));
         createLabel(User.getCurrentUser().getUsername(), "1");
     }
@@ -121,7 +121,6 @@ public class StartGameMenu extends Application {
             new Alert(Alert.AlertType.ERROR, Message.EMPTY_FIELD.toString()).show();
             return;
         }
-        appController.runMenu(Result.ENTER_GAME_MENU);
         ArrayList<Government> governments = new ArrayList<>();
         Map map = Map.getMapCopyByName(mapName.getText());
 
@@ -131,10 +130,11 @@ public class StartGameMenu extends Application {
         for (java.util.Map.Entry<Integer, String> integerStringEntry : userTerritory.entrySet()) {
             String username = integerStringEntry.getValue();
             Integer territory = integerStringEntry.getKey();
-            governments.add(new Government(User.getUserByUsername(username), GameColor.values()[index].getColor(), map, territory));
+            governments.add(new Government(User.getUserByUsername(username), GameColor.values()[index], map, territory));
         }
 
         Game game = new Game(map, governments);
         GameController.getInstance().setCurrentGame(game);
+        appController.runMenu(Result.ENTER_GAME_MENU);
     }
 }

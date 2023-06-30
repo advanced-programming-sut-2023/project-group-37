@@ -62,7 +62,7 @@ public class MapController {
 
     public void setGamePane(Pane gamePane) throws URISyntaxException {
         Map.loadMaps();
-        this.map = Map.getMaps().get(0); // todo : wtf ?
+        this.map = this.game.getMap();
         Tile[][] tiles = this.map.getField();
 
         gamePane.setPrefHeight(740); // 37 tiles
@@ -85,6 +85,7 @@ public class MapController {
         this.mainMap.setLayoutY(0);
 
         gamePane.getChildren().add(this.mainMap);
+        this.map.updateImages();
 
         this.mainMap.setOnKeyPressed(keyEvent -> {
             String keyName = keyEvent.getCode().getName();
@@ -113,13 +114,11 @@ public class MapController {
                 case "Z" -> {
                     if (Tile.zoom()) {
                         this.map.updateSizes();
-                        this.map.updateImages();
                     }
                 }
                 case "X" -> {
                     if (Tile.zoomOut()) {
                         this.map.updateSizes();
-                        this.map.updateImages();
                     }
 
                 }
@@ -212,9 +211,8 @@ public class MapController {
     }
 
     public void createDetailLabels(Pane detailPane) {
-        // todo : set with currentGovernment :
-        this.goldLabel = new Label(String.valueOf(100));
-        this.popularityLabel = new Label(String.valueOf(100));
+        this.goldLabel = new Label(String.valueOf(currentGovernment.getGold()));
+        this.popularityLabel = new Label(String.valueOf(currentGovernment.getPopularity()));
 
         this.goldLabel.setLayoutX(978);
         this.goldLabel.setLayoutY(93);

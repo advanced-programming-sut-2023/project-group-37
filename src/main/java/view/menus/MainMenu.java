@@ -101,7 +101,6 @@ public class MainMenu extends Application {
     }
 
     public void startGame() throws Exception {
-        // TODO : select map and users menu
         appController.runMenu(Result.ENTER_START_GAME_MENU);
     }
 }

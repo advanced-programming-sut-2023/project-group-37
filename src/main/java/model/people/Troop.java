@@ -15,20 +15,33 @@ public class Troop extends MilitaryUnit {
     private File standingImageFile;
     private ArrayList<File> animationFiles;
     private final boolean canClimbLadder;
+    private Government loyalty;
     private boolean hasLadder;
 
     public Troop(Government loyalty, TroopType type, Tile location) {
         super(loyalty, location, type.getMaxHitpoints(), type.getDamage(), type.getRange(), type.getSpeed());
         this.type = type;
+        this.loyalty = loyalty;
         try {
             this.animationFiles = MultiMenuFunctions.getAllImageFilesFromFolder(new File(Objects.requireNonNull(
-                    Troop.class.getResource("Image/Troop/animation/" + type.getName() + "/" +
-                            loyalty.getColor())).toExternalForm()));
+                    Troop.class.getResource("/Image/Troop/animation/" + type.getName() + "/" +
+                            loyalty.getColor())).toURI()));
             this.standingImageFile = this.animationFiles.get(0);
-        } catch (Exception ignored) {
+
+        } catch (Exception ex) {
+            System.out.println("ERRORED");
+            System.out.println(ex.getLocalizedMessage());
         }
         this.canClimbLadder = type.canClimbLadder();
         this.hasLadder = type == TroopType.LADDERMAN;
+    }
+
+    public Image getStandingImage() {
+        return new Image(standingImageFile.getAbsolutePath());
+    }
+
+    public ArrayList<File> getAnimationFiles() {
+        return animationFiles;
     }
 
     public TroopType getType() {
