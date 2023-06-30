@@ -256,6 +256,8 @@ public class TradeMenuController {
         price.setHeaderText("Request");
         price.show();
 
+
+        int priceAmount = Integer.parseInt(price.getContentText());
         final String[] message = {""};
 
         price.setOnCloseRequest(new EventHandler<DialogEvent>() {
@@ -268,14 +270,13 @@ public class TradeMenuController {
                     @Override
                     public void handle(DialogEvent dialogEvent) {
                         message[0] = textInputDialog.getContentText();
-                        new TradeRequest(item, tradeAmount, 10, message[0], game.getCurrentTurnGovernment(),
+                        new TradeRequest(item, tradeAmount, priceAmount, message[0], game.getCurrentTurnGovernment(),
                                 selectedGovernment, game.getIndex());
                     }
                 });
 
             }
         });
-
 
     }
 }
