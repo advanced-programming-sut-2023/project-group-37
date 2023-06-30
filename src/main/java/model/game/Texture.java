@@ -93,6 +93,10 @@ public enum Texture {
         return null;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public Image getImage() {
         return this.image;
     }

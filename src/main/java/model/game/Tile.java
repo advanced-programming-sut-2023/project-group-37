@@ -1,6 +1,11 @@
 package model.game;
 
 import controller.MultiMenuFunctions;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -28,6 +33,7 @@ public class Tile extends Rectangle {
     private Territory territory;
     public int number;
     private boolean hasBuilding;
+    private String info;
 
     static {
         tileSize = 20;
@@ -50,10 +56,11 @@ public class Tile extends Rectangle {
         this.building = null;
         this.isPassable = true;
         this.hasBuilding = false;
+        Tooltip.install(this, new Tooltip(this.getInfo()));
     }
 
     public Tile(Tile bigTile) { // for creating miniTile
-        super((double) tileSize/40, (double) tileSize/40);
+        super((double) tileSize / 40, (double) tileSize / 40);
         this.x = bigTile.x;
         this.y = bigTile.y;
         this.texture = bigTile.texture;
@@ -66,6 +73,19 @@ public class Tile extends Rectangle {
             selectedTile.strokeProperty().set(null);
         }
         selectedTiles = new ArrayList<>();
+    }
+
+    public String getInfo() {
+        info = "Texture : " + this.texture.getName() + "\n";
+        for (MilitaryUnit militaryUnit : this.getMilitaryUnits()) {
+            info += "Name : " + militaryUnit.getName() + "\n";
+        }
+
+        if (this.hasBuilding) {
+            info += "Building Name : " + this.building.getType().getName() + "\n";
+        }
+        info = info.trim();
+        return info;
     }
 
     public static void setSelectedTiles(ArrayList<Tile> selectedTiles) {
@@ -118,12 +138,15 @@ public class Tile extends Rectangle {
     public void setUpRectangleEffect() {
         this.setRectangleSelectedEffect();
     }
+
     public void setDownRectangleEffect() {
         this.setRectangleSelectedEffect();
     }
+
     public void setLeftRectangleEffect() {
         this.setRectangleSelectedEffect();
     }
+
     public void setRightRectangleEffect() {
         this.setRectangleSelectedEffect();
     }
@@ -214,9 +237,7 @@ public class Tile extends Rectangle {
             if (building instanceof DefensiveBuilding defensiveBuilding)
                 this.setImage(defensiveBuilding.getDefensiveType().getImage());
             else this.setImage(building.getType().getImage());
-        }
-
-        else this.hasBuilding = false;
+        } else this.hasBuilding = false;
         this.updateImage();
     }
 
@@ -233,8 +254,7 @@ public class Tile extends Rectangle {
                 if (this.building instanceof DefensiveBuilding defensiveBuilding) {
                     MultiMenuFunctions.setTileImage(this, defensiveBuilding.getDefensiveType().getImage());
                     this.miniTile.setFill(Color.WHITESMOKE);
-                }
-                else {
+                } else {
                     MultiMenuFunctions.setTileImage(this, this.building.getType().getImage());
                     this.miniTile.setFill(Color.LIGHTYELLOW);
                 }
@@ -249,11 +269,10 @@ public class Tile extends Rectangle {
                 }
 
                 MultiMenuFunctions.setTileImage(this,
-                        ((Troop) this.militaryUnits.get(this.militaryUnits.size() -1)).getStandingImage());
+                        ((Troop) this.militaryUnits.get(this.militaryUnits.size() - 1)).getStandingImage());
                 this.miniTile.setFill(Color.HOTPINK);
             }
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
         }
     }
 

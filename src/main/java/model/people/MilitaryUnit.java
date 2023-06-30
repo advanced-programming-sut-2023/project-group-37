@@ -49,7 +49,7 @@ public abstract class MilitaryUnit {
     }
 
     public int getDamage() {
-        return (int) (this.damage * (1 - (double)this.loyalty.getFearRate() / 6)) + 1;
+        return (int) (this.damage * (1 - (double) this.loyalty.getFearRate() / 6)) + 1;
     }
 
     public int getHitpoints() {
@@ -125,6 +125,14 @@ public abstract class MilitaryUnit {
 
     public Tile getLocation() {
         return this.location;
+    }
+
+    public String getName() {
+        if (this instanceof Troop) {
+            return ((Troop) this).getType().getName();
+        } else {
+            return ((MilitaryMachine) this).getType().getName();
+        }
     }
 
     public MilitaryUnitStance getStance() {
