@@ -16,6 +16,8 @@ public class TradeMenuController {
     private final Pane stripPane;
     private final int sizeOfImage;
     private static Game game;
+    private Label amount;
+    private Label forTrade;
 
     public TradeMenuController(Pane stripPane) {
         this.stripPane = stripPane;
@@ -61,7 +63,7 @@ public class TradeMenuController {
         }
     }
 
-    private void gotoGovernment(Government government) {
+    private void gotoGovernment(Government selectedGovernment) {
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
 
@@ -73,21 +75,34 @@ public class TradeMenuController {
                 if (i < Item.getAllItems().size() / 2) imageView.setLayoutY(10);
                 else imageView.setLayoutY(60);
 
-                imageView.setOnMouseClicked(mouseEvent -> goToItem(item));
+                imageView.setOnMouseClicked(mouseEvent -> goToItem(item, selectedGovernment));
 
                 stripPane.getChildren().add(imageView);
                 i++;
             }
         }
 
-        addBackButton();
+        addBackButton(1, null);
     }
 
-    private void goToItem(Item item) {
+    private void goToItem(Item item, Government selectedGovernment) {
+        if (this.stripPane.getChildren().size() > 0)
+            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+
+
+        ImageView imageView = MultiMenuFunctions.getImageView(item.getImageUrl(), 65);
+
+        imageView.setLayoutX(130);
+        imageView.setLayoutY(15);
+
+        stripPane.getChildren().add(imageView);
+
+        addLabelsAndButtons(item);
+        addBackButton(2, selectedGovernment);
 
     }
 
-    private void addBackButton() {
+    private void addBackButton(int flag, Government selectedGovernment) {
         ImageView back = MultiMenuFunctions.getImageView("/Image/Button/back1.png", 30);
         back.setLayoutX(10);
         back.setLayoutY(60);
@@ -96,8 +111,20 @@ public class TradeMenuController {
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                run();
+                switch (flag) {
+                    case 1 -> run();
+                    case 2 -> gotoGovernment(selectedGovernment);
+                }
             }
         });
     }
+
+    private void addLabelsAndButtons(Item item) {
+        amount = new Label(Integer.toString(game.getCurrentTurnGovernment().getItemAmount(item)));
+        amount.setLayoutX(230);
+        amount.setLayoutY(15);
+
+
+    }
+
 }
