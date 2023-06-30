@@ -1,49 +1,58 @@
 package controller.stripControllers;
 
+import controller.MapController;
 import controller.MultiMenuFunctions;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import model.game.Government;
+import model.buildings.BuildingType;
+import model.game.Color;
+import model.game.Game;
 import model.game.Item;
 import model.game.ItemCategory;
+import view.enums.Message;
+import view.enums.PopUp;
+import view.menus.RegisterMenu;
+
+import java.util.Objects;
 
 public class ShopMenuController {
-    private Pane stripPane;
-    private Government currentGovernment;
+    private final Pane stripPane;
+    private Label amount;
+    private Label gold;
+    private static Game game;
+
 
     public ShopMenuController(Pane stripPane) {
         this.stripPane = stripPane;
-        currentGovernment = null;
+    }
+
+    public static void setGame(Game game) {
+        ShopMenuController.game = game;
     }
 
     public void run() {
+        if (game.getCurrentTurnGovernment().getUniqueBuilding(BuildingType.MARKET) == null) {
+            PopUp.MARKET_NOT_EXISTS.show();
+            return;
+        }
+
+        if (this.stripPane.getChildren().size() > 0)
+            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+
         ImageView resources = MultiMenuFunctions.getImageView("/Image/Button/resources.png", 70);
         ImageView weapons = MultiMenuFunctions.getImageView("/Image/Button/weapons.png", 70);
         ImageView foods = MultiMenuFunctions.getImageView("/Image/Button/food.jpg", 70);
 
-        resources.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                resources();
-            }
-        });
+        resources.setOnMouseClicked(mouseEvent -> resources());
 
-        weapons.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                weapons();
-            }
-        });
+        weapons.setOnMouseClicked(mouseEvent -> weapons());
 
-        foods.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                foods();
-            }
-        });
+        foods.setOnMouseClicked(mouseEvent -> foods());
 
         resources.setLayoutX(150);
         resources.setLayoutY(15);
@@ -66,20 +75,16 @@ public class ShopMenuController {
         for (Item item : Item.getAllItems()) {
             if (item.getCategory().equals(ItemCategory.RESOURCES)) {
                 ImageView imageView = MultiMenuFunctions.getImageView(item.getImageUrl(), 60);
-                imageView.setLayoutX(100 + (i * 75));
+                imageView.setLayoutX(100 + (i * 90));
                 imageView.setLayoutY(15);
 
-                imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        goToItem(item);
-                    }
-                });
+                imageView.setOnMouseClicked(mouseEvent -> goToItem(item));
 
                 stripPane.getChildren().add(imageView);
                 i++;
             }
         }
+        addBackButton();
     }
 
     private void weapons() {
@@ -90,20 +95,16 @@ public class ShopMenuController {
         for (Item item : Item.getAllItems()) {
             if (item.getCategory().equals(ItemCategory.WEAPONS)) {
                 ImageView imageView = MultiMenuFunctions.getImageView(item.getImageUrl(), 60);
-                imageView.setLayoutX(100 + (i * 75));
+                imageView.setLayoutX(100 + (i * 90));
                 imageView.setLayoutY(15);
 
-                imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        goToItem(item);
-                    }
-                });
+                imageView.setOnMouseClicked(mouseEvent -> goToItem(item));
 
                 stripPane.getChildren().add(imageView);
                 i++;
             }
         }
+        addBackButton();
     }
 
     private void foods() {
@@ -114,20 +115,17 @@ public class ShopMenuController {
         for (Item item : Item.getAllItems()) {
             if (item.getCategory().equals(ItemCategory.FOODS)) {
                 ImageView imageView = MultiMenuFunctions.getImageView(item.getImageUrl(), 60);
-                imageView.setLayoutX(100 + (i * 75));
+                imageView.setLayoutX(100 + i * (120));
                 imageView.setLayoutY(15);
 
-                imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        goToItem(item);
-                    }
-                });
+                imageView.setOnMouseClicked(mouseEvent -> goToItem(item));
 
                 stripPane.getChildren().add(imageView);
                 i++;
             }
         }
+        addBackButton();
+
     }
 
     private void goToItem(Item item) {
@@ -136,15 +134,139 @@ public class ShopMenuController {
 
         ImageView imageView = MultiMenuFunctions.getImageView(item.getImageUrl(), 65);
 
-        imageView.setLayoutX(100);
+        imageView.setLayoutX(130);
         imageView.setLayoutY(15);
 
-        Label amount = new Label(Integer.toString(currentGovernment.getItemAmount(item)));
-        amount.setLayoutX(100);
-        amount.setLayoutY(10);
-
-
         stripPane.getChildren().add(imageView);
+
+        ImageView goldImage = MultiMenuFunctions.getImageView("/Image/Item/gold.png", 70);
+        goldImage.setLayoutX(800);
+        goldImage.setLayoutY(25);
+
+        stripPane.getChildren().add(goldImage);
+
+        addLabels(item);
+        addBuySellButtons(item);
+        addBackButton(item);
+    }
+
+    private void addBackButton() {
+        ImageView back = MultiMenuFunctions.getImageView("/Image/Button/back1.png", 45);
+        back.setLayoutX(30);
+        back.setLayoutY(50);
+
+        stripPane.getChildren().add(back);
+        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                run();
+            }
+        });
+    }
+
+    private void addBackButton(Item item) {
+        ImageView back = MultiMenuFunctions.getImageView("/Image/Button/back1.png", 45);
+        back.setLayoutX(30);
+        back.setLayoutY(50);
+
+        stripPane.getChildren().add(back);
+        back.setOnMouseClicked(mouseEvent -> {
+            switch (item.getCategory()) {
+                case FOODS -> foods();
+                case WEAPONS -> weapons();
+                case RESOURCES -> resources();
+            }
+        });
+    }
+
+    private void addBuySellButtons(Item item) {
+        ImageView buy = new ImageView(new Image(Objects.requireNonNull(RegisterMenu.class.getResource("/Image/Button/buy.png"))
+                .toExternalForm(), 324 * 0.7, 63 * 0.7, false, false));
+        buy.setLayoutX(330);
+        buy.setLayoutY(8);
+
+        buy.setOnMouseClicked(mouseEvent -> buy(item));
+
+        ImageView sell = new ImageView(new Image(Objects.requireNonNull(RegisterMenu.class.getResource("/Image/Button/sell.png"))
+                .toExternalForm(), 324 * 0.7, 63 * 0.7, false, false));
+        sell.setLayoutX(330);
+        sell.setLayoutY(60);
+
+        sell.setOnMouseClicked(mouseEvent -> sell(item));
+
+        stripPane.getChildren().add(buy);
+        stripPane.getChildren().add(sell);
+    }
+
+    private void buy(Item item) {
+        if (game.getCurrentTurnGovernment().getGold() < item.getBuyCost()) {
+            new Alert(Alert.AlertType.ERROR, Message.NOT_ENOUGH_GOLD.toString()).show();
+            return;
+        }
+
+        if (game.getCurrentTurnGovernment().getFreeSpace(game.getCurrentTurnGovernment().getTargetRepository(item)) == 0) {
+            new Alert(Alert.AlertType.ERROR, Message.NOT_ENOUGH_SPACE.toString()).show();
+            return;
+        }
+
+        game.getCurrentTurnGovernment().buyItem(item, 1);
+        updateLabel(item);
+    }
+
+    private void sell(Item item) {
+        if (game.getCurrentTurnGovernment().getItemAmount(item) == 0) {
+            new Alert(Alert.AlertType.ERROR, Message.NOT_ENOUGH_AMOUNT.toString()).show();
+            return;
+        }
+        game.getCurrentTurnGovernment().sellItem(item, 1);
+        updateLabel(item);
+    }
+
+    private void addLabels(Item item) {
+        this.amount = new Label(Integer.toString(game.getCurrentTurnGovernment().getItemAmount(item)));
+        amount.setStyle("-fx-font-size: 30");
+
+        if (Integer.toString(game.getCurrentTurnGovernment().getItemAmount(item)).equals("0"))
+            amount.setTextFill(Color.RED.getColor());
+        else amount.setTextFill(Color.GREEN.getColor());
+
+        amount.setLayoutX(230);
+        amount.setLayoutY(15);
+
         stripPane.getChildren().add(amount);
+
+        Label buyPrice = new Label(Integer.toString(item.getBuyCost()));
+        buyPrice.setStyle("-fx-font-size: 20");
+        buyPrice.setLayoutX(580);
+        buyPrice.setLayoutY(15);
+
+        stripPane.getChildren().add(buyPrice);
+        buyPrice.toFront();
+
+
+        Label sellPrice = new Label(Integer.toString(item.getSellCost()));
+        sellPrice.setStyle("-fx-font-size: 20");
+        sellPrice.setLayoutX(580);
+        sellPrice.setLayoutY(60);
+
+        stripPane.getChildren().add(sellPrice);
+        sellPrice.toFront();
+
+
+        this.gold = new Label(Integer.toString(game.getCurrentTurnGovernment().getGold()));
+        gold.setStyle("-fx-font-size: 30");
+        gold.setLayoutX(700);
+        gold.setLayoutY(30);
+        gold.setTextFill(Color.BROWN.getColor());
+
+        stripPane.getChildren().add(gold);
+        gold.toFront();
+
+    }
+
+    private void updateLabel(Item item) {
+        this.amount.setText(Integer.toString(game.getCurrentTurnGovernment().getItemAmount(item)));
+        this.gold.setText(Integer.toString(game.getCurrentTurnGovernment().getGold()));
+        MapController.getInstance().updateDetails();
     }
 }

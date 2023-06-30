@@ -13,13 +13,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import model.buildings.*;
 import model.game.Tile;
 import model.people.*;
 import view.enums.Message;
+import view.enums.PopUp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class StripPaneController {
     private final MapController mapController;
@@ -32,6 +35,10 @@ public class StripPaneController {
     private final GameController gameController;
     private final HashMap<BuildingType, ImageView> buildingTypeImages;
     private final HashMap<DefensiveBuildingType, ImageView> defensiveBuildingTypeImages;
+
+    private Rectangle towerRec;
+    private Rectangle gateHouseRec;
+    private Rectangle militaryRec;
 
     public StripPaneController(Pane stripPane) {
         this.sizeOfImages = 70;
@@ -57,7 +64,7 @@ public class StripPaneController {
             imageView.setOnMouseReleased(mouseEvent -> {
                 Tile tile = mapController.getTileByXY(mouseEvent.getSceneX(), mouseEvent.getSceneY());
                 if (tile == null) return;
-                System.out.println(mapController.getGame().getGameMenuController().dropBuilding(tile, buildingType.getName()));
+                mapController.getGame().getGameMenuController().dropBuilding(tile, buildingType.getName());
             });
             this.buildingTypeImages.put(buildingType, imageView);
         }
@@ -88,9 +95,26 @@ public class StripPaneController {
         return this.defensiveBuildingTypeImages.get(defensiveBuildingType);
     }
 
+    public void getRectangles(Rectangle towerRec, Rectangle militaryRec, Rectangle gateHouseRec) {
+        towerRec.setLayoutX(760);
+        towerRec.setLayoutY(10);
+        militaryRec.setLayoutX(800);
+        militaryRec.setLayoutY(10);
+        gateHouseRec.setLayoutX(800);
+        gateHouseRec.setLayoutY(55);
+
+        this.towerRec = towerRec; this.militaryRec = militaryRec; this.gateHouseRec = gateHouseRec;
+    }
+
     public void insertImages(BuildingCategory category) {
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+
+        if (category == BuildingCategory.CASTLE_BUILDINGS) {
+            this.stripPane.getChildren().add(this.towerRec);
+            this.stripPane.getChildren().add(this.gateHouseRec);
+            this.stripPane.getChildren().add(this.militaryRec);
+        }
 
         int i = 0;
         for (BuildingType buildingType : BuildingType.values()) {
@@ -123,8 +147,6 @@ public class StripPaneController {
     }
 
     public void runShopMenu() {
-        if (this.stripPane.getChildren().size() > 0)
-            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
         shopMenuController.run();
     }
 
@@ -138,29 +160,60 @@ public class StripPaneController {
         boolean hasMilitaryUnit = false;
         for (Tile tile : selectedTiles) {
             if (tile.getMilitaryUnits().size() > 0) {
-                hasMilitaryUnit = true;
-                break;
+                if (tile.getMilitaryUnits().get(0).getLoyalty() == gameController.getCurrentGame().getCurrentTurnGovernment()) {
+                    hasMilitaryUnit = true;
+                    break;
+                }
             }
         }
 
-        if (!hasMilitaryUnit) {
-            Building building = null;
-            for (Tile tile : selectedTiles) {
-                if (tile.hasBuilding()) {
+        Building building = null;
+        for (Tile tile : selectedTiles) {
+            if (tile.hasBuilding()) {
+                if (tile.getBuilding().getLoyalty() == gameController.getCurrentGame().getCurrentTurnGovernment()) {
                     building = tile.getBuilding();
                     break;
                 }
             }
-            if (building != null)
-                this.buildingMenuController.run(building);
         }
-        else
+
+        if (hasMilitaryUnit) {
             this.unitMenuController.run(selectedTiles);
+            if (building != null) {
+                ImageView imageView;
+                if (building instanceof DefensiveBuilding defensiveBuilding)
+                    imageView = MultiMenuFunctions.getImageView(defensiveBuilding.getDefensiveType().getImage(), this.sizeOfImages);
+
+                else imageView = MultiMenuFunctions.getImageView(building.getType().getImage(), this.sizeOfImages);
+
+                Building finalBuilding = building;
+                imageView.setOnMouseClicked((MouseEvent mouseEvent) -> {
+                    this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+                    this.buildingMenuController.run(finalBuilding);
+                });
+
+                imageView.setLayoutY(20);
+                imageView.setLayoutX(750);
+                this.stripPane.getChildren().add(imageView);
+            }
+        }
+        else if (building != null)
+            this.buildingMenuController.run(building);
     }
 
     public void setForTradeMenu() {
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+    }
 
+    public boolean attack(Tile tile) {
+        PopUp popUp = this.unitMenuController.attack(tile);
+        popUp.show();
+
+        return popUp == PopUp.WILL_ATTACK;
+    }
+
+    public void move(Tile tile) {
+        this.unitMenuController.move(tile).show();
     }
 }

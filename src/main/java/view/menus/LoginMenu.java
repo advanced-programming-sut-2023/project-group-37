@@ -145,9 +145,7 @@ public class LoginMenu extends Application {
         if (message == Message.LOGIN_SUCCESSFUL) {
             MultiMenuFunctions.setAllCurrentUsers(User.getUserByUsername(this.usernameField.getText()));
             this.appController.runMenu(Result.ENTER_MAIN_MENU);
-        }
-
-        else new Alert(Alert.AlertType.ERROR, Message.CANT_LOGIN.toString()).show();
+        } else new Alert(Alert.AlertType.ERROR, Message.CANT_LOGIN.toString()).show();
     }
 
     @FXML

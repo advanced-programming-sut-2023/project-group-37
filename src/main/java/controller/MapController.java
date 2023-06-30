@@ -4,6 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import model.game.Game;
 import model.game.Government;
 import model.game.Map;
@@ -27,10 +28,11 @@ public class MapController {
     private Label goldLabel;
     private Label popularityLabel;
     private Government currentGovernment;
-    private ArrayList<Tile> selectedTiles;
-    private int cursorRight;
-    private int cursorDown;
-    private boolean isSelectedForMoveOrAttack;
+    private Label attackingLabel;
+    private double cursorRight;
+    private double cursorDown;
+    private boolean isOnAttack;
+    private boolean isOnMove;
 
     static {
         MAP_CONTROLLER = new MapController();
@@ -123,11 +125,13 @@ public class MapController {
                 }
                 case "M" -> {
                     this.setCursorOn(CursorType.SELECT_MOVE_DESTINATION);
-                    this.isSelectedForMoveOrAttack = true;
+                    this.isOnMove = true;
+                    this.isOnAttack = false;
                 }
                 case "A" -> {
                     this.setCursorOn(CursorType.SELECT_ATTACK_DESTINATION);
-                    this.isSelectedForMoveOrAttack = true;
+                    this.isOnAttack = true;
+                    this.isOnMove = false;
                 }
                 case "T" -> this.downPane.setForTradeMenu();
                 case "S" -> this.downPane.setForShopMenu();
@@ -149,12 +153,12 @@ public class MapController {
             double x = mouseEvent.getX();
             double y = mouseEvent.getY();
 
-            rectangleTiles.set(this.map.getRectangleTilesByXY(startX[0] + Tile.getTileSize() * this.cursorRight,
-                    startY[0] + Tile.getTileSize() * this.cursorDown, x + Tile.getTileSize()
-                            * this.cursorRight, y + Tile.getTileSize() * this.cursorDown));
+            rectangleTiles.set(this.map.getRectangleTilesByXY(startX[0] + this.cursorRight,
+                    startY[0] + this.cursorDown, x + this.cursorRight,
+                    y + this.cursorDown));
 
-            Tile firstTile = this.map.getTileByXY(startX[0] + Tile.getTileSize() * this.cursorRight,
-                    startY[0] + Tile.getTileSize() * this.cursorDown);
+            Tile firstTile = this.map.getTileByXY(startX[0] + this.cursorRight,
+                    startY[0] + this.cursorDown);
             Tile secondTile = this.map.getTileByXY(x, y);
 
             for (Tile rectangleTile : rectangleTiles.get()) {
@@ -181,8 +185,8 @@ public class MapController {
                 double x = mouseEvent.getX();
                 double y = mouseEvent.getY();
 
-                Tile tile = this.map.getTileByXY(x + Tile.getTileSize() * this.cursorRight,
-                        y + Tile.getTileSize() * this.cursorDown);
+                Tile tile = this.map.getTileByXY(x + this.cursorRight,
+                        y + this.cursorDown);
 
                 tile.setSelectedEffect();
                 ArrayList<Tile> selectedTiles = new ArrayList<>();
@@ -205,7 +209,6 @@ public class MapController {
     public void createDownPane(Pane gamePane) throws URISyntaxException {
         this.downPane = new DownPane(this);
         this.downPane.initialize(gamePane);
-
     }
 
     public void createDetailLabels(Pane detailPane) {
@@ -258,18 +261,49 @@ public class MapController {
 
     private void setCursorOn(CursorType cursorType) {
         this.mainMap.setCursor(cursorType.getImageCursor());
-        this.cursorRight = 1;
-        this.cursorDown = 1;
+        this.cursorRight = 20;
+        this.cursorDown = 14;
     }
 
     private void setSelectedTiles(ArrayList<Tile> selectedTiles) {
-        this.selectedTiles = selectedTiles;
+        //        this.mainMap.setCursor(CursorType.DEFAULT.getImageCursor());
+
+        if (selectedTiles == null)
+            return;
+
+        if (this.isOnAttack) {
+            if(selectedTiles.size() == 1) {
+                if(this.downPane.attack(selectedTiles.get(0)))
+                    this.showAttacking();
+            }
+        }
+        else if (this.isOnMove) {
+            if (selectedTiles.size() == 1)
+                this.downPane.move(selectedTiles.get(0));
+        }
+        else this.downPane.setForTiles(selectedTiles);
+
         this.cursorRight = 0;
         this.cursorDown = 0;
-//        this.mainMap.setCursor(CursorType.DEFAULT.getImageCursor());
+        this.isOnMove = false;
+        this.isOnAttack = false;
+    }
 
-        if (!this.isSelectedForMoveOrAttack && selectedTiles != null)
-            this.downPane.setForTiles(selectedTiles);
+    private void showAttacking() {
+        if (this.attackingLabel != null)
+            this.downPane.getChildren().remove(this.attackingLabel);
+
+        this.attackingLabel = new Label("Attacking");
+        this.attackingLabel.setTextFill(Color.RED);
+        this.attackingLabel.setFont(new Font(30));
+
+        this.attackingLabel.setLayoutX(950);
+        this.attackingLabel.setLayoutY(15);
+        this.downPane.getChildren().add(this.attackingLabel);
+    }
+
+    public void stopShowingAttack() {
+        this.downPane.getChildren().remove(this.attackingLabel);
     }
 
     public void goUp() {
@@ -316,8 +350,9 @@ public class MapController {
         return mainMap;
     }
 
-    public void updateDetails() { // todo : use this in all changes for gold & popularity
+    public void updateDetails() {
         this.goldLabel.setText(String.valueOf(currentGovernment.getGold()));
+        this.popularityLabel.setText(String.valueOf(currentGovernment.getPopularity()));
     }
 
 }

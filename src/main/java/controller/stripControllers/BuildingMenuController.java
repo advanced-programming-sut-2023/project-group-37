@@ -19,13 +19,13 @@ import model.people.MilitaryMachineType;
 import model.people.Troop;
 import model.people.TroopType;
 import view.enums.Message;
+import view.enums.PopUp;
 
 import java.util.HashMap;
 import java.util.Objects;
 
 public class BuildingMenuController {
     private static Game game;
-    private static Government currentGovernment;
     private final Pane stripPane;
     private final StripPaneController stripPaneController;
     private final int sizeOfImages;
@@ -57,7 +57,6 @@ public class BuildingMenuController {
 
     public static void setGame(Game game) {
         BuildingMenuController.game = game;
-        BuildingMenuController.currentGovernment = game.getCurrentTurnGovernment();
     }
 
     public void run(Building building) {
@@ -92,13 +91,14 @@ public class BuildingMenuController {
                 }
             });
         }
-
-        switch (building.getType()) {
-            case BARRACKS -> uploadTroopImages(BuildingType.BARRACKS);
-            case MERCENARY_POST -> uploadTroopImages(BuildingType.MERCENARY_POST);
-            case ENGINEER_GUILD -> uploadTroopImages(BuildingType.ENGINEER_GUILD);
-            case TUNNELER_GUILD -> uploadTroopImages(BuildingType.TUNNELER_GUILD);
-            case MARKET -> this.stripPaneController.runShopMenu();
+        else {
+            switch (building.getType()) {
+                case BARRACKS -> uploadTroopImages(BuildingType.BARRACKS);
+                case MERCENARY_POST -> uploadTroopImages(BuildingType.MERCENARY_POST);
+                case ENGINEER_GUILD -> uploadTroopImages(BuildingType.ENGINEER_GUILD);
+                case TUNNELER_GUILD -> uploadTroopImages(BuildingType.TUNNELER_GUILD);
+                case MARKET -> this.stripPaneController.runShopMenu();
+            }
         }
     }
 
@@ -108,7 +108,9 @@ public class BuildingMenuController {
             if (troopType.getTrainingCamp() == buildingType) {
                 ImageView imageView = this.getImageView(troopType);
                 imageView.setOnMouseClicked((MouseEvent mouseEvent) -> {
-                    Message message = this.createUnit(troopType);
+                    PopUp popUp = this.createUnit(troopType);
+                    if (popUp != null)
+                        popUp.show();
                 });
                 imageView.setLayoutX(100 + i * (sizeOfImages + 50));
                 imageView.setLayoutY(30);
@@ -116,12 +118,11 @@ public class BuildingMenuController {
                 this.stripPane.getChildren().add(imageView);
 
                 Label cost = new Label(String.valueOf(troopType.getCost()));
-                cost.setLayoutY(40 + sizeOfImages);
-                cost.setLayoutX(80 + i * (sizeOfImages + 50));
+                cost.setLayoutY(30 + sizeOfImages);
+                cost.setLayoutX(100 + i * (sizeOfImages + 50));
                 this.stripPane.getChildren().add(cost);
 
-                ImageView goldImageView = MultiMenuFunctions.getImageView(Objects.requireNonNull(this.getClass().getResource(
-                        "/Image/Item/gold.png")).toExternalForm(), 20);
+                ImageView goldImageView = MultiMenuFunctions.getImageView("/Image/Item/gold.png", 20);
 
                 goldImageView.setLayoutY(cost.getLayoutY());
                 goldImageView.setLayoutX(cost.getLayoutX() + 20);
@@ -148,39 +149,42 @@ public class BuildingMenuController {
                 (1 - (double) (defensiveBuilding.getHitpoints() / defensiveBuilding.getMaxHitpoints())) *
                 defensiveBuilding.getType().getRawMaterialUsesForSecond();
 
-        if (currentGovernment.removeItem(Item.STONE, stoneNeededToRepair))
+        if (game.getCurrentTurnGovernment().removeItem(Item.STONE, stoneNeededToRepair))
             return Message.NOT_ENOUGH_STONE;
+
+        MapController.getInstance().updateDetails();
 
         defensiveBuilding.setHitpoints(defensiveBuilding.getMaxHitpoints());
         return Message.REPAIR_SUCCESS;
     }
 
-    public Message createUnit(TroopType troopType) {
+    public PopUp createUnit(TroopType troopType) {
         int goldCost = troopType.getCost();
         Item armor = troopType.getArmor(), weapon = troopType.getWeapon();
 
-        if (goldCost > currentGovernment.getGold())
-            return Message.NOT_ENOUGH_GOLD;
+        if (goldCost > game.getCurrentTurnGovernment().getGold())
+            return PopUp.NOT_ENOUGH_GOLD;
 
         if (armor != null) {
-            if (1 > currentGovernment.getItemAmount(armor))
-                return Message.NOT_ENOUGH_RESOURCE;
+            if (1 > game.getCurrentTurnGovernment().getItemAmount(armor))
+                return PopUp.NOT_ENOUGH_RESOURCE;
         }
 
         if (weapon != null) {
-            if (1 > currentGovernment.getItemAmount(weapon))
-                return Message.NOT_ENOUGH_RESOURCE;
+            if (1 > game.getCurrentTurnGovernment().getItemAmount(weapon))
+                return PopUp.NOT_ENOUGH_RESOURCE;
         }
 
-        currentGovernment.removeItem(armor, 1);
-        currentGovernment.removeItem(weapon, 1);
-        currentGovernment.setGold(currentGovernment.getGold() - goldCost);
+        game.getCurrentTurnGovernment().removeItem(armor, 1);
+        game.getCurrentTurnGovernment().removeItem(weapon, 1);
+        game.getCurrentTurnGovernment().setGold(game.getCurrentTurnGovernment().getGold() - goldCost);
 
-        Troop troop = new Troop(currentGovernment, troopType, currentBuilding.getLocation());
-        currentGovernment.getMilitaryUnits().add(troop);
+        Troop troop = new Troop(game.getCurrentTurnGovernment(), troopType, currentBuilding.getLocation());
+        game.getCurrentTurnGovernment().getMilitaryUnits().add(troop);
         this.mapController.getTileByLocation(currentBuilding.getLocation().getLocationX(),
                 currentBuilding.getLocation().getLocationY() + 1).addMilitaryUnit(troop);
 
-        return Message.CREATE_UNIT_SUCCESSFUL;
+        MapController.getInstance().updateDetails();
+        return null;
     }
 }

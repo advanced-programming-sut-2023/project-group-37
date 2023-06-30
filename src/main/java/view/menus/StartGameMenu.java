@@ -46,7 +46,7 @@ public class StartGameMenu extends Application {
     @FXML
     private TextField username;
 
-    private HashMap<Integer, String> userTerritory = new HashMap<>();
+    private final HashMap<Integer, String> userTerritory = new HashMap<>();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -109,11 +109,11 @@ public class StartGameMenu extends Application {
         userTerritory.put(Integer.parseInt(territory), username);
     }
 
-    public void back(MouseEvent mouseEvent) throws Exception {
+    public void back() throws Exception {
         appController.runMenu(Result.ENTER_MAIN_MENU);
     }
 
-    public void startGame(MouseEvent mouseEvent) throws Exception {
+    public void startGame() throws Exception {
         createGame(userTerritory);
     }
 
@@ -127,7 +127,6 @@ public class StartGameMenu extends Application {
         Map map = Map.getMapCopyByName(mapName.getText());
 
         assert map != null;
-        governments.add(new Government(User.getCurrentUser(), Color.RED.getColor(), map, 1));
 
         int index = 1;
         for (java.util.Map.Entry<Integer, String> integerStringEntry : userTerritory.entrySet()) {

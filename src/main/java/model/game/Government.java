@@ -46,10 +46,10 @@ public class Government {
         this.militaryUnits = new ArrayList<>();
         this.buildings = new ArrayList<>();
         this.stockpile = new ArrayList<>();
-        Storage firstStockPlie = new Storage(this, territory.getFirstStockpileLocation(), BuildingType.STOCKPILE);
-        this.stockpile.add(firstStockPlie);
-        firstStockPlie.getLocation().setBuilding(firstStockPlie);
-        this.buildings.add(firstStockPlie);
+        Storage firstStockPile = new Storage(this, territory.getFirstStockpileLocation(), BuildingType.STOCKPILE);
+        this.stockpile.add(firstStockPile);
+        firstStockPile.getLocation().setBuilding(firstStockPile);
+        this.buildings.add(firstStockPile);
         this.addItem(Item.WOOD, 100);
         this.addItem(Item.STONE, 50);
         this.granary = new ArrayList<>();
