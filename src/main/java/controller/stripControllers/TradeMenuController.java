@@ -1,12 +1,9 @@
 package controller.stripControllers;
 
 import controller.MultiMenuFunctions;
-import javafx.event.EventHandler;
-import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -15,9 +12,7 @@ import view.enums.PopUp;
 
 public class TradeMenuController {
     private final Pane stripPane;
-    private final int sizeOfImage;
     private static Game game;
-    private Label amount;
     private Label forTrade;
     private int tradeAmount;
     private final Label donate = new Label("Donate");
@@ -25,7 +20,6 @@ public class TradeMenuController {
 
     public TradeMenuController(Pane stripPane) {
         this.stripPane = stripPane;
-        this.sizeOfImage = 0;
     }
 
     public static void setGame(Game game) {
@@ -58,12 +52,7 @@ public class TradeMenuController {
                 label.setBackground(Background.fill(Color.GOLD));
                 label.setTextFill(Color.BLUE);
                 stripPane.getChildren().add(label);
-                label.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        gotoGovernment(government);
-                    }
-                });
+                label.setOnMouseClicked(mouseEvent -> gotoGovernment(government));
                 i++;
             }
         }
@@ -77,7 +66,7 @@ public class TradeMenuController {
         for (Item item : Item.getAllItems()) {
             if (!item.getCategory().equals(ItemCategory.ANIMALS)) {
                 ImageView imageView = MultiMenuFunctions.getImageView(item.getImageUrl(), 40);
-                imageView.setLayoutX(50 + ((i % (Item.getAllItems().size() / 2)) * 90));
+                imageView.setLayoutX(50 + ((i % (Item.getAllItems().size() / 2.0)) * 90));
                 if (i < Item.getAllItems().size() / 2) imageView.setLayoutY(10);
                 else imageView.setLayoutY(60);
 
@@ -114,13 +103,10 @@ public class TradeMenuController {
         back.setLayoutY(60);
 
         stripPane.getChildren().add(back);
-        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                switch (flag) {
-                    case 1 -> run();
-                    case 2 -> gotoGovernment(selectedGovernment);
-                }
+        back.setOnMouseClicked(mouseEvent -> {
+            switch (flag) {
+                case 1 -> run();
+                case 2 -> gotoGovernment(selectedGovernment);
             }
         });
     }
@@ -135,12 +121,7 @@ public class TradeMenuController {
         plus.setLayoutY(15);
 
         stripPane.getChildren().add(plus);
-        plus.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                increase(item);
-            }
-        });
+        plus.setOnMouseClicked(mouseEvent -> increase());
 
         ImageView minus = MultiMenuFunctions.getImageView("/Image/Button/minus.jpg", 40);
         minus.setLayoutX(450);
@@ -148,20 +129,15 @@ public class TradeMenuController {
 
         stripPane.getChildren().add(minus);
 
-        minus.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                decrease(item);
-            }
-        });
+        minus.setOnMouseClicked(mouseEvent -> decrease());
     }
 
-    private void increase(Item item) {
+    private void increase() {
         tradeAmount++;
         forTrade.setText("Trade : " + tradeAmount);
     }
 
-    private void decrease(Item item) {
+    private void decrease() {
         if (tradeAmount == 0) return;
         tradeAmount--;
         forTrade.setText("Trade : " + tradeAmount);
@@ -174,26 +150,16 @@ public class TradeMenuController {
         donate.setStyle("-fx-font-size: 20");
         stripPane.getChildren().add(donate);
 
-        donate.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                donate(item, selectedGovernment);
-            }
-        });
+        donate.setOnMouseClicked(mouseEvent -> donate(item, selectedGovernment));
 
         request.setLayoutX(520);
         request.setLayoutY(50);
         request.setBackground(Background.fill(Color.BROWN));
         request.setStyle("-fx-font-size: 20");
-        request.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                request(item, selectedGovernment);
-            }
-        });
+        request.setOnMouseClicked(mouseEvent -> request(item, selectedGovernment));
         stripPane.getChildren().add(request);
 
-        amount = new Label("You have : " + game.getCurrentTurnGovernment().getItemAmount(item));
+        Label amount = new Label("You have : " + game.getCurrentTurnGovernment().getItemAmount(item));
         amount.setLayoutX(230);
         amount.setLayoutY(30);
         amount.setStyle("-fx-font-size: 20");
@@ -216,17 +182,12 @@ public class TradeMenuController {
         textInputDialog.setHeaderText("Donate");
         textInputDialog.show();
 
-        textInputDialog.setOnCloseRequest(new EventHandler<DialogEvent>() {
-            @Override
-            public void handle(DialogEvent dialogEvent) {
-                String message = textInputDialog.getContentText();
+        textInputDialog.setOnCloseRequest(dialogEvent -> {
+            String message = textInputDialog.getContentText();
 
-                new TradeRequest(item, tradeAmount, 0, message, game.getCurrentTurnGovernment(),
-                        selectedGovernment, game.getIndex());
-            }
+            new TradeRequest(item, tradeAmount, 0, message, game.getCurrentTurnGovernment(),
+                    selectedGovernment, game.getIndex());
         });
-
-
     }
 
     private void request(Item item, Government selectedGovernment) {
@@ -236,24 +197,15 @@ public class TradeMenuController {
 
         final String[] message = {""};
 
-        price.setOnCloseRequest(new EventHandler<DialogEvent>() {
-            @Override
-            public void handle(DialogEvent dialogEvent) {
-                TextInputDialog textInputDialog = new TextInputDialog("Enter your message : ");
-                textInputDialog.setHeaderText("Request");
-                textInputDialog.show();
-                textInputDialog.setOnCloseRequest(new EventHandler<DialogEvent>() {
-                    @Override
-                    public void handle(DialogEvent dialogEvent) {
-                        message[0] = textInputDialog.getContentText();
-                        new TradeRequest(item, tradeAmount, 10, message[0], game.getCurrentTurnGovernment(),
-                                selectedGovernment, game.getIndex());
-                    }
-                });
-
-            }
+        price.setOnCloseRequest(dialogEvent -> {
+            TextInputDialog textInputDialog = new TextInputDialog("Enter your message : ");
+            textInputDialog.setHeaderText("Request");
+            textInputDialog.show();
+            textInputDialog.setOnCloseRequest(dialogEvent1 -> {
+                message[0] = textInputDialog.getContentText();
+                new TradeRequest(item, tradeAmount, 10, message[0], game.getCurrentTurnGovernment(),
+                        selectedGovernment, game.getIndex());
+            });
         });
-
-
     }
 }
