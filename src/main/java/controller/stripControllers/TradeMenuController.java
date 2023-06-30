@@ -18,6 +18,7 @@ public class TradeMenuController {
     private static Game game;
     private Label amount;
     private Label forTrade;
+    private int tradeAmount;
 
     public TradeMenuController(Pane stripPane) {
         this.stripPane = stripPane;
@@ -120,21 +121,47 @@ public class TradeMenuController {
     }
 
     private void addLabelsAndButtons(Item item) {
-        amount = new Label(Integer.toString(game.getCurrentTurnGovernment().getItemAmount(item)));
+        tradeAmount = 0;
+
+
+        amount = new Label("You have : " + game.getCurrentTurnGovernment().getItemAmount(item));
         amount.setLayoutX(230);
-        amount.setLayoutY(15);
+        amount.setLayoutY(30);
+        amount.setStyle("-fx-font-size: 20");
+        stripPane.getChildren().add(amount);
+
+        forTrade = new Label("Trade : " + tradeAmount);
+        forTrade.setLayoutX(230);
+        forTrade.setLayoutY(5);
+        forTrade.setStyle("-fx-font-size: 20");
+        stripPane.getChildren().add(forTrade);
 
         ImageView plus = MultiMenuFunctions.getImageView("/Image/Button/plus.jpg", 40);
         plus.setLayoutX(300);
         plus.setLayoutY(15);
 
         stripPane.getChildren().add(plus);
+        plus.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+
+            }
+        });
 
         ImageView minus = MultiMenuFunctions.getImageView("/Image/Button/minus.jpg", 40);
         minus.setLayoutX(350);
         minus.setLayoutY(15);
 
         stripPane.getChildren().add(minus);
+
+        minus.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+
+            }
+        });
     }
+
+
 
 }
