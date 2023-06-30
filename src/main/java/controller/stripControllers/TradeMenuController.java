@@ -2,6 +2,7 @@ package controller.stripControllers;
 
 import controller.MultiMenuFunctions;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
@@ -11,7 +12,10 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import model.game.*;
+import view.enums.Message;
 import view.enums.PopUp;
+
+import java.util.ArrayList;
 
 public class TradeMenuController {
     private final Pane stripPane;
@@ -90,11 +94,13 @@ public class TradeMenuController {
 
         Label sent = new Label("Sent");
         Label received = new Label("Received");
+        Label newTrades = new Label("New Trades");
 
         sent.setStyle("-fx-font-size: 20");
         sent.setBackground(Background.fill(Color.GREEN));
         sent.setLayoutX(150);
         sent.setLayoutY(15);
+        sent.setPrefWidth(received.getPrefWidth());
 
         sent.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -107,8 +113,8 @@ public class TradeMenuController {
 
         received.setStyle("-fx-font-size: 20");
         received.setBackground(Background.fill(Color.GREEN));
-        received.setLayoutX(150);
-        received.setLayoutY(40);
+        received.setLayoutX(250);
+        received.setLayoutY(15);
 
         received.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -119,11 +125,33 @@ public class TradeMenuController {
 
         stripPane.getChildren().add(received);
 
+        newTrades.setStyle("-fx-font-size: 20");
+        newTrades.setBackground(Background.fill(Color.GREEN));
+        newTrades.setLayoutX(350);
+        newTrades.setLayoutY(15);
+        newTrades.setPrefWidth(received.getPrefWidth());
+
+        newTrades.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                showNewTrades();
+            }
+        });
+
+        stripPane.getChildren().add(newTrades);
+
     }
 
     private void showSentTrades() {
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+
+        Label trades = new Label(createSentTrades());
+        trades.setLayoutX(10);
+        trades.setLayoutY(10);
+        trades.setStyle("-fx-font-size: 15");
+
+        stripPane.getChildren().add(trades);
 
     }
 
@@ -131,6 +159,97 @@ public class TradeMenuController {
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
 
+        Label trades = new Label(createReceivedHistory());
+        trades.setLayoutX(10);
+        trades.setLayoutY(10);
+        trades.setStyle("-fx-font-size: 15");
+
+        stripPane.getChildren().add(trades);
+
+    }
+
+    private void showNewTrades() {
+        if (this.stripPane.getChildren().size() > 0)
+            this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
+
+        Label trades = new Label(createNewTrades());
+        trades.setLayoutX(10);
+        trades.setLayoutY(10);
+        trades.setStyle("-fx-font-size: 15");
+
+        stripPane.getChildren().add(trades);
+
+        Label acceptButton = new Label("Accept");
+        acceptButton.setLayoutX(600);
+        acceptButton.setLayoutY(10);
+        acceptButton.setStyle("-fx-font-size: 20");
+
+        acceptButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                acceptTrade();
+            }
+        });
+
+        stripPane.getChildren().add(acceptButton);
+
+    }
+
+    private void acceptTrade() {
+        TextInputDialog textInputDialog = new TextInputDialog("Enter id : ");
+        textInputDialog.setHeaderText("Accept Trade");
+        textInputDialog.show();
+
+
+        int id = Integer.parseInt(textInputDialog.getContentText());
+        final String[] reply = new String[1];
+
+        textInputDialog.setOnCloseRequest(new EventHandler<DialogEvent>() {
+            @Override
+            public void handle(DialogEvent dialogEvent) {
+                TextInputDialog t = new TextInputDialog("Enter your Reply : ");
+                t.setHeaderText("Trade Reply");
+                t.show();
+                reply[0] = t.getContentText();
+
+                t.setOnCloseRequest(new EventHandler<DialogEvent>() {
+                    @Override
+                    public void handle(DialogEvent dialogEvent) {
+                        ArrayList<TradeRequest> requests = TradeRequest.getRequestsByReceiver(game.getCurrentTurnGovernment());
+                        if (requests.size() < id || id < 1) {
+                            PopUp.INVALID_ID.show();
+                            return;
+                        }
+                        TradeRequest request = requests.get(id - 1);
+                        if (!request.doTrade(reply[0])) {
+                            PopUp.TRADE_FAILED.show();
+                            return;
+                        }
+                        PopUp.TRADE_SUCCESS.show();
+                    }
+                });
+
+            }
+        });
+
+    }
+
+    public String createNewTrades() {
+        StringBuilder newTrades = new StringBuilder();
+        newTrades.append("Here's the trades you have received in last turn:\n");
+        int id = 1;
+        for (TradeRequest request : TradeRequest.getRequestsByReceiver(game.getCurrentTurnGovernment())) {
+            if ((request.getTime() == (game.getIndex() - 1)) && !request.isDone()) {
+                newTrades.append("id: ").append(id).append(", Sender: ").append(request.getSender().getUser().getUsername())
+                        .append(", Type: ").append(request.getItem().getName()).append(", Amount: ")
+                        .append(request.getItemAmount())
+                        .append(", Price: ").append(request.getPrice()).append("\n").append("Their Message: ")
+                        .append(request.getSenderMessage()).append("\n");
+            }
+            id++;
+        }
+
+        return newTrades.toString().trim();
     }
 
     private void gotoGovernment(Government selectedGovernment) {
@@ -320,5 +439,39 @@ public class TradeMenuController {
             }
         });
 
+    }
+
+    private String createReceivedHistory() {
+        StringBuilder message = new StringBuilder();
+        message.append("Here's the trades you received and replied:\n");
+        for (TradeRequest request : TradeRequest.getRequestsByReceiver(game.getCurrentTurnGovernment())) {
+            if (request.isDone()) {
+                message.append("Sender: ").append(request.getSender().getUser().getUsername())
+                        .append(", Type: ").append(request.getItem().getName()).append(", Amount: ")
+                        .append(request.getItemAmount())
+                        .append(", Price: ").append(request.getPrice()).append("\n").append("Their Message: ")
+                        .append(request.getSenderMessage()).append("You replied: ")
+                        .append(request.getReceiverMessage()).append("\n");
+            }
+
+        }
+
+        return message.toString().trim();
+    }
+
+    private String createSentTrades() {
+        StringBuilder message = new StringBuilder();
+        message.append("Here's the trades you've sent:\n");
+        for (TradeRequest request : TradeRequest.getRequestsBySender(game.getCurrentTurnGovernment())) {
+            message.append("Receiver: ").append(request.getReceiver().getUser().getUsername())
+                    .append(", Type: ").append(request.getItem().getName()).append(", Amount: ")
+                    .append(request.getItemAmount())
+                    .append(", Price: ").append(request.getPrice()).append("\n").append("Your Message: ")
+                    .append(request.getSenderMessage()).append("\n");
+
+            if (request.isDone())
+                message.append("--isDone ").append("Their reply: ").append(request.getReceiverMessage()).append("\n");
+        }
+        return message.toString().trim();
     }
 }
