@@ -137,19 +137,19 @@ public class TradeMenuController {
         stripPane.getChildren().add(forTrade);
 
         ImageView plus = MultiMenuFunctions.getImageView("/Image/Button/plus.jpg", 40);
-        plus.setLayoutX(300);
+        plus.setLayoutX(400);
         plus.setLayoutY(15);
 
         stripPane.getChildren().add(plus);
         plus.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-
+                increase(item);
             }
         });
 
         ImageView minus = MultiMenuFunctions.getImageView("/Image/Button/minus.jpg", 40);
-        minus.setLayoutX(350);
+        minus.setLayoutX(450);
         minus.setLayoutY(15);
 
         stripPane.getChildren().add(minus);
@@ -157,11 +157,20 @@ public class TradeMenuController {
         minus.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-
+                decrease(item);
             }
         });
     }
 
+    private void increase(Item item) {
+        if (tradeAmount == game.getCurrentTurnGovernment().getItemAmount(item)) return;
+        tradeAmount++;
+        forTrade.setText("Trade : " + tradeAmount);
+    }
 
-
+    private void decrease(Item item) {
+        if (tradeAmount == 0) return;
+        tradeAmount--;
+        forTrade.setText("Trade : " + tradeAmount);
+    }
 }

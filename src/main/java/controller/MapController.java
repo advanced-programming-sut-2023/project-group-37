@@ -272,16 +272,14 @@ public class MapController {
             return;
 
         if (this.isOnAttack) {
-            if(selectedTiles.size() == 1) {
-                if(this.downPane.attack(selectedTiles.get(0)))
+            if (selectedTiles.size() == 1) {
+                if (this.downPane.attack(selectedTiles.get(0)))
                     this.showAttacking();
             }
-        }
-        else if (this.isOnMove) {
+        } else if (this.isOnMove) {
             if (selectedTiles.size() == 1)
                 this.downPane.move(selectedTiles.get(0));
-        }
-        else this.downPane.setForTiles(selectedTiles);
+        } else this.downPane.setForTiles(selectedTiles);
 
         this.cursorRight = 0;
         this.cursorDown = 0;
@@ -339,7 +337,7 @@ public class MapController {
     }
 
     public Tile getTileByLocation(int x, int y) {
-        return this.map.getTileByLocation(x,y);
+        return this.map.getTileByLocation(x, y);
     }
 
     public Government getCurrentGovernment() {
