@@ -2,6 +2,7 @@ package controller.stripControllers;
 
 import controller.MultiMenuFunctions;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -132,23 +133,19 @@ public class UnitMenuController {
             else this.militaryUnits.remove(i);
         }
 
-        ArrayList<Tile> newTiles = new ArrayList<>();
-        Tile.removeSelectedTiles();
-        for (Tile tile : this.selectedTiles) {
-            boolean havUnit = false;
-            for (MilitaryUnit militaryUnit : this.militaryUnits) {
-                if (militaryUnit.getLocation() == tile) {
-                    havUnit = true;
-                    break;
-                }
-            }
-            if (havUnit)
-                newTiles.add(tile);
+        TextInputDialog textInputDialog = new TextInputDialog(String.valueOf(this.militaryUnits.size()));
+        textInputDialog.setHeaderText("Number of units");
+        textInputDialog.show();
+
+        int count = this.militaryUnits.size();
+        try {
+            count = Integer.parseInt(textInputDialog.getContentText());
+        }
+        catch (Exception ignored) {
         }
 
-        this.selectedTiles = newTiles;
-        for (Tile tile : selectedTiles)
-            tile.setSelectedEffect();
+        if (militaryUnits.size() > count)
+            this.militaryUnits.subList(count, militaryUnits.size()).clear();
 
         this.showUnitsInStripPane();
     }
@@ -161,6 +158,21 @@ public class UnitMenuController {
             }
             else this.militaryUnits.remove(i);
         }
+
+        TextInputDialog textInputDialog = new TextInputDialog(String.valueOf(this.militaryUnits.size()));
+        textInputDialog.setHeaderText("Number of units");
+        textInputDialog.show();
+
+        int count = this.militaryUnits.size();
+        try {
+            count = Integer.parseInt(textInputDialog.getContentText());
+        }
+        catch (Exception ignored) {
+        }
+
+        if (militaryUnits.size() > count)
+            this.militaryUnits.subList(count, militaryUnits.size()).clear();
+
         this.showUnitsInStripPane();
     }
 
