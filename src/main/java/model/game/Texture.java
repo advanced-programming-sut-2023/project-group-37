@@ -32,7 +32,7 @@ public enum Texture {
             ("/Image/Texture/grass.jpg")).toExternalForm()), true, true),
 
     DESERT_TREE("desert tree", new Image(Objects.requireNonNull(Texture.class.getResource
-            ("/Image/Texture/olive-tree.png")).toExternalForm()), false, false),
+            ("/Image/Texture/desert-shrub.png")).toExternalForm()), false, false),
 
     CHERRY_PALM("cherry palm", new Image(Objects.requireNonNull(Texture.class.getResource
             ("/Image/Texture/cherry-palm.png")).toExternalForm()), false, false),
