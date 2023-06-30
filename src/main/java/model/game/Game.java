@@ -3,10 +3,7 @@ package model.game;
 import controller.GameController;
 import controller.MultiMenuFunctions;
 import model.buildings.*;
-import model.people.MilitaryMachine;
-import model.people.MilitaryUnit;
-import model.people.MilitaryUnitStance;
-import model.people.Troop;
+import model.people.*;
 
 import java.util.ArrayList;
 
@@ -64,12 +61,9 @@ public class Game {
         return this.currentTurnGovernment;
     }
 
-    public void addGovernment(Government government) {
-        this.governments.add(government);
-    }
-
     public void goToNextTurn() {
         if (this.index == this.governments.size() - 1) {
+            System.out.println(0);
             for (Government government : this.governments) {
                 int innCount = 0, churchCount = 0, cathedralCount = 0, stableCount = 0;
                 for (Building building : government.getBuildings()) {
@@ -155,9 +149,8 @@ public class Game {
 
             for (Government government : this.governments) {
                 for (MilitaryUnit militaryUnit : government.getMilitaryUnits()) {
-                    if (militaryUnit.isOnMove()) {
+                    if (militaryUnit.isOnMove())
                         militaryUnit.move();
-                    }
 
                     else if (militaryUnit.isOnPatrol())
                         militaryUnit.patrol();
@@ -166,7 +159,7 @@ public class Game {
                         militaryUnit.getMoatTarget().changeMoat();
 
                     if (militaryUnit instanceof Troop troop) {
-                        if (troop.getType().getName().equals("tunneler"))
+                        if (troop.getType() == TroopType.TUNNELER)
                             continue;
                     }
 

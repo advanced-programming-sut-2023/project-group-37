@@ -59,7 +59,7 @@ public class Tile extends Rectangle {
         this.texture = bigTile.texture;
     }
 
-    private static void removeSelectedTiles() {
+    public static void removeSelectedTiles() {
         for (Tile selectedTile : selectedTiles) {
             selectedTile.setWidth(20);
             selectedTile.setHeight(20);
@@ -319,5 +319,4 @@ public class Tile extends Rectangle {
     public boolean hasBuilding() {
         return hasBuilding;
     }
-
 }

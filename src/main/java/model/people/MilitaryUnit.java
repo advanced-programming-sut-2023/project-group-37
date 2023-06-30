@@ -158,7 +158,9 @@ public abstract class MilitaryUnit {
     }
 
     public void move() {
+        System.out.println(1);
         if (this.route.size() > 1) {
+            System.out.println(2);
             LinkedList<Tile> route = this.getRoute();
             int speed = this.getSpeed();
             if (route.size() - 1 < speed)
@@ -175,11 +177,11 @@ public abstract class MilitaryUnit {
                     }
                 }
             }
+
             if (hasKillingPit) {
                 this.loyalty.getMilitaryUnits().remove(this);
                 this.location.getMilitaryUnits().remove(this);
             } else {
-
                 this.location.getMilitaryUnits().remove(this);
                 this.location = route.get(speed);
                 this.location.addMilitaryUnit(this);

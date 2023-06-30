@@ -91,6 +91,9 @@ public class MapController {
         this.mainMap.setOnKeyPressed(keyEvent -> {
             String keyName = keyEvent.getCode().getName();
 
+            if (!keyName.equals("D"))
+                Tile.removeSelectedTiles();
+
             switch (keyName) {
                 case "Left" -> {
                     goLeft();
@@ -133,10 +136,10 @@ public class MapController {
                 case "A" -> {
                     this.setCursorOn(CursorType.SELECT_ATTACK_DESTINATION);
                     this.isOnAttack = true;
-                    this.isOnMove = false;
                 }
                 case "T" -> this.downPane.setForTradeMenu();
                 case "S" -> this.downPane.setForShopMenu();
+                case "N" -> this.game.goToNextTurn();
             }
         });
 
@@ -180,7 +183,10 @@ public class MapController {
             isNotDragged.set(false);
         });
 
-        this.mainMap.setOnMouseReleased((MouseEvent mouseEvent) -> this.setSelectedTiles(rectangleTiles.get()));
+        this.mainMap.setOnMouseReleased((MouseEvent mouseEvent) ->{
+            if (!isNotDragged.get())
+                this.setSelectedTiles(rectangleTiles.get());
+        });
 
         this.mainMap.setOnMouseClicked(mouseEvent -> {
             if (isNotDragged.get()) {
@@ -191,21 +197,11 @@ public class MapController {
                         y + this.cursorDown);
 
                 tile.setSelectedEffect();
-                ArrayList<Tile> selectedTiles = new ArrayList<>();
-                selectedTiles.add(tile);
-                this.setSelectedTiles(selectedTiles);
+                this.setSelectedTile(tile);
             }
             isNotDragged.set(true);
         });
 
-    }
-
-    public void goTo(int x, int y) {
-        if (x < 32 || y < 18 || x > this.map.getSize() - 34 || y > this.map.getSize() - 29)
-            return;
-
-        this.mainMap.setLayoutX((32 - x) * Tile.getTileSize());
-        this.mainMap.setLayoutY((18 - y) * Tile.getTileSize());
     }
 
     public void createDownPane(Pane gamePane) throws URISyntaxException {
@@ -217,7 +213,7 @@ public class MapController {
         this.goldLabel = new Label(String.valueOf(currentGovernment.getGold()));
         this.popularityLabel = new Label(String.valueOf(currentGovernment.getPopularity()));
 
-        this.goldLabel.setLayoutX(940);
+        this.goldLabel.setLayoutX(965);
         this.goldLabel.setLayoutY(93);
         this.popularityLabel.setLayoutX(965);
         this.popularityLabel.setLayoutY(113);
@@ -266,28 +262,42 @@ public class MapController {
         this.cursorDown = 14;
     }
 
+    private void setSelectedTile(Tile tile) {
+        if (tile == null)
+            return;
+
+        this.mainMap.setCursor(ImageCursor.DEFAULT);
+
+        if (this.isOnAttack) {
+            if (this.downPane.attack(tile))
+                this.showAttacking();
+        }
+
+        else if (this.isOnMove)
+            this.downPane.move(tile);
+
+        this.downPane.setForTile(tile);
+
+        this.cursorRight = 0;
+        this.cursorDown = 0;
+        this.isOnMove = false;
+        this.isOnAttack = false;
+    }
+
     private void setSelectedTiles(ArrayList<Tile> selectedTiles) {
         this.mainMap.setCursor(ImageCursor.DEFAULT);
 
         if (selectedTiles == null)
             return;
 
-        if (this.isOnAttack) {
-            if(selectedTiles.size() == 1) {
-                if(this.downPane.attack(selectedTiles.get(0)))
-                    this.showAttacking();
-            }
-        }
-        else if (this.isOnMove) {
-            if (selectedTiles.size() == 1)
-                this.downPane.move(selectedTiles.get(0));
-        }
-        else this.downPane.setForTiles(selectedTiles);
+        if (selectedTiles.size() > 1) {
+            this.downPane.setForTiles(selectedTiles);
 
-        this.cursorRight = 0;
-        this.cursorDown = 0;
-        this.isOnMove = false;
-        this.isOnAttack = false;
+            this.cursorRight = 0;
+            this.cursorDown = 0;
+            this.isOnMove = false;
+            this.isOnAttack = false;
+        }
     }
 
     private void showAttacking() {
