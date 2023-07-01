@@ -51,7 +51,7 @@ public class PopularityMenuController {
 
     private void setFood() {
         Label food = new Label("Food rate : " + game.getCurrentTurnGovernment().getFoodRate());
-        food.setLayoutX(330);//60
+        food.setLayoutX(380);//60
         food.setLayoutY(15);//15
 
         stripPane.getChildren().add(food);
@@ -59,7 +59,7 @@ public class PopularityMenuController {
         food.setStyle("-fx-font-size: 20");
         food.setBackground(Background.fill(Color.WHITE));
 
-        foodFace.setLayoutX(350);
+        foodFace.setLayoutX(410);
         foodFace.setLayoutY(60);
         stripPane.getChildren().add(foodFace);
 
@@ -68,7 +68,7 @@ public class PopularityMenuController {
 
     private void setReligion() {
         Label religion = new Label("Religion rate : " + game.getCurrentTurnGovernment().getReligionPopularityRate());
-        religion.setLayoutX(175);
+        religion.setLayoutX(200);
         religion.setLayoutY(15);
 
         stripPane.getChildren().add(religion);
@@ -76,7 +76,7 @@ public class PopularityMenuController {
         religion.setStyle("-fx-font-size: 20");
         religion.setBackground(Background.fill(Color.WHITE));
 
-        religionFace.setLayoutX(220);
+        religionFace.setLayoutX(250);
         religionFace.setLayoutY(60);
         stripPane.getChildren().add(religionFace);
 
@@ -94,7 +94,7 @@ public class PopularityMenuController {
         stripPane.getChildren().add(fear);
 
         updateFace();
-        fearFace.setLayoutX(750);
+        fearFace.setLayoutX(780);
         fearFace.setLayoutY(25);
 
         stripPane.getChildren().add(fearFace);
@@ -126,7 +126,7 @@ public class PopularityMenuController {
     private void setTaxes() {
         Label tax = new Label("Tax rate : " + game.getCurrentTurnGovernment().getTaxRate());
 
-        tax.setLayoutX(480);
+        tax.setLayoutX(500);
         tax.setLayoutY(15);
         tax.setStyle("-fx-font-size: 20");
         tax.setBackground(Background.fill(Color.WHITE));
@@ -134,7 +134,7 @@ public class PopularityMenuController {
         stripPane.getChildren().add(tax);
 
         taxFace = MultiMenuFunctions.getImageView("/Image/Popularity Face/green-face.png", 30);
-        taxFace.setLayoutX(520);
+        taxFace.setLayoutX(550);
         taxFace.setLayoutY(60);
         stripPane.getChildren().add(taxFace);
 
