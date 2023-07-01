@@ -120,4 +120,7 @@ public class DownPane extends Pane {
         this.stripPaneController.deselect();
     }
 
+    public void runPopularityMenu() {
+        this.stripPaneController.runPopularityMenu();
+    }
 }

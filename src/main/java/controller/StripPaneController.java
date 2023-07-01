@@ -1,9 +1,6 @@
 package controller;
 
-import controller.stripControllers.BuildingMenuController;
-import controller.stripControllers.ShopMenuController;
-import controller.stripControllers.TradeMenuController;
-import controller.stripControllers.UnitMenuController;
+import controller.stripControllers.*;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -32,6 +29,7 @@ public class StripPaneController {
     private final UnitMenuController unitMenuController;
     private final BuildingMenuController buildingMenuController;
     private final TradeMenuController tradeMenuController;
+    private final PopularityMenuController popularityMenuController;
     private final GameController gameController;
     private final HashMap<BuildingType, ImageView> buildingTypeImages;
     private final HashMap<DefensiveBuildingType, ImageView> defensiveBuildingTypeImages;
@@ -52,6 +50,7 @@ public class StripPaneController {
         this.unitMenuController = new UnitMenuController(stripPane);
         this.buildingMenuController = new BuildingMenuController(stripPane, this);
         this.tradeMenuController = new TradeMenuController(stripPane);
+        this.popularityMenuController = new PopularityMenuController(stripPane);
 
         for (BuildingType buildingType : BuildingType.values()) {
             ImageView imageView = MultiMenuFunctions.getImageView(buildingType.getImage(), this.sizeOfImages);
@@ -219,5 +218,9 @@ public class StripPaneController {
 
     public void move(Tile tile) {
         this.unitMenuController.move(tile).show();
+    }
+
+    public void runPopularityMenu() {
+        this.popularityMenuController.run();
     }
 }

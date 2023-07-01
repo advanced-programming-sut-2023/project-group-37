@@ -4,6 +4,8 @@ import javafx.event.EventHandler;
 import javafx.scene.ImageCursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -14,9 +16,11 @@ import model.game.Map;
 import model.game.Tile;
 import model.graphic.CursorType;
 import model.graphic.DownPane;
+import view.animation.FaceAnimation;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -30,6 +34,7 @@ public class MapController {
     private Pane chooserRectangle;
     private Label goldLabel;
     private Label popularityLabel;
+    private ImageView faceImage;
     private Government currentGovernment;
     private Label attackingLabel;
     private double cursorRight;
@@ -142,7 +147,7 @@ public class MapController {
                 }
                 case "T" -> this.downPane.setForTradeMenu();
                 case "S" -> this.downPane.setForShopMenu();
-                case "N" -> this.game.goToNextTurn();
+                case "N" -> this.goToNextTurn();
             }
         });
 
@@ -207,9 +212,28 @@ public class MapController {
 
     }
 
+    private void goToNextTurn() {
+        int prePopularity = this.game.getNextTurnGovernment().getPopularity();
+        this.game.goToNextTurn();
+        int nextPopularity = this.game.getCurrentTurnGovernment().getPopularity();
+        FaceAnimation faceAnimation = new FaceAnimation(faceImage, prePopularity, nextPopularity);
+        faceAnimation.play();
+    }
+
     public void createDownPane(Pane gamePane) throws URISyntaxException {
         this.downPane = new DownPane(this);
         this.downPane.initialize(gamePane);
+        this.faceImage = new ImageView(new Image(Objects.requireNonNull(this.getClass().getResource(
+                "/Image/Face Animation/face10.png")).toExternalForm(), 130, 100, false, false));
+
+        this.faceImage.setLayoutX(1100);
+
+        this.faceImage.setOnMouseEntered((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.HAND));
+        this.faceImage.setOnMouseExited((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.DEFAULT));
+
+        this.faceImage.setOnMouseClicked((MouseEvent mouseEvent) -> this.downPane.runPopularityMenu());
+
+        this.downPane.getChildren().add(faceImage);
     }
 
     public void createDetailLabels(Pane detailPane) {
