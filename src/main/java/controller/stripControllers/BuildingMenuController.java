@@ -213,10 +213,9 @@ public class BuildingMenuController {
         game.getCurrentTurnGovernment().removeItem(weapon, 1);
         game.getCurrentTurnGovernment().setGold(game.getCurrentTurnGovernment().getGold() - goldCost);
 
-        Troop troop = new Troop(game.getCurrentTurnGovernment(), troopType,
+        new Troop(game.getCurrentTurnGovernment(), troopType,
                 this.mapController.getTileByLocation(currentBuilding.getLocation().getLocationX(),
                 currentBuilding.getLocation().getLocationY() + 2));
-        game.getCurrentTurnGovernment().getMilitaryUnits().add(troop);
 
         this.mapController.getTileByLocation(currentBuilding.getLocation().getLocationX(),
                 currentBuilding.getLocation().getLocationY() + 2).updateImage();

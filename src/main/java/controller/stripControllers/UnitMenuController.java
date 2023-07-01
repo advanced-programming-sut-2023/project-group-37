@@ -61,8 +61,12 @@ public class UnitMenuController {
 
     public void run(ArrayList<Tile> selectedTiles) {
         this.militaryUnits = new ArrayList<>();
-        for (Tile tile : selectedTiles)
-            this.militaryUnits.addAll(tile.getMilitaryUnits());
+        for (Tile tile : selectedTiles) {
+            for (MilitaryUnit militaryUnit : tile.getMilitaryUnits()) {
+                if (militaryUnit.getLoyalty() == game.getCurrentTurnGovernment())
+                    this.militaryUnits.add(militaryUnit);
+            }
+        }
 
         this.selectedTiles = selectedTiles;
         this.showUnitsInStripPane();

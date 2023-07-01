@@ -34,6 +34,7 @@ public abstract class MilitaryUnit {
         this.loyalty = loyalty;
         this.location = location;
         this.location.addMilitaryUnit(this);
+        this.loyalty.getMilitaryUnits().add(this);
         this.hitpoints = hitpoints;
         this.damage = damage;
         this.range = range;

@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import model.buildings.*;
 import model.game.Tile;
+import model.people.MilitaryUnit;
 import view.enums.PopUp;
 
 import java.util.ArrayList;
@@ -159,9 +160,11 @@ public class StripPaneController {
         boolean hasMilitaryUnit = false;
         for (Tile tile : selectedTiles) {
             if (tile.getMilitaryUnits().size() > 0) {
-                if (tile.getMilitaryUnits().get(0).getLoyalty() == gameController.getCurrentGame().getCurrentTurnGovernment()) {
-                    hasMilitaryUnit = true;
-                    break;
+                for (MilitaryUnit militaryUnit : tile.getMilitaryUnits()) {
+                    if (militaryUnit.getLoyalty() == gameController.getCurrentGame().getCurrentTurnGovernment()) {
+                        hasMilitaryUnit = true;
+                        break;
+                    }
                 }
             }
         }
