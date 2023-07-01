@@ -20,4 +20,5 @@ module Stronghold {
     opens model.user to com.google.gson;
     exports controller.viewControllers;
     opens controller.viewControllers to javafx.fxml;
+    exports view.animation;
 }

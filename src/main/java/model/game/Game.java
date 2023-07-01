@@ -4,6 +4,7 @@ import controller.GameController;
 import controller.MultiMenuFunctions;
 import model.buildings.*;
 import model.people.*;
+import view.animation.FaceAnimation;
 
 import java.util.ArrayList;
 
@@ -241,5 +242,9 @@ public class Game {
             return true;
         }
         return false;
+    }
+
+    public Government getNextTurnGovernment() {
+        return this.governments.get((index + 1) % this.governments.size());
     }
 }

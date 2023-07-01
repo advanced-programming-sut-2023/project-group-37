@@ -1,4 +1,4 @@
-package view;
+package view.animation;
 
 import controller.MultiMenuFunctions;
 import javafx.animation.Transition;
