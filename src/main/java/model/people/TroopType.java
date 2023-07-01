@@ -34,7 +34,7 @@ public enum TroopType {
             95, 1, Item.SWORD, Item.METAL_ARMOR, Item.HORSE, false, false),
 
     // Mercenary post:
-    ARABIAN_ARCHER("arabian-archer", "arabian/archer.png", BuildingType.MERCENARY_POST, 75,
+    ARABIAN_ARCHER("arabian-archer", "arabian/arabian-archer.png", BuildingType.MERCENARY_POST, 75,
             45, 45, 90, 12, null, null, false, true),
 
     SLAVE("slave", "arabian/slave.png", BuildingType.MERCENARY_POST, 5,
@@ -46,7 +46,7 @@ public enum TroopType {
     HORSE_ARCHER("horse-archer", "arabian/horse-archer.png", BuildingType.MERCENARY_POST, 80,
             55, 50, 95, 12, null, null, false, false),
 
-    ARABIAN_SWORDSMAN("arabian-swordsman", "arabian/swordsman.png", BuildingType.MERCENARY_POST, 80,
+    ARABIAN_SWORDSMAN("arabian-swordsman", "arabian/arabian-swordsman.png", BuildingType.MERCENARY_POST, 80,
             88, 88, 40, 1, null, null, false, false),
 
     ASSASSIN("assassin", "arabian/assassin.png", BuildingType.MERCENARY_POST, 60,
