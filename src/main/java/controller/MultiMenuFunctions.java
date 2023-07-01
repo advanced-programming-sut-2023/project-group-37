@@ -46,10 +46,20 @@ public class MultiMenuFunctions {
     }
 
     public static void setTileImage(Tile tile, Image image, String string) {
-        ImageView imageView = MultiMenuFunctions.getImageView(image, 2.8 * Tile.getTileSize());
+        ImageView imageView;
+        if (string.equals("Wall")) {
+            imageView = new ImageView(new Image(image.getUrl(), Tile.getTileSize(), 2.8 * Tile.getTileSize(), false, false));
+            imageView.setOnMouseEntered((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.HAND));
+            imageView.setOnMouseExited((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.DEFAULT));
+            imageView.setLayoutX(tile.getLayoutX());
+            imageView.setLayoutY(tile.getLayoutY() - Tile.getTileSize());
+        }
+        else {
+            imageView = MultiMenuFunctions.getImageView(image, 2.8 * Tile.getTileSize());
+            imageView.setLayoutX(tile.getLayoutX() - Tile.getTileSize());
+            imageView.setLayoutY(tile.getLayoutY() - Tile.getTileSize());
+        }
 
-        imageView.setLayoutX(tile.getLayoutX() - Tile.getTileSize());
-        imageView.setLayoutY(tile.getLayoutY() - Tile.getTileSize());
         Tooltip.install(imageView, new Tooltip(string));
 
         MapController.getInstance().getMainMap().getChildren().add(imageView);
