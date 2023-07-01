@@ -113,12 +113,15 @@ public class BuildingMenuController {
             repairLabel.setBackground(Background.fill(Color.BLACK));
             repairLabel.setLayoutY(40);
             repairLabel.setLayoutX(10);
+            repairLabel.setOnMouseEntered((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.HAND));
+            repairLabel.setOnMouseExited((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.DEFAULT));
 
             repairLabel.setDisable(defensiveBuilding.getMaxHitpoints() == defensiveBuilding.getHitpoints());
             repairLabel.setOnMouseClicked((MouseEvent mouseEvent) -> {
                 Message message = this.repair(defensiveBuilding);
                 if (message == Message.REPAIR_SUCCESS) {
                     repairLabel.setDisable(true);
+                    healthBar.setProgress(1);
                 }
             });
             this.stripPane.getChildren().add(repairLabel);
@@ -178,7 +181,7 @@ public class BuildingMenuController {
     public Message repair(DefensiveBuilding defensiveBuilding) {
         int stoneNeededToRepair = (int)
                 (1 - (double) (defensiveBuilding.getHitpoints() / defensiveBuilding.getMaxHitpoints())) *
-                defensiveBuilding.getType().getRawMaterialUsesForSecond();
+                defensiveBuilding.getDefensiveType().getStoneAmount();
 
         if (game.getCurrentTurnGovernment().removeItem(Item.STONE, stoneNeededToRepair))
             return Message.NOT_ENOUGH_STONE;

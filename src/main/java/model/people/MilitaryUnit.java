@@ -200,6 +200,13 @@ public abstract class MilitaryUnit {
 
     public void setRoute(LinkedList<Tile> route) {
         this.route = route;
+        this.target = new ArrayList<>();
+    }
+
+    public boolean isOnAttack() {
+        if (this.target == null)
+            return false;
+        return this.target.size() != 0;
     }
 
     public void setPatrol(LinkedList<Tile> patrolRoute) {
