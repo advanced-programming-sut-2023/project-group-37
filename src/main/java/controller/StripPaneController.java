@@ -1,6 +1,9 @@
 package controller;
 
 import controller.stripControllers.*;
+import javafx.event.EventHandler;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -55,7 +58,8 @@ public class StripPaneController {
             imageView.setOnMouseReleased(mouseEvent -> {
                 Tile tile = mapController.getTileByXY(mouseEvent.getSceneX(), mouseEvent.getSceneY());
                 if (tile == null) return;
-                mapController.getGame().getGameMenuController().dropBuilding(tile, buildingType.getName());
+                String message = mapController.getGame().getGameMenuController().dropBuilding(tile, buildingType.getName());
+                new Alert(Alert.AlertType.INFORMATION, message).show();
             });
             this.buildingTypeImages.put(buildingType, imageView);
         }
@@ -71,7 +75,8 @@ public class StripPaneController {
             imageView.setOnMouseReleased(mouseEvent -> {
                 Tile tile = mapController.getTileByXY(mouseEvent.getSceneX(), mouseEvent.getSceneY());
                 if (tile == null) return;
-                mapController.getGame().getGameMenuController().dropBuilding(tile, defensiveBuildingType.getName());
+                String message = mapController.getGame().getGameMenuController().dropBuilding(tile, defensiveBuildingType.getName());
+                new Alert(Alert.AlertType.INFORMATION, message).show();
             });
 
             this.defensiveBuildingTypeImages.put(defensiveBuildingType, imageView);
