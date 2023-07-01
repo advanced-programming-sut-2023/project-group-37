@@ -39,6 +39,7 @@ public class Government {
         this.user = user;
         this.territory = map.getCopyKeepByNumber(this, territoryNumber);
         this.color = color;
+        this.militaryUnits = new ArrayList<>();
         this.gold = 2000;
         this.territory.getKeep().setBuilding(new DefensiveBuilding(this, this.territory.getKeep(),
                 DefensiveBuildingType.KEEP, 'v'));
@@ -48,7 +49,6 @@ public class Government {
 
         this.people = new ArrayList<>();
         this.addPeasant(10);
-        this.militaryUnits = new ArrayList<>();
         this.buildings = new ArrayList<>();
         this.stockpile = new ArrayList<>();
         Storage firstStockPile = new Storage(this, territory.getFirstStockpileLocation(), BuildingType.STOCKPILE);

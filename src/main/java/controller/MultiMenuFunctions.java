@@ -47,7 +47,7 @@ public class MultiMenuFunctions {
 
     public static void setTileImage(Tile tile, Image image, String string) {
         ImageView imageView;
-        if (string.equals("Wall")) {
+        if (string.equals("Wall") || string.equals("Stairs")) {
             imageView = new ImageView(new Image(image.getUrl(), Tile.getTileSize(), 2.8 * Tile.getTileSize(), false, false));
             imageView.setOnMouseEntered((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.HAND));
             imageView.setOnMouseExited((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.DEFAULT));

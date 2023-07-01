@@ -11,6 +11,7 @@ import javafx.scene.shape.Rectangle;
 import model.buildings.*;
 import model.game.Tile;
 import model.people.MilitaryUnit;
+import view.enums.Message;
 import view.enums.PopUp;
 
 import java.util.ArrayList;
@@ -60,7 +61,8 @@ public class StripPaneController {
                 Tile tile = mapController.getTileByXY(mouseEvent.getSceneX(), mouseEvent.getSceneY());
                 if (tile == null) return;
                 String message = mapController.getGame().getGameMenuController().dropBuilding(tile, buildingType.getName());
-                new Alert(Alert.AlertType.INFORMATION, message).show();
+                if (!Objects.equals(message, Message.DROP_BUILDING_SUCCESS.toString()))
+                    new Alert(Alert.AlertType.INFORMATION, message).show();
             });
             this.buildingTypeImages.put(buildingType, imageView);
         }
@@ -77,7 +79,8 @@ public class StripPaneController {
                 Tile tile = mapController.getTileByXY(mouseEvent.getSceneX(), mouseEvent.getSceneY());
                 if (tile == null) return;
                 String message = mapController.getGame().getGameMenuController().dropBuilding(tile, defensiveBuildingType.getName());
-                new Alert(Alert.AlertType.INFORMATION, message).show();
+                if (!Objects.equals(message, Message.DROP_BUILDING_SUCCESS.toString()))
+                    new Alert(Alert.AlertType.INFORMATION, message).show();
             });
 
             this.defensiveBuildingTypeImages.put(defensiveBuildingType, imageView);
@@ -230,7 +233,11 @@ public class StripPaneController {
             return;
 
         for (Tile tile : selectedTiles) {
-            this.gameController.dropBuilding(tile, BuildingMenuController.getCopyBuilding());
+            String message = this.gameController.dropBuilding(tile, BuildingMenuController.getCopyBuilding());
+            if (!Objects.equals(message, Message.DROP_BUILDING_SUCCESS.toString())) {
+                new Alert(Alert.AlertType.INFORMATION, message).show();
+                break;
+            }
         }
     }
 }
