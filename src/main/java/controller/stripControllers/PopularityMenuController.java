@@ -51,15 +51,15 @@ public class PopularityMenuController {
 
     private void setFood() {
         Label food = new Label("Food rate : " + game.getCurrentTurnGovernment().getFoodRate());
-        food.setLayoutX(100);
-        food.setLayoutY(15);
+        food.setLayoutX(330);//60
+        food.setLayoutY(15);//15
 
         stripPane.getChildren().add(food);
 
         food.setStyle("-fx-font-size: 20");
         food.setBackground(Background.fill(Color.WHITE));
 
-        foodFace.setLayoutX(100);
+        foodFace.setLayoutX(350);
         foodFace.setLayoutY(60);
         stripPane.getChildren().add(foodFace);
 
@@ -76,7 +76,7 @@ public class PopularityMenuController {
         religion.setStyle("-fx-font-size: 20");
         religion.setBackground(Background.fill(Color.WHITE));
 
-        religionFace.setLayoutX(200);
+        religionFace.setLayoutX(220);
         religionFace.setLayoutY(60);
         stripPane.getChildren().add(religionFace);
 
@@ -159,7 +159,7 @@ public class PopularityMenuController {
     private void setPopularity() {
         Label popularity = new Label("Popularity : " + game.getCurrentTurnGovernment().getPopularity());
 
-        popularity.setLayoutX(300);
+        popularity.setLayoutX(60);
         popularity.setLayoutY(15);
         popularity.setStyle("-fx-font-size: 20");
         popularity.setBackground(Background.fill(Color.WHITE));
@@ -190,11 +190,11 @@ public class PopularityMenuController {
             religionFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/yellow-face.png", 30).getImage());
 
         if (game.getCurrentTurnGovernment().getFoodRate() > 0)
-            religionFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/green-face.png", 30).getImage());
+            foodFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/green-face.png", 30).getImage());
         else if (game.getCurrentTurnGovernment().getFoodRate() < 0)
-            religionFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/red-face.png", 30).getImage());
+            foodFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/red-face.png", 30).getImage());
         else
-            religionFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/yellow-face.png", 30).getImage());
+            foodFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/yellow-face.png", 30).getImage());
     }
 
 
