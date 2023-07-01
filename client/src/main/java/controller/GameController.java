@@ -2,16 +2,14 @@ package controller;
 
 import controller.stripControllers.BuildingMenuController;
 import controller.stripControllers.PopularityMenuController;
+import controller.stripControllers.ShopMenuController;
 import controller.stripControllers.UnitMenuController;
-import controller.viewControllers.ShopMenuController;
 import controller.viewControllers.TradeMenuController;
 import model.buildings.Building;
 import model.buildings.BuildingType;
 import model.buildings.Storage;
 import model.game.*;
 import model.people.MilitaryUnit;
-import model.people.Troop;
-import model.people.TroopType;
 import model.buildings.DefensiveBuilding;
 import model.buildings.DefensiveBuildingType;
 import model.people.Person;
