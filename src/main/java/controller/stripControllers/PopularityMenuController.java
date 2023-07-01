@@ -20,6 +20,7 @@ public class PopularityMenuController {
     private Slider fearSlider;
     private ImageView fearFace;
     private ImageView taxFace;
+    private ImageView religionFace;
 
 
     public PopularityMenuController(Pane stripPane) {
@@ -27,6 +28,7 @@ public class PopularityMenuController {
         fearSlider = new Slider();
         fearFace = new ImageView();
         taxFace = new ImageView();
+        religionFace = new ImageView();
     }
 
     public static void setGame(Game game) {
@@ -40,7 +42,25 @@ public class PopularityMenuController {
         setPopularity();
         setTaxes();
         setFearRate();
+        setReligion();
 
+    }
+
+    private void setReligion() {
+        Label religion = new Label("Religion : " + game.getCurrentTurnGovernment().getReligionPopularityRate());
+        religion.setLayoutX(175);
+        religion.setLayoutY(15);
+
+        stripPane.getChildren().add(religion);
+
+        religion.setStyle("-fx-font-size: 20");
+        religion.setBackground(Background.fill(Color.WHITE));
+
+        religionFace.setLayoutX(200);
+        religionFace.setLayoutY(60);
+        stripPane.getChildren().add(religionFace);
+
+        updateFace();
     }
 
     private void setFearRate() {
@@ -141,6 +161,13 @@ public class PopularityMenuController {
             taxFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/red-face.png", 30).getImage());
         else
             taxFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/yellow-face.png", 30).getImage());
+
+        if (game.getCurrentTurnGovernment().getReligionPopularityRate() > 0)
+            religionFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/green-face.png", 30).getImage());
+        else if (game.getCurrentTurnGovernment().getReligionPopularityRate() < 0)
+            religionFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/red-face.png", 30).getImage());
+        else
+            religionFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/yellow-face.png", 30).getImage());
 
     }
 
