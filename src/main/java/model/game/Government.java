@@ -88,6 +88,17 @@ public class Government {
         return null;
     }
 
+    public boolean isOnAttack() {
+        boolean isOnAttack = false;
+        for (MilitaryUnit militaryUnit : this.militaryUnits) {
+            if (militaryUnit.isOnAttack()) {
+                isOnAttack = true;
+                break;
+            }
+        }
+        return isOnAttack;
+    }
+
     public int getGold() {
         return this.gold;
     }

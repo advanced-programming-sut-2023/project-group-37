@@ -229,6 +229,12 @@ public class MapController {
         int nextPopularity = this.game.getCurrentTurnGovernment().getPopularity();
         FaceAnimation faceAnimation = new FaceAnimation(faceImage, prePopularity, nextPopularity);
         faceAnimation.play();
+
+        if (this.attackingLabel != null) {
+            if (this.game.getCurrentTurnGovernment().isOnAttack())
+                this.attackingLabel.setText("Attacking");
+            else this.attackingLabel.setText("");
+        }
     }
 
     public void createDownPane(Pane gamePane) throws URISyntaxException {

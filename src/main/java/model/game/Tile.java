@@ -198,9 +198,8 @@ public class Tile extends Rectangle {
         }
 
         if (damage == firstDamage && this.building != null) {
-            if (!(this.building instanceof DefensiveBuilding) && this.building.getType() != BuildingType.KILLING_PIT &&
-                    this.building.getLoyalty() != government)
-                this.building.takeDamage(damage);
+            if (this.building.getLoyalty() != government)
+                this.building.takeDamage(damage/2);
         }
     }
 
