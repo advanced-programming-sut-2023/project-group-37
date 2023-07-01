@@ -25,6 +25,8 @@ public class PopularityMenuController {
     public PopularityMenuController(Pane stripPane) {
         this.stripPane = stripPane;
         fearSlider = new Slider();
+        fearFace = new ImageView();
+        taxFace = new ImageView();
     }
 
     public static void setGame(Game game) {
@@ -44,16 +46,16 @@ public class PopularityMenuController {
     private void setFearRate() {
         Label fear = new Label("Fear rate : " + game.getCurrentTurnGovernment().getFearRate());
 
-        fear.setLayoutX(600);
+        fear.setLayoutX(625);
         fear.setLayoutY(15);
         fear.setStyle("-fx-font-size: 20");
         fear.setBackground(Background.fill(Color.WHITE));
 
         stripPane.getChildren().add(fear);
 
-        fearFace = MultiMenuFunctions.getImageView("/Image/Popularity Face/yellow-face.png", 30);
+        updateFace();
         fearFace.setLayoutX(750);
-        fearFace.setLayoutY(40);
+        fearFace.setLayoutY(25);
 
         stripPane.getChildren().add(fearFace);
 
@@ -68,7 +70,7 @@ public class PopularityMenuController {
 
         fearSlider.setStyle("-fx-font-size: 20");
 
-        fearSlider.setValue(0);
+        fearSlider.setValue(game.getCurrentTurnGovernment().getFearRate());
         stripPane.getChildren().add(fearSlider);
 
         fearSlider.valueProperty().addListener((observableValue, number, t1) -> {
