@@ -39,7 +39,7 @@ public class PopularityMenuController {
     private void setFearRate() {
         Label fear = new Label("Fear rate : " + game.getCurrentTurnGovernment().getFearRate());
 
-        fear.setLayoutX(400);
+        fear.setLayoutX(600);
         fear.setLayoutY(15);
         fear.setStyle("-fx-font-size: 20");
         fear.setBackground(Background.fill(Color.WHITE));
@@ -49,7 +49,7 @@ public class PopularityMenuController {
         fearSlider.setMin(-5);
         fearSlider.setMax(5);
 
-        fearSlider.setLayoutX(400);
+        fearSlider.setLayoutX(620);
         fearSlider.setLayoutY(55);
 
         fearSlider.setShowTickLabels(true);
@@ -72,7 +72,7 @@ public class PopularityMenuController {
     private void setTaxes() {
         Label tax = new Label("Tax rate : " + game.getCurrentTurnGovernment().getTaxRate());
 
-        tax.setLayoutX(280);
+        tax.setLayoutX(480);
         tax.setLayoutY(15);
         tax.setStyle("-fx-font-size: 20");
         tax.setBackground(Background.fill(Color.WHITE));
@@ -100,7 +100,7 @@ public class PopularityMenuController {
     private void setPopularity() {
         Label popularity = new Label("Popularity : " + game.getCurrentTurnGovernment().getPopularity());
 
-        popularity.setLayoutX(100);
+        popularity.setLayoutX(300);
         popularity.setLayoutY(15);
         popularity.setStyle("-fx-font-size: 20");
         popularity.setBackground(Background.fill(Color.WHITE));
