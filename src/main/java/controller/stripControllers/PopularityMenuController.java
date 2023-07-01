@@ -1,6 +1,12 @@
 package controller.stripControllers;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -9,9 +15,11 @@ import model.game.Game;
 public class PopularityMenuController {
     private static Game game;
     private final Pane stripPane;
+    private Slider fearSlider;
 
     public PopularityMenuController(Pane stripPane) {
         this.stripPane = stripPane;
+        fearSlider = new Slider();
     }
 
     public static void setGame(Game game) {
@@ -29,26 +37,65 @@ public class PopularityMenuController {
     }
 
     private void setFearRate() {
-        Label Fear = new Label("Popularity : " + game.getCurrentTurnGovernment().getFearRate());
+        Label fear = new Label("Fear rate : " + game.getCurrentTurnGovernment().getFearRate());
 
-        Fear.setLayoutX(300);
-        Fear.setLayoutY(15);
-        Fear.setStyle("-fx-font-size: 20");
-        Fear.setBackground(Background.fill(Color.WHITE));
+        fear.setLayoutX(400);
+        fear.setLayoutY(15);
+        fear.setStyle("-fx-font-size: 20");
+        fear.setBackground(Background.fill(Color.WHITE));
 
-        stripPane.getChildren().add(Fear);
+        stripPane.getChildren().add(fear);
+
+        fearSlider.setMin(-5);
+        fearSlider.setMax(5);
+
+        fearSlider.setLayoutX(400);
+        fearSlider.setLayoutY(55);
+
+        fearSlider.setShowTickLabels(true);
+        fearSlider.setShowTickMarks(true);
+
+        fearSlider.setStyle("-fx-font-size: 20");
+
+        fearSlider.setValue(0);
+        stripPane.getChildren().add(fearSlider);
+
+        fearSlider.valueProperty().addListener((observableValue, number, t1) -> {
+            fearSlider.setValue(t1.intValue());
+            game.getCurrentTurnGovernment().setFearRate((int) fearSlider.getValue());
+            fear.setText("Fear rate : " + game.getCurrentTurnGovernment().getFearRate());
+        });
+
     }
 
-    private void setTaxes() {
-        Label tax = new Label("Popularity : " + game.getCurrentTurnGovernment().getTaxRate());
 
-        tax.setLayoutX(200);
+    private void setTaxes() {
+        Label tax = new Label("Tax rate : " + game.getCurrentTurnGovernment().getTaxRate());
+
+        tax.setLayoutX(280);
         tax.setLayoutY(15);
         tax.setStyle("-fx-font-size: 20");
         tax.setBackground(Background.fill(Color.WHITE));
 
+
         stripPane.getChildren().add(tax);
+
+        tax.setOnMouseClicked(mouseEvent -> {
+            TextInputDialog textInputDialog = new TextInputDialog("Enter Tax Rate : ");
+            textInputDialog.setHeaderText("Tax Rate");
+            textInputDialog.showAndWait();
+            try {
+                int taxRate = Integer.parseInt(textInputDialog.getEditor().getText());
+                game.getCurrentTurnGovernment().setTaxRate(taxRate);
+                tax.setText("Tax rate : " + game.getCurrentTurnGovernment().getTaxRate());
+            } catch (NumberFormatException ignored) {
+
+            }
+
+        });
+
     }
+
 
     private void setPopularity() {
         Label popularity = new Label("Popularity : " + game.getCurrentTurnGovernment().getPopularity());
