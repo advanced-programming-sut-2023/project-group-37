@@ -23,6 +23,7 @@ import java.util.Objects;
 
 public class ShopMenuController {
     private final Pane stripPane;
+    private TradeMenuController tradeMenuController;
     private Label amount;
     private Label gold;
     private static Game game;
@@ -30,6 +31,7 @@ public class ShopMenuController {
 
     public ShopMenuController(Pane stripPane) {
         this.stripPane = stripPane;
+        tradeMenuController = TradeMenuController.getInstance();
     }
 
     public static void setGame(Game game) {
@@ -48,6 +50,7 @@ public class ShopMenuController {
         ImageView resources = MultiMenuFunctions.getImageView("/Image/Button/resources.png", 70);
         ImageView weapons = MultiMenuFunctions.getImageView("/Image/Button/weapons.png", 70);
         ImageView foods = MultiMenuFunctions.getImageView("/Image/Button/food.jpg", 70);
+        ImageView scale = MultiMenuFunctions.getImageView("/Image/Button/scale.png", 70);
 
         resources.setOnMouseClicked(mouseEvent -> resources());
 
@@ -55,16 +58,21 @@ public class ShopMenuController {
 
         foods.setOnMouseClicked(mouseEvent -> foods());
 
+        scale.setOnMouseClicked(mouseEvent -> enterTrade());
+
         resources.setLayoutX(150);
         resources.setLayoutY(15);
         weapons.setLayoutX(250);
         weapons.setLayoutY(15);
         foods.setLayoutX(350);
         foods.setLayoutY(15);
+        scale.setLayoutX(450);
+        scale.setLayoutY(15);
 
         stripPane.getChildren().add(resources);
         stripPane.getChildren().add(weapons);
         stripPane.getChildren().add(foods);
+        stripPane.getChildren().add(scale);
 
     }
 
@@ -127,6 +135,10 @@ public class ShopMenuController {
         }
         addBackButton();
 
+    }
+
+    private void enterTrade() {
+        tradeMenuController.run();
     }
 
     private void goToItem(Item item) {

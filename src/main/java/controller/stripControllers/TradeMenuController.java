@@ -17,6 +17,7 @@ import view.enums.PopUp;
 import java.util.ArrayList;
 
 public class TradeMenuController {
+    private static TradeMenuController tradeMenuController;
     private final Pane stripPane;
     private static Game game;
     private Label amount;
@@ -27,7 +28,12 @@ public class TradeMenuController {
 
     public TradeMenuController(Pane stripPane) {
         this.stripPane = stripPane;
+        tradeMenuController = this;
 
+    }
+
+    public static TradeMenuController getInstance() {
+        return tradeMenuController;
     }
 
     public static void setGame(Game game) {
