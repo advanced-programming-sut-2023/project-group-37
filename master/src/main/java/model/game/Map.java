@@ -87,7 +87,9 @@ public class Map {
                 tiles[j].updateImage();
             }
         }
+    }
 
+    public void updateLordImage() {
         for (Integer integer : this.territories.keySet()) {
             Territory territory = this.territories.get(integer);
             Tile keep = territory.getKeep();

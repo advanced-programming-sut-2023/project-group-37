@@ -97,7 +97,6 @@ public class MapController {
         MoveAnimation.setMainMap(mainMap);
 
         gamePane.getChildren().add(this.mainMap);
-        this.map.updateImages();
 
         this.mainMap.setOnKeyPressed(keyEvent -> {
             String keyName = keyEvent.getCode().getName();
@@ -299,6 +298,7 @@ public class MapController {
         this.downPane.getChildren().add(miniMap);
 
         this.map.updateImages();
+        this.map.updateLordImage();
     }
 
     private void setCursorOn(CursorType cursorType) {

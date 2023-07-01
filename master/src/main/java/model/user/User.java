@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User implements Serializable {
-
     private static User currentUser;
     private String username;
     private String hashedPassword;
@@ -49,6 +48,10 @@ public class User implements Serializable {
         this.rank = users.size() + 1;
         this.avatarNum = ProfileMenuController.getRandomAvatarURL();
         users.add(this);
+    }
+
+    public static void reset(ArrayList<User> users) {
+        User.users = users;
     }
 
 
@@ -88,10 +91,6 @@ public class User implements Serializable {
         }
 
         return null;
-    }
-
-    public static Gson getGson() {
-        return User.gson;
     }
 
     public void setRank(int rank) {
