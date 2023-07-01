@@ -6,12 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Stronghold" />
+        <module name="client" />
+        <module name="master" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="project-group-37" target="19" />
-      <module name="Stronghold" target="19" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
