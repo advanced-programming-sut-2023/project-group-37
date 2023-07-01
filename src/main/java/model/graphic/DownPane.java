@@ -123,4 +123,8 @@ public class DownPane extends Pane {
     public void runPopularityMenu() {
         this.stripPaneController.runPopularityMenu();
     }
+
+    public void paste() {
+        this.stripPaneController.paste();
+    }
 }

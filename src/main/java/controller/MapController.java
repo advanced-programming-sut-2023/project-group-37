@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.event.EventHandler;
 import javafx.scene.ImageCursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -17,8 +16,10 @@ import model.game.Tile;
 import model.graphic.CursorType;
 import model.graphic.DownPane;
 import view.animation.FaceAnimation;
+import view.animation.MoveAnimation;
 
 import java.net.URISyntaxException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -93,6 +94,8 @@ public class MapController {
         this.mainMap.setLayoutX(0);
         this.mainMap.setLayoutY(0);
 
+        MoveAnimation.setMainMap(mainMap);
+
         gamePane.getChildren().add(this.mainMap);
         this.map.updateImages();
 
@@ -147,7 +150,14 @@ public class MapController {
                 }
                 case "T" -> this.downPane.setForTradeMenu();
                 case "S" -> this.downPane.setForShopMenu();
-                case "N" -> this.goToNextTurn();
+                case "N" -> {
+                    try {
+                        this.goToNextTurn();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                case "P" -> this.downPane.paste();
             }
         });
 
@@ -212,9 +222,10 @@ public class MapController {
 
     }
 
-    private void goToNextTurn() {
+    private void goToNextTurn() throws InterruptedException {
         int prePopularity = this.game.getNextTurnGovernment().getPopularity();
         this.game.goToNextTurn();
+        Thread.sleep(1000);
         int nextPopularity = this.game.getCurrentTurnGovernment().getPopularity();
         FaceAnimation faceAnimation = new FaceAnimation(faceImage, prePopularity, nextPopularity);
         faceAnimation.play();
@@ -224,9 +235,10 @@ public class MapController {
         this.downPane = new DownPane(this);
         this.downPane.initialize(gamePane);
         this.faceImage = new ImageView(new Image(Objects.requireNonNull(this.getClass().getResource(
-                "/Image/Face Animation/face10.png")).toExternalForm(), 130, 100, false, false));
+                "/Image/FaceAnimation/face10.png")).toExternalForm(), 130, 100, false, false));
 
         this.faceImage.setLayoutX(1100);
+        this.faceImage.setLayoutY(-5);
 
         this.faceImage.setOnMouseEntered((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.HAND));
         this.faceImage.setOnMouseExited((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.DEFAULT));

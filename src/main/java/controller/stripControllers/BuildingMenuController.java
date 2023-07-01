@@ -3,11 +3,15 @@ package controller.stripControllers;
 import controller.MapController;
 import controller.MultiMenuFunctions;
 import controller.StripPaneController;
+import javafx.scene.ImageCursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -28,6 +32,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class BuildingMenuController {
+    private static ClipboardContent content;
     private static Game game;
     private final Pane stripPane;
     private final StripPaneController stripPaneController;
@@ -62,6 +67,10 @@ public class BuildingMenuController {
         BuildingMenuController.game = game;
     }
 
+    public static String getCopyBuilding() {
+        return content.getString();
+    }
+
     public void run(Building building) {
         this.currentBuilding = building;
 
@@ -85,20 +94,34 @@ public class BuildingMenuController {
         this.stripPane.getChildren().add(healthLabel);
         this.stripPane.getChildren().add(healthBar);
 
+        Clipboard clipboard = Clipboard.getSystemClipboard();
+        content = new ClipboardContent();
+        clipboard.setContent(content);
+        Label copyLabel = new Label("Copy");
+        copyLabel.setBackground(Background.fill(Color.WHITE));
+        copyLabel.setLayoutX(10);
+        copyLabel.setLayoutY(65);
+        copyLabel.setOnMouseClicked((MouseEvent mouseEvent) -> content.putString(building.getName()));
+        copyLabel.setOnMouseEntered((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.HAND));
+        copyLabel.setOnMouseExited((MouseEvent mouseEvent) -> MapController.getInstance().getDownPane().setCursor(ImageCursor.DEFAULT));
+        this.stripPane.getChildren().add(copyLabel);
+
         if (building instanceof DefensiveBuilding defensiveBuilding) {
             nameLabel.setText(defensiveBuilding.getDefensiveType().getName());
-            Button repairButton = new Button("Repair");
-            repairButton.setLayoutY(40);
-            repairButton.setLayoutX(10);
+            Label repairLabel = new Label("Repair");
+            repairLabel.setTextFill(Color.WHITE);
+            repairLabel.setBackground(Background.fill(Color.BLACK));
+            repairLabel.setLayoutY(40);
+            repairLabel.setLayoutX(10);
 
-            repairButton.setDisable(defensiveBuilding.getMaxHitpoints() == defensiveBuilding.getHitpoints());
-            repairButton.setOnMouseClicked((MouseEvent mouseEvent) -> {
+            repairLabel.setDisable(defensiveBuilding.getMaxHitpoints() == defensiveBuilding.getHitpoints());
+            repairLabel.setOnMouseClicked((MouseEvent mouseEvent) -> {
                 Message message = this.repair(defensiveBuilding);
                 if (message == Message.REPAIR_SUCCESS) {
-                    repairButton.setDisable(true);
+                    repairLabel.setDisable(true);
                 }
             });
-            this.stripPane.getChildren().add(repairButton);
+            this.stripPane.getChildren().add(repairLabel);
         }
 
         else {

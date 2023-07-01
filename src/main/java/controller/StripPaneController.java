@@ -1,20 +1,12 @@
 package controller;
 
 import controller.stripControllers.*;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import model.buildings.*;
 import model.game.Tile;
-import model.people.*;
-import view.enums.Message;
 import view.enums.PopUp;
 
 import java.util.ArrayList;
@@ -33,7 +25,7 @@ public class StripPaneController {
     private final GameController gameController;
     private final HashMap<BuildingType, ImageView> buildingTypeImages;
     private final HashMap<DefensiveBuildingType, ImageView> defensiveBuildingTypeImages;
-
+    private ArrayList<Tile> selectedTiles;
     private Rectangle towerRec;
     private Rectangle gateHouseRec;
     private Rectangle militaryRec;
@@ -152,6 +144,7 @@ public class StripPaneController {
     }
 
     public void insertSelectedTiles(ArrayList<Tile> selectedTiles) {
+        this.selectedTiles = selectedTiles;
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
 
@@ -222,5 +215,14 @@ public class StripPaneController {
 
     public void runPopularityMenu() {
         this.popularityMenuController.run();
+    }
+
+    public void paste() {
+        if (this.selectedTiles == null || this.selectedTiles.size() == 0 || BuildingMenuController.getCopyBuilding() == null)
+            return;
+
+        for (Tile tile : selectedTiles) {
+            this.gameController.dropBuilding(tile, BuildingMenuController.getCopyBuilding());
+        }
     }
 }
