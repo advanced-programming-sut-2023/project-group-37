@@ -2,6 +2,7 @@ package controller.stripControllers;
 
 import controller.MultiMenuFunctions;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
@@ -10,6 +11,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import model.game.*;
+import view.enums.Message;
 import view.enums.PopUp;
 
 import java.util.ArrayList;
@@ -211,7 +213,7 @@ public class TradeMenuController {
             PopUp.TRADE_FAILED.show();
             return;
         }
-        PopUp.TRADE_SUCCESS.show();
+        new Alert(Alert.AlertType.INFORMATION, Message.TRADE_SUCCESS.toString()).show();
 
     }
 
