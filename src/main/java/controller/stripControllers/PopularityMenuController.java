@@ -1,11 +1,13 @@
 package controller.stripControllers;
 
+import controller.MultiMenuFunctions;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
@@ -16,6 +18,9 @@ public class PopularityMenuController {
     private static Game game;
     private final Pane stripPane;
     private Slider fearSlider;
+    private ImageView fearFace;
+    private ImageView taxFace;
+
 
     public PopularityMenuController(Pane stripPane) {
         this.stripPane = stripPane;
@@ -46,6 +51,12 @@ public class PopularityMenuController {
 
         stripPane.getChildren().add(fear);
 
+        fearFace = MultiMenuFunctions.getImageView("/Image/Popularity Face/yellow-face.png", 30);
+        fearFace.setLayoutX(750);
+        fearFace.setLayoutY(40);
+
+        stripPane.getChildren().add(fearFace);
+
         fearSlider.setMin(-5);
         fearSlider.setMax(5);
 
@@ -64,6 +75,7 @@ public class PopularityMenuController {
             fearSlider.setValue(t1.intValue());
             game.getCurrentTurnGovernment().setFearRate((int) fearSlider.getValue());
             fear.setText("Fear rate : " + game.getCurrentTurnGovernment().getFearRate());
+            updateFace();
         });
 
     }
@@ -77,8 +89,12 @@ public class PopularityMenuController {
         tax.setStyle("-fx-font-size: 20");
         tax.setBackground(Background.fill(Color.WHITE));
 
-
         stripPane.getChildren().add(tax);
+
+        taxFace = MultiMenuFunctions.getImageView("/Image/Popularity Face/green-face.png", 30);
+        taxFace.setLayoutX(520);
+        taxFace.setLayoutY(60);
+        stripPane.getChildren().add(taxFace);
 
         tax.setOnMouseClicked(mouseEvent -> {
             TextInputDialog textInputDialog = new TextInputDialog("Enter Tax Rate : ");
@@ -88,6 +104,7 @@ public class PopularityMenuController {
                 int taxRate = Integer.parseInt(textInputDialog.getEditor().getText());
                 game.getCurrentTurnGovernment().setTaxRate(taxRate);
                 tax.setText("Tax rate : " + game.getCurrentTurnGovernment().getTaxRate());
+                updateFace();
             } catch (NumberFormatException ignored) {
 
             }
@@ -106,6 +123,23 @@ public class PopularityMenuController {
         popularity.setBackground(Background.fill(Color.WHITE));
 
         stripPane.getChildren().add(popularity);
+    }
+
+    private void updateFace() {
+        if (game.getCurrentTurnGovernment().getFearRate() > 0)
+            fearFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/green-face.png", 30).getImage());
+        else if (game.getCurrentTurnGovernment().getFearRate() < 0)
+            fearFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/red-face.png", 30).getImage());
+        else
+            fearFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/yellow-face.png", 30).getImage());
+
+        if (game.getCurrentTurnGovernment().getTaxRate() > 0)
+            taxFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/green-face.png", 30).getImage());
+        else if (game.getCurrentTurnGovernment().getTaxRate() < 0)
+            taxFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/red-face.png", 30).getImage());
+        else
+            taxFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/yellow-face.png", 30).getImage());
+
     }
 
 }
