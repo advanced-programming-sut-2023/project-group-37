@@ -209,10 +209,6 @@ public class RegisterMenu extends Application {
                 this.usernameError.setText(Error.NECESSARY_FIELD.toString());
 
             else this.usernameError.setText("");
-
-            if (User.getUserByUsername(usernameField.getText()) != null) {
-                this.usernameError.setText(Error.USERNAME_ALREADY_EXISTS.toString());
-            }
         });
 
         MultiMenuFunctions.initializePasswordFieldsWithConfirm(this.passwordShow, this.passwordConfirmShow,
