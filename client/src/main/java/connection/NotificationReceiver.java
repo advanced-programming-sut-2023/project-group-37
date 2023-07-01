@@ -1,7 +1,9 @@
 package connection;
 
+import com.google.gson.Gson;
+import view.enums.PopUp;
+
 import java.io.DataInputStream;
-import java.io.IOException;
 
 public class NotificationReceiver extends Thread{
     private final DataInputStream dataInputStream;
@@ -12,12 +14,16 @@ public class NotificationReceiver extends Thread{
 
     @Override
     public void run() {
-        try {
-            while (true) {
-                System.out.println(this.dataInputStream.readUTF());
+        Gson gson = new Gson();
+        while (true) {
+            PopUp popUp;
+            try {
+                popUp = gson.fromJson(this.dataInputStream.readUTF(), PopUp.class);
+                popUp.show();
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            catch (Exception ignored) {
+
+            }
         }
     }
 }

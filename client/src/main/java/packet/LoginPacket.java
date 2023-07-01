@@ -1,4 +1,4 @@
 package packet;
 
-public class LoginPacket {
+public record LoginPacket(String username, String password) {
 }

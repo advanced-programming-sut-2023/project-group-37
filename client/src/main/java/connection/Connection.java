@@ -1,36 +1,43 @@
 package connection;
 
 import com.google.gson.Gson;
+import packet.LoginPacket;
 import packet.RegisterPacket;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Scanner;
-import java.util.regex.Matcher;
 
 public class Connection {
-    private final DataOutputStream dataOutputStream;
-    private final DataInputStream dataInputStream;
     private final Gson gson;
+    private static Connection connection;
+    private final DataOutputStream dataOutputStream;
+
     public Connection(String host, int port) throws IOException {
         Socket socket = new Socket(host, port);
-        this.dataInputStream = new DataInputStream(socket.getInputStream());
+        DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
         this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
         this.gson = new Gson();
 
         this.dataOutputStream.writeUTF("");
-        System.out.println(this.dataInputStream.readUTF());
+        System.out.println(dataInputStream.readUTF());
 
-        new NotificationReceiver(this.dataInputStream).start();
+        new NotificationReceiver(dataInputStream).start();
+        connection = this;
     }
 
-    private void register() {
-
+    public static Connection getInstance() {
+        return connection;
     }
 
-    private void login() {
+    public void register(String username, String password, String nickName, String email,
+                          String recoveryQuestion, String recoveryAnswer, String slogan) throws IOException {
+        this.dataOutputStream.writeUTF(gson.toJson(new RegisterPacket(username, password, nickName, email,
+                recoveryQuestion, recoveryAnswer, slogan)));
+    }
 
+    public void login(String username, String password) throws IOException {
+        this.dataOutputStream.writeUTF(gson.toJson(new LoginPacket(username, password)));
     }
 }

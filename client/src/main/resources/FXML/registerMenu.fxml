@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="534.0" prefWidth="600.0" stylesheets="@../CSS/registration.css"
+            xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="view.menus.RegisterMenu">
+    <VBox layoutX="190.0" layoutY="15.0" prefHeight="528.0" prefWidth="220.0" spacing="7.5">
+        <children>
+            <TextField fx:id="usernameField" promptText="username"/>
+            <TextField fx:id="passwordShow" promptText="password"/>
+            <PasswordField fx:id="passwordField" promptText="password"/>
+            <TextField fx:id="passwordConfirmShow" promptText="password confirm"/>
+            <PasswordField fx:id="passwordConfirmField" promptText="password confirm"/>
+            <TextField fx:id="nicknameField" promptText="nickname"/>
+            <TextField fx:id="emailField" promptText="email"/>
+            <VBox prefHeight="52.0" prefWidth="226.0">
+                <children>
+                    <Label prefHeight="27.0" prefWidth="163.0" styleClass="ErrorLabel"
+                           text="Password recovery question :"/>
+                    <ChoiceBox fx:id="recoveryQuestions" prefHeight="20.0" prefWidth="199.0">
+                        <VBox.margin>
+                            <Insets left="10.0"/>
+                        </VBox.margin>
+                    </ChoiceBox>
+                </children>
+            </VBox>
+            <TextField fx:id="recoveryAnswerField" promptText="Password recovery answer"/>
+            <ChoiceBox fx:id="sloganChoiceBox" prefHeight="20.0" prefWidth="150.0">
+                <VBox.margin>
+                    <Insets left="35.0"/>
+                </VBox.margin>
+            </ChoiceBox>
+            <TextField fx:id="sloganField" prefHeight="24.0" prefWidth="220.0" promptText="slogan">
+                <font>
+                    <Font size="9.0"/>
+                </font>
+            </TextField>
+            <HBox prefHeight="25.0" prefWidth="220.0" spacing="10.0">
+                <children>
+                    <ImageView fx:id="captchaImage" fitHeight="25.0" fitWidth="145.0" pickOnBounds="true"
+                               preserveRatio="true"/>
+                    <Label fx:id="refreshLabel" onMouseClicked="#refreshCaptcha" prefHeight="26.0" prefWidth="52.0">
+                        <HBox.margin>
+                            <Insets left="15.0"/>
+                        </HBox.margin>
+                    </Label>
+                </children>
+                <VBox.margin>
+                    <Insets top="15.0"/>
+                </VBox.margin>
+            </HBox>
+            <TextField fx:id="captchaField" promptText="Captcha code"/>
+            <Button mnemonicParsing="false" onAction="#register" prefHeight="30.0" prefWidth="100.0" text="Register">
+                <VBox.margin>
+                    <Insets left="65.0"/>
+                </VBox.margin>
+            </Button>
+            <HBox prefHeight="35.0" prefWidth="220.0">
+                <children>
+                    <Label alignment="CENTER_RIGHT" prefHeight="45.0" prefWidth="134.0" styleClass="ErrorLabel"
+                           text="Have an account ? : "/>
+                    <Hyperlink onAction="#enterLoginMenu" prefHeight="53.0" prefWidth="86.0" text="Login"/>
+                </children>
+            </HBox>
+
+        </children>
+    </VBox>
+    <VBox layoutX="37.0" layoutY="15.0" prefHeight="480.0" prefWidth="142.0" spacing="7.5">
+        <children>
+            <Label fx:id="usernameError" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="147.0" textFill="RED">
+                <font>
+                    <Font size="10.0"/>
+                </font>
+            </Label>
+            <Label fx:id="passwordError" alignment="CENTER_RIGHT" prefHeight="24.0" prefWidth="142.0" textFill="RED">
+                <font>
+                    <Font size="10.0"/>
+                </font>
+            </Label>
+            <Label fx:id="passwordConfirmError" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="147.0"
+                   textFill="RED">
+                <font>
+                    <Font size="10.0"/>
+                </font>
+                <VBox.margin>
+                    <Insets top="7.0"/>
+                </VBox.margin>
+            </Label>
+            <Label fx:id="nicknameError" alignment="CENTER_RIGHT" prefHeight="24.0" prefWidth="142.0" textFill="RED">
+                <font>
+                    <Font size="10.0"/>
+                </font>
+            </Label>
+            <Label fx:id="emailError" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="147.0" textFill="RED">
+                <font>
+                    <Font size="10.0"/>
+                </font>
+            </Label>
+            <Label fx:id="recoveryQuestionError" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="142.0"
+                   textFill="RED">
+                <font>
+                    <Font size="10.0"/>
+                </font>
+                <VBox.margin>
+                    <Insets top="2.0"/>
+                </VBox.margin>
+            </Label>
+            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="142.0" textFill="RED">
+                <font>
+                    <Font size="10.0"/>
+                </font>
+            </Label>
+            <Label fx:id="recoveryAnswerError" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="147.0"
+                   textFill="RED">
+                <font>
+                    <Font size="10.0"/>
+                </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="147.0" textFill="RED">
+                <font>
+                    <Font size="10.0"/>
+                </font>
+            </Label>
+            <Label fx:id="sloganError" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="147.0" textFill="RED">
+                <font>
+                    <Font size="10.0"/>
+                </font>
+            </Label>
+            <Label fx:id="captchaError" alignment="TOP_RIGHT" prefHeight="18.0" prefWidth="149.0" textFill="RED">
+                <VBox.margin>
+                    <Insets top="50.0"/>
+                </VBox.margin>
+                <font>
+                    <Font size="10.0"/>
+                </font>
+            </Label>
+        </children>
+    </VBox>
+    <CheckBox fx:id="showPassword" alignment="CENTER" contentDisplay="CENTER" layoutX="420.0" layoutY="53.0"
+              mnemonicParsing="false" text="Show"/>
+    <Button layoutX="419.0" layoutY="81.0" mnemonicParsing="false" onAction="#generateRandomPassword" prefHeight="25.0"
+            prefWidth="115.0" text="Generate Random"/>
+</AnchorPane>
