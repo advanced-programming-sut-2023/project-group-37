@@ -1,6 +1,5 @@
 package model.game;
 
-import connection.Database;
 import controller.MultiMenuFunctions;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -352,5 +351,10 @@ public class Tile extends Rectangle {
 
     public boolean hasBuilding() {
         return hasBuilding;
+    }
+
+    public void updateTile(Tile tile) {
+        this.militaryUnits = tile.getMilitaryUnits();
+        this.setBuilding(tile.getBuilding());
     }
 }

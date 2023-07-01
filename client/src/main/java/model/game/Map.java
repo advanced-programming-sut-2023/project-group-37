@@ -87,7 +87,9 @@ public class Map {
                 tiles[j].updateImage();
             }
         }
+    }
 
+    public void updateLordImage() {
         for (Integer integer : this.territories.keySet()) {
             Territory territory = this.territories.get(integer);
             Tile keep = territory.getKeep();
@@ -163,5 +165,10 @@ public class Map {
 
     public HashMap<Integer, Territory> getKeeps() {
         return this.territories;
+    }
+
+    public void resetSomeTiles(ArrayList<Tile> modifiedTiles) {
+        for (Tile tile : modifiedTiles)
+            this.field[tile.getLocationX()][tile.getLocationY()].updateTile(tile);
     }
 }

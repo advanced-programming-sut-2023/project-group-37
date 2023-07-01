@@ -1,10 +1,6 @@
 package model.game;
 
 import controller.MultiMenuFunctions;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -13,11 +9,15 @@ import javafx.scene.shape.Rectangle;
 import model.buildings.Building;
 import model.buildings.BuildingType;
 import model.buildings.DefensiveBuilding;
-import model.people.*;
+import model.people.MilitaryMachine;
+import model.people.MilitaryUnit;
+import model.people.Person;
+import model.people.Troop;
 
 import java.util.ArrayList;
 
 public class Tile extends Rectangle {
+    private static ArrayList<Tile> modifiedTiles;
     private static Integer tileSize;
     private static ArrayList<Tile> selectedTiles;
     private final int x;
@@ -33,9 +33,9 @@ public class Tile extends Rectangle {
     private Territory territory;
     public int number;
     private boolean hasBuilding;
-    private String info;
 
     static {
+        modifiedTiles = new ArrayList<>();
         tileSize = 20;
         selectedTiles = new ArrayList<>();
     }
@@ -65,6 +65,11 @@ public class Tile extends Rectangle {
         this.texture = bigTile.texture;
     }
 
+    public static void addModifiedTile(Tile tile) {
+        if (!modifiedTiles.contains(tile))
+            modifiedTiles.add(tile);
+    }
+
     public static void removeSelectedTiles() {
         for (Tile selectedTile : selectedTiles) {
             selectedTile.setWidth(20);
@@ -74,8 +79,17 @@ public class Tile extends Rectangle {
         selectedTiles = new ArrayList<>();
     }
 
+    public static ArrayList<Tile> updateImages() {
+        for (Tile tile : modifiedTiles)
+            tile.updateImage();
+        ArrayList<Tile> tiles = modifiedTiles;
+
+        modifiedTiles = new ArrayList<>();
+        return tiles;
+    }
+
     public String getInfo() {
-        info = "Texture : " + this.texture.getName() + "\n";
+        String info = "Texture : " + this.texture.getName() + "\n";
         if (this.getMilitaryUnits() != null) {
             for (MilitaryUnit militaryUnit : this.getMilitaryUnits()) {
                 info += "Name : " + militaryUnit.getName() + "  Hp : " + militaryUnit.getHitpoints() + "\n";
@@ -242,6 +256,7 @@ public class Tile extends Rectangle {
     }
 
     public void updateImage() {
+        addModifiedTile(this);
         try {
             this.setImage(this.texture.getImage());
 
@@ -336,5 +351,10 @@ public class Tile extends Rectangle {
 
     public boolean hasBuilding() {
         return hasBuilding;
+    }
+
+    public void updateTile(Tile tile) {
+        this.militaryUnits = tile.getMilitaryUnits();
+        this.setBuilding(tile.getBuilding());
     }
 }

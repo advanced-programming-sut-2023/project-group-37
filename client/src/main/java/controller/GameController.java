@@ -3,10 +3,17 @@ package controller;
 import controller.stripControllers.BuildingMenuController;
 import controller.stripControllers.PopularityMenuController;
 import controller.stripControllers.UnitMenuController;
+import controller.viewControllers.ShopMenuController;
 import controller.viewControllers.TradeMenuController;
-import model.buildings.*;
+import model.buildings.Building;
+import model.buildings.BuildingType;
+import model.buildings.Storage;
 import model.game.*;
 import model.people.MilitaryUnit;
+import model.people.Troop;
+import model.people.TroopType;
+import model.buildings.DefensiveBuilding;
+import model.buildings.DefensiveBuildingType;
 import model.people.Person;
 import model.user.User;
 import view.enums.Message;
@@ -18,6 +25,7 @@ public class GameController {
     private static final GameController GAME_CONTROLLER;
     private Game currentGame;
     private final MapController mapController;
+    private final ShopMenuController shopMenuController;
     private final TradeMenuController tradeMenuController;
     private Government currentGovernment;
 
@@ -27,6 +35,7 @@ public class GameController {
 
     private GameController() {
         mapController = MapController.getInstance();
+        shopMenuController = ShopMenuController.getInstance();
         tradeMenuController = TradeMenuController.getInstance();
     }
 
@@ -36,6 +45,7 @@ public class GameController {
 
     public void setCurrentGovernment(Government government) {
         this.currentGovernment = government;
+        this.shopMenuController.setGovernment(government);
         this.tradeMenuController.setGovernment(government);
         this.mapController.setCurrentGovernment(government);
     }

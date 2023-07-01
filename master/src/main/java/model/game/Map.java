@@ -166,4 +166,9 @@ public class Map {
     public HashMap<Integer, Territory> getKeeps() {
         return this.territories;
     }
+
+    public void resetSomeTiles(ArrayList<Tile> modifiedTiles) {
+        for (Tile tile : modifiedTiles)
+            this.field[tile.getLocationX()][tile.getLocationY()].updateTile(tile);
+    }
 }

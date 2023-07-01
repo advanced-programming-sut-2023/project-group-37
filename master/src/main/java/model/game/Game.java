@@ -226,8 +226,8 @@ public class Game {
 
             try {
                 Database.getInstance().updateEveryOneTiles(Tile.updateImages());
-            } catch (IOException ignored) {
-
+            }
+            catch (IOException ignored) {
             }
         }
         do {

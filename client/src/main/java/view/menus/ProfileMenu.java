@@ -11,13 +11,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import model.game.GameColor;
 import model.user.User;
-import view.enums.Message;
 import view.enums.Result;
+import view.enums.Command;
+import view.enums.Message;
 
 import java.net.URL;
 import java.util.Objects;
@@ -74,51 +75,54 @@ public class ProfileMenu extends Application {
     }
 
     private void initializeLabels() {
+        //password is hashed, how can I show it???
+//        User.setCurrentUser(new User("mehrshad", "Mehr1283", "sdf",
+//                "epf@sg.cdsf", "ddf", "sdfdf", "slogan"));//for test
         username.setText(User.getCurrentUser().getUsername());
         nickName.setText(User.getCurrentUser().getNickName());
         if (User.getCurrentUser().getSlogan() == null) slogan.setText("Slogan is empty!");
         else slogan.setText(User.getCurrentUser().getSlogan());
         email.setText(User.getCurrentUser().getEmail());
 
-        username.setTextFill(Color.GREEN);
-        nickName.setTextFill(Color.RED);
-        slogan.setTextFill(Color.YELLOW);
-        email.setTextFill(Color.BLUE);
+        username.setTextFill(GameColor.GREEN.getColor());
+        nickName.setTextFill(GameColor.RED.getColor());
+        slogan.setTextFill(GameColor.YELLOW.getColor());
+        email.setTextFill(GameColor.BLUE.getColor());
     }
 
-//    public Result run() {
-//        String command;
-//        Matcher matcher;
-//
-//        while (true) {
-//            command = this.scanner.nextLine();
-//            if ((matcher = Command.CHANGE_USERNAME.getMatcher(command)) != null) {
-//                System.out.println(this.profileMenuController.changeUsername(matcher.group("username")));
-//            } else if ((matcher = Command.CHANGE_NICKNAME.getMatcher(command)) != null) {
-//                System.out.println(this.profileMenuController.changeNickName(matcher.group("nickname")));
-//            } else if ((matcher = Command.CHANGE_PASSWORD.getMatcher(command)) != null) {
-//                changePassword(matcher);
-//            } else if ((matcher = Command.CHANGE_EMAIL.getMatcher(command)) != null) {
-//                System.out.println(this.profileMenuController.changeEmail(matcher.group("email")));
-//            } else if ((matcher = Command.CHANGE_SLOGAN.getMatcher(command)) != null) {
-//                System.out.println(this.profileMenuController.changeSlogan(matcher.group("slogan")));
-//            } else if (command.matches(Command.REMOVE_SLOGAN.toString())) {
-//                System.out.println(this.profileMenuController.removeSlogan());
-//            } else if (command.matches(Command.DISPLAY_HIGHSCORE.toString())) {
-//                System.out.println(this.profileMenuController.showScore());
-//            } else if (command.matches(Command.DISPLAY_RANK.toString())) {
-//                System.out.println(this.profileMenuController.showRank());
-//            } else if (command.matches(Command.DISPLAY_SLOGAN.toString())) {
-//                System.out.println(this.profileMenuController.showSlogan());
-//            } else if (command.matches(Command.DISPLAY_PROFILE.toString())) {
-//                System.out.println(this.profileMenuController.showProfile());
-//            } else if (command.matches(Command.BACK.toString())) {
-//                System.out.println(Message.BACK_MAIN_MENU);
-//                return Result.ENTER_MAIN_MENU;
-//            } else
-//                System.out.println(Message.INVALID_COMMAND);
-//        }
-//    }
+    public Result run() {
+        String command;
+        Matcher matcher;
+
+        while (true) {
+            command = this.scanner.nextLine();
+            if ((matcher = Command.CHANGE_USERNAME.getMatcher(command)) != null) {
+                System.out.println(this.profileMenuController.changeUsername(matcher.group("username")));
+            } else if ((matcher = Command.CHANGE_NICKNAME.getMatcher(command)) != null) {
+                System.out.println(this.profileMenuController.changeNickName(matcher.group("nickname")));
+            } else if ((matcher = Command.CHANGE_PASSWORD.getMatcher(command)) != null) {
+                changePassword(matcher);
+            } else if ((matcher = Command.CHANGE_EMAIL.getMatcher(command)) != null) {
+                System.out.println(this.profileMenuController.changeEmail(matcher.group("email")));
+            } else if ((matcher = Command.CHANGE_SLOGAN.getMatcher(command)) != null) {
+                System.out.println(this.profileMenuController.changeSlogan(matcher.group("slogan")));
+            } else if (command.matches(Command.REMOVE_SLOGAN.toString())) {
+                System.out.println(this.profileMenuController.removeSlogan());
+            } else if (command.matches(Command.DISPLAY_HIGHSCORE.toString())) {
+                System.out.println(this.profileMenuController.showScore());
+            } else if (command.matches(Command.DISPLAY_RANK.toString())) {
+                System.out.println(this.profileMenuController.showRank());
+            } else if (command.matches(Command.DISPLAY_SLOGAN.toString())) {
+                System.out.println(this.profileMenuController.showSlogan());
+            } else if (command.matches(Command.DISPLAY_PROFILE.toString())) {
+                System.out.println(this.profileMenuController.showProfile());
+            } else if (command.matches(Command.BACK.toString())) {
+                System.out.println(Message.BACK_MAIN_MENU);
+                return Result.ENTER_MAIN_MENU;
+            } else
+                System.out.println(Message.INVALID_COMMAND);
+        }
+    }
 
     private void changePassword(Matcher matcher) {
         String message = this.profileMenuController.changePassword(matcher.group("oldPassword"), matcher.group("newPassword"));

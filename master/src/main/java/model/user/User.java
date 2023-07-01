@@ -54,6 +54,10 @@ public class User implements Serializable {
         User.users = users;
     }
 
+    public static ArrayList<User> getUsers() {
+        return users;
+    }
+
 
     private void setRanks() {
         for (User user : users)

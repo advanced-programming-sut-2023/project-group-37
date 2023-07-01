@@ -28,13 +28,22 @@ public class Database {
         return Database.DATABASE;
     }
 
-    public void addConnectedUser(User user, Socket socket) {
+    public void addConnectedUser(User user, Socket socket) throws IOException {
         this.connectedUsers.add(user);
         this.sockets.add(socket);
+
+        new DataOutputStream(socket.getOutputStream()).writeUTF(gson.toJson(User.getUsers()));
     }
 
     public void updateEveryOneTiles(ArrayList<Tile> modifiedTiles) throws IOException {
         for (Socket socket : this.sockets)
             new DataOutputStream(socket.getOutputStream()).writeUTF(gson.toJson(modifiedTiles));
+    }
+
+    public void updateEveryOneTilesExcept(ArrayList<Tile> modifiedTiles, User user) throws IOException {
+        for (Socket socket : this.sockets) {
+            if (connectedUsers.get(sockets.indexOf(socket)) != user)
+                new DataOutputStream(socket.getOutputStream()).writeUTF(gson.toJson(modifiedTiles));
+        }
     }
 }

@@ -1,9 +1,9 @@
 package view.menus;
 
-import connection.Connection;
 import controller.AppController;
 import controller.CaptchaController;
 import controller.MultiMenuFunctions;
+import controller.viewControllers.RegisterMenuController;
 import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -15,18 +15,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.user.RecoveryQuestion;
-import model.user.Slogan;
 import model.user.User;
 import view.enums.Error;
 import view.enums.Message;
 import view.enums.Result;
 
 import java.net.URL;
-import java.security.SecureRandom;
 import java.util.Objects;
 
 public class RegisterMenu extends Application {
     private final AppController appController;
+    private final RegisterMenuController registerMenuController;
     private final CaptchaController captchaController;
 
     // choiceBoxes && Buttons :
@@ -87,6 +86,7 @@ public class RegisterMenu extends Application {
 
     public RegisterMenu() {
         this.appController = AppController.getInstance();
+        this.registerMenuController = RegisterMenuController.getInstance();
         this.captchaController = new CaptchaController();
     }
 
@@ -114,42 +114,6 @@ public class RegisterMenu extends Application {
         }
     }
 
-    public String randomPassword() {
-        SecureRandom random = new SecureRandom();
-
-        String LOWER_CHARACTERS = "abcdefghijklmnopqrstuvwxyz";
-        String UPPER_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String NUMBERS = "0123456789";
-        String OTHER_CHARACTERS = "?!@#$%^&*_+=-/:;.><";
-
-        StringBuilder password = new StringBuilder();
-        int randomIndex;
-        char randomChar;
-
-        for (int i = 0; i < 3; i++) {
-            randomIndex = random.nextInt(UPPER_CHARACTERS.length());
-            randomChar = UPPER_CHARACTERS.charAt(randomIndex);
-            password.append(randomChar);
-        }
-
-        randomIndex = random.nextInt(OTHER_CHARACTERS.length());
-        randomChar = OTHER_CHARACTERS.charAt(randomIndex);
-        password.append(randomChar);
-
-        for (int i = 0; i < 3; i++) {
-            randomIndex = random.nextInt(LOWER_CHARACTERS.length());
-            randomChar = LOWER_CHARACTERS.charAt(randomIndex);
-            password.append(randomChar);
-        }
-
-        for (int i = 0; i < 2; i++) {
-            randomIndex = random.nextInt(NUMBERS.length());
-            randomChar = NUMBERS.charAt(randomIndex);
-            password.append(randomChar);
-        }
-        return password.toString();
-    }
-
     private void initializeSlogan() {
         this.sloganChoiceBox.getItems().add("No slogan");
         this.sloganChoiceBox.getItems().add("Type a slogan");
@@ -167,7 +131,7 @@ public class RegisterMenu extends Application {
                     }
 
                     if (new_val.intValue() == 2)
-                        this.sloganField.setText(Slogan.getRandomSlogan().toString());
+                        this.sloganField.setText(this.registerMenuController.generateRandomSlogan());
                     else this.sloganField.setText("");
 
                     this.sloganField.setDisable(true);
@@ -284,15 +248,16 @@ public class RegisterMenu extends Application {
             return;
         }
 
-        Connection.getInstance().register(this.usernameField.getText(), this.passwordField.getText(),
+        Message message = this.registerMenuController.register(this.usernameField.getText(), this.passwordField.getText(),
                 this.nicknameField.getText(), this.emailField.getText(), this.recoveryQuestions.getValue(),
                 this.recoveryAnswerField.getText(), this.sloganField.getText());
         this.appController.runMenu(Result.ENTER_LOGIN_MENU);
+        new Alert(Alert.AlertType.INFORMATION, message.toString()).show();
     }
 
     @FXML
     private void generateRandomPassword() {
-        this.passwordField.setText(this.randomPassword());
+        this.passwordField.setText(registerMenuController.generateRandomPassword());
         this.showPassword.setSelected(true);
     }
 
