@@ -28,6 +28,7 @@ public class NotificationReceiver extends Thread{
         while (true) {
             try {
                 data = this.dataInputStream.readUTF();
+                System.out.println("OMAD");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -42,6 +43,7 @@ public class NotificationReceiver extends Thread{
                     users = gson.fromJson(data, new TypeToken<List<User>>() {
                     }.getType());
                     User.reset(users);
+                    System.out.println("USERA");
                 }
             }
             catch (Exception ignored) {

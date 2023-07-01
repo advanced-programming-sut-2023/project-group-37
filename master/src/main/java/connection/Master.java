@@ -6,7 +6,7 @@ import java.net.Socket;
 
 public class Master {
     public Master(int port) {
-        System.out.println("Starting Mini Kuber service...");
+        System.out.println("Starting StrongHold service...");
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             while (true) {
@@ -14,7 +14,7 @@ public class Master {
                 new Connection(socket).start();
             }
         } catch (IOException ignored) {
-
+            System.out.println(ignored.getMessage());
         }
     }
 }

@@ -9,6 +9,7 @@ import model.game.Tile;
 import model.user.User;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class Connection extends Thread {
     public Connection(Socket socket) throws IOException {
         this.socket = socket;
         this.database = Database.getInstance();
+        new DataOutputStream(socket.getOutputStream()).writeUTF(new Gson().toJson(User.getUsers()));
     }
 
     @Override
