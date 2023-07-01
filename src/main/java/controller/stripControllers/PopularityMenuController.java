@@ -19,6 +19,19 @@ public class PopularityMenuController {
         if (this.stripPane.getChildren().size() > 0)
             this.stripPane.getChildren().subList(0, this.stripPane.getChildren().size()).clear();
 
+        setPopularity();
+        setTaxes();
+        setFearRate();
 
     }
+
+    private void setFearRate() {
+    }
+
+    private void setTaxes() {
+    }
+
+    private void setPopularity() {
+    }
+
 }

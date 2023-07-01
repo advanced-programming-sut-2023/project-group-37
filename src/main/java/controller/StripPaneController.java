@@ -50,7 +50,7 @@ public class StripPaneController {
         this.buildingMenuController = new BuildingMenuController(stripPane, this);
         this.tradeMenuController = new TradeMenuController(stripPane);
         this.popularityMenuController = new PopularityMenuController(stripPane);
-        this.shopMenuController = new ShopMenuController(stripPane,tradeMenuController);
+        this.shopMenuController = new ShopMenuController(stripPane, tradeMenuController);
 
         for (BuildingType buildingType : BuildingType.values()) {
             ImageView imageView = MultiMenuFunctions.getImageView(buildingType.getImage(), this.sizeOfImages);
