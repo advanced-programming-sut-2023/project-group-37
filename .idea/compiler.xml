@@ -11,6 +11,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="master" target="19" />
       <module name="project-group-37" target="19" />
     </bytecodeTargetLevel>
   </component>
