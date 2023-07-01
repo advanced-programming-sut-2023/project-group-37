@@ -2,6 +2,7 @@ package controller.stripControllers;
 
 import controller.MapController;
 import controller.MultiMenuFunctions;
+import controller.StripPaneController;
 import javafx.event.EventHandler;
 import javafx.scene.ImageCursor;
 import javafx.scene.control.Alert;
@@ -29,9 +30,9 @@ public class ShopMenuController {
     private static Game game;
 
 
-    public ShopMenuController(Pane stripPane) {
+    public ShopMenuController(Pane stripPane, TradeMenuController tradeMenuController) {
         this.stripPane = stripPane;
-        tradeMenuController = TradeMenuController.getInstance();
+        this.tradeMenuController = tradeMenuController;
     }
 
     public static void setGame(Game game) {
@@ -138,7 +139,7 @@ public class ShopMenuController {
     }
 
     private void enterTrade() {
-        tradeMenuController.run();
+        this.tradeMenuController.run();
     }
 
     private void goToItem(Item item) {

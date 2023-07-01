@@ -48,10 +48,10 @@ public class StripPaneController {
 
         this.mapController = MapController.getInstance();
         this.gameController = GameController.getInstance();
-        this.shopMenuController = new ShopMenuController(stripPane);
         this.unitMenuController = new UnitMenuController(stripPane);
         this.buildingMenuController = new BuildingMenuController(stripPane, this);
         this.tradeMenuController = new TradeMenuController(stripPane);
+        this.shopMenuController = new ShopMenuController(stripPane,tradeMenuController);
 
         for (BuildingType buildingType : BuildingType.values()) {
             ImageView imageView = MultiMenuFunctions.getImageView(buildingType.getImage(), this.sizeOfImages);
