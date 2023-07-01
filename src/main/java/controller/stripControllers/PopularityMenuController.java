@@ -1,5 +1,6 @@
 package controller.stripControllers;
 
+import controller.MapController;
 import controller.MultiMenuFunctions;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -51,7 +52,7 @@ public class PopularityMenuController {
 
     private void setFood() {
         Label food = new Label("Food rate : " + game.getCurrentTurnGovernment().getFoodRate());
-        food.setLayoutX(380);//60
+        food.setLayoutX(370);//60
         food.setLayoutY(15);//15
 
         stripPane.getChildren().add(food);
@@ -110,6 +111,7 @@ public class PopularityMenuController {
 
         fearSlider.setStyle("-fx-font-size: 20");
 
+
         fearSlider.setValue(game.getCurrentTurnGovernment().getFearRate());
         stripPane.getChildren().add(fearSlider);
 
@@ -118,6 +120,7 @@ public class PopularityMenuController {
             game.getCurrentTurnGovernment().setFearRate((int) fearSlider.getValue());
             fear.setText("Fear rate : " + game.getCurrentTurnGovernment().getFearRate());
             updateFace();
+            MapController.getInstance().getMainMap().requestFocus();
         });
 
     }
