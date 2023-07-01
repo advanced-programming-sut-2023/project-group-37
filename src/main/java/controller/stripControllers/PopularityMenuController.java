@@ -159,7 +159,7 @@ public class PopularityMenuController {
     private void setPopularity() {
         Label popularity = new Label("Popularity : " + game.getCurrentTurnGovernment().getPopularity());
 
-        popularity.setLayoutX(60);
+        popularity.setLayoutX(40);
         popularity.setLayoutY(15);
         popularity.setStyle("-fx-font-size: 20");
         popularity.setBackground(Background.fill(Color.WHITE));
