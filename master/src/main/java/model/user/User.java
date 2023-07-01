@@ -52,6 +52,7 @@ public class User implements Serializable {
 
     public static void reset(ArrayList<User> users) {
         User.users = users;
+        User.updateDatabase();
     }
 
     public static ArrayList<User> getUsers() {
