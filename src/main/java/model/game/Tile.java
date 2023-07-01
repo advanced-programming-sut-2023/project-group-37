@@ -78,12 +78,12 @@ public class Tile extends Rectangle {
         info = "Texture : " + this.texture.getName() + "\n";
         if (this.getMilitaryUnits() != null) {
             for (MilitaryUnit militaryUnit : this.getMilitaryUnits()) {
-                info += "Name : " + militaryUnit.getName() + "Hp : " + militaryUnit.getHitpoints() + "\n";
+                info += "Name : " + militaryUnit.getName() + "  Hp : " + militaryUnit.getHitpoints() + "\n";
             }
         }
 
         if (this.hasBuilding) {
-            info += "Building Name : " + this.building.getName() + "HP : " + building.getHitpoints() + "\n";
+            info += "Building Name : " + this.building.getName() + "  HP : " + building.getHitpoints() + "\n";
         }
         info = info.trim();
         return info;
