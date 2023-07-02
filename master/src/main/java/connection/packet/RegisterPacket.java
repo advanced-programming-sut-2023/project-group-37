@@ -1,4 +1,4 @@
-package connection;
+package connection.packet;
 
 import javafx.scene.image.Image;
 import model.user.User;

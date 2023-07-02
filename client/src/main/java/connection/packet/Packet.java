@@ -1,4 +1,4 @@
-package connection;
+package connection.packet;
 
 import com.google.gson.Gson;
 

@@ -1,4 +1,4 @@
-package connection;
+package connection.packet;
 
 public class LoginPacket extends Packet {
 
