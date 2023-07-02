@@ -52,6 +52,10 @@ public class User implements Serializable {
 
     public static void reset(ArrayList<User> users) {
         User.users = users;
+        for (User user : users) {
+            System.out.println(user.getUsername());
+        }
+        System.out.println("BAW");
         User.updateDatabase();
     }
 
@@ -90,16 +94,10 @@ public class User implements Serializable {
     }
 
     public static User getUserByEmail(String email) {
-        for (User user : users) {
+        for (User user : users)
             if (user.getEmail().equals(email.toLowerCase()))
                 return user;
-        }
-
         return null;
-    }
-
-    public void setRank(int rank) {
-        this.rank = rank;
     }
 
     public User(String username, String password, String nickname, String email, String recoveryQuestion,
@@ -113,7 +111,6 @@ public class User implements Serializable {
         this.recoveryAnswer = recoveryAnswer;
         this.highScore = 0;
         this.avatarNum = ProfileMenuController.getRandomAvatarURL();
-
         users.add(this);
         User.updateDatabase();
     }
@@ -124,6 +121,10 @@ public class User implements Serializable {
 
     public String getUsername() {
         return this.username;
+    }
+
+    public String getHashedPassword() {
+        return this.hashedPassword;
     }
 
     public String getNickName() {
@@ -140,6 +141,10 @@ public class User implements Serializable {
 
     public String getRecoveryQuestion() {
         return this.recoveryQuestion;
+    }
+
+    public String getRecoveryAnswer() {
+        return this.recoveryAnswer;
     }
 
     public int getHighScore() {
@@ -185,6 +190,10 @@ public class User implements Serializable {
     public void setHighScore(int highScore) {
         this.highScore = highScore;
         setRanks();
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 
     public Image getAvatar() {
