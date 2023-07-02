@@ -18,7 +18,7 @@ public class TilesPacket extends Packet {
 
     @Override
     public PacketType getType() {
-        return PacketType.TilesPacket;
+        return PacketType.TILES_PACKET;
     }
 
     public static class TilePacket {

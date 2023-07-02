@@ -1,31 +1,26 @@
 package connection;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import connection.packet.Packet;
-import connection.packet.PacketType;
-import controller.GameController;
-import controller.viewControllers.MainMenuController;
-import model.game.Map;
-import model.game.Tile;
+import connection.packet.*;
+import controller.AuthorizationController;
+import controller.GamingController;
 import model.user.User;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Connection extends Thread {
+    private final AuthorizationController authorizationController;
+    private GamingController gamingController;
     private User user;
     private final Socket socket;
     private final DatabaseController databaseController;
 
     public Connection(Socket socket) throws IOException {
+        this.authorizationController = new AuthorizationController(socket);
         this.socket = socket;
         this.databaseController = DatabaseController.getInstance();
-        new DataOutputStream(socket.getOutputStream()).writeUTF(new Gson().toJson(User.getUsers()));
     }
 
     @Override
@@ -49,6 +44,37 @@ public class Connection extends Thread {
 
             Packet packet = gson.fromJson(data, Packet.class);
             PacketType type = packet.getType();
+
+            switch (type) {
+                case LOGIN_PACKET -> this.handleLogin((LoginPacket) packet);
+                case REGISTER_PACKET -> this.handleRegister((RegisterPacket) packet);
+                case TILES_PACKET -> this.gamingController.handleTiles((TilesPacket) packet);
+            }
+        }
+    }
+
+    private void handleRegister(RegisterPacket registerPacket) {
+        try {
+            this.authorizationController.handleRegister(registerPacket);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void handleLogin(LoginPacket loginPacket) {
+        User user;
+        try {
+            if ((user = this.authorizationController.handleLogin(loginPacket)) != null) {
+                this.user = user;
+                try {
+                    this.databaseController.addConnectedUser(user, this.socket);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                this.gamingController = new GamingController(user);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
