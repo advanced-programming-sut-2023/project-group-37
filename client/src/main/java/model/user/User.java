@@ -56,25 +56,16 @@ public class User implements Serializable {
         User.updateDatabase();
     }
 
+    public static ArrayList<User> getUsers() {
+        return users;
+    }
+
     public static User getCurrentUser() {
         return User.currentUser;
     }
 
     public static void setCurrentUser(User currentUser) {
         User.currentUser = currentUser;
-    }
-
-    public static void reset(ArrayList<User> users) {
-        User.users = users;
-        for (User user : users) {
-            System.out.println(user.getUsername());
-        }
-        System.out.println("BAW");
-        User.updateDatabase();
-    }
-
-    public static ArrayList<User> getUsers() {
-        return users;
     }
 
     public static User getUserByUsername(String username) {
@@ -93,128 +84,19 @@ public class User implements Serializable {
         return null;
     }
 
-    public int getRank() {
-        return rank;
-    }
-
-    private void setRanks() {
-        for (User user : users)
-            user.rank = 0;
-
-        int rank = 1, highScore;
-        User rankedUser = users.get(0);
-
-        while (rank <= users.size()) {
-            highScore = 0;
-            for (User user : users) {
-                if (user.highScore > highScore && user.rank == 0) {
-                    rankedUser = user;
-                    highScore = user.highScore;
-                }
-            }
-            rankedUser.rank = rank;
-            rank++;
+    public static void reset(ArrayList<User> users) {
+        User.users = users;
+        for (User user : users) {
+            System.out.println(user.getUsername());
         }
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    public String getHashedPassword() {
-        return this.hashedPassword;
-    }
-
-    public String getNickName() {
-        return this.nickname;
-    }
-
-    public String getSlogan() {
-        return this.slogan;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public String getRecoveryQuestion() {
-        return this.recoveryQuestion;
-    }
-
-    public String getRecoveryAnswer() {
-        return this.recoveryAnswer;
-    }
-
-    public int getHighScore() {
-        return this.highScore;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void changePassword(String newPassword) {
-        this.hashedPassword = PasswordHashing.encode(newPassword);
-    }
-
-    public void setPassword(String password) {
-        this.hashedPassword = PasswordHashing.encode(password);
-    }
-
-    public void setNickName(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public void setSlogan(String slogan) {
-        this.slogan = slogan;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setRecoveryQuestion(int questionNumber) {
-        this.recoveryQuestion = RecoveryQuestion.getQuestion(questionNumber);
-    }
-
-    public void setAvatarNumber(int avatarNumber) {
-        this.avatarNumber = avatarNumber;
-    }
-
-    public void setRecoveryAnswer(String recoveryAnswer) {
-        this.recoveryAnswer = recoveryAnswer;
-    }
-
-    public void setHighScore(int highScore) {
-        this.highScore = highScore;
-        setRanks();
-    }
-
-    public void setRank(int rank) {
-        this.rank = rank;
-    }
-
-    public Image getAvatar() {
-        return new Image(ProfileMenuController.getAllAvatarImages().get(this.avatarNumber).getAbsolutePath());
-    }
-
-    public boolean isWrongPassword(String password) {
-        return !PasswordHashing.checkPassword(password, this.hashedPassword);
-    }
-
-    public boolean isWrongAnswer(String answer) {
-        return !this.recoveryAnswer.equals(answer);
-    }
-
-    public static void deleteUser(User user) {
-        users.remove(user);
+        System.out.println("BAW");
+        User.updateDatabase();
     }
 
     private static User getUserByRank(int rank) {
-        for (User user : users) {
+        for (User user : users)
             if (user.rank == rank)
                 return user;
-        }
         return null;
     }
 
@@ -224,13 +106,12 @@ public class User implements Serializable {
         int rankNumber = 1;
         while (rankNumber <= rank) {
             rankUser = getUserByRank(rankNumber);
-            if (rankUser != null) {
+            if (rankUser != null)
                 if (rankUser.highScore < user.highScore) {
                     user.rank = rankNumber;
                     rankUser.rank = -1;
                     break;
                 }
-            }
             rankNumber++;
         }
         for (int rankToChange = rankNumber + 1; rankToChange < rank; rankToChange++) {
@@ -245,13 +126,10 @@ public class User implements Serializable {
     }
 
     // Database functions :
-
     public static void updateDatabase() {
         saveUsersToFile();
-
-        if (loadStayLoggedIn() != null) {
+        if (loadStayLoggedIn() != null)
             setStayLoggedIn(currentUser);
-        }
     }
 
     public static void loadUsersFromFile() {
@@ -261,9 +139,9 @@ public class User implements Serializable {
             ArrayList<User> createdUsers = gson.fromJson(json, new TypeToken<List<User>>() {
             }.getType());
 
-            if (createdUsers != null) {
+            if (createdUsers != null)
                 users = createdUsers;
-            }
+
         } catch (IOException ignored) {
             File file = new File(filePath);
             try {
@@ -278,10 +156,8 @@ public class User implements Serializable {
         String filePath = "./src/main/resources/Database/stayLoggedIn.json";
         try {
             String json = new String(Files.readAllBytes(Paths.get(filePath)));
-
             return gson.fromJson(json, new TypeToken<User>() {
             }.getType());
-
         } catch (IOException ignored) {
             File file = new File(filePath);
             try {
@@ -324,5 +200,122 @@ public class User implements Serializable {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getHashedPassword() {
+        return this.hashedPassword;
+    }
+
+    public void setPassword(String password) {
+        this.hashedPassword = PasswordHashing.encode(password);
+    }
+
+    public String getNickName() {
+        return this.nickname;
+    }
+
+    public void setNickName(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getSlogan() {
+        return this.slogan;
+    }
+
+    public void setSlogan(String slogan) {
+        this.slogan = slogan;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRecoveryQuestion() {
+        return this.recoveryQuestion;
+    }
+
+    public void setRecoveryQuestion(int questionNumber) {
+        this.recoveryQuestion = RecoveryQuestion.getQuestion(questionNumber);
+    }
+
+    public String getRecoveryAnswer() {
+        return this.recoveryAnswer;
+    }
+
+    public void setRecoveryAnswer(String recoveryAnswer) {
+        this.recoveryAnswer = recoveryAnswer;
+    }
+
+    public int getHighScore() {
+        return this.highScore;
+    }
+
+    public void setHighScore(int highScore) {
+        this.highScore = highScore;
+        setRanks();
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public void setAvatarNumber(int avatarNumber) {
+        this.avatarNumber = avatarNumber;
+    }
+
+    public void changePassword(String newPassword) {
+        this.hashedPassword = PasswordHashing.encode(newPassword);
+    }
+
+    private void setRanks() {
+        for (User user : users)
+            user.rank = 0;
+
+        int rank = 1, highScore;
+        User rankedUser = users.get(0);
+
+        while (rank <= users.size()) {
+            highScore = 0;
+            for (User user : users) {
+                if (user.highScore > highScore && user.rank == 0) {
+                    rankedUser = user;
+                    highScore = user.highScore;
+                }
+            }
+            rankedUser.rank = rank;
+            rank++;
+        }
+    }
+
+    public Image getAvatar() {
+        return new Image(ProfileMenuController.getAllAvatarImages().get(this.avatarNumber).getAbsolutePath());
+    }
+
+    public boolean isWrongPassword(String password) {
+        return !PasswordHashing.checkPassword(password, this.hashedPassword);
+    }
+
+    public boolean isWrongAnswer(String answer) {
+        return !this.recoveryAnswer.equals(answer);
+    }
+
+    public static void deleteUser(User user) {
+        users.remove(user);
     }
 }
