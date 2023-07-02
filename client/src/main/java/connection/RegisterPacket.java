@@ -12,9 +12,6 @@ public class RegisterPacket extends Packet {
     private final String recoveryQuestion;
     private final String recoveryAnswer;
     private final int highScore;
-    private int rank;
-//    private int avatarNum;
-    // TODO: is this ok?
     private final Image avatar;
 
     private RegisterPacket(User user) {
@@ -72,10 +69,6 @@ public class RegisterPacket extends Packet {
 
     public int getHighScore() {
         return this.highScore;
-    }
-
-    public int getRank() {
-        return this.rank;
     }
 
     public Image getAvatar() {
