@@ -18,8 +18,8 @@ import java.util.List;
 
 public class User implements Serializable {
     private static User currentUser;
-    private static ArrayList<User> users = new ArrayList<>();
-    private static final Gson gson = new Gson();
+    private static ArrayList<User> users;
+    private static final Gson gson;
     private String username;
     private String hashedPassword;
     private String nickname;
@@ -31,6 +31,11 @@ public class User implements Serializable {
     private int rank;
     private int avatarNumber;
 
+    static {
+        updateDatabase();
+        users = new ArrayList<>();
+        gson = new Gson();
+    }
     public User(RegisterPacket registerPacket) {
         this.username = registerPacket.getUsername();
         this.hashedPassword = registerPacket.getHashedPassword();

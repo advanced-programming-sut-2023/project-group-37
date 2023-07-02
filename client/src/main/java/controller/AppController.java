@@ -49,9 +49,7 @@ public class AppController {
     }
 
     public void loadApp() throws Exception {
-        User.loadUsersFromFile();
         User loggedInUser = User.loadStayLoggedIn();
-        Map.loadMaps();
 
         if (loggedInUser != null) {
             MainMenuController.setCurrentUser(loggedInUser);

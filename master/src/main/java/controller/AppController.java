@@ -1,11 +1,15 @@
 package controller;
 
+import controller.viewControllers.ChangeMenuController;
 import controller.viewControllers.MainMenuController;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import model.game.Map;
 import model.user.User;
 import view.enums.Result;
 import view.menus.*;
+
+import java.util.Objects;
 
 public class AppController {
     private static AppController appController;
@@ -45,9 +49,7 @@ public class AppController {
     }
 
     public void loadApp() throws Exception {
-        User.loadUsersFromFile();
         User loggedInUser = User.loadStayLoggedIn();
-        Map.loadMaps();
 
         if (loggedInUser != null) {
             MainMenuController.setCurrentUser(loggedInUser);

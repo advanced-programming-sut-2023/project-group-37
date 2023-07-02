@@ -15,6 +15,7 @@ public class Map {
     private final HashMap<Integer, Territory> territories;
 
     static {
+        loadMaps();
         maps = new ArrayList<>();
     }
 

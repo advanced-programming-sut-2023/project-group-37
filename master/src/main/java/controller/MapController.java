@@ -19,6 +19,7 @@ import view.animation.FaceAnimation;
 import view.animation.MoveAnimation;
 
 import java.net.URISyntaxException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -69,7 +70,6 @@ public class MapController {
     }
 
     public void setGamePane(Pane gamePane) throws URISyntaxException {
-        Map.loadMaps();
         this.map = this.game.getMap();
         Tile[][] tiles = this.map.getField();
 

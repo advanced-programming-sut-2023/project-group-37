@@ -70,7 +70,6 @@ public class MapController {
     }
 
     public void setGamePane(Pane gamePane) throws URISyntaxException {
-        Map.loadMaps();
         this.map = this.game.getMap();
         Tile[][] tiles = this.map.getField();
 
