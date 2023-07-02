@@ -4,6 +4,8 @@ module Stronghold {
     requires spring.security.crypto;
     requires com.google.gson;
 
+    exports connection;
+    exports connection.packet;
     exports view;
     exports model.buildings;
     exports model.game;
@@ -13,7 +15,6 @@ module Stronghold {
     exports controller;
     opens controller to javafx.fxml;
     exports view.enums;
-    opens view.enums to javafx.fxml;
     exports view.menus;
     opens view.menus to javafx.fxml;
     exports model.user;
@@ -21,6 +22,7 @@ module Stronghold {
     exports controller.viewControllers;
     opens controller.viewControllers to javafx.fxml;
     exports view.animation;
-    exports connection;
-    opens connection to javafx.fxml;
+    opens connection to com.google.gson;
+    opens connection.packet to com.google.gson;
+    opens view.enums to com.google.gson, javafx.fxml;
 }

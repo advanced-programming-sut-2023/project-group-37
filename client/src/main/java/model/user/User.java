@@ -32,9 +32,9 @@ public class User implements Serializable {
     private int avatarNumber;
 
     static {
-        updateDatabase();
         users = new ArrayList<>();
         gson = new Gson();
+        updateDatabase();
     }
     public User(RegisterPacket registerPacket) {
         this.username = registerPacket.getUsername();

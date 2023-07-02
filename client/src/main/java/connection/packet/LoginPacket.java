@@ -6,6 +6,7 @@ public class LoginPacket extends Packet {
     private final String password;
 
     public LoginPacket(String username, String password) {
+        super(PacketType.LOGIN_PACKET);
         this.username = username;
         this.password = password;
     }

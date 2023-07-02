@@ -134,7 +134,7 @@ public class LoginMenu extends Application {
     }
 
     @FXML
-    private void login() throws Exception {
+    private void login() {
         if (!this.checkForErrors()) {
             new Alert(Alert.AlertType.ERROR, Message.EMPTY_FIELD.toString()).show();
             return;

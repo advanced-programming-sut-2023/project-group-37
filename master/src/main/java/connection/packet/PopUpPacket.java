@@ -7,6 +7,7 @@ public class PopUpPacket extends Packet{
     private final boolean isError;
 
     public PopUpPacket(Message message, boolean isError) {
+        super(PacketType.POPUP_PACKET);
         this.message = message;
         this.isError = isError;
     }

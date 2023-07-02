@@ -18,6 +18,7 @@ public class RegistrationController {
     }
 
     public User handleLogin(LoginPacket loginPacket) throws IOException {
+        System.out.println("RC : handle login");
         User user;
         if ((user = User.getUserByUsername(loginPacket.getUsername())) != null) {
             this.dataOutputStream.writeUTF(new PopUpPacket(Message.LOGIN_SUCCESSFUL, false).toJson());

@@ -42,6 +42,7 @@ public class QueryReceiver extends Thread {
 
             Packet packet = gson.fromJson(data, Packet.class);
             PacketType type = packet.getType();
+            System.out.println("Q : received");
 
             switch (type) {
                 case LOGIN_PACKET -> this.handleLogin((LoginPacket) packet);
@@ -64,6 +65,7 @@ public class QueryReceiver extends Thread {
     }
 
     private void handleLogin(LoginPacket loginPacket) {
+        System.out.println("Q : login handle");
         User user;
         try {
             if ((user = this.registrationController.handleLogin(loginPacket)) != null) {
@@ -74,6 +76,9 @@ public class QueryReceiver extends Thread {
                     throw new RuntimeException(e);
                 }
                 this.gamingController = new GamingController(user);
+            }
+            else {
+
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

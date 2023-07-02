@@ -4,5 +4,5 @@ public enum PacketType {
     REGISTER_PACKET,
     LOGIN_PACKET,
     TILES_PACKET,
-    POPUP_PACKET,
+    POPUP_PACKET, USER_PACKET,
 }

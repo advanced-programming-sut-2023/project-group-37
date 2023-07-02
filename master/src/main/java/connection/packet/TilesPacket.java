@@ -11,6 +11,7 @@ public class TilesPacket extends Packet {
     private final ArrayList<TilePacket> tiles;
 
     public TilesPacket(ArrayList<Tile> modifiedTiles) {
+        super(PacketType.TILES_PACKET);
         this.tiles = new ArrayList<>();
         for (Tile tile : modifiedTiles)
             this.tiles.add(new TilePacket(tile));
