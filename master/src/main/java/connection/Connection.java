@@ -58,13 +58,10 @@ public class Connection extends Thread {
                     catch (Exception ex) {
                         User user = User.getUserByUsername(data);
                         if (user != null) {
-
                             this.user = user;
-                            database.addConnectedUser(user, socket);
                             QueryReceiver queryReceiver = new QueryReceiver(user, dataInputStream);
                             queryReceiver.start();
                             databaseController.addConnectedUser(user, socket);
-                            AliveListener aliveListener = new AliveListener(user, dataInputStream);
                         }
                     }
                 }
