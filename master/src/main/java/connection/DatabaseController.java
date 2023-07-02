@@ -11,26 +11,26 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Database {
-    private static final Database DATABASE;
+public class DatabaseController {
+    private static final DatabaseController CLIENTS_CONTROLLER;
     private final ArrayList<User> connectedUsers;
     private final HashMap<User, DataInputStream> dataInputStreams;
     private final HashMap<User, DataOutputStream> dataOutputStreams;
     private final Gson gson;
 
     static {
-        DATABASE = new Database();
+        CLIENTS_CONTROLLER = new DatabaseController();
     }
 
-    private Database() {
+    private DatabaseController() {
         this.connectedUsers = new ArrayList<>();
         this.dataInputStreams = new HashMap<>();
         this.dataOutputStreams = new HashMap<>();
         this.gson = new Gson();
     }
 
-    public static Database getInstance() {
-        return Database.DATABASE;
+    public static DatabaseController getInstance() {
+        return DatabaseController.CLIENTS_CONTROLLER;
     }
 
     public void addConnectedUser(User user, Socket socket) throws IOException {
@@ -43,7 +43,7 @@ public class Database {
     public void updateEveryOneTilesExcept(ArrayList<Tile> modifiedTiles, User user) throws IOException {
         for (User connectedUser : this.connectedUsers) {
             if (connectedUser != user)
-                this.dataOutputStreams.get(user).writeUTF(this.gson.toJson(modifiedTiles));
+                this.dataOutputStreams.get(user).writeUTF(this.gson.toJson(new TilesPacket(modifiedTiles)));
         }
     }
 }

@@ -1,13 +1,10 @@
 package model.game;
 
-import connection.Database;
 import controller.GameController;
 import controller.MultiMenuFunctions;
 import model.buildings.*;
 import model.people.*;
-import view.animation.FaceAnimation;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Game {
@@ -217,6 +214,7 @@ public class Game {
                 government.removeDeadUnits();
                 government.removeDestroyedBuildings();
             }
+
             for (Government government : this.governments)
                 for (Building building : government.getBuildings())
                     if (building instanceof DefensiveBuilding && (
@@ -224,6 +222,7 @@ public class Game {
                                     ((DefensiveBuilding) building).getDefensiveType() == DefensiveBuildingType.LARGE_GATEHOUSE))
                         ((DefensiveBuilding) building).setOwner();
         }
+
         do {
             this.index = (this.index + 1) % this.governments.size();
         } while (this.governments.get(index).isDead());
