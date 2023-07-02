@@ -5,6 +5,13 @@ import com.google.gson.Gson;
 import java.io.Serializable;
 
 public abstract class Packet implements Serializable {
+
+    protected PacketType type;
+
+    public PacketType getType() {
+        return this.type;
+    }
+
     public String toJson() {
         return new Gson().toJson(this);
     }

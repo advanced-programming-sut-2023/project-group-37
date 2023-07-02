@@ -11,8 +11,6 @@ public class RegisterPacket extends Packet {
     private final String email;
     private final String recoveryQuestion;
     private final String recoveryAnswer;
-    private final int highScore;
-    private final Image avatar;
 
     private RegisterPacket(User user) {
         this.username = user.getUsername();
@@ -22,8 +20,6 @@ public class RegisterPacket extends Packet {
         this.email = user.getEmail();
         this.recoveryQuestion = user.getRecoveryQuestion();
         this.recoveryAnswer = user.getRecoveryAnswer();
-        this.highScore = user.getHighScore();
-        this.avatar = user.getAvatar();
     }
 
     public RegisterPacket(String username, String hashedPassword, String nickname, String slogan, String email,
@@ -35,8 +31,6 @@ public class RegisterPacket extends Packet {
         this.email = email;
         this.recoveryQuestion = recoveryQuestion;
         this.recoveryAnswer = recoveryAnswer;
-        this.highScore = 0;
-        this.avatar = avatar;
     }
 
     public String getUsername() {
@@ -65,13 +59,5 @@ public class RegisterPacket extends Packet {
 
     public String getRecoveryAnswer() {
         return this.recoveryAnswer;
-    }
-
-    public int getHighScore() {
-        return this.highScore;
-    }
-
-    public Image getAvatar() {
-        return this.avatar;
     }
 }

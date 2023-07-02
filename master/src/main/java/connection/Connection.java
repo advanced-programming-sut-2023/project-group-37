@@ -3,7 +3,6 @@ package connection;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import controller.GameController;
-import controller.viewControllers.MainMenuController;
 import model.game.Map;
 import model.game.Tile;
 import model.user.User;
@@ -48,26 +47,22 @@ public class Connection extends Thread {
                     Map map = GameController.getInstance().getCurrentGame().getMap();
                     map.resetSomeTiles(modifiedTiles);
                     this.database.updateEveryOneTilesExcept(modifiedTiles, this.user);
-                }
-                catch (Exception ignored) {
+                } catch (Exception ignored) {
                     try {
                         users = gson.fromJson(data, new TypeToken<List<User>>() {
                         }.getType());
                         User.reset(users);
-                    }
-                    catch (Exception ex) {
+                    } catch (Exception ex) {
                         User user = User.getUserByUsername(data);
                         if (user != null) {
-
                             this.user = user;
                             database.addConnectedUser(user, socket);
-                            AliveListener aliveListener = new AliveListener(user, dataInputStream);
+                            QueryReceiver queryReceiver = new QueryReceiver(user, dataInputStream);
+                            queryReceiver.start();
                         }
                     }
                 }
-            }
-            catch (Exception ignored) {
-
+            } catch (Exception ignored) {
             }
         }
     }

@@ -69,32 +69,32 @@ public class AvatarMenu extends Application {
     }
 
     public void select1(MouseEvent mouseEvent) {
-        User.getCurrentUser().setAvatarNum(0);
+        User.getCurrentUser().setAvatarNumber(0);
         currentAvatar.setFill(new ImagePattern(User.getCurrentUser().getAvatar()));
     }
 
     public void select2(MouseEvent mouseEvent) {
-        User.getCurrentUser().setAvatarNum(1);
+        User.getCurrentUser().setAvatarNumber(1);
         currentAvatar.setFill(new ImagePattern(User.getCurrentUser().getAvatar()));
     }
 
     public void select3(MouseEvent mouseEvent) {
-        User.getCurrentUser().setAvatarNum(2);
+        User.getCurrentUser().setAvatarNumber(2);
         currentAvatar.setFill(new ImagePattern(User.getCurrentUser().getAvatar()));
     }
 
     public void select4(MouseEvent mouseEvent) {
-        User.getCurrentUser().setAvatarNum(3);
+        User.getCurrentUser().setAvatarNumber(3);
         currentAvatar.setFill(new ImagePattern(User.getCurrentUser().getAvatar()));
     }
 
     public void select5(MouseEvent mouseEvent) {
-        User.getCurrentUser().setAvatarNum(4);
+        User.getCurrentUser().setAvatarNumber(4);
         currentAvatar.setFill(new ImagePattern(User.getCurrentUser().getAvatar()));
     }
 
     public void select6(MouseEvent mouseEvent) {
-        User.getCurrentUser().setAvatarNum(5);
+        User.getCurrentUser().setAvatarNumber(5);
         currentAvatar.setFill(new ImagePattern(User.getCurrentUser().getAvatar()));
     }
 
