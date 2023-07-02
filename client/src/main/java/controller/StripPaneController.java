@@ -1,9 +1,7 @@
 package controller;
 
 import controller.stripControllers.*;
-import javafx.event.EventHandler;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -12,7 +10,7 @@ import model.buildings.*;
 import model.game.Tile;
 import model.people.MilitaryUnit;
 import view.enums.Message;
-import view.enums.PopUp;
+import connection.PopUp;
 
 import java.util.ArrayList;
 import java.util.HashMap;

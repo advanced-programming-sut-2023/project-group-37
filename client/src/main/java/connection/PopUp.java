@@ -1,4 +1,4 @@
-package view.enums;
+package connection;
 
 import javafx.scene.control.Alert;
 

@@ -1,7 +1,5 @@
 package model.game;
 
-import controller.GameController;
-import controller.MultiMenuFunctions;
 import model.buildings.*;
 import model.people.*;
 

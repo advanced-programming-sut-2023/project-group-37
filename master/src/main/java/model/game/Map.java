@@ -1,7 +1,5 @@
 package model.game;
 
-import controller.MultiMenuFunctions;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;

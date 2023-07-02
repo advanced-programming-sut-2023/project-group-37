@@ -2,7 +2,6 @@ package controller.stripControllers;
 
 import controller.MapController;
 import controller.MultiMenuFunctions;
-import controller.StripPaneController;
 import javafx.event.EventHandler;
 import javafx.scene.ImageCursor;
 import javafx.scene.control.Alert;
@@ -17,7 +16,7 @@ import model.game.Game;
 import model.game.Item;
 import model.game.ItemCategory;
 import view.enums.Message;
-import view.enums.PopUp;
+import connection.PopUp;
 import view.menus.RegisterMenu;
 
 import java.util.Objects;

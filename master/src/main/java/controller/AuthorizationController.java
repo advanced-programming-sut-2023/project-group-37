@@ -4,7 +4,7 @@ import connection.packet.LoginPacket;
 import connection.packet.PopUpPacket;
 import connection.packet.RegisterPacket;
 import model.user.User;
-import view.enums.PopUp;
+import connection.PopUp;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

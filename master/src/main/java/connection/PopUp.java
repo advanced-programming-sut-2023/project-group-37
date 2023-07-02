@@ -1,8 +1,11 @@
-package view.enums;
+package connection;
 
 import javafx.scene.control.Alert;
 
 public enum PopUp {
+    // Register & Login Menu :
+    CANT_LOGIN("Username and password didn't match!"),
+
     // unitMenu :
     NO_UNIT_SELECTED("No unit selected!"),
     NO_ENEMY("There are no enemy in this tile!"),
@@ -22,7 +25,7 @@ public enum PopUp {
     INVALID_ID("Invalid id!"),
     TRADE_FAILED("This trade can't be done!"),
     TRADE_SUCCESS("The trade was successfully completed!"),
-    ;
+    LOGIN_SUCCESSFUL("LoggedIn successfully!", true);
     private final Alert alert;
 
     PopUp(String message) {

@@ -21,4 +21,6 @@ module Stronghold {
     exports controller.viewControllers;
     opens controller.viewControllers to javafx.fxml;
     exports view.animation;
+    exports connection;
+    opens connection to javafx.fxml;
 }

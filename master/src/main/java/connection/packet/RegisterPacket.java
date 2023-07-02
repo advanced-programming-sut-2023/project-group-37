@@ -23,7 +23,7 @@ public class RegisterPacket extends Packet {
     }
 
     public RegisterPacket(String username, String hashedPassword, String nickname, String slogan, String email,
-                          String recoveryQuestion, String recoveryAnswer, Image avatar) {
+                          String recoveryQuestion, String recoveryAnswer) {
         this.username = username;
         this.hashedPassword = hashedPassword;
         this.nickname = nickname;

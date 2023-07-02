@@ -4,7 +4,6 @@ import controller.MapController;
 import controller.MultiMenuFunctions;
 import controller.StripPaneController;
 import javafx.scene.ImageCursor;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
@@ -15,21 +14,18 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import model.buildings.Building;
 import model.buildings.BuildingType;
 import model.buildings.DefensiveBuilding;
 import model.game.Game;
-import model.game.Government;
 import model.game.Item;
 import model.people.MilitaryMachineType;
 import model.people.Troop;
 import model.people.TroopType;
 import view.enums.Message;
-import view.enums.PopUp;
+import connection.PopUp;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 public class BuildingMenuController {
     private static ClipboardContent content;
