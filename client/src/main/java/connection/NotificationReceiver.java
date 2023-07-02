@@ -1,16 +1,14 @@
 package connection;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import controller.GameController;
-import model.game.Map;
-import model.game.Tile;
-import model.user.User;
+import connection.packet.*;
+import controller.AppController;
+import controller.MultiMenuFunctions;
+import javafx.scene.control.Alert;
+import view.enums.Result;
 
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class NotificationReceiver extends Thread {
     private final DataInputStream dataInputStream;
@@ -23,8 +21,7 @@ public class NotificationReceiver extends Thread {
     public void run() {
         Gson gson = new Gson();
         String data;
-        ArrayList<Tile> modifiedTiles;
-        ArrayList<User> users;
+
         while (true) {
             try {
                 data = this.dataInputStream.readUTF();
@@ -32,21 +29,31 @@ public class NotificationReceiver extends Thread {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            try {
-                try {
-                    modifiedTiles = gson.fromJson(data, new TypeToken<List<Tile>>() {
-                    }.getType());
-                    Map map = GameController.getInstance().getCurrentGame().getMap();
-                    map.resetSomeTiles(modifiedTiles);
-                } catch (Exception ignored) {
-                    users = gson.fromJson(data, new TypeToken<List<User>>() {
-                    }.getType());
-                    User.reset(users);
-                    System.out.println("USERA");
-                }
-            } catch (Exception ignored) {
-
+            Packet packet = gson.fromJson(data, Packet.class);
+            PacketType type = packet.getType();
+            switch (type) {
+                case POPUP_PACKET -> this.handlePopUp((PopUpPacket) packet);
+                case TILES_PACKET -> this.handleTiles((TilesPacket) packet);
+                case USER_PACKET -> this.login((UserPacket) packet);
             }
         }
+    }
+
+    private void login(UserPacket userPacket) {
+        MultiMenuFunctions.setAllCurrentUsers(userPacket.getUser());
+        try {
+            AppController.getInstance().runMenu(Result.ENTER_MAIN_MENU);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void handlePopUp(PopUpPacket popUpPacket) {
+        if (popUpPacket.isError())
+            new Alert(Alert.AlertType.ERROR, popUpPacket.getMessage().toString());
+        else new Alert(Alert.AlertType.INFORMATION, popUpPacket.getMessage().toString());
+    }
+
+    private void handleTiles(TilesPacket tilesPacket) {
     }
 }

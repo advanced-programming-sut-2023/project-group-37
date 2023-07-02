@@ -10,6 +10,11 @@ public class LoginPacket extends Packet {
         this.password = password;
     }
 
+    @Override
+    public PacketType getType() {
+        return PacketType.LOGIN_PACKET;
+    }
+
     public String getUsername() {
         return this.username;
     }
@@ -17,4 +22,5 @@ public class LoginPacket extends Packet {
     public String getPassword() {
         return this.password;
     }
+
 }

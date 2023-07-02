@@ -1,6 +1,5 @@
 package connection.packet;
 
-import javafx.scene.image.Image;
 import model.user.User;
 
 public class RegisterPacket extends Packet {
@@ -23,7 +22,7 @@ public class RegisterPacket extends Packet {
     }
 
     public RegisterPacket(String username, String hashedPassword, String nickname, String slogan, String email,
-                          String recoveryQuestion, String recoveryAnswer, Image avatar) {
+                          String recoveryQuestion, String recoveryAnswer) {
         this.username = username;
         this.hashedPassword = hashedPassword;
         this.nickname = nickname;
@@ -31,6 +30,11 @@ public class RegisterPacket extends Packet {
         this.email = email;
         this.recoveryQuestion = recoveryQuestion;
         this.recoveryAnswer = recoveryAnswer;
+    }
+
+    @Override
+    public PacketType getType() {
+        return PacketType.REGISTER_PACKET;
     }
 
     public String getUsername() {
@@ -60,4 +64,5 @@ public class RegisterPacket extends Packet {
     public String getRecoveryAnswer() {
         return this.recoveryAnswer;
     }
+
 }

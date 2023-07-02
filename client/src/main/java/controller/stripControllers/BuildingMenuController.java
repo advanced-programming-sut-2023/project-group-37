@@ -23,7 +23,7 @@ import model.people.MilitaryMachineType;
 import model.people.Troop;
 import model.people.TroopType;
 import view.enums.Message;
-import connection.PopUp;
+import view.enums.PopUp;
 
 import java.util.HashMap;
 

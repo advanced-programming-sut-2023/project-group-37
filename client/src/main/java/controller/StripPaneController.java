@@ -10,7 +10,7 @@ import model.buildings.*;
 import model.game.Tile;
 import model.people.MilitaryUnit;
 import view.enums.Message;
-import connection.PopUp;
+import view.enums.PopUp;
 
 import java.util.ArrayList;
 import java.util.HashMap;

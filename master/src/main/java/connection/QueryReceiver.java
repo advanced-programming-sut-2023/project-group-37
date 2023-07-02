@@ -9,14 +9,14 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class QueryReceiver extends Thread {
-    private final AuthorizationController authorizationController;
+    private final RegistrationController registrationController;
     private GamingController gamingController;
     private User user;
     private final Socket socket;
     private final DatabaseController databaseController;
 
     public QueryReceiver(Socket socket) throws IOException {
-        this.authorizationController = new AuthorizationController(socket);
+        this.registrationController = new RegistrationController(socket);
         this.socket = socket;
         this.databaseController = DatabaseController.getInstance();
     }
@@ -57,7 +57,7 @@ public class QueryReceiver extends Thread {
 
     private void handleRegister(RegisterPacket registerPacket) {
         try {
-            this.authorizationController.handleRegister(registerPacket);
+            this.registrationController.handleRegister(registerPacket);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -66,7 +66,7 @@ public class QueryReceiver extends Thread {
     private void handleLogin(LoginPacket loginPacket) {
         User user;
         try {
-            if ((user = this.authorizationController.handleLogin(loginPacket)) != null) {
+            if ((user = this.registrationController.handleLogin(loginPacket)) != null) {
                 this.user = user;
                 try {
                     this.databaseController.addConnectedUser(user, this.socket);

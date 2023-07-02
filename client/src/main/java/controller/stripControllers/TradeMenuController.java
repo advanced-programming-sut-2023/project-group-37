@@ -12,7 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import model.game.*;
 import view.enums.Message;
-import connection.PopUp;
+import view.enums.PopUp;
 
 import java.util.ArrayList;
 

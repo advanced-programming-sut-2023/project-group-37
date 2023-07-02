@@ -10,7 +10,7 @@ import model.game.Game;
 import model.game.Tile;
 import model.people.*;
 import view.enums.Message;
-import connection.PopUp;
+import view.enums.PopUp;
 
 import java.util.ArrayList;
 import java.util.HashMap;

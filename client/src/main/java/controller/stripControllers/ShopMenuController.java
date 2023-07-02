@@ -16,7 +16,7 @@ import model.game.Game;
 import model.game.Item;
 import model.game.ItemCategory;
 import view.enums.Message;
-import connection.PopUp;
+import view.enums.PopUp;
 import view.menus.RegisterMenu;
 
 import java.util.Objects;

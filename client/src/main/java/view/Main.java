@@ -13,6 +13,6 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         new AppController(stage).loadApp();
-        new Connection("localhost", 8180);
+        new Connection("localhost", 8080);
     }
 }

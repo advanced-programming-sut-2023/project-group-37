@@ -1,6 +1,5 @@
 package connection.packet;
 
-import javafx.scene.image.Image;
 import model.user.User;
 
 public class RegisterPacket extends Packet {
