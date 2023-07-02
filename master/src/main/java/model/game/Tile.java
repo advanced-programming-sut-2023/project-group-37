@@ -1,5 +1,6 @@
 package model.game;
 
+import controller.MultiMenuFunctions;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;

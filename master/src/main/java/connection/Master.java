@@ -11,7 +11,7 @@ public class Master {
             ServerSocket serverSocket = new ServerSocket(port);
             while (true) {
                 Socket socket = serverSocket.accept();
-                new Connection(socket).start();
+                new QueryReceiver(socket).start();
             }
         } catch (IOException e) {
             // todo: try to reconnect?

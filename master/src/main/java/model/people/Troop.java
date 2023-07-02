@@ -1,5 +1,6 @@
 package model.people;
 
+import controller.MultiMenuFunctions;
 import javafx.scene.image.Image;
 import model.game.Government;
 import model.game.Tile;

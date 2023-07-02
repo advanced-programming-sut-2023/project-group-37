@@ -1,5 +1,6 @@
 package model.people;
 
+import controller.MultiMenuFunctions;
 import model.buildings.Building;
 import model.buildings.BuildingType;
 import model.buildings.DefensiveBuilding;

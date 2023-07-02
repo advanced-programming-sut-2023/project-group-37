@@ -1,18 +1,13 @@
 package model.game;
 
-import javafx.scene.paint.Color;
 import model.buildings.*;
 import model.people.MilitaryUnit;
 import model.people.Person;
 import model.people.Troop;
-
 import model.people.TroopType;
 import model.user.User;
 
 import java.util.ArrayList;
-
-import static javafx.scene.paint.Color.BLUE;
-import static javafx.scene.paint.Color.GREEN;
 
 public class Government {
     private final User user;

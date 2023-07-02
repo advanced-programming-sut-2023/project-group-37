@@ -2,7 +2,7 @@ package model.user;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import connection.packet.RegisterPacket;
+import controller.viewControllers.ProfileMenuController;
 import javafx.scene.image.Image;
 import model.utils.PasswordHashing;
 
@@ -14,8 +14,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Random;
 
 public class User implements Serializable {
     private static User currentUser;
@@ -32,16 +30,28 @@ public class User implements Serializable {
     private int rank;
     private int avatarNumber;
 
-    public User(RegisterPacket registerPacket) {
-        this.username = registerPacket.getUsername();
-        this.hashedPassword = registerPacket.getHashedPassword();
-        this.nickname = registerPacket.getNickname();
-        this.slogan = registerPacket.getSlogan();
-        this.email = registerPacket.getEmail();
-        this.recoveryQuestion = registerPacket.getRecoveryQuestion();
-        this.recoveryAnswer = registerPacket.getRecoveryAnswer();
+    public User(String username, String password, String email, String slogan, String nickname) {
+        this.username = username;
+        this.hashedPassword = password;
+        this.email = email;
+        this.slogan = slogan;
+        this.nickname = nickname;
+        this.rank = users.size() + 1;
+        this.avatarNumber = ProfileMenuController.getRandomAvatarURL();
+        users.add(this);
+    }
+
+    public User(String username, String password, String nickname, String email, String recoveryQuestion,
+                String recoveryAnswer, String slogan) {
+        this.username = username;
+        this.hashedPassword = password;
+        this.nickname = nickname;
+        this.slogan = slogan;
+        this.email = email;
+        this.recoveryQuestion = recoveryQuestion;
+        this.recoveryAnswer = recoveryAnswer;
         this.highScore = 0;
-        this.avatarNumber = new Random().nextInt(1,6);
+        this.avatarNumber = ProfileMenuController.getRandomAvatarURL();
         users.add(this);
         User.updateDatabase();
     }
@@ -185,8 +195,7 @@ public class User implements Serializable {
     }
 
     public Image getAvatar() {
-        return new Image(Objects.requireNonNull(this.getClass().getResource(
-                "/Image/Avatar/" + this.avatarNumber + ".png")).toExternalForm());
+        return new Image(ProfileMenuController.getAllAvatarImages().get(this.avatarNumber).getAbsolutePath());
     }
 
     public boolean isWrongPassword(String password) {

@@ -1,4 +1,4 @@
-package controller;
+package connection;
 
 import connection.packet.TilesPacket;
 import model.user.User;

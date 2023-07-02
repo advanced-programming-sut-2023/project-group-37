@@ -1,5 +1,7 @@
 package model.game;
 
+import controller.GameController;
+import controller.MultiMenuFunctions;
 import model.buildings.*;
 import model.people.*;
 
@@ -212,15 +214,15 @@ public class Game {
                 government.removeDeadUnits();
                 government.removeDestroyedBuildings();
             }
-
             for (Government government : this.governments)
                 for (Building building : government.getBuildings())
                     if (building instanceof DefensiveBuilding && (
                             ((DefensiveBuilding) building).getDefensiveType() == DefensiveBuildingType.SMALL_GATEHOUSE ||
                                     ((DefensiveBuilding) building).getDefensiveType() == DefensiveBuildingType.LARGE_GATEHOUSE))
                         ((DefensiveBuilding) building).setOwner();
-        }
 
+            map.updateImages();
+        }
         do {
             this.index = (this.index + 1) % this.governments.size();
         } while (this.governments.get(index).isDead());

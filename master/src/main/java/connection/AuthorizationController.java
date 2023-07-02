@@ -1,4 +1,4 @@
-package controller;
+package connection;
 
 import connection.packet.LoginPacket;
 import connection.packet.PopUpPacket;

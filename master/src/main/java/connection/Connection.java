@@ -1,80 +1,19 @@
 package connection;
 
-import com.google.gson.Gson;
-import connection.packet.*;
-import controller.AuthorizationController;
-import controller.GamingController;
-import model.user.User;
-
-import java.io.DataInputStream;
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Connection extends Thread {
-    private final AuthorizationController authorizationController;
-    private GamingController gamingController;
-    private User user;
-    private final Socket socket;
-    private final DatabaseController databaseController;
-
-    public Connection(Socket socket) throws IOException {
-        this.authorizationController = new AuthorizationController(socket);
-        this.socket = socket;
-        this.databaseController = DatabaseController.getInstance();
-    }
-
-    @Override
-    public synchronized void run() {
-        DataInputStream dataInputStream;
+public class Connection {
+    public Connection(int port) {
         try {
-            dataInputStream = new DataInputStream(this.socket.getInputStream());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        Gson gson = new Gson();
-        String data;
-
-        while (true) {
-            try {
-                data = dataInputStream.readUTF();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            ServerSocket serverSocket = new ServerSocket(port);
+            while (true) {
+                Socket socket = serverSocket.accept();
+                new QueryReceiver(socket).start();
             }
+        } catch (IOException ignored) {
 
-            Packet packet = gson.fromJson(data, Packet.class);
-            PacketType type = packet.getType();
-
-            switch (type) {
-                case LOGIN_PACKET -> this.handleLogin((LoginPacket) packet);
-                case REGISTER_PACKET -> this.handleRegister((RegisterPacket) packet);
-                case TILES_PACKET -> this.gamingController.handleTiles((TilesPacket) packet);
-            }
-        }
-    }
-
-    private void handleRegister(RegisterPacket registerPacket) {
-        try {
-            this.authorizationController.handleRegister(registerPacket);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void handleLogin(LoginPacket loginPacket) {
-        User user;
-        try {
-            if ((user = this.authorizationController.handleLogin(loginPacket)) != null) {
-                this.user = user;
-                try {
-                    this.databaseController.addConnectedUser(user, this.socket);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                this.gamingController = new GamingController(user);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 }

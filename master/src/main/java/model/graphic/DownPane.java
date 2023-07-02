@@ -1,5 +1,8 @@
 package model.graphic;
 
+import controller.MapController;
+import controller.MultiMenuFunctions;
+import controller.StripPaneController;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
