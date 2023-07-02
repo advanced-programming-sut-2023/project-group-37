@@ -223,12 +223,6 @@ public class Game {
                             ((DefensiveBuilding) building).getDefensiveType() == DefensiveBuildingType.SMALL_GATEHOUSE ||
                                     ((DefensiveBuilding) building).getDefensiveType() == DefensiveBuildingType.LARGE_GATEHOUSE))
                         ((DefensiveBuilding) building).setOwner();
-
-            try {
-                Database.getInstance().updateEveryOneTiles(Tile.updateImages());
-            }
-            catch (IOException ignored) {
-            }
         }
         do {
             this.index = (this.index + 1) % this.governments.size();
