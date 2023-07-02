@@ -4,7 +4,7 @@ import model.user.User;
 
 import java.io.DataInputStream;
 
-public class AliveListener extends Thread{
+public class AliveListener extends Thread {
     private final User user;
     private final DataInputStream dataInputStream;
 

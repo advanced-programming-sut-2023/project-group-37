@@ -6,15 +6,16 @@ import java.net.Socket;
 
 public class Master {
     public Master(int port) {
-        System.out.println("Starting StrongHold service...");
+        System.out.println("Starting Stronghold service...");
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             while (true) {
                 Socket socket = serverSocket.accept();
                 new Connection(socket).start();
             }
-        } catch (IOException ignored) {
-            System.out.println(ignored.getMessage());
+        } catch (IOException e) {
+            // todo: try to reconnect?
+            System.out.println(e.getMessage());
         }
     }
 }

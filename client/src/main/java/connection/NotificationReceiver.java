@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationReceiver extends Thread{
+public class NotificationReceiver extends Thread {
     private final DataInputStream dataInputStream;
 
     public NotificationReceiver(DataInputStream dataInputStream) {
@@ -28,7 +28,7 @@ public class NotificationReceiver extends Thread{
         while (true) {
             try {
                 data = this.dataInputStream.readUTF();
-                System.out.println("OMAD");
+                System.out.println("Response got");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -38,15 +38,13 @@ public class NotificationReceiver extends Thread{
                     }.getType());
                     Map map = GameController.getInstance().getCurrentGame().getMap();
                     map.resetSomeTiles(modifiedTiles);
-                }
-                catch (Exception ignored) {
+                } catch (Exception ignored) {
                     users = gson.fromJson(data, new TypeToken<List<User>>() {
                     }.getType());
                     User.reset(users);
                     System.out.println("USERA");
                 }
-            }
-            catch (Exception ignored) {
+            } catch (Exception ignored) {
 
             }
         }

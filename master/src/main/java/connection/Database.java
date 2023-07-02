@@ -14,6 +14,7 @@ public class Database {
     private final ArrayList<User> connectedUsers;
     private final ArrayList<Socket> sockets;
     private final Gson gson;
+
     static {
         DATABASE = new Database();
     }
@@ -31,7 +32,6 @@ public class Database {
     public void addConnectedUser(User user, Socket socket) throws IOException {
         this.connectedUsers.add(user);
         this.sockets.add(socket);
-
         new DataOutputStream(socket.getOutputStream()).writeUTF(gson.toJson(User.getUsers()));
     }
 
