@@ -6,11 +6,7 @@ import java.io.Serializable;
 
 public abstract class Packet implements Serializable {
 
-    protected PacketType type;
-
-    public PacketType getType() {
-        return this.type;
-    }
+    public abstract PacketType getType();
 
     public String toJson() {
         return new Gson().toJson(this);

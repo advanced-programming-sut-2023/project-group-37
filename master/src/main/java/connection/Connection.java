@@ -2,6 +2,8 @@ package connection;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import connection.packet.Packet;
+import connection.packet.PacketType;
 import controller.GameController;
 import controller.viewControllers.MainMenuController;
 import model.game.Map;
@@ -37,38 +39,16 @@ public class Connection extends Thread {
 
         Gson gson = new Gson();
         String data;
-        ArrayList<User> users;
-        ArrayList<Tile> modifiedTiles;
+
         while (true) {
             try {
                 data = dataInputStream.readUTF();
-                try {
-                    modifiedTiles = gson.fromJson(data, new TypeToken<List<Tile>>() {
-                    }.getType());
-                    Map map = GameController.getInstance().getCurrentGame().getMap();
-                    map.resetSomeTiles(modifiedTiles);
-                    this.databaseController.updateEveryOneTilesExcept(modifiedTiles, this.user);
-                }
-                catch (Exception ignored) {
-                    try {
-                        users = gson.fromJson(data, new TypeToken<List<User>>() {
-                        }.getType());
-                        User.reset(users);
-                    }
-                    catch (Exception ex) {
-                        User user = User.getUserByUsername(data);
-                        if (user != null) {
-                            this.user = user;
-                            QueryReceiver queryReceiver = new QueryReceiver(user, dataInputStream);
-                            queryReceiver.start();
-                            databaseController.addConnectedUser(user, socket);
-                        }
-                    }
-                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            catch (Exception ignored) {
 
-            }
+            Packet packet = gson.fromJson(data, Packet.class);
+            PacketType type = packet.getType();
         }
     }
 }

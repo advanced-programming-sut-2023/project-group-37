@@ -1,4 +1,4 @@
-package connection;
+package connection.packet;
 
 import model.buildings.Building;
 import model.game.Texture;
@@ -14,6 +14,11 @@ public class TilesPacket extends Packet {
         this.tiles = new ArrayList<>();
         for (Tile tile : modifiedTiles)
             this.tiles.add(new TilePacket(tile));
+    }
+
+    @Override
+    public PacketType getType() {
+        return PacketType.TilesPacket;
     }
 
     public static class TilePacket {

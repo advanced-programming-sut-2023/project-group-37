@@ -33,6 +33,11 @@ public class RegisterPacket extends Packet {
         this.recoveryAnswer = recoveryAnswer;
     }
 
+    @Override
+    public PacketType getType() {
+        return PacketType.REGISTER_PACKET;
+    }
+
     public String getUsername() {
         return this.username;
     }
@@ -60,4 +65,5 @@ public class RegisterPacket extends Packet {
     public String getRecoveryAnswer() {
         return this.recoveryAnswer;
     }
+
 }
