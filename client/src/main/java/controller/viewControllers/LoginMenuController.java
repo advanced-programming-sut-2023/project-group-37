@@ -1,11 +1,15 @@
 package controller.viewControllers;
 
+import connection.Connection;
+import connection.packet.LoginPacket;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import model.user.User;
 import view.enums.Message;
+
+import java.io.IOException;
 
 
 public class LoginMenuController {
@@ -25,20 +29,13 @@ public class LoginMenuController {
         return loginMenuController;
     }
 
-    public Message login(String username, String password, boolean stayLoggedIn) {
-        User user = User.getUserByUsername(username);
-
-        if (user == null)
-            return Message.USER_NOT_EXISTS;
-
-        if (user.isWrongPassword(password))
-            return Message.INCORRECT_PASSWORD;
-
-        MainMenuController.setCurrentUser(user);
-        if (stayLoggedIn)
-            User.setStayLoggedIn(user);
-
-        return Message.LOGIN_SUCCESSFUL;
+    public void login(String username, String password, boolean stayLoggedIn) {
+        try {
+            Connection.getInstance().getDataOutputStream().writeUTF(new LoginPacket(username, password).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Connection.getInstance().setStayLoggedIn(stayLoggedIn);
     }
 
     public Message findUser(String username, Label questionLabel) {

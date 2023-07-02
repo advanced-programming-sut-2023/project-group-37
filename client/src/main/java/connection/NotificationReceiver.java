@@ -5,6 +5,7 @@ import connection.packet.*;
 import controller.AppController;
 import controller.MultiMenuFunctions;
 import javafx.scene.control.Alert;
+import model.user.User;
 import view.enums.Result;
 
 import java.io.DataInputStream;
@@ -12,9 +13,11 @@ import java.io.IOException;
 
 public class NotificationReceiver extends Thread {
     private final DataInputStream dataInputStream;
+    private boolean stayLoggedIn;
 
     public NotificationReceiver(DataInputStream dataInputStream) {
         this.dataInputStream = dataInputStream;
+        this.stayLoggedIn = false;
     }
 
     @Override
@@ -41,6 +44,8 @@ public class NotificationReceiver extends Thread {
 
     private void login(UserPacket userPacket) {
         MultiMenuFunctions.setAllCurrentUsers(userPacket.getUser());
+        if (stayLoggedIn)
+            User.setStayLoggedIn(userPacket.getUser());
         try {
             AppController.getInstance().runMenu(Result.ENTER_MAIN_MENU);
         } catch (Exception e) {
@@ -55,5 +60,9 @@ public class NotificationReceiver extends Thread {
     }
 
     private void handleTiles(TilesPacket tilesPacket) {
+    }
+
+    public void setStayLoggedIn(boolean stayLoggedIn) {
+        this.stayLoggedIn = stayLoggedIn;
     }
 }

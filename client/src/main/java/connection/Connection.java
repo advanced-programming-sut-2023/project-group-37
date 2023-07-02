@@ -8,20 +8,28 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class Connection {
-    private final Gson gson;
     private static Connection connection;
-
+    private final DataOutputStream dataOutputStream;
+    private final NotificationReceiver notificationReceiver;
     public Connection(String host, int port) throws IOException {
         Socket socket = new Socket(host, port);
         DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
-        DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-        this.gson = new Gson();
+        this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
-        new NotificationReceiver(dataInputStream).start();
+        this.notificationReceiver = new NotificationReceiver(dataInputStream);
+        this.notificationReceiver.start();
         connection = this;
     }
 
     public static Connection getInstance() {
         return connection;
+    }
+
+    public DataOutputStream getDataOutputStream() {
+        return this.dataOutputStream;
+    }
+
+    public void setStayLoggedIn(boolean stayLoggedIn) {
+        this.notificationReceiver.setStayLoggedIn(stayLoggedIn);
     }
 }
