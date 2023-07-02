@@ -3,6 +3,7 @@ package connection;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import controller.GameController;
+import controller.viewControllers.MainMenuController;
 import model.game.Map;
 import model.game.Tile;
 import model.user.User;
@@ -17,11 +18,11 @@ import java.util.List;
 public class Connection extends Thread {
     private User user;
     private final Socket socket;
-    private final Database database;
+    private final DatabaseController databaseController;
 
     public Connection(Socket socket) throws IOException {
         this.socket = socket;
-        this.database = Database.getInstance();
+        this.databaseController = DatabaseController.getInstance();
         new DataOutputStream(socket.getOutputStream()).writeUTF(new Gson().toJson(User.getUsers()));
     }
 
@@ -46,23 +47,30 @@ public class Connection extends Thread {
                     }.getType());
                     Map map = GameController.getInstance().getCurrentGame().getMap();
                     map.resetSomeTiles(modifiedTiles);
-                    this.database.updateEveryOneTilesExcept(modifiedTiles, this.user);
-                } catch (Exception ignored) {
+                    this.databaseController.updateEveryOneTilesExcept(modifiedTiles, this.user);
+                }
+                catch (Exception ignored) {
                     try {
                         users = gson.fromJson(data, new TypeToken<List<User>>() {
                         }.getType());
                         User.reset(users);
-                    } catch (Exception ex) {
+                    }
+                    catch (Exception ex) {
                         User user = User.getUserByUsername(data);
                         if (user != null) {
+
                             this.user = user;
                             database.addConnectedUser(user, socket);
                             QueryReceiver queryReceiver = new QueryReceiver(user, dataInputStream);
                             queryReceiver.start();
+                            databaseController.addConnectedUser(user, socket);
+                            AliveListener aliveListener = new AliveListener(user, dataInputStream);
                         }
                     }
                 }
-            } catch (Exception ignored) {
+            }
+            catch (Exception ignored) {
+
             }
         }
     }
