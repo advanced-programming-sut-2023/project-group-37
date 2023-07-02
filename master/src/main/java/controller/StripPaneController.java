@@ -1,6 +1,6 @@
 package controller;
 
-import connection.PopUp;
+import view.enums.PopUp;
 import controller.stripControllers.*;
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;

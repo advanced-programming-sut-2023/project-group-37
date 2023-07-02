@@ -1,6 +1,6 @@
 package controller.stripControllers;
 
-import connection.PopUp;
+import view.enums.PopUp;
 import controller.MultiMenuFunctions;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;

@@ -1,6 +1,6 @@
 package connection.packet;
 
-import connection.PopUp;
+import view.enums.PopUp;
 
 public class PopUpPacket extends Packet{
     private final PopUp popUp;

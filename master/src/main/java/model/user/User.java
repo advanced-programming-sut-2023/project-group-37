@@ -2,6 +2,7 @@ package model.user;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import connection.packet.RegisterPacket;
 import controller.viewControllers.ProfileMenuController;
 import javafx.scene.image.Image;
 import model.utils.PasswordHashing;
@@ -30,15 +31,18 @@ public class User implements Serializable {
     private int rank;
     private int avatarNumber;
 
-    public User(String username, String password, String email, String slogan, String nickname) {
-        this.username = username;
-        this.hashedPassword = password;
-        this.email = email;
-        this.slogan = slogan;
-        this.nickname = nickname;
-        this.rank = users.size() + 1;
+    public User(RegisterPacket registerPacket) {
+        this.username = registerPacket.getUsername();
+        this.hashedPassword = registerPacket.getHashedPassword();
+        this.nickname = registerPacket.getNickname();
+        this.slogan = registerPacket.getSlogan();
+        this.email = registerPacket.getEmail();
+        this.recoveryQuestion = registerPacket.getRecoveryQuestion();
+        this.recoveryAnswer = registerPacket.getRecoveryAnswer();
+        this.highScore = 0;
         this.avatarNumber = ProfileMenuController.getRandomAvatarURL();
         users.add(this);
+        User.updateDatabase();
     }
 
     public User(String username, String password, String nickname, String email, String recoveryQuestion,

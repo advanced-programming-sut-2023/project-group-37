@@ -1,6 +1,6 @@
 package controller.stripControllers;
 
-import connection.PopUp;
+import view.enums.PopUp;
 import controller.MultiMenuFunctions;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
