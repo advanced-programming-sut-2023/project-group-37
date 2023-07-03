@@ -359,12 +359,11 @@ public class User implements Serializable {
         this.chats = chats;
     }
 
-    public void addFriend(User friend){
+    public void addFriend(User friend) {
         this.friends.add(friend);
     }
 
     public void joinChat(Chat chat) {
         this.chats.add(chat);
     }
-
 }
