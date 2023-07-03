@@ -2,11 +2,11 @@ package connection.packet;
 
 import model.user.User;
 
-public class AddFriendPacket extends Packet {
+public class FriendRequestPacket extends Packet {
     private final User sender;
 
-    public AddFriendPacket(User sender) {
-        super.type = PacketType.ADD_FRIEND_PACKET;
+    public FriendRequestPacket(User sender) {
+        super.type = PacketType.FRIEND_REQUEST_PACKET;
         this.sender = sender;
     }
 
