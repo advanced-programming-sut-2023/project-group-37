@@ -1,8 +1,8 @@
 Button {
     -fx-min-width: 180;
-    -fx-min-height: 65;
+    -fx-min-height: 60;
     -fx-text-fill: white;
-    -fx-background-insets: 20;
+    -fx-background-insets: 15;
     -fx-background-color: brown;
     -fx-background-radius: 40;
     -fx-font-size: 15;
@@ -16,4 +16,7 @@ Label {
 Button:pressed {
     -fx-background-color: green;
     -fx-font-size: 17;
+}
+Button:hover {
+    -fx-text-fill: lightblue;
 }

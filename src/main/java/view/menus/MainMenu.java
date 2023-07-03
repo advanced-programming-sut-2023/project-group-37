@@ -4,6 +4,7 @@ import controller.AppController;
 import controller.viewControllers.MainMenuController;
 import controller.MultiMenuFunctions;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -102,5 +103,12 @@ public class MainMenu extends Application {
 
     public void startGame() throws Exception {
         appController.runMenu(Result.ENTER_START_GAME_MENU);
+    }
+
+    public void createLobby() {
+
+    }
+
+    public void joinLobby() {
     }
 }
