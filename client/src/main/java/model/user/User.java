@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import controller.viewControllers.ProfileMenuController;
 import javafx.scene.image.Image;
+import model.Chat;
 import model.utils.PasswordHashing;
 
 import java.io.File;
@@ -16,9 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User implements Serializable {
-    private static User currentUser;
-    private static ArrayList<User> users = new ArrayList<>();
     private static final Gson gson = new Gson();
+    private static ArrayList<User> users = new ArrayList<>();
+    private static User currentUser;
+    private ArrayList<Chat> chats;
     private String username;
     private String hashedPassword;
     private String nickname;
@@ -202,6 +204,10 @@ public class User implements Serializable {
         }
     }
 
+    public ArrayList<Chat> getChats() {
+        return this.chats;
+    }
+
     public String getUsername() {
         return this.username;
     }
@@ -277,6 +283,10 @@ public class User implements Serializable {
 
     public void setAvatarNumber(int avatarNumber) {
         this.avatarNumber = avatarNumber;
+    }
+
+    public void joinChat(Chat chat) {
+        this.chats.add(chat);
     }
 
     public void changePassword(String newPassword) {
