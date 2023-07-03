@@ -1,6 +1,5 @@
 package connection;
 
-import com.google.gson.Gson;
 import controller.AppController;
 
 import java.io.DataInputStream;
@@ -19,8 +18,9 @@ public class Connection {
 
         this.notificationReceiver = new NotificationReceiver(dataInputStream);
         this.notificationReceiver.start();
-        connection = this;
+        new AliveSender(this.dataOutputStream).start();
 
+        connection = this;
         if (AppController.stayLoggedInPacket != null)
             this.dataOutputStream.writeUTF(AppController.stayLoggedInPacket.toJson());
     }
