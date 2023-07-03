@@ -1,10 +1,13 @@
 package controller.viewControllers;
 
+import connection.Connection;
+import connection.packet.RegisterPacket;
 import model.user.Slogan;
 import model.user.User;
 import model.utils.PasswordHashing;
 import view.enums.Message;
 
+import java.io.IOException;
 import java.security.SecureRandom;
 
 public class RegisterMenuController {
@@ -63,13 +66,16 @@ public class RegisterMenuController {
         return Slogan.getRandomSlogan().toString();
     }
 
-    public Message register(String username, String password, String nickName, String email,
+    public void register(String username, String password, String nickName, String email,
                            String recoveryQuestion, String recoveryAnswer, String slogan) {
 
-        new User(username, PasswordHashing.encode(password), nickName, email,
-                recoveryQuestion, recoveryAnswer, slogan);
+        try {
+            Connection.getInstance().getDataOutputStream().writeUTF(new RegisterPacket(username, password, nickName,
+                    slogan, email, recoveryQuestion, recoveryAnswer).toJson());
 
-        return Message.REGISTER_SUCCESSFUL;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

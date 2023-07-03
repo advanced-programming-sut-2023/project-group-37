@@ -37,11 +37,11 @@ public class User implements Serializable {
     static {
         users = new ArrayList<>();
         gson = new Gson();
-        updateDatabase();
+        loadUsersFromFile();
     }
     public User(RegisterPacket registerPacket) {
         this.username = registerPacket.getUsername();
-        this.hashedPassword = registerPacket.getHashedPassword();
+        this.hashedPassword = registerPacket.getPassword();
         this.nickname = registerPacket.getNickname();
         this.slogan = registerPacket.getSlogan();
         this.email = registerPacket.getEmail();
@@ -219,6 +219,10 @@ public class User implements Serializable {
         return !PasswordHashing.checkPassword(password, this.hashedPassword);
     }
 
+    public boolean isWrongHashedPassword(String hashedPassword) {
+        return !this.hashedPassword.equals(hashedPassword);
+    }
+
     public boolean isWrongAnswer(String answer) {
         return !this.recoveryAnswer.equals(answer);
     }
@@ -271,7 +275,7 @@ public class User implements Serializable {
     }
 
     public static void loadUsersFromFile() {
-        String filePath = "./src/main/resources/Database/userDatabase.json";
+        String filePath = "./master/src/main/resources/Database/userDatabase.json";
         try {
             String json = new String(Files.readAllBytes(Paths.get(filePath)));
             ArrayList<User> createdUsers = gson.fromJson(json, new TypeToken<List<User>>() {
@@ -291,7 +295,7 @@ public class User implements Serializable {
     }
 
     public static User loadStayLoggedIn() {
-        String filePath = "./src/main/resources/Database/stayLoggedIn.json";
+        String filePath = "./master/src/main/resources/Database/stayLoggedIn.json";
         try {
             String json = new String(Files.readAllBytes(Paths.get(filePath)));
 
@@ -311,7 +315,7 @@ public class User implements Serializable {
     }
 
     public static void setStayLoggedIn(User loggedInUser) {
-        String filePath = "./src/main/resources/Database/stayLoggedIn.json";
+        String filePath = "./master/src/main/resources/Database/stayLoggedIn.json";
         try {
             FileWriter fileWriter = new FileWriter(filePath);
             fileWriter.write(gson.toJson(loggedInUser));
@@ -327,12 +331,13 @@ public class User implements Serializable {
     }
 
     public static void saveUsersToFile() {
-        String filePath = "./src/main/resources/Database/userDatabase.json";
+        String filePath = "./master/src/main/resources/Database/userDatabase.json";
         try {
             FileWriter fileWriter = new FileWriter(filePath);
             fileWriter.write(gson.toJson(users));
             fileWriter.close();
         } catch (IOException ignored) {
+            System.out.println("ERRORED");
             File file = new File(filePath);
             try {
                 file.createNewFile();

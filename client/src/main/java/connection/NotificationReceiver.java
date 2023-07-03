@@ -47,12 +47,6 @@ public class NotificationReceiver extends Thread {
         MultiMenuFunctions.setAllCurrentUsers(userPacket.getUser());
         if (this.stayLoggedIn)
             User.setStayLoggedIn(userPacket.getUser());
-        try {
-            AppController.getInstance().runMenu(Result.ENTER_MAIN_MENU);
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void handleTiles(TilesPacket tilesPacket) {

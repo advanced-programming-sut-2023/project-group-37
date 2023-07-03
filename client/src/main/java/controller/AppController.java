@@ -1,7 +1,7 @@
 package controller;
 
+import connection.packet.LoginPacket;
 import connection.packet.PopUpPacket;
-import controller.viewControllers.MainMenuController;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
@@ -11,6 +11,7 @@ import view.menus.*;
 
 public class AppController {
     private static AppController appController;
+    public static LoginPacket stayLoggedInPacket;
     private final Stage stage;
     private final LoginMenu loginMenu;
     private final ForgotMenu forgotMenu;
@@ -50,12 +51,11 @@ public class AppController {
         User loggedInUser = User.loadStayLoggedIn();
 
         if (loggedInUser != null) {
-            MainMenuController.setCurrentUser(loggedInUser);
-            User.setCurrentUser(loggedInUser);
-            this.mainMenu.start(this.stage);
+            stayLoggedInPacket = new LoginPacket(
+                    loggedInUser.getUsername(), loggedInUser.getHashedPassword());
             return;
         }
-
+        stayLoggedInPacket = null;
         this.loginMenu.start(this.stage);
     }
 
@@ -87,6 +87,13 @@ public class AppController {
                 case LOGIN_SUCCESSFUL -> {
                     try {
                         this.runMenu(Result.ENTER_MAIN_MENU);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                case REGISTER_SUCCESSFUL -> {
+                    try {
+                        this.runMenu(Result.ENTER_LOGIN_MENU);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

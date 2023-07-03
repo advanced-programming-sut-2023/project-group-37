@@ -1,17 +1,13 @@
 package controller;
 
 import connection.packet.PopUpPacket;
-import controller.viewControllers.ChangeMenuController;
 import controller.viewControllers.MainMenuController;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import model.game.Map;
 import model.user.User;
 import view.enums.Result;
 import view.menus.*;
-
-import java.util.Objects;
 
 public class AppController {
     private static AppController appController;
@@ -81,9 +77,28 @@ public class AppController {
         }
     }
 
-    public void showAlert(PopUpPacket popUpPacket) {
-        if (popUpPacket.isError())
-            new Alert(Alert.AlertType.ERROR, popUpPacket.getMessage().toString()).show();
-        else new Alert(Alert.AlertType.INFORMATION, popUpPacket.getMessage().toString()).show();
+    public void handleAlert(PopUpPacket popUpPacket) {
+        Platform.runLater(() -> {
+            if (popUpPacket.isError())
+                new Alert(Alert.AlertType.ERROR, popUpPacket.getMessage().toString()).show();
+            else new Alert(Alert.AlertType.INFORMATION, popUpPacket.getMessage().toString()).show();
+        });
+
+        switch (popUpPacket.getMessage()) {
+            case LOGIN_SUCCESSFUL -> {
+                try {
+                    this.runMenu(Result.ENTER_MAIN_MENU);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            case REGISTER_SUCCESSFUL -> {
+                try {
+                    this.runMenu(Result.ENTER_LOGIN_MENU);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 }
