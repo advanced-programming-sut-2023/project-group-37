@@ -39,6 +39,7 @@ public class User implements Serializable {
         gson = new Gson();
         updateDatabase();
     }
+
     public User(RegisterPacket registerPacket) {
         this.username = registerPacket.getUsername();
         this.hashedPassword = registerPacket.getHashedPassword();

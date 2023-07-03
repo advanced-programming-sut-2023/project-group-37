@@ -3,6 +3,7 @@ package connection;
 import com.google.gson.Gson;
 import connection.packet.TilesPacket;
 import connection.packet.UserPacket;
+import model.chat.Chat;
 import model.game.Tile;
 import model.user.User;
 
@@ -14,8 +15,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DatabaseController {
+
     private static final DatabaseController CLIENTS_CONTROLLER;
     private final ArrayList<User> connectedUsers;
+    private final ArrayList<Chat> rooms;
     private final HashMap<User, DataInputStream> dataInputStreams;
     private final HashMap<User, DataOutputStream> dataOutputStreams;
     private final Gson gson;
@@ -26,6 +29,7 @@ public class DatabaseController {
 
     private DatabaseController() {
         this.connectedUsers = new ArrayList<>();
+        this.rooms = new ArrayList<>();
         this.dataInputStreams = new HashMap<>();
         this.dataOutputStreams = new HashMap<>();
         this.gson = new Gson();
@@ -41,6 +45,10 @@ public class DatabaseController {
         this.dataOutputStreams.put(user, dataOutputStream);
         this.dataInputStreams.put(user, new DataInputStream(socket.getInputStream()));
         dataOutputStream.writeUTF(new UserPacket(user).toJson());
+    }
+
+    public void addRoom(Chat room) {
+        this.rooms.add(room);
     }
 
     public DataOutputStream getUserDataOutputStream(User user) {
