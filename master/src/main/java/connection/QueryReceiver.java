@@ -1,13 +1,12 @@
 package connection;
 
 import com.google.gson.Gson;
-import connection.packet.LoginPacket;
-import connection.packet.Packet;
-import connection.packet.PacketType;
-import connection.packet.RegisterPacket;
+import connection.packet.*;
+import model.ChatMessage;
 import model.user.User;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class QueryReceiver extends Thread {
@@ -32,12 +31,12 @@ public class QueryReceiver extends Thread {
         }
     }
 
-    private void handleLoginPacket(LoginPacket loginPacket) {
+    private void handleLoginPacket(LoginPacket packet) {
         boolean userExists = false;
         for (User item : User.getUsers()) {
-            if (item.getUsername().equals(loginPacket.getUsername())) {
+            if (item.getUsername().equals(packet.getUsername())) {
                 userExists = true;
-                if (item.isWrongPassword(loginPacket.getPassword()))
+                if (item.isWrongPassword(packet.getPassword()))
                     // TODO: should change later...
                     System.out.println("wrong password");
                 else
@@ -48,6 +47,10 @@ public class QueryReceiver extends Thread {
         if (!userExists)
             // TODO: should change later...
             System.out.println("user not exist");
+    }
+
+    private void handleFriendRequestPacket(FriendRequestPacket packet) throws IOException {
+        DatabaseController.getInstance().getUserDataOutputStream(packet.getSender()).writeUTF(packet.toJson());
     }
 
     @Override
@@ -65,6 +68,9 @@ public class QueryReceiver extends Thread {
                         case LOGIN_PACKET:
                             LoginPacket loginPacket = (LoginPacket) packet;
                             handleLoginPacket(loginPacket);
+                        case FRIEND_REQUEST_PACKET:
+                            FriendRequestPacket friendRequestPacket = (FriendRequestPacket) packet;
+                            handleFriendRequestPacket(friendRequestPacket);
                     }
                 }
             } catch (IOException e) {

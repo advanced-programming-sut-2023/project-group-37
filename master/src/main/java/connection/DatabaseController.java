@@ -40,6 +40,13 @@ public class DatabaseController {
         new DataOutputStream(socket.getOutputStream()).writeUTF(gson.toJson(User.getUsers()));
     }
 
+    public DataOutputStream getUserDataOutputStream(User user) {
+        if (!this.dataOutputStreams.containsKey(user))
+            // TODO: should change later...
+            System.out.println("error");
+        return this.dataOutputStreams.get(user);
+    }
+
     public void updateEveryOneTilesExcept(ArrayList<Tile> modifiedTiles, User user) throws IOException {
         for (User connectedUser : this.connectedUsers) {
             if (connectedUser != user)
