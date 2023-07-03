@@ -86,6 +86,7 @@ public class QueryReceiver extends Thread {
                 case CHAT_PACKET -> this.handleChatPacket(gson.fromJson(data, ChatPacket.class));
                 case ALIVE_PACKET -> this.setQueryAlive(true);
                 case LOGOUT_PACKET -> this.databaseController.disconnectUser(this.user);
+//                case REQUEST_LOBBY_PACKET ->
             }
         }
     }
