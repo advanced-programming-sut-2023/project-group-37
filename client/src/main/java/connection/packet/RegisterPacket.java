@@ -61,5 +61,4 @@ public class RegisterPacket extends Packet {
     public String getRecoveryAnswer() {
         return this.recoveryAnswer;
     }
-
 }
