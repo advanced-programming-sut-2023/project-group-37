@@ -5,20 +5,29 @@ import model.user.User;
 import java.util.ArrayList;
 
 public class Lobby {
-    private final String id;
+    private static int idCounter;
+    private final int id;
     private final User admin;
     private final int capacity;
     private final ArrayList<User> members;
     private final Chat room;
     private final boolean isPublic;
 
-    public Lobby(String id, User admin, int capacity, ArrayList<User> members, Chat room, boolean isPublic) {
-        this.id = id;
+    static {
+        idCounter = 0;
+    }
+
+    public Lobby(User admin, int capacity, ArrayList<User> members, Chat room, boolean isPublic) {
+        this.id = idCounter++;
         this.admin = admin;
         this.capacity = capacity;
         this.members = members;
         this.room = room;
         this.isPublic = isPublic;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     public User getAdmin() {
