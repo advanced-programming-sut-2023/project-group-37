@@ -1,5 +1,6 @@
 package connection;
 
+import connection.packet.Packet;
 import model.buildings.Building;
 import model.game.Texture;
 import model.game.Tile;

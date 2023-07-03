@@ -1,6 +1,7 @@
 package connection;
 
 import com.google.gson.Gson;
+import connection.packet.LoginPacket;
 import connection.packet.Packet;
 import connection.packet.PacketType;
 import connection.packet.RegisterPacket;
@@ -31,6 +32,24 @@ public class QueryReceiver extends Thread {
         }
     }
 
+    private void handleLoginPacket(LoginPacket loginPacket) {
+        boolean userExists = false;
+        for (User item : User.getUsers()) {
+            if (item.getUsername().equals(loginPacket.getUsername())) {
+                userExists = true;
+                if (item.isWrongPassword(loginPacket.getPassword()))
+                    // TODO: should change later...
+                    System.out.println("wrong password");
+                else
+                    User.setCurrentUser(item);
+                break;
+            }
+        }
+        if (!userExists)
+            // TODO: should change later...
+            System.out.println("user not exist");
+    }
+
     @Override
     public void run() {
         while (true) {
@@ -43,6 +62,9 @@ public class QueryReceiver extends Thread {
                         case REGISTER_PACKET:
                             RegisterPacket registerPacket = (RegisterPacket) packet;
                             handleRegisterPacket(registerPacket);
+                        case LOGIN_PACKET:
+                            LoginPacket loginPacket = (LoginPacket) packet;
+                            handleLoginPacket(loginPacket);
                     }
                 }
             } catch (IOException e) {
