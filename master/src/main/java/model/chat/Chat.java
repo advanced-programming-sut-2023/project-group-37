@@ -49,4 +49,12 @@ public abstract class Chat {
     public ArrayList<ChatMessage> getMessages() {
         return this.messages;
     }
+
+    public void addSubscriber(User user) {
+        this.subscribers.add(user);
+    }
+
+    public void removeSubscriber(User user) {
+        this.subscribers.remove(user);
+    }
 }
