@@ -3,8 +3,10 @@ package connection;
 import com.google.gson.Gson;
 import connection.packet.*;
 import model.user.User;
+import view.enums.Message;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -13,12 +15,14 @@ public class QueryReceiver extends Thread {
     private GamingController gamingController;
     private User user;
     private final Socket socket;
+    private final DataOutputStream dataOutputStream;
     private final DatabaseController databaseController;
 
     public QueryReceiver(Socket socket) throws IOException {
         this.registrationController = new RegistrationController(socket);
         this.socket = socket;
         this.databaseController = DatabaseController.getInstance();
+        this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
     }
 
     private void handleFriendRequestPacket(FriendRequestPacket packet) {
@@ -66,11 +70,11 @@ public class QueryReceiver extends Thread {
             System.out.println("Q : received");
 
             switch (type) {
-                case LOGIN_PACKET -> this.handleLogin((LoginPacket) packet);
-                case REGISTER_PACKET -> this.handleRegister((RegisterPacket) packet);
-                case TILES_PACKET -> this.handleTiles((TilesPacket) packet);
-                case FRIEND_REQUEST_PACKET -> this.handleFriendRequestPacket((FriendRequestPacket) packet);
-                case CHAT_PACKET -> this.handleChatPacket((ChatPacket) packet);
+                case LOGIN_PACKET -> this.handleLogin(gson.fromJson(data, LoginPacket.class));
+                case REGISTER_PACKET -> this.handleRegister(gson.fromJson(data, RegisterPacket.class));
+                case TILES_PACKET -> this.handleTiles(gson.fromJson(data, TilesPacket.class));
+                case FRIEND_REQUEST_PACKET -> this.handleFriendRequestPacket(gson.fromJson(data, FriendRequestPacket.class));
+                case CHAT_PACKET -> this.handleChatPacket(gson.fromJson(data, ChatPacket.class));
             }
         }
     }
@@ -95,15 +99,17 @@ public class QueryReceiver extends Thread {
                 this.user = user;
                 try {
                     this.databaseController.addConnectedUser(user, this.socket);
-                } catch (IOException e) {
+                    this.dataOutputStream.writeUTF(new PopUpPacket(Message.LOGIN_SUCCESSFUL, false).toJson());
+                }
+                catch (IOException e) {
                     throw new RuntimeException(e);
                 }
                 this.gamingController = new GamingController(user);
             }
-            else {
+            else this.dataOutputStream.writeUTF(new PopUpPacket(Message.CANT_LOGIN, true).toJson());
 
-            }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

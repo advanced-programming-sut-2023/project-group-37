@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import connection.packet.*;
 import controller.AppController;
 import controller.MultiMenuFunctions;
-import javafx.scene.control.Alert;
 import model.user.User;
 import view.enums.Result;
 
@@ -12,12 +11,14 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 public class NotificationReceiver extends Thread {
+    private final AppController appController;
     private final DataInputStream dataInputStream;
     private boolean stayLoggedIn;
 
     public NotificationReceiver(DataInputStream dataInputStream) {
         this.dataInputStream = dataInputStream;
         this.stayLoggedIn = false;
+        this.appController = AppController.getInstance();
     }
 
     @Override
@@ -35,28 +36,23 @@ public class NotificationReceiver extends Thread {
             Packet packet = gson.fromJson(data, Packet.class);
             PacketType type = packet.getType();
             switch (type) {
-                case POPUP_PACKET -> this.handlePopUp((PopUpPacket) packet);
-                case TILES_PACKET -> this.handleTiles((TilesPacket) packet);
-                case USER_PACKET -> this.login((UserPacket) packet);
+                case POPUP_PACKET -> this.appController.handleAlert(gson.fromJson(data, PopUpPacket.class));
+                case TILES_PACKET -> this.handleTiles(gson.fromJson(data, TilesPacket.class));
+                case USER_PACKET -> this.login(gson.fromJson(data, UserPacket.class));
             }
         }
     }
 
     private void login(UserPacket userPacket) {
         MultiMenuFunctions.setAllCurrentUsers(userPacket.getUser());
-        if (stayLoggedIn)
+        if (this.stayLoggedIn)
             User.setStayLoggedIn(userPacket.getUser());
         try {
             AppController.getInstance().runMenu(Result.ENTER_MAIN_MENU);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private void handlePopUp(PopUpPacket popUpPacket) {
-        if (popUpPacket.isError())
-            new Alert(Alert.AlertType.ERROR, popUpPacket.getMessage().toString());
-        else new Alert(Alert.AlertType.INFORMATION, popUpPacket.getMessage().toString());
     }
 
     private void handleTiles(TilesPacket tilesPacket) {

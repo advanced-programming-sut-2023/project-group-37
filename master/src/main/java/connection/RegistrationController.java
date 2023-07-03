@@ -20,16 +20,14 @@ public class RegistrationController {
     public User handleLogin(LoginPacket loginPacket) throws IOException {
         System.out.println("RC : handle login");
         User user;
-        if ((user = User.getUserByUsername(loginPacket.getUsername())) != null) {
-            this.dataOutputStream.writeUTF(new PopUpPacket(Message.LOGIN_SUCCESSFUL, false).toJson());
+        if ((user = User.getUserByUsername(loginPacket.getUsername())) != null)
             return user;
-        }
-        this.dataOutputStream.writeUTF(new PopUpPacket(Message.CANT_LOGIN, true).toJson());
+
         return null;
     }
 
     public void handleRegister(RegisterPacket registerPacket) throws IOException {
-        if (User.getUserByUsername(registerPacket.getUsername()) == null) {
+        if (User.getUserByUsername(registerPacket.getUsername()) != null) {
             this.dataOutputStream.writeUTF(new PopUpPacket(Message.USERNAME_ALREADY_EXISTS, true).toJson());
             return;
         }

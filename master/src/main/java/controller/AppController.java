@@ -1,7 +1,9 @@
 package controller;
 
+import connection.packet.PopUpPacket;
 import controller.viewControllers.ChangeMenuController;
 import controller.viewControllers.MainMenuController;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import model.game.Map;
@@ -77,5 +79,11 @@ public class AppController {
 
             // todo : how to show game parts menu ??
         }
+    }
+
+    public void showAlert(PopUpPacket popUpPacket) {
+        if (popUpPacket.isError())
+            new Alert(Alert.AlertType.ERROR, popUpPacket.getMessage().toString()).show();
+        else new Alert(Alert.AlertType.INFORMATION, popUpPacket.getMessage().toString()).show();
     }
 }

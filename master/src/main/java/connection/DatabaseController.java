@@ -2,6 +2,7 @@ package connection;
 
 import com.google.gson.Gson;
 import connection.packet.TilesPacket;
+import connection.packet.UserPacket;
 import model.game.Tile;
 import model.user.User;
 
@@ -35,10 +36,11 @@ public class DatabaseController {
     }
 
     public void addConnectedUser(User user, Socket socket) throws IOException {
+        DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
         this.connectedUsers.add(user);
-        this.dataOutputStreams.put(user, new DataOutputStream(socket.getOutputStream()));
+        this.dataOutputStreams.put(user, dataOutputStream);
         this.dataInputStreams.put(user, new DataInputStream(socket.getInputStream()));
-        new DataOutputStream(socket.getOutputStream()).writeUTF(gson.toJson(User.getUsers()));
+        dataOutputStream.writeUTF(new UserPacket(user).toJson());
     }
 
     public DataOutputStream getUserDataOutputStream(User user) {
