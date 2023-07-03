@@ -1,4 +1,4 @@
-package model;
+package model.chat;
 
 public enum MessageState {
     SENDING("*"),

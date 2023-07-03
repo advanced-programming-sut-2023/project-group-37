@@ -11,6 +11,7 @@ module Stronghold {
     exports model.game;
     exports model.people;
     exports model.utils;
+    exports model.chat;
 
     exports controller;
     opens controller to javafx.fxml;
@@ -25,4 +26,5 @@ module Stronghold {
     opens connection to com.google.gson;
     opens connection.packet to com.google.gson;
     opens view.enums to com.google.gson, javafx.fxml;
+    opens model.chat to com.google.gson;
 }

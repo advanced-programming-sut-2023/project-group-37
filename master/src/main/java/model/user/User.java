@@ -5,7 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import connection.packet.RegisterPacket;
 import controller.viewControllers.ProfileMenuController;
 import javafx.scene.image.Image;
-import model.Chat;
+import model.chat.Chat;
 import model.utils.PasswordHashing;
 
 import java.io.File;

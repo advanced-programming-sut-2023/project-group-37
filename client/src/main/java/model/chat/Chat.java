@@ -1,5 +1,6 @@
-package model;
+package model.chat;
 
+import model.chat.ChatMessage;
 import model.user.User;
 
 import java.util.ArrayList;

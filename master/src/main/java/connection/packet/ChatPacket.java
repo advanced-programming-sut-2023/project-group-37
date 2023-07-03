@@ -1,6 +1,6 @@
 package connection.packet;
 
-import model.Chat;
+import model.chat.Chat;
 
 public class ChatPacket extends Packet {
     private final Chat chat;
