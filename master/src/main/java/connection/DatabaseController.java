@@ -42,9 +42,11 @@ public class DatabaseController {
     }
 
     public DataOutputStream getUserDataOutputStream(User user) {
-        if (!this.dataOutputStreams.containsKey(user))
+        if (!this.dataOutputStreams.containsKey(user)) {
             // TODO: should change later...
             System.out.println("error");
+            return null;
+        }
         return this.dataOutputStreams.get(user);
     }
 

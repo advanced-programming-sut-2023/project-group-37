@@ -51,8 +51,11 @@ public class QueryReceiver extends Thread {
         DatabaseController.getInstance().getUserDataOutputStream(packet.getSender()).writeUTF(packet.toJson());
     }
 
-    private void handleChatMessagePacket(ChatPacket packet) {
-
+    private void handleChatPacket(ChatPacket packet) throws IOException {
+        // TODO: do we need to exclude the sender himself?
+        // TODO: add try catch or anything to avoid NullPointerException...
+        for (User subscriber : packet.getChat().getSubscribers())
+            DatabaseController.getInstance().getUserDataOutputStream(subscriber).writeUTF(packet.toJson());
     }
 
     @Override
@@ -71,7 +74,7 @@ public class QueryReceiver extends Thread {
                         case FRIEND_REQUEST_PACKET:
                             handleFriendRequestPacket((FriendRequestPacket) packet);
                         case CHAT_PACKET:
-                            handleChatMessagePacket((ChatPacket) packet);
+                            handleChatPacket((ChatPacket) packet);
                     }
                 }
             } catch (IOException e) {
