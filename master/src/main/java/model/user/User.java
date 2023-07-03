@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User implements Serializable {
-    private static final Gson gson = new Gson();
-    private static ArrayList<User> users = new ArrayList<>();
+    private static final Gson gson;
+    private static ArrayList<User> users;
     private static User currentUser;
     private ArrayList<User> friends;
     private ArrayList<Chat> chats;
@@ -32,6 +32,11 @@ public class User implements Serializable {
     private int highScore;
     private int rank;
     private int avatarNumber;
+
+    static {
+        gson = new Gson();
+        users = new ArrayList<>();
+    }
 
     public User(String username, String password, String email, String slogan, String nickname) {
         this.friends = new ArrayList<>();

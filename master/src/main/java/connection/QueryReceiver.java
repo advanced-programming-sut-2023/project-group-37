@@ -69,12 +69,19 @@ public class QueryReceiver extends Thread {
                     switch (type) {
                         case REGISTER_PACKET:
                             handleRegisterPacket((RegisterPacket) packet);
+                            break;
                         case LOGIN_PACKET:
                             handleLoginPacket((LoginPacket) packet);
+                            break;
                         case FRIEND_REQUEST_PACKET:
                             handleFriendRequestPacket((FriendRequestPacket) packet);
+                            break;
                         case CHAT_PACKET:
                             handleChatPacket((ChatPacket) packet);
+                            break;
+                        case TILES_PACKET:
+                            // TODO: talk to erfan
+                            break;
                     }
                 }
             } catch (IOException e) {
