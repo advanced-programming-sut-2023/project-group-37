@@ -1,5 +1,7 @@
-package connection.packet;
+package connection.packet.registration;
 
+import connection.packet.Packet;
+import connection.packet.PacketType;
 import model.user.User;
 
 public class UserPacket extends Packet {

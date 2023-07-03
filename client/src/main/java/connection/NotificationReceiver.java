@@ -2,10 +2,11 @@ package connection;
 
 import com.google.gson.Gson;
 import connection.packet.*;
+import connection.packet.game.TilesPacket;
+import connection.packet.registration.UserPacket;
 import controller.AppController;
 import controller.MultiMenuFunctions;
 import model.user.User;
-import view.enums.Result;
 
 import java.io.DataInputStream;
 import java.io.IOException;

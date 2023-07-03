@@ -1,5 +1,7 @@
-package connection.packet;
+package connection.packet.relation;
 
+import connection.packet.Packet;
+import connection.packet.PacketType;
 import model.user.User;
 
 public class FriendRequestPacket extends Packet {

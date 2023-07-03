@@ -1,11 +1,10 @@
 package connection;
 
-import connection.packet.LoginPacket;
+import connection.packet.registration.LoginPacket;
 import connection.packet.PopUpPacket;
-import connection.packet.RegisterPacket;
+import connection.packet.registration.RegisterPacket;
 import model.user.User;
 import view.enums.Message;
-import view.enums.PopUp;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

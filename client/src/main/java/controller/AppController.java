@@ -1,6 +1,6 @@
 package controller;
 
-import connection.packet.LoginPacket;
+import connection.packet.registration.LoginPacket;
 import connection.packet.PopUpPacket;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;

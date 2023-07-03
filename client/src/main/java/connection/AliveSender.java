@@ -1,6 +1,6 @@
 package connection;
 
-import connection.packet.AlivePacket;
+import connection.packet.registration.AlivePacket;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

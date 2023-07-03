@@ -2,7 +2,7 @@ package model.user;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import connection.packet.RegisterPacket;
+import connection.packet.registration.RegisterPacket;
 import controller.viewControllers.ProfileMenuController;
 import javafx.scene.image.Image;
 import model.chat.Chat;

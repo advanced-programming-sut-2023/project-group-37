@@ -1,4 +1,7 @@
-package connection.packet;
+package connection.packet.registration;
+
+import connection.packet.Packet;
+import connection.packet.PacketType;
 
 public class LoginPacket extends Packet {
     private final String username;

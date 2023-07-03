@@ -1,11 +1,8 @@
 package controller.viewControllers;
 
 import connection.Connection;
-import connection.packet.RegisterPacket;
+import connection.packet.registration.RegisterPacket;
 import model.user.Slogan;
-import model.user.User;
-import model.utils.PasswordHashing;
-import view.enums.Message;
 
 import java.io.IOException;
 import java.security.SecureRandom;
