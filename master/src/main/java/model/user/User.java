@@ -220,10 +220,9 @@ public class User implements Serializable {
     }
 
     private static User getUserByRank(int rank) {
-        for (User user : users) {
+        for (User user : users)
             if (user.rank == rank)
                 return user;
-        }
         return null;
     }
 
@@ -333,5 +332,146 @@ public class User implements Serializable {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public ArrayList<User> getFriends() {
+        return this.friends;
+    }
+
+    public void setFriends(ArrayList<User> friends) {
+        this.friends = friends;
+    }
+
+    public ArrayList<Chat> getChats() {
+        return this.chats;
+    }
+
+    public void setChats(ArrayList<Chat> chats) {
+        this.chats = chats;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getHashedPassword() {
+        return this.hashedPassword;
+    }
+
+    public void setPassword(String password) {
+        this.hashedPassword = PasswordHashing.encode(password);
+    }
+
+    public String getNickName() {
+        return this.nickname;
+    }
+
+    public void setNickName(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getSlogan() {
+        return this.slogan;
+    }
+
+    public void setSlogan(String slogan) {
+        this.slogan = slogan;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRecoveryQuestion() {
+        return this.recoveryQuestion;
+    }
+
+    public void setRecoveryQuestion(int questionNumber) {
+        this.recoveryQuestion = RecoveryQuestion.getQuestion(questionNumber);
+    }
+
+    public String getRecoveryAnswer() {
+        return this.recoveryAnswer;
+    }
+
+    public void setRecoveryAnswer(String recoveryAnswer) {
+        this.recoveryAnswer = recoveryAnswer;
+    }
+
+    public int getHighScore() {
+        return this.highScore;
+    }
+
+    public void setHighScore(int highScore) {
+        this.highScore = highScore;
+        setRanks();
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public void setAvatarNumber(int avatarNumber) {
+        this.avatarNumber = avatarNumber;
+    }
+
+    public void addFriend(User friend){
+        this.friends.add(friend);
+    }
+
+    public void joinChat(Chat chat) {
+        this.chats.add(chat);
+    }
+
+    public void changePassword(String newPassword) {
+        this.hashedPassword = PasswordHashing.encode(newPassword);
+    }
+
+    private void setRanks() {
+        for (User user : users)
+            user.rank = 0;
+
+        int rank = 1, highScore;
+        User rankedUser = users.get(0);
+
+        while (rank <= users.size()) {
+            highScore = 0;
+            for (User user : users) {
+                if (user.highScore > highScore && user.rank == 0) {
+                    rankedUser = user;
+                    highScore = user.highScore;
+                }
+            }
+            rankedUser.rank = rank;
+            rank++;
+        }
+    }
+
+    public Image getAvatar() {
+        return new Image(ProfileMenuController.getAllAvatarImages().get(this.avatarNumber).getAbsolutePath());
+    }
+
+    public boolean isWrongPassword(String password) {
+        return !PasswordHashing.checkPassword(password, this.hashedPassword);
+    }
+
+    public boolean isWrongAnswer(String answer) {
+        return !this.recoveryAnswer.equals(answer);
+    }
+
+    public static void deleteUser(User user) {
+        users.remove(user);
     }
 }

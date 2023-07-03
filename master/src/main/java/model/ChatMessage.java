@@ -24,23 +24,23 @@ public class ChatMessage {
     }
 
     public String getSenderUsername() {
-        return senderUsername;
+        return this.senderUsername;
     }
 
     public Image getSenderAvatar() {
-        return senderAvatar;
+        return this.senderAvatar;
     }
 
     public LocalDateTime getTime() {
-        return time;
+        return this.time;
     }
 
     public ArrayList<Image> getReactions() {
-        return reactions;
+        return this.reactions;
     }
 
     public String getMessage() {
-        return message;
+        return this.message;
     }
 
     public void setMessage(String message) {
@@ -48,7 +48,7 @@ public class ChatMessage {
     }
 
     public MessageState getState() {
-        return state;
+        return this.state;
     }
 
     public void setState(MessageState state) {

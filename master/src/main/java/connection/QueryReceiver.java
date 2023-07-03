@@ -21,6 +21,26 @@ public class QueryReceiver extends Thread {
         this.databaseController = DatabaseController.getInstance();
     }
 
+    private void handleFriendRequestPacket(FriendRequestPacket packet) {
+        try {
+            DatabaseController.getInstance().getUserDataOutputStream(packet.getSender()).writeUTF(packet.toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void handleChatPacket(ChatPacket packet) {
+        // TODO: do we need to exclude the sender himself?
+        // TODO: add try catch or anything to avoid NullPointerException...
+        for (User subscriber : packet.getChat().getSubscribers()) {
+            try {
+                DatabaseController.getInstance().getUserDataOutputStream(subscriber).writeUTF(packet.toJson());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     @Override
     public synchronized void run() {
         DataInputStream dataInputStream;
@@ -49,6 +69,8 @@ public class QueryReceiver extends Thread {
                 case LOGIN_PACKET -> this.handleLogin((LoginPacket) packet);
                 case REGISTER_PACKET -> this.handleRegister((RegisterPacket) packet);
                 case TILES_PACKET -> this.handleTiles((TilesPacket) packet);
+                case FRIEND_REQUEST_PACKET -> this.handleFriendRequestPacket((FriendRequestPacket) packet);
+                case CHAT_PACKET -> this.handleChatPacket((ChatPacket) packet);
             }
         }
     }
