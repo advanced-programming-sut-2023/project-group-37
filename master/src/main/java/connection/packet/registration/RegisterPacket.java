@@ -1,10 +1,12 @@
-package connection.packet;
+package connection.packet.registration;
 
+import connection.packet.Packet;
+import connection.packet.PacketType;
 import model.user.User;
 
 public class RegisterPacket extends Packet {
     private final String username;
-    private final String hashedPassword;
+    private final String password;
     private final String nickname;
     private final String slogan;
     private final String email;
@@ -14,7 +16,7 @@ public class RegisterPacket extends Packet {
     private RegisterPacket(User user) {
         super.type = PacketType.REGISTER_PACKET;
         this.username = user.getUsername();
-        this.hashedPassword = user.getHashedPassword();
+        this.password = user.getHashedPassword();
         this.nickname = user.getNickName();
         this.slogan = user.getSlogan();
         this.email = user.getEmail();
@@ -22,11 +24,11 @@ public class RegisterPacket extends Packet {
         this.recoveryAnswer = user.getRecoveryAnswer();
     }
 
-    public RegisterPacket(String username, String hashedPassword, String nickname, String slogan, String email,
+    public RegisterPacket(String username, String password, String nickname, String slogan, String email,
                           String recoveryQuestion, String recoveryAnswer) {
         super.type = PacketType.REGISTER_PACKET;
         this.username = username;
-        this.hashedPassword = hashedPassword;
+        this.password = password;
         this.nickname = nickname;
         this.slogan = slogan;
         this.email = email;
@@ -38,8 +40,8 @@ public class RegisterPacket extends Packet {
         return this.username;
     }
 
-    public String getHashedPassword() {
-        return this.hashedPassword;
+    public String getPassword() {
+        return this.password;
     }
 
     public String getNickname() {

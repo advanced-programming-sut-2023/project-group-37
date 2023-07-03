@@ -1,6 +1,6 @@
 package connection;
 
-import connection.packet.TilesPacket;
+import connection.packet.game.TilesPacket;
 import model.user.User;
 
 public class GamingController {

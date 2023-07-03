@@ -1,7 +1,8 @@
 package controller;
 
+import connection.Connection;
+import connection.packet.registration.LoginPacket;
 import connection.packet.PopUpPacket;
-import controller.viewControllers.MainMenuController;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
@@ -11,6 +12,7 @@ import view.menus.*;
 
 public class AppController {
     private static AppController appController;
+    public static LoginPacket stayLoggedInPacket;
     private final Stage stage;
     private final LoginMenu loginMenu;
     private final ForgotMenu forgotMenu;
@@ -50,12 +52,12 @@ public class AppController {
         User loggedInUser = User.loadStayLoggedIn();
 
         if (loggedInUser != null) {
-            MainMenuController.setCurrentUser(loggedInUser);
-            User.setCurrentUser(loggedInUser);
-            this.mainMenu.start(this.stage);
+            stayLoggedInPacket = new LoginPacket(
+                    loggedInUser.getUsername(), loggedInUser.getHashedPassword());
+            Connection.getInstance().setStayLoggedIn(true);
             return;
         }
-
+        stayLoggedInPacket = null;
         this.loginMenu.start(this.stage);
     }
 
@@ -79,14 +81,22 @@ public class AppController {
 
     public void handleAlert(PopUpPacket popUpPacket) {
         Platform.runLater(() -> {
-            if (popUpPacket.isError())
-                new Alert(Alert.AlertType.ERROR, popUpPacket.getMessage().toString()).show();
-            else new Alert(Alert.AlertType.INFORMATION, popUpPacket.getMessage().toString()).show();
-
             switch (popUpPacket.getMessage()) {
                 case LOGIN_SUCCESSFUL -> {
                     try {
                         this.runMenu(Result.ENTER_MAIN_MENU);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                case REGISTER_SUCCESSFUL -> {
+
+                    if (popUpPacket.isError())
+                        new Alert(Alert.AlertType.ERROR, popUpPacket.getMessage().toString()).show();
+                    else new Alert(Alert.AlertType.INFORMATION, popUpPacket.getMessage().toString()).show();
+
+                    try {
+                        this.runMenu(Result.ENTER_LOGIN_MENU);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

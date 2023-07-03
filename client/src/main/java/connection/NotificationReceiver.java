@@ -2,10 +2,11 @@ package connection;
 
 import com.google.gson.Gson;
 import connection.packet.*;
+import connection.packet.game.TilesPacket;
+import connection.packet.registration.UserPacket;
 import controller.AppController;
 import controller.MultiMenuFunctions;
 import model.user.User;
-import view.enums.Result;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -14,7 +15,6 @@ public class NotificationReceiver extends Thread {
     private final AppController appController;
     private final DataInputStream dataInputStream;
     private boolean stayLoggedIn;
-
     public NotificationReceiver(DataInputStream dataInputStream) {
         this.dataInputStream = dataInputStream;
         this.stayLoggedIn = false;
@@ -47,12 +47,6 @@ public class NotificationReceiver extends Thread {
         MultiMenuFunctions.setAllCurrentUsers(userPacket.getUser());
         if (this.stayLoggedIn)
             User.setStayLoggedIn(userPacket.getUser());
-        try {
-            AppController.getInstance().runMenu(Result.ENTER_MAIN_MENU);
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void handleTiles(TilesPacket tilesPacket) {

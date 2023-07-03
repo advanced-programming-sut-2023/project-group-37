@@ -1,8 +1,7 @@
 package controller.viewControllers;
 
 import connection.Connection;
-import connection.packet.LoginPacket;
-import javafx.scene.control.Alert;
+import connection.packet.registration.LoginPacket;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;

@@ -1,6 +1,8 @@
 package connection;
 
 import com.google.gson.Gson;
+import connection.packet.game.TilesPacket;
+import connection.packet.registration.UserPacket;
 import connection.packet.TilesPacket;
 import connection.packet.UserPacket;
 import model.chat.Chat;
@@ -18,13 +20,12 @@ public class DatabaseController {
 
     private static final DatabaseController CLIENTS_CONTROLLER;
     private final ArrayList<User> connectedUsers;
-    private final ArrayList<Chat> rooms;
     private final HashMap<User, DataInputStream> dataInputStreams;
     private final HashMap<User, DataOutputStream> dataOutputStreams;
     private final Gson gson;
 
     static {
-        CLIENTS_CONTROLLER = new DatabaseController();
+        DATABASE_CONTROLLER = new DatabaseController();
     }
 
     private DatabaseController() {
@@ -36,7 +37,7 @@ public class DatabaseController {
     }
 
     public static DatabaseController getInstance() {
-        return DatabaseController.CLIENTS_CONTROLLER;
+        return DatabaseController.DATABASE_CONTROLLER;
     }
 
     public void addConnectedUser(User user, Socket socket) throws IOException {
@@ -64,6 +65,14 @@ public class DatabaseController {
         for (User connectedUser : this.connectedUsers) {
             if (connectedUser != user)
                 this.dataOutputStreams.get(user).writeUTF(this.gson.toJson(new TilesPacket(modifiedTiles)));
+        }
+    }
+
+    public void disconnectUser(User user) {
+        if (connectedUsers.contains(user)) {
+            connectedUsers.remove(user);
+            dataInputStreams.remove(user);
+            dataOutputStreams.remove(user);
         }
     }
 }

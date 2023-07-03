@@ -17,3 +17,6 @@ Button:pressed {
     -fx-background-color: green;
     -fx-font-size: 17;
 }
+Button:hover {
+    -fx-text-fill: lightblue;
+}

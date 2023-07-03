@@ -27,4 +27,10 @@ module Stronghold {
     opens connection.packet to com.google.gson;
     opens view.enums to com.google.gson, javafx.fxml;
     opens model.chat to com.google.gson;
+    exports connection.packet.relation;
+    opens connection.packet.relation to com.google.gson;
+    exports connection.packet.registration;
+    opens connection.packet.registration to com.google.gson;
+    exports connection.packet.game;
+    opens connection.packet.game to com.google.gson;
 }

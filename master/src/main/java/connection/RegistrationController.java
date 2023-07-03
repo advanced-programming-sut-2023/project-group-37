@@ -1,11 +1,10 @@
 package connection;
 
-import connection.packet.LoginPacket;
+import connection.packet.registration.LoginPacket;
 import connection.packet.PopUpPacket;
-import connection.packet.RegisterPacket;
+import connection.packet.registration.RegisterPacket;
 import model.user.User;
 import view.enums.Message;
-import view.enums.PopUp;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -18,11 +17,14 @@ public class RegistrationController {
     }
 
     public User handleLogin(LoginPacket loginPacket) throws IOException {
-        System.out.println("RC : handle login");
         User user;
-        if ((user = User.getUserByUsername(loginPacket.getUsername())) != null)
-            return user;
+        if ((user = User.getUserByUsername(loginPacket.getUsername())) != null) {
+            if (!user.isWrongPassword(loginPacket.getPassword()) || !user.isWrongHashedPassword(loginPacket.getPassword()))
+                return user;
+        }
 
+        System.out.println(loginPacket.getUsername());
+        System.out.println(User.getUsers().size());
         return null;
     }
 
@@ -32,5 +34,6 @@ public class RegistrationController {
             return;
         }
         new User(registerPacket);
+        this.dataOutputStream.writeUTF(new PopUpPacket(Message.REGISTER_SUCCESSFUL, false).toJson());
     }
 }

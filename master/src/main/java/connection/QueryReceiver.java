@@ -2,6 +2,11 @@ package connection;
 
 import com.google.gson.Gson;
 import connection.packet.*;
+import connection.packet.game.TilesPacket;
+import connection.packet.registration.LoginPacket;
+import connection.packet.registration.RegisterPacket;
+import connection.packet.relation.ChatPacket;
+import connection.packet.relation.FriendRequestPacket;
 import model.user.User;
 import view.enums.Message;
 
@@ -14,6 +19,8 @@ public class QueryReceiver extends Thread {
     private final RegistrationController registrationController;
     private GamingController gamingController;
     private User user;
+    private boolean isQueryAlive;
+    private boolean isDead;
     private final Socket socket;
     private final DataOutputStream dataOutputStream;
     private final DatabaseController databaseController;
@@ -23,6 +30,8 @@ public class QueryReceiver extends Thread {
         this.socket = socket;
         this.databaseController = DatabaseController.getInstance();
         this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
+        this.isQueryAlive = true;
+        this.isDead = false;
     }
 
     private void handleFriendRequestPacket(FriendRequestPacket packet) {
@@ -57,7 +66,7 @@ public class QueryReceiver extends Thread {
         Gson gson = new Gson();
         String data;
 
-        while (true) {
+        while (!isDead) {
             try {
                 data = dataInputStream.readUTF();
             } catch (IOException e) {
@@ -75,8 +84,18 @@ public class QueryReceiver extends Thread {
                 case TILES_PACKET -> this.handleTiles(gson.fromJson(data, TilesPacket.class));
                 case FRIEND_REQUEST_PACKET -> this.handleFriendRequestPacket(gson.fromJson(data, FriendRequestPacket.class));
                 case CHAT_PACKET -> this.handleChatPacket(gson.fromJson(data, ChatPacket.class));
+                case ALIVE_PACKET -> this.setQueryAlive(true);
+                case LOGOUT_PACKET -> this.databaseController.disconnectUser(this.user);
             }
         }
+    }
+
+    void setQueryAlive(boolean isQueryAlive) {
+        this.isQueryAlive = true;
+    }
+
+    public boolean isQueryAlive() {
+        return this.isQueryAlive;
     }
 
     private void handleTiles(TilesPacket tilesPacket) {
@@ -112,5 +131,13 @@ public class QueryReceiver extends Thread {
         catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setIsDead(boolean isDead) {
+        this.isDead = isDead;
+    }
+
+    public User getUser() {
+        return user;
     }
 }
