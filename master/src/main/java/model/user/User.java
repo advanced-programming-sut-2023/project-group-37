@@ -20,6 +20,7 @@ public class User implements Serializable {
     private static final Gson gson = new Gson();
     private static ArrayList<User> users = new ArrayList<>();
     private static User currentUser;
+    private ArrayList<User> friends;
     private ArrayList<Chat> chats;
     private String username;
     private String hashedPassword;
@@ -33,6 +34,8 @@ public class User implements Serializable {
     private int avatarNumber;
 
     public User(String username, String password, String email, String slogan, String nickname) {
+        this.friends = new ArrayList<>();
+        this.chats = new ArrayList<>();
         this.username = username;
         this.hashedPassword = password;
         this.email = email;
@@ -45,6 +48,8 @@ public class User implements Serializable {
 
     public User(String username, String password, String nickname, String email, String recoveryQuestion,
                 String recoveryAnswer, String slogan) {
+        this.friends = new ArrayList<>();
+        this.chats = new ArrayList<>();
         this.username = username;
         this.hashedPassword = password;
         this.nickname = nickname;
@@ -204,8 +209,20 @@ public class User implements Serializable {
         }
     }
 
+    public ArrayList<User> getFriends() {
+        return this.friends;
+    }
+
+    public void setFriends(ArrayList<User> friends) {
+        this.friends = friends;
+    }
+
     public ArrayList<Chat> getChats() {
         return this.chats;
+    }
+
+    public void setChats(ArrayList<Chat> chats) {
+        this.chats = chats;
     }
 
     public String getUsername() {
@@ -283,6 +300,10 @@ public class User implements Serializable {
 
     public void setAvatarNumber(int avatarNumber) {
         this.avatarNumber = avatarNumber;
+    }
+
+    public void addFriend(User friend){
+        this.friends.add(friend);
     }
 
     public void joinChat(Chat chat) {
