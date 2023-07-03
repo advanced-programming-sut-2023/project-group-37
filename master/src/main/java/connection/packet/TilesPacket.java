@@ -1,6 +1,5 @@
-package connection;
+package connection.packet;
 
-import connection.packet.Packet;
 import model.buildings.Building;
 import model.game.Texture;
 import model.game.Tile;
@@ -12,6 +11,7 @@ public class TilesPacket extends Packet {
     private final ArrayList<TilePacket> tiles;
 
     public TilesPacket(ArrayList<Tile> modifiedTiles) {
+        super.type = PacketType.TILES_PACKET;
         this.tiles = new ArrayList<>();
         for (Tile tile : modifiedTiles)
             this.tiles.add(new TilePacket(tile));

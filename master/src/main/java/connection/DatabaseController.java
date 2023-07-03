@@ -1,6 +1,7 @@
 package connection;
 
 import com.google.gson.Gson;
+import connection.packet.TilesPacket;
 import model.game.Tile;
 import model.user.User;
 

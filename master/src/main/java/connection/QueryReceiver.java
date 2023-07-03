@@ -2,11 +2,9 @@ package connection;
 
 import com.google.gson.Gson;
 import connection.packet.*;
-import model.ChatMessage;
 import model.user.User;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class QueryReceiver extends Thread {
@@ -53,6 +51,10 @@ public class QueryReceiver extends Thread {
         DatabaseController.getInstance().getUserDataOutputStream(packet.getSender()).writeUTF(packet.toJson());
     }
 
+    private void handleChatMessagePacket(ChatPacket packet) {
+
+    }
+
     @Override
     public void run() {
         while (true) {
@@ -63,14 +65,13 @@ public class QueryReceiver extends Thread {
                     PacketType type = packet.getType();
                     switch (type) {
                         case REGISTER_PACKET:
-                            RegisterPacket registerPacket = (RegisterPacket) packet;
-                            handleRegisterPacket(registerPacket);
+                            handleRegisterPacket((RegisterPacket) packet);
                         case LOGIN_PACKET:
-                            LoginPacket loginPacket = (LoginPacket) packet;
-                            handleLoginPacket(loginPacket);
+                            handleLoginPacket((LoginPacket) packet);
                         case FRIEND_REQUEST_PACKET:
-                            FriendRequestPacket friendRequestPacket = (FriendRequestPacket) packet;
-                            handleFriendRequestPacket(friendRequestPacket);
+                            handleFriendRequestPacket((FriendRequestPacket) packet);
+                        case CHAT_PACKET:
+                            handleChatMessagePacket((ChatPacket) packet);
                     }
                 }
             } catch (IOException e) {
