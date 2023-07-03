@@ -118,8 +118,16 @@ public class MainMenu extends Application {
         catch (Exception ignored) {
         }
 
+        TextInputDialog privateInputDialog = new TextInputDialog("T");
+        privateInputDialog.setHeaderText("Want your lobby be public ?");
+        textInputDialog.showAndWait();
+
+
+        String isPublicString  = textInputDialog.getEditor().getText();
+        boolean isPublic = isPublicString.equals("F");
+
         try {
-            Connection.getInstance().getDataOutputStream().writeUTF(new RequestLobbyPacket(capacity).toJson());
+            Connection.getInstance().getDataOutputStream().writeUTF(new RequestLobbyPacket(capacity, isPublic).toJson());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -5,7 +5,7 @@ import model.user.User;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public abstract class Chat {
+public class Chat {
     private static int idCounter;
     private final int id;
     private final User owner;
@@ -27,6 +27,14 @@ public abstract class Chat {
         this.type = type;
         this.subscribers = new ArrayList<>();
         this.subscribers.addAll(Arrays.asList(subscribers));
+        this.messages = new ArrayList<>();
+    }
+
+    public Chat(User owner, ChatType type) {
+        this.id = idCounter++;
+        this.owner = owner;
+        this.type = type;
+        this.subscribers = new ArrayList<>();
         this.messages = new ArrayList<>();
     }
 
