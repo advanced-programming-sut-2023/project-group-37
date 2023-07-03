@@ -12,7 +12,7 @@ public class RegisterPacket extends Packet {
     private final String recoveryAnswer;
 
     private RegisterPacket(User user) {
-        super(PacketType.REGISTER_PACKET);
+        super.type = PacketType.REGISTER_PACKET;
         this.username = user.getUsername();
         this.hashedPassword = user.getHashedPassword();
         this.nickname = user.getNickName();
@@ -24,7 +24,7 @@ public class RegisterPacket extends Packet {
 
     public RegisterPacket(String username, String hashedPassword, String nickname, String slogan, String email,
                           String recoveryQuestion, String recoveryAnswer) {
-        super(PacketType.REGISTER_PACKET);
+        super.type = PacketType.REGISTER_PACKET;
         this.username = username;
         this.hashedPassword = hashedPassword;
         this.nickname = nickname;
@@ -32,11 +32,6 @@ public class RegisterPacket extends Packet {
         this.email = email;
         this.recoveryQuestion = recoveryQuestion;
         this.recoveryAnswer = recoveryAnswer;
-    }
-
-    @Override
-    public PacketType getType() {
-        return PacketType.REGISTER_PACKET;
     }
 
     public String getUsername() {

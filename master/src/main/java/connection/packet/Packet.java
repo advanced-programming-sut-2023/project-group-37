@@ -5,10 +5,10 @@ import com.google.gson.Gson;
 import java.io.Serializable;
 
 public class Packet implements Serializable {
-    private final PacketType type;
+    protected PacketType type;
 
-    public Packet(PacketType type) {
-        this.type = type;
+    public Packet() {
+
     }
 
     public PacketType getType() {

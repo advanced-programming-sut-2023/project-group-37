@@ -41,6 +41,7 @@ public class QueryReceiver extends Thread {
             }
 
             Packet packet = gson.fromJson(data, Packet.class);
+            System.out.println(packet instanceof LoginPacket);
             PacketType type = packet.getType();
             System.out.println("Q : received");
 
