@@ -1,5 +1,6 @@
 package controller;
 
+import connection.Connection;
 import connection.packet.registration.LoginPacket;
 import connection.packet.PopUpPacket;
 import javafx.application.Platform;
@@ -53,6 +54,7 @@ public class AppController {
         if (loggedInUser != null) {
             stayLoggedInPacket = new LoginPacket(
                     loggedInUser.getUsername(), loggedInUser.getHashedPassword());
+            Connection.getInstance().setStayLoggedIn(true);
             return;
         }
         stayLoggedInPacket = null;
@@ -79,10 +81,6 @@ public class AppController {
 
     public void handleAlert(PopUpPacket popUpPacket) {
         Platform.runLater(() -> {
-            if (popUpPacket.isError())
-                new Alert(Alert.AlertType.ERROR, popUpPacket.getMessage().toString()).show();
-            else new Alert(Alert.AlertType.INFORMATION, popUpPacket.getMessage().toString()).show();
-
             switch (popUpPacket.getMessage()) {
                 case LOGIN_SUCCESSFUL -> {
                     try {
@@ -92,6 +90,11 @@ public class AppController {
                     }
                 }
                 case REGISTER_SUCCESSFUL -> {
+
+                    if (popUpPacket.isError())
+                        new Alert(Alert.AlertType.ERROR, popUpPacket.getMessage().toString()).show();
+                    else new Alert(Alert.AlertType.INFORMATION, popUpPacket.getMessage().toString()).show();
+
                     try {
                         this.runMenu(Result.ENTER_LOGIN_MENU);
                     } catch (Exception e) {

@@ -1,8 +1,8 @@
 Button {
     -fx-min-width: 180;
-    -fx-min-height: 60;
+    -fx-min-height: 65;
     -fx-text-fill: white;
-    -fx-background-insets: 15;
+    -fx-background-insets: 20;
     -fx-background-color: brown;
     -fx-background-radius: 40;
     -fx-font-size: 15;

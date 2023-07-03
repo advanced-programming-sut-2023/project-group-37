@@ -15,7 +15,6 @@ public class NotificationReceiver extends Thread {
     private final AppController appController;
     private final DataInputStream dataInputStream;
     private boolean stayLoggedIn;
-
     public NotificationReceiver(DataInputStream dataInputStream) {
         this.dataInputStream = dataInputStream;
         this.stayLoggedIn = false;
