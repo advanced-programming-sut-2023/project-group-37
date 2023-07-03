@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import connection.packet.RegisterPacket;
 import controller.viewControllers.ProfileMenuController;
 import javafx.scene.image.Image;
+import model.Chat;
 import model.utils.PasswordHashing;
 
 import java.io.File;
@@ -20,6 +21,8 @@ public class User implements Serializable {
     private static User currentUser;
     private static ArrayList<User> users;
     private static final Gson gson;
+    private ArrayList<Chat> chats;
+    private ArrayList<User> friends;
     private String username;
     private String hashedPassword;
     private String nickname;
@@ -46,6 +49,8 @@ public class User implements Serializable {
         this.recoveryAnswer = registerPacket.getRecoveryAnswer();
         this.highScore = 0;
         this.avatarNumber = ProfileMenuController.getRandomAvatarURL();
+        this.friends = new ArrayList<>();
+        this.chats = new ArrayList<>();
         users.add(this);
         User.updateDatabase();
     }
@@ -60,6 +65,9 @@ public class User implements Serializable {
         this.recoveryQuestion = recoveryQuestion;
         this.recoveryAnswer = recoveryAnswer;
         this.highScore = 0;
+        this.avatarNumber = ProfileMenuController.getRandomAvatarURL();
+        this.friends = new ArrayList<>();
+        this.chats = new ArrayList<>();
         this.avatarNumber = ProfileMenuController.getRandomAvatarURL();
         users.add(this);
         User.updateDatabase();
@@ -220,10 +228,9 @@ public class User implements Serializable {
     }
 
     private static User getUserByRank(int rank) {
-        for (User user : users) {
+        for (User user : users)
             if (user.rank == rank)
                 return user;
-        }
         return null;
     }
 
@@ -334,4 +341,29 @@ public class User implements Serializable {
             }
         }
     }
+
+    public ArrayList<User> getFriends() {
+        return this.friends;
+    }
+
+    public void setFriends(ArrayList<User> friends) {
+        this.friends = friends;
+    }
+
+    public ArrayList<Chat> getChats() {
+        return this.chats;
+    }
+
+    public void setChats(ArrayList<Chat> chats) {
+        this.chats = chats;
+    }
+
+    public void addFriend(User friend){
+        this.friends.add(friend);
+    }
+
+    public void joinChat(Chat chat) {
+        this.chats.add(chat);
+    }
+
 }

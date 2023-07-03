@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import connection.packet.RegisterPacket;
 import controller.viewControllers.ProfileMenuController;
 import javafx.scene.image.Image;
+import model.Chat;
 import model.utils.PasswordHashing;
 
 import java.io.File;
@@ -20,6 +21,8 @@ public class User implements Serializable {
     private static User currentUser;
     private static ArrayList<User> users;
     private static final Gson gson;
+    private ArrayList<Chat> chats;
+    private ArrayList<User> friends;
     private String username;
     private String hashedPassword;
     private String nickname;
@@ -46,6 +49,8 @@ public class User implements Serializable {
         this.recoveryAnswer = registerPacket.getRecoveryAnswer();
         this.highScore = 0;
         this.avatarNumber = ProfileMenuController.getRandomAvatarURL();
+        this.friends = new ArrayList<>();
+        this.chats = new ArrayList<>();
         users.add(this);
         User.updateDatabase();
     }
@@ -60,6 +65,9 @@ public class User implements Serializable {
         this.recoveryQuestion = recoveryQuestion;
         this.recoveryAnswer = recoveryAnswer;
         this.highScore = 0;
+        this.avatarNumber = ProfileMenuController.getRandomAvatarURL();
+        this.friends = new ArrayList<>();
+        this.chats = new ArrayList<>();
         this.avatarNumber = ProfileMenuController.getRandomAvatarURL();
         users.add(this);
         User.updateDatabase();
@@ -350,83 +358,6 @@ public class User implements Serializable {
         this.chats = chats;
     }
 
-    public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getHashedPassword() {
-        return this.hashedPassword;
-    }
-
-    public void setPassword(String password) {
-        this.hashedPassword = PasswordHashing.encode(password);
-    }
-
-    public String getNickName() {
-        return this.nickname;
-    }
-
-    public void setNickName(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getSlogan() {
-        return this.slogan;
-    }
-
-    public void setSlogan(String slogan) {
-        this.slogan = slogan;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getRecoveryQuestion() {
-        return this.recoveryQuestion;
-    }
-
-    public void setRecoveryQuestion(int questionNumber) {
-        this.recoveryQuestion = RecoveryQuestion.getQuestion(questionNumber);
-    }
-
-    public String getRecoveryAnswer() {
-        return this.recoveryAnswer;
-    }
-
-    public void setRecoveryAnswer(String recoveryAnswer) {
-        this.recoveryAnswer = recoveryAnswer;
-    }
-
-    public int getHighScore() {
-        return this.highScore;
-    }
-
-    public void setHighScore(int highScore) {
-        this.highScore = highScore;
-        setRanks();
-    }
-
-    public int getRank() {
-        return rank;
-    }
-
-    public void setRank(int rank) {
-        this.rank = rank;
-    }
-
-    public void setAvatarNumber(int avatarNumber) {
-        this.avatarNumber = avatarNumber;
-    }
-
     public void addFriend(User friend){
         this.friends.add(friend);
     }
@@ -435,43 +366,4 @@ public class User implements Serializable {
         this.chats.add(chat);
     }
 
-    public void changePassword(String newPassword) {
-        this.hashedPassword = PasswordHashing.encode(newPassword);
-    }
-
-    private void setRanks() {
-        for (User user : users)
-            user.rank = 0;
-
-        int rank = 1, highScore;
-        User rankedUser = users.get(0);
-
-        while (rank <= users.size()) {
-            highScore = 0;
-            for (User user : users) {
-                if (user.highScore > highScore && user.rank == 0) {
-                    rankedUser = user;
-                    highScore = user.highScore;
-                }
-            }
-            rankedUser.rank = rank;
-            rank++;
-        }
-    }
-
-    public Image getAvatar() {
-        return new Image(ProfileMenuController.getAllAvatarImages().get(this.avatarNumber).getAbsolutePath());
-    }
-
-    public boolean isWrongPassword(String password) {
-        return !PasswordHashing.checkPassword(password, this.hashedPassword);
-    }
-
-    public boolean isWrongAnswer(String answer) {
-        return !this.recoveryAnswer.equals(answer);
-    }
-
-    public static void deleteUser(User user) {
-        users.remove(user);
-    }
 }
