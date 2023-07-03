@@ -1,5 +1,5 @@
 package connection.packet;
 
 public enum PacketType {
-    REGISTER_PACKET, LOGIN_PACKET;
+    REGISTER_PACKET, LOGIN_PACKET, ADD_FRIEND_PACKET
 }

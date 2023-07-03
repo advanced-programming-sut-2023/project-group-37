@@ -13,6 +13,7 @@ public class RegisterPacket extends Packet {
     private final String recoveryAnswer;
 
     private RegisterPacket(User user) {
+        super.type = PacketType.REGISTER_PACKET;
         this.username = user.getUsername();
         this.hashedPassword = user.getHashedPassword();
         this.nickname = user.getNickName();
