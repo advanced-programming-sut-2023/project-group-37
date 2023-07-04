@@ -55,7 +55,7 @@ public class NotificationReceiver extends Thread {
     private void handleChat(ChatPacket chatPacket) {
         Chat chat = chatPacket.getChat();
         switch (chat.getType()) {
-            case PUBLIC -> this.relationHandler.setPublicChat(chat);
+            case PUBLIC -> this.relationHandler.handlePublicChat(chat);
             case PRIVATE -> this.relationHandler.handlePrivateChat(chat);
             case ROOM -> this.relationHandler.handleRoom(chat);
         }

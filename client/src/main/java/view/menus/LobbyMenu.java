@@ -10,7 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -44,7 +46,7 @@ public class LobbyMenu extends Application {
     public LobbyMenu() {
         this.appController = AppController.getInstance();
         this.relationHandler = RelationHandler.getInstance();
-        this.relationHandler.setCurrentRoomVBox(this.chatVBox);
+        this.relationHandler.setRoomVBox(this.chatVBox);
     }
 
     @Override
@@ -62,6 +64,7 @@ public class LobbyMenu extends Application {
     @FXML
     private void initialize() {
         sendButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/send.png", 30).getImage()));
+        this.chatVBox.setBackground(Background.fill(Color.WHITE));
     }
 
     public void leaveLobby() {
