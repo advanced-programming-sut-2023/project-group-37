@@ -83,9 +83,7 @@ public class QueryReceiver extends Thread {
             }
 
             Packet packet = gson.fromJson(data, Packet.class);
-            System.out.println(packet instanceof LoginPacket);
             PacketType type = packet.getType();
-            System.out.println("Q : received");
 
             switch (type) {
                 case LOGIN_PACKET -> this.handleLogin(gson.fromJson(data, LoginPacket.class));
@@ -118,6 +116,7 @@ public class QueryReceiver extends Thread {
     }
 
     private void acceptReq(AcceptRequest acceptRequest) {
+        System.out.println("ACCEPT REQ");
         Chat privateChat = new Chat(acceptRequest.getSender(), Chat.ChatType.PRIVATE, acceptRequest.getReceiver());
         try {
             this.dataOutputStream.writeUTF(new ChatPacket(privateChat).toJson());
@@ -129,7 +128,6 @@ public class QueryReceiver extends Thread {
     }
 
     private synchronized void updateChat(RequestChatPacket requestChatPacket) {
-        System.out.println("REQ");
         switch (requestChatPacket.getChat().getType()) {
             case PUBLIC -> sendPublic();
             case PRIVATE -> sendPrivate();
@@ -197,7 +195,6 @@ public class QueryReceiver extends Thread {
     }
 
     private synchronized void handleLogin(LoginPacket loginPacket) {
-        System.out.println("Q : login handle");
         User user;
         try {
             if ((user = this.registrationController.handleLogin(loginPacket)) != null) {

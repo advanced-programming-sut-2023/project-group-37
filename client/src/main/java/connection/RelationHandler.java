@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.chat.Chat;
 import model.chat.ChatMessage;
@@ -82,12 +83,15 @@ public class RelationHandler {
         if (friend.getUsername().equals(User.getCurrentUser().getUsername()))
             friend = privateChat.getSubscribers().get(1);
 
-        Circle circle = new Circle(13);
+        Circle circle = new Circle(30);
         circle.setFill(new ImagePattern(friend.getAvatar()));
+        circle.setLayoutY(40);
+        circle.setLayoutX(40);
 
         Label nickName = new Label(friend.getNickName());
         nickName.setLayoutY(10);
         nickName.setLayoutX(50);
+        nickName.setFont(new Font(20));
 
         Pane friendPane = new Pane(circle, nickName);
         friendPane.setOnMouseClicked((MouseEvent mouseEvent) -> this.setCurrentPrivateChat(privateChat));
@@ -123,6 +127,7 @@ public class RelationHandler {
     }
 
     private void addPrivateChat(Chat privateChat) {
+        System.out.println("ADD PRIVATE CHAT");
         this.privateChats.add(privateChat);
         Platform.runLater(() -> {
             try {
@@ -180,8 +185,10 @@ public class RelationHandler {
         this.addPrivateChat(privateChat);
         User.getCurrentUser().joinChat(privateChat);
 
-        if (this.currentPrivateChat.getId() == privateChat.getId())
-            this.setCurrentPrivateChat(privateChat);
+        if (this.currentPrivateChat != null) {
+            if (this.currentPrivateChat.getId() == privateChat.getId())
+                this.setCurrentPrivateChat(privateChat);
+        }
     }
 
     public void handleRoom(Chat room) {
@@ -207,22 +214,23 @@ public class RelationHandler {
 
             accept.setOnMouseClicked((MouseEvent mouseEvent) -> {
                 try {
-                    Connection.getInstance().getDataOutputStream().writeUTF(new AcceptRequest(friendRequestPacket.getSender(),
-                            friendRequestPacket.getReceiver()).toJson());
+                    Connection.getInstance().getDataOutputStream().writeUTF(new AcceptRequest(User.getCurrentUser(),
+                            friendRequestPacket.getSender()).toJson());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
                 stage.close();
             });
 
-            Button reject = new Button("Accept");
-            reject.setBackground(Background.fill(Color.GREEN));
-            reject.setLayoutX(40);
+            Button reject = new Button("Reject");
+            reject.setBackground(Background.fill(Color.RED));
+            reject.setLayoutX(100);
             reject.setLayoutY(100);
 
             reject.setOnMouseClicked((MouseEvent mouseEvent) -> stage.close());
 
             AnchorPane anchorPane = new AnchorPane(label, accept, reject);
+            anchorPane.setPrefHeight(140);
             stage.setScene(new Scene(anchorPane));
             stage.show();
         });

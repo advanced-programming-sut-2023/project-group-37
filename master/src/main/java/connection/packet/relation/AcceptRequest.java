@@ -1,6 +1,7 @@
 package connection.packet.relation;
 
 import connection.packet.Packet;
+import connection.packet.PacketType;
 import model.user.User;
 
 public class AcceptRequest extends Packet {
@@ -9,6 +10,7 @@ public class AcceptRequest extends Packet {
 
 
     public AcceptRequest(User sender, User receiver) {
+        super.type = PacketType.ACCEPT_PACKET;
         this.sender = sender;
         this.receiver = receiver;
     }

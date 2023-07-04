@@ -87,7 +87,7 @@ public class ChatMenu extends Application {
         this.relationHandler.setAvatar(avatar);
     }
 
-    public void addFriend() { // TODO send reqChatPacket
+    public void addFriend() {
         this.relationHandler.sendFriendReq();
     }
 

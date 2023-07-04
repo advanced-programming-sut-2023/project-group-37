@@ -221,7 +221,7 @@ public class User implements Serializable {
     }
 
     public boolean isWrongHashedPassword(String hashedPassword) {
-        return this.hashedPassword.equals(hashedPassword);
+        return !this.hashedPassword.equals(hashedPassword);
     }
 
     public boolean isWrongAnswer(String answer) {
