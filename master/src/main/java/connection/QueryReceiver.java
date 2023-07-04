@@ -7,6 +7,7 @@ import connection.packet.registration.LoginPacket;
 import connection.packet.registration.RegisterPacket;
 import connection.packet.relation.ChatPacket;
 import connection.packet.relation.FriendRequestPacket;
+import connection.packet.relation.LobbyPacket;
 import connection.packet.relation.RequestLobbyPacket;
 import model.chat.Lobby;
 import model.user.User;
@@ -137,7 +138,12 @@ public class QueryReceiver extends Thread {
     }
 
     private void createLobby(RequestLobbyPacket requestLobbyPacket) {
-        new Lobby(this.user, requestLobbyPacket.getCapacity(), requestLobbyPacket.isPublic());
+        try {
+            this.dataOutputStream.writeUTF(new LobbyPacket(new Lobby(
+                    this.user, requestLobbyPacket.getCapacity(), requestLobbyPacket.isPublic())).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void setIsDead(boolean isDead) {
