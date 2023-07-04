@@ -77,13 +77,16 @@ public class DatabaseController {
         this.lobbies.add(lobby);
     }
 
-    public DataOutputStream getUserDataOutputStream(User user) {
-        if (!this.dataOutputStreams.containsKey(user)) {
-            // TODO: should change later...
-            System.out.println("error");
-            return null;
+    public User getConnectedUser(String username) {
+        for (Session session : this.currentSessions) {
+            if (session.getUser().getUsername().equals(username))
+                return session.getUser();
         }
-        return this.dataOutputStreams.get(user);
+        return null;
+    }
+
+    public DataOutputStream getUserDataOutputStream(String username) {
+        return this.dataOutputStreams.get(this.getConnectedUser(username));
     }
 
     public void updateEveryOneTilesExcept(ArrayList<Tile> modifiedTiles, User user) throws IOException {

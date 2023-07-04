@@ -40,7 +40,7 @@ public class QueryReceiver extends Thread {
     private synchronized void handleFriendRequestPacket(FriendRequestPacket friendRequestPacket) {
         try {
             DatabaseController.getInstance().getUserDataOutputStream(
-                    friendRequestPacket.getReceiver()).writeUTF(friendRequestPacket.toJson());
+                    friendRequestPacket.getReceiver().getUsername()).writeUTF(friendRequestPacket.toJson());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -55,7 +55,7 @@ public class QueryReceiver extends Thread {
         for (User subscriber : chatPacket.getChat().getSubscribers()) {
             if (!subscriber.getUsername().equals(this.user.getUsername())) {
                 try {
-                    DatabaseController.getInstance().getUserDataOutputStream(subscriber).writeUTF(chatPacket.toJson());
+                    DatabaseController.getInstance().getUserDataOutputStream(subscriber.getUsername()).writeUTF(chatPacket.toJson());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -108,7 +108,7 @@ public class QueryReceiver extends Thread {
         Chat privateChat = new Chat(acceptRequest.getSender(), Chat.ChatType.PRIVATE, acceptRequest.getReceiver());
         try {
             this.dataOutputStream.writeUTF(new ChatPacket(privateChat).toJson());
-            this.databaseController.getUserDataOutputStream(acceptRequest.getReceiver()).writeUTF
+            this.databaseController.getUserDataOutputStream(acceptRequest.getReceiver().getUsername()).writeUTF
                     (new ChatPacket(privateChat).toJson());
         } catch (IOException e) {
             throw new RuntimeException(e);
