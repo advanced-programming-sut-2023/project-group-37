@@ -8,7 +8,6 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -41,7 +40,6 @@ public class RelationHandler {
     private VBox friendsVBox;
     private final ArrayList<Chat> privateChats;
     private final ArrayList<Chat> rooms;
-
     private VBox usernames;
     private VBox territories;
     private Label capacity;
@@ -181,7 +179,7 @@ public class RelationHandler {
     }
 
     public Lobby getCurrentLobby() {
-        return currentLobby;
+        return this.currentLobby;
     }
 
     public void setCurrentLobby(Lobby currentLobby) {
@@ -254,6 +252,10 @@ public class RelationHandler {
             stage.setScene(new Scene(anchorPane));
             stage.show();
         });
+    }
+
+    public void handleRefreshLobby(Lobby lobby) {
+        // TODO: fill here...
     }
 
     public void sendMessage(String content, Chat.ChatType chatType) {
@@ -338,7 +340,7 @@ public class RelationHandler {
         this.foundFriend = friend;
     }
 
-    public void sendFriendReq() {
+    public void sendFriendRequest() {
         try {
             Connection.getInstance().getDataOutputStream().writeUTF(new FriendRequestPacket(User.getCurrentUser(), foundFriend).toJson());
         } catch (IOException e) {

@@ -88,7 +88,7 @@ public class ChatMenu extends Application {
     }
 
     public void addFriend() {
-        this.relationHandler.sendFriendReq();
+        this.relationHandler.sendFriendRequest();
     }
 
     public void search() {

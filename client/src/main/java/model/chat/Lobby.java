@@ -1,15 +1,16 @@
 package model.chat;
 
+import model.game.Territory;
 import model.user.User;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Lobby {
     private static int idCounter;
     private final int id;
     private final User admin;
     private final int capacity;
-    private final ArrayList<User> members;
+    private final HashMap<User, Territory> governments;
     private final Chat room;
     private final boolean isPublic;
 
@@ -21,7 +22,7 @@ public class Lobby {
         this.id = idCounter++;
         this.admin = admin;
         this.capacity = capacity;
-        this.members = new ArrayList<>();
+        this.governments = new HashMap<>();
         this.room = new Chat(admin, Chat.ChatType.ROOM);
         this.isPublic = isPublic;
     }
@@ -38,21 +39,21 @@ public class Lobby {
         return this.capacity;
     }
 
-    public ArrayList<User> getMembers() {
-        return this.members;
+    public HashMap<User, Territory> getGovernments() {
+        return this.governments;
     }
 
     public Chat getRoom() {
         return room;
     }
 
-    public void addMember(User user) {
-        this.members.add(user);
+    public void addGovernment(User user, Territory territory) {
+        this.governments.put(user, territory);
         this.room.addSubscriber(user);
     }
 
     public void removeMember (User user) {
-        this.members.remove(user);
+        this.governments.remove(user);
         this.room.removeSubscriber(user);
     }
 }

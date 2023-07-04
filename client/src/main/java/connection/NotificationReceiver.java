@@ -46,19 +46,25 @@ public class NotificationReceiver extends Thread {
             switch (type) {
                 case POPUP_PACKET -> this.appController.handleAlert(gson.fromJson(data, PopUpPacket.class));
                 case USER_PACKET -> this.login(gson.fromJson(data, UserPacket.class));
-                case FRIEND_REQUEST_PACKET ->
-                        this.relationHandler.handleFriendRequest(gson.fromJson(data, FriendRequestPacket.class));
+                case FRIEND_REQUEST_PACKET -> this.relationHandler.handleFriendRequest(gson.fromJson
+                        (data, FriendRequestPacket.class));
                 case LOBBY_PACKET -> this.createLobby(gson.fromJson(data, LobbyPacket.class));
                 case CHAT_PACKET -> this.handleChat(gson.fromJson(data, ChatPacket.class));
                 case TILES_PACKET -> this.handleTiles(gson.fromJson(data, TilesPacket.class));
                 case FOUND_USER_PACKET -> this.handleFoundFriend(gson.fromJson(data, FoundUserPacket.class));
+                case REFRESH_LOBBY_PACKET -> this.handleRefreshLobby(gson.fromJson(data, RefreshLobbyPacket.class));
             }
         }
     }
 
+    private void handleRefreshLobby(RefreshLobbyPacket refreshLobbyPacket) {
+        this.relationHandler.setCurrentLobby(refreshLobbyPacket.getLobby());
+        // TODO: setCurrentRoom?
+    }
+
     private void handleFoundFriend(FoundUserPacket foundUserPacket) {
         User friend = foundUserPacket.getFoundUser();
-        relationHandler.changeAvatar(friend);
+        this.relationHandler.changeAvatar(friend);
     }
 
     private void handleChat(ChatPacket chatPacket) {
