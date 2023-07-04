@@ -3,6 +3,7 @@ package connection;
 import com.google.gson.Gson;
 import connection.packet.*;
 import connection.packet.game.LobbiesPacket;
+import connection.packet.game.RefreshLobbyPacket;
 import connection.packet.game.TilesPacket;
 import connection.packet.registration.UserPacket;
 import connection.packet.relation.ChatPacket;
@@ -12,12 +13,10 @@ import connection.packet.relation.LobbyPacket;
 import controller.AppController;
 import controller.MultiMenuFunctions;
 import model.chat.Chat;
-import model.chat.Lobby;
 import model.user.User;
 
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class NotificationReceiver extends Thread {
     private final AppController appController;

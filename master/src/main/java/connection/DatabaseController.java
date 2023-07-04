@@ -139,7 +139,7 @@ public class DatabaseController {
     public void joinAtLobby(User user, int id) {
         Lobby lobby;
         if ((lobby = this.lobbies.get(id)) != null)
-            lobby.addMember(user);
+            lobby.addUser(user);
     }
 
     public void updatePublicChat(Chat publicChat) {

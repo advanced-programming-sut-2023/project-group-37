@@ -98,7 +98,7 @@ public class JoinMenu extends Application {
             PopUp.SEARCH_LOBBY.show();
             return;
         }
-        searchedLobby.addMember(User.getCurrentUser());
+        searchedLobby.addUser(User.getCurrentUser());
         //nothing to do after joining a lobby ??
     }
 

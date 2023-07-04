@@ -413,19 +413,19 @@ public class RelationHandler {
     }
 
     private String setOtherUsers(Lobby lobby) {
-        String others = "";
+        StringBuilder others = new StringBuilder();
         int counter = 0;
-        for (User member : lobby.getGovernments().keySet()) {
+        for (User member : lobby.getUsers().keySet()) {
             if (!member.equals(lobby.getAdmin())) {
-                others += counter + ". " + member.getNickName();
+                others.append(counter).append(". ").append(member.getNickName());
                 counter++;
             }
-            if (counter != lobby.getGovernments().size() - 1) {
-                others += ", ";
+            if (counter != lobby.getUsers().size() - 1) {
+                others.append(", ");
             }
         }
         //System.out.println(others); //test
-        return others;
+        return others.toString();
     }
 
     public void getLobbiesFromMaster() {
