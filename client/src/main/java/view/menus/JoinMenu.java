@@ -1,5 +1,6 @@
 package view.menus;
 
+import connection.Connection;
 import controller.AppController;
 import controller.MultiMenuFunctions;
 import javafx.application.Application;
@@ -55,13 +56,20 @@ public class JoinMenu extends Application {
 
     @FXML
     private void initialize() {
-        searchButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/search.jpg", 30).getImage()));
+        searchButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/search.jpg", 30)
+                .getImage()));
+
     }
 
     public void search(MouseEvent mouseEvent) {
+
     }
 
     public void join(MouseEvent mouseEvent) {
 
+    }
+
+    public void startGame(MouseEvent mouseEvent) {
+        //TODO : start online game
     }
 }
