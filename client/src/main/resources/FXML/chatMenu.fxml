@@ -12,7 +12,7 @@
 <AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.menus.ChatMenu">
     <children>
-        <VBox fx:id="privateChatVBox" alignment="TOP_CENTER" layoutX="1.0" prefHeight="530.0" prefWidth="400.0">
+        <VBox fx:id="privateChatVBox" alignment="TOP_CENTER" layoutX="117.0" prefHeight="530.0" prefWidth="400.0">
             <children>
                 <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="36.0" prefWidth="118.0" text="Private"
                        textFill="BLUE">
@@ -22,7 +22,7 @@
                 </Label>
             </children>
         </VBox>
-        <VBox fx:id="publicChatVBox" alignment="TOP_CENTER" layoutX="558.0" layoutY="3.0" prefHeight="530.0"
+        <VBox fx:id="publicChatVBox" alignment="TOP_CENTER" layoutX="674.0" layoutY="3.0" prefHeight="530.0"
               prefWidth="400.0">
             <children>
                 <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="36.0" prefWidth="118.0" text="Public"
@@ -33,25 +33,25 @@
                 </Label>
             </children>
         </VBox>
-        <Button layoutX="348.0" layoutY="523.0" minWidth="134.0" mnemonicParsing="false" onMouseClicked="#addFriend"
+        <Button layoutX="464.0" layoutY="523.0" minWidth="134.0" mnemonicParsing="false" onMouseClicked="#addFriend"
                 prefHeight="66.0" prefWidth="134.0" stylesheets="@../CSS/GameStyle.css" text="Add Friend"/>
-        <TextField fx:id="friendName" layoutX="394.0" layoutY="488.0" prefHeight="26.0" prefWidth="143.0"
+        <TextField fx:id="friendName" layoutX="510.0" layoutY="488.0" prefHeight="26.0" prefWidth="143.0"
                    promptText="Friend Name"/>
-        <Rectangle fx:id="searchButton" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="30.0" layoutX="550.0"
+        <Rectangle fx:id="searchButton" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="30.0" layoutX="666.0"
                    layoutY="488.0" onMouseClicked="#search" stroke="BLACK" strokeType="INSIDE" width="30.0"/>
-        <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="549.0" layoutY="557.0" radius="26.0" stroke="BLACK"
+        <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="665.0" layoutY="557.0" radius="26.0" stroke="BLACK"
                 strokeType="INSIDE"/>
-        <TextField fx:id="privateChatBox" layoutX="14.0" layoutY="556.0" prefHeight="30.0" prefWidth="250.0"
+        <TextField fx:id="privateChatBox" layoutX="130.0" layoutY="556.0" prefHeight="30.0" prefWidth="250.0"
                    promptText="Message"/>
         <Rectangle fx:id="sendButtonPrivate" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="30.0"
-                   layoutX="283.0" layoutY="556.0" onMouseClicked="#sendPrivate" stroke="BLACK" strokeType="INSIDE"
+                   layoutX="399.0" layoutY="556.0" onMouseClicked="#sendPrivate" stroke="BLACK" strokeType="INSIDE"
                    width="30.0"/>
-        <TextField fx:id="publicChatBox" layoutX="609.0" layoutY="558.0" prefHeight="30.0" prefWidth="270.0"
+        <TextField fx:id="publicChatBox" layoutX="725.0" layoutY="558.0" prefHeight="30.0" prefWidth="270.0"
                    promptText="Message"/>
         <Rectangle fx:id="sendButtonPublic" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="30.0"
-                   layoutX="895.0" layoutY="558.0" onMouseClicked="#sendPublic" stroke="BLACK" strokeType="INSIDE"
+                   layoutX="1011.0" layoutY="558.0" onMouseClicked="#sendPublic" stroke="BLACK" strokeType="INSIDE"
                    width="30.0"/>
-        <VBox fx:id="friendsVBox" alignment="TOP_CENTER" layoutX="395.0" layoutY="3.0" prefHeight="477.0"
+        <VBox fx:id="friendsVBox" alignment="TOP_CENTER" layoutX="511.0" layoutY="3.0" prefHeight="477.0"
               prefWidth="180.0">
             <children>
                 <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="36.0" prefWidth="118.0" text="Friends"
