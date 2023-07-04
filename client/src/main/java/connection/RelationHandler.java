@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 import model.chat.Chat;
 import model.chat.ChatMessage;
 import model.chat.Lobby;
-import model.chat.PublicChat;
 import model.user.User;
 
 import java.io.IOException;
@@ -43,7 +42,7 @@ public class RelationHandler {
     private RelationHandler() {
         this.privateChats = new ArrayList<>();
         this.rooms = new ArrayList<>();
-        this.publicChat = new PublicChat();
+        this.publicChat = new Chat(null, Chat.ChatType.PUBLIC);
     }
 
     public static RelationHandler getInstance() {
@@ -73,45 +72,48 @@ public class RelationHandler {
     }
 
     private void setPublicChat(Chat publicChat) {
-        try {
-            this.publicChat = publicChat;
-            if (this.publicChatVBox.getChildren().size() > 0)
-                this.publicChatVBox.getChildren().subList(0, this.publicChatVBox.getChildren().size()).clear();
+        Platform.runLater(()-> {
+            try {
+                this.publicChat = publicChat;
+                if (this.publicChatVBox.getChildren().size() > 0)
+                    this.publicChatVBox.getChildren().subList(0, this.publicChatVBox.getChildren().size()).clear();
 
-            for (ChatMessage chatMessage : this.publicChat.getMessages())
-                this.publicChatVBox.getChildren().add(this.createMessagePane(chatMessage));
-        }
-        catch (Exception ignored) {
-
-        }
+                for (ChatMessage chatMessage : this.publicChat.getMessages())
+                    this.publicChatVBox.getChildren().add(this.createMessagePane(chatMessage));
+            }
+            catch (Exception ignored) {
+            }
+        });
     }
 
     private void setCurrentRoom(Chat currentRoom) {
-        try {
-            this.currentRoom = currentRoom;
-            if (this.roomVBox.getChildren().size() > 0)
-                this.roomVBox.getChildren().subList(0, this.roomVBox.getChildren().size()).clear();
+        Platform.runLater(() -> {
+            try {
+                this.currentRoom = currentRoom;
+                if (this.roomVBox.getChildren().size() > 0)
+                    this.roomVBox.getChildren().subList(0, this.roomVBox.getChildren().size()).clear();
 
-            for (ChatMessage chatMessage : this.currentRoom.getMessages())
-                this.roomVBox.getChildren().add(this.createMessagePane(chatMessage));
-        }
-        catch (Exception ignored) {
-
-        }
+                for (ChatMessage chatMessage : this.currentRoom.getMessages())
+                    this.roomVBox.getChildren().add(this.createMessagePane(chatMessage));
+            }
+            catch (Exception ignored) {
+            }
+        });
     }
 
     private void setCurrentPrivateChat(Chat privateChat) {
-        try {
-            this.currentPrivateChat = privateChat;
-            if (this.privateChatVBox.getChildren().size() > 0)
-                this.privateChatVBox.getChildren().subList(0, this.privateChatVBox.getChildren().size()).clear();
+        Platform.runLater(() -> {
+            try {
+                this.currentPrivateChat = privateChat;
+                if (this.privateChatVBox.getChildren().size() > 0)
+                    this.privateChatVBox.getChildren().subList(0, this.privateChatVBox.getChildren().size()).clear();
 
-            for (ChatMessage chatMessage : this.currentPrivateChat.getMessages())
-                this.privateChatVBox.getChildren().add(this.createMessagePane(chatMessage));
-        }
-        catch (Exception ignored) {
-
-        }
+                for (ChatMessage chatMessage : this.currentPrivateChat.getMessages())
+                    this.privateChatVBox.getChildren().add(this.createMessagePane(chatMessage));
+            }
+            catch (Exception ignored) {
+            }
+        });
     }
 
     public Lobby getCurrentLobby() {
@@ -124,8 +126,6 @@ public class RelationHandler {
     }
 
     public void handlePublicChat(Chat chat) {
-        System.out.println("PUB");
-        System.out.println(chat);
         this.publicChat = chat;
         User.getCurrentUser().joinChat(chat);
         this.setPublicChat(chat);

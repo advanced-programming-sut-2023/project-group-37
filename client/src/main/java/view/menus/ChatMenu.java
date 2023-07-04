@@ -95,10 +95,12 @@ public class ChatMenu extends Application {
     }
 
     public void sendPrivate() {
+        this.privateChatBox.setText("");
         this.relationHandler.sendMessage(this.privateChatBox.getText(), Chat.ChatType.PRIVATE);
     }
 
     public void sendPublic() {
+        this.publicChatBox.setText("");
         this.relationHandler.sendMessage(this.publicChatBox.getText(), Chat.ChatType.PUBLIC);
     }
 
