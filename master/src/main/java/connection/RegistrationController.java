@@ -11,20 +11,20 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class RegistrationController {
+
     private final DataOutputStream dataOutputStream;
+
     public RegistrationController(Socket socket) throws IOException {
         this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
     }
 
     public User handleLogin(LoginPacket loginPacket) throws IOException {
         User user;
-        if ((user = User.getUserByUsername(loginPacket.getUsername())) != null) {
-            if (!user.isWrongPassword(loginPacket.getPassword()) || !user.isWrongHashedPassword(loginPacket.getPassword()))
+        if ((user = User.getUserByUsername(loginPacket.getUsername())) != null)
+            if (DatabaseController.getInstance().getSessionByUser(user) == null &&
+                    (!user.isWrongPassword(loginPacket.getPassword()) || !user.isWrongHashedPassword
+                            (loginPacket.getPassword())))
                 return user;
-        }
-
-        System.out.println(loginPacket.getUsername());
-        System.out.println(User.getUsers().size());
         return null;
     }
 

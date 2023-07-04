@@ -45,6 +45,13 @@ public class DatabaseController {
         return DatabaseController.DATABASE_CONTROLLER;
     }
 
+    public Session getSessionByUser(User user) {
+        for (Session session : this.currentSessions)
+            if (session.getUser() == user)
+                return session;
+        return null;
+    }
+
     public void addSession(User user, Socket socket) throws IOException {
         DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
         this.currentSessions.add(new Session(user));

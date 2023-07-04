@@ -93,7 +93,8 @@ public class QueryReceiver extends Thread {
                 case LOGIN_PACKET -> this.handleLogin(gson.fromJson(data, LoginPacket.class));
                 case REGISTER_PACKET -> this.handleRegister(gson.fromJson(data, RegisterPacket.class));
                 case TILES_PACKET -> this.handleTiles(gson.fromJson(data, TilesPacket.class));
-                case FRIEND_REQUEST_PACKET -> this.handleFriendRequestPacket(gson.fromJson(data, FriendRequestPacket.class));
+                case FRIEND_REQUEST_PACKET -> this.handleFriendRequestPacket(gson.fromJson(data,
+                        FriendRequestPacket.class));
                 case CHAT_PACKET -> this.handleChatPacket(gson.fromJson(data, ChatPacket.class));
                 case ALIVE_PACKET -> this.setQueryAlive(true);
                 case LOGOUT_PACKET -> this.databaseController.endSession(this.user);
