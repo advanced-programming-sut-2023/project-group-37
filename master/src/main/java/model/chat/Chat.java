@@ -27,6 +27,7 @@ public class Chat {
         this.type = type;
         this.subscribers = new ArrayList<>();
         this.subscribers.addAll(Arrays.asList(subscribers));
+        this.subscribers.add(owner);
         this.messages = new ArrayList<>();
     }
 
@@ -35,6 +36,7 @@ public class Chat {
         this.owner = owner;
         this.type = type;
         this.subscribers = new ArrayList<>();
+        this.subscribers.add(owner);
         this.messages = new ArrayList<>();
     }
 
@@ -60,6 +62,10 @@ public class Chat {
 
     public void addSubscriber(User user) {
         this.subscribers.add(user);
+    }
+
+    public void addMessage(ChatMessage chatMessage) {
+        this.messages.add(chatMessage);
     }
 
     public void removeSubscriber(User user) {

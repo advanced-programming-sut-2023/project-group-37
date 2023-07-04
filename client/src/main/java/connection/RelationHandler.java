@@ -84,21 +84,31 @@ public class RelationHandler {
     }
 
     private void setCurrentRoom(Chat currentRoom) {
-        this.currentRoom = currentRoom;
-        if (this.roomVBox.getChildren().size() > 0)
-            this.roomVBox.getChildren().subList(0, this.roomVBox.getChildren().size()).clear();
+        try {
+            this.currentRoom = currentRoom;
+            if (this.roomVBox.getChildren().size() > 0)
+                this.roomVBox.getChildren().subList(0, this.roomVBox.getChildren().size()).clear();
 
-        for (ChatMessage chatMessage : this.currentRoom.getMessages())
-            this.roomVBox.getChildren().add(this.createMessagePane(chatMessage));
+            for (ChatMessage chatMessage : this.currentRoom.getMessages())
+                this.roomVBox.getChildren().add(this.createMessagePane(chatMessage));
+        }
+        catch (Exception ignored) {
+
+        }
     }
 
     private void setCurrentPrivateChat(Chat privateChat) {
-        this.currentPrivateChat = privateChat;
-        if (this.privateChatVBox.getChildren().size() > 0)
-            this.privateChatVBox.getChildren().subList(0, this.privateChatVBox.getChildren().size()).clear();
+        try {
+            this.currentPrivateChat = privateChat;
+            if (this.privateChatVBox.getChildren().size() > 0)
+                this.privateChatVBox.getChildren().subList(0, this.privateChatVBox.getChildren().size()).clear();
 
-        for (ChatMessage chatMessage : this.currentPrivateChat.getMessages())
-            this.privateChatVBox.getChildren().add(this.createMessagePane(chatMessage));
+            for (ChatMessage chatMessage : this.currentPrivateChat.getMessages())
+                this.privateChatVBox.getChildren().add(this.createMessagePane(chatMessage));
+        }
+        catch (Exception ignored) {
+
+        }
     }
 
     public Lobby getCurrentLobby() {
