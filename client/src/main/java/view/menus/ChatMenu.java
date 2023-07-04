@@ -71,8 +71,6 @@ public class ChatMenu extends Application {
     public void search(MouseEvent mouseEvent) throws IOException {
         Connection.getInstance().getDataOutputStream().writeUTF(new SearchPacket(friendName.getText()).toJson());
 
-
-        setAvatar(foundUser);
     }
 
     public void sendPrivate(MouseEvent mouseEvent) {
