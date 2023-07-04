@@ -23,6 +23,8 @@ public class Connection {
         connection = this;
         if (AppController.stayLoggedInPacket != null)
             this.dataOutputStream.writeUTF(AppController.stayLoggedInPacket.toJson());
+
+        this.setStayLoggedIn(AppController.getInstance().isStayLoggedIn());
     }
 
     public static Connection getInstance() {

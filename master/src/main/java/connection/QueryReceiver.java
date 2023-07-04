@@ -38,9 +38,10 @@ public class QueryReceiver extends Thread {
         this.isDead = false;
     }
 
-    private void handleFriendRequestPacket(FriendRequestPacket packet) {
+    private void handleFriendRequestPacket(FriendRequestPacket friendRequestPacket) {
         try {
-            DatabaseController.getInstance().getUserDataOutputStream(packet.getSender()).writeUTF(packet.toJson());
+            DatabaseController.getInstance().getUserDataOutputStream(
+                    friendRequestPacket.getReceiver()).writeUTF(friendRequestPacket.toJson());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
