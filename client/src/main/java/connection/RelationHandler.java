@@ -70,12 +70,17 @@ public class RelationHandler {
     }
 
     private void setPublicChat(Chat publicChat) {
-        this.publicChat = publicChat;
-        if (this.publicChatVBox.getChildren().size() > 0)
-            this.publicChatVBox.getChildren().subList(0, this.publicChatVBox.getChildren().size()).clear();
+        try {
+            this.publicChat = publicChat;
+            if (this.publicChatVBox.getChildren().size() > 0)
+                this.publicChatVBox.getChildren().subList(0, this.publicChatVBox.getChildren().size()).clear();
 
-        for (ChatMessage chatMessage : this.publicChat.getMessages())
-            this.publicChatVBox.getChildren().add(this.createMessagePane(chatMessage));
+            for (ChatMessage chatMessage : this.publicChat.getMessages())
+                this.publicChatVBox.getChildren().add(this.createMessagePane(chatMessage));
+        }
+        catch (Exception ignored) {
+
+        }
     }
 
     private void setCurrentRoom(Chat currentRoom) {
