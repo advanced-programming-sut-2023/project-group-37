@@ -68,11 +68,16 @@ public class JoinMenu extends Application {
         searchButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/search.jpg", 30)
                 .getImage()));
         getLobbiesFromMaster();
+        relationHandler.showLobbies();
     }
 
     private void getLobbiesFromMaster() {
         relationHandler.sendReqToGetLobbies();
-
+        try {
+            Thread.sleep(100); // make sure the packet has come !
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

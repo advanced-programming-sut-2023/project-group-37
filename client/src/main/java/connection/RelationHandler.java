@@ -40,8 +40,39 @@ public class RelationHandler {
     private Circle avatar;
     private User foundFriend;
     private VBox friendsVBox;
+    private VBox lobbyNames;
+    private VBox lobbyCapacities;
+    private VBox lobbyAdmin;
+    private VBox lobbyOthers;
+
+    public void setLobbyNames(VBox lobbyNames) {
+        this.lobbyNames = lobbyNames;
+    }
+
+    public void setLobbyCapacities(VBox lobbyCapacities) {
+        this.lobbyCapacities = lobbyCapacities;
+    }
+
+    public void setLobbyAdmin(VBox lobbyAdmin) {
+        this.lobbyAdmin = lobbyAdmin;
+    }
+
+    public void setLobbyOthers(VBox lobbyOthers) {
+        this.lobbyOthers = lobbyOthers;
+    }
+
     private final ArrayList<Chat> privateChats;
     private final ArrayList<Chat> rooms;
+
+    public ArrayList<Lobby> getLobbies() {
+        return lobbies;
+    }
+
+    public void setLobbies(ArrayList<Lobby> lobbies) {
+        this.lobbies = lobbies;
+    }
+
+    private ArrayList<Lobby> lobbies;
 
     private RelationHandler() {
         this.privateChats = new ArrayList<>();
@@ -333,5 +364,9 @@ public class RelationHandler {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void showLobbies() {
+
     }
 }
