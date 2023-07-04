@@ -12,6 +12,7 @@ public class Master {
             while (true) {
                 Socket socket = serverSocket.accept();
                 new QueryReceiver(socket).start();
+                new SessionCloser();
             }
         } catch (IOException e) {
             // todo: try to reconnect?

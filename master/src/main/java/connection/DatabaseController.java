@@ -45,6 +45,10 @@ public class DatabaseController {
         return DatabaseController.DATABASE_CONTROLLER;
     }
 
+    public ArrayList<Session> getCurrentSessions() {
+        return this.currentSessions;
+    }
+
     public Session getSessionByUser(User user) {
         for (Session session : this.currentSessions)
             if (session.getUser() == user)

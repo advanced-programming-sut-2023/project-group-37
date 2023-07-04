@@ -27,7 +27,6 @@ public class AliveListener extends Thread {
         while (true) {
             for (QueryReceiver queryReceiver : this.queryReceivers)
                 queryReceiver.setQueryAlive(false);
-
             try {
                 sleep(40000);
             } catch (InterruptedException e) {
