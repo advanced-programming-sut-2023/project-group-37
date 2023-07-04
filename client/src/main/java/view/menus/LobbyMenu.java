@@ -61,6 +61,7 @@ public class LobbyMenu extends Application {
     }
 
     public void leaveLobby(MouseEvent mouseEvent) {
+        System.out.println("leave");
     }
 
     public void send(MouseEvent mouseEvent) {
