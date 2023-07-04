@@ -41,7 +41,7 @@ public class User implements Serializable {
     }
     public User(RegisterPacket registerPacket) {
         this.username = registerPacket.getUsername();
-        this.hashedPassword = registerPacket.getPassword();
+        this.hashedPassword = PasswordHashing.encode(registerPacket.getPassword());
         this.nickname = registerPacket.getNickname();
         this.slogan = registerPacket.getSlogan();
         this.email = registerPacket.getEmail();
@@ -58,7 +58,7 @@ public class User implements Serializable {
     public User(String username, String password, String nickname, String email, String recoveryQuestion,
                 String recoveryAnswer, String slogan) {
         this.username = username;
-        this.hashedPassword = password;
+        this.hashedPassword = PasswordHashing.encode(password);
         this.nickname = nickname;
         this.slogan = slogan;
         this.email = email;
