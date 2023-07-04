@@ -19,7 +19,7 @@ import java.util.HashMap;
 public class DatabaseController {
 
     private static final DatabaseController DATABASE_CONTROLLER;
-    private final ArrayList<User> connectedUsers;
+    private final ArrayList<Session> currentSessions;
     private final HashMap<User, DataInputStream> dataInputStreams;
     private final HashMap<User, DataOutputStream> dataOutputStreams;
     private final ArrayList<Chat> rooms;
@@ -32,7 +32,7 @@ public class DatabaseController {
     }
 
     private DatabaseController() {
-        this.connectedUsers = new ArrayList<>();
+        this.currentSessions = new ArrayList<>();
         this.rooms = new ArrayList<>();
         this.lobbies = new ArrayList<>();
         this.publicChat = PublicChat.getInstance();
@@ -45,9 +45,9 @@ public class DatabaseController {
         return DatabaseController.DATABASE_CONTROLLER;
     }
 
-    public void addConnectedUser(User user, Socket socket) throws IOException {
+    public void addSession(User user, Socket socket) throws IOException {
         DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-        this.connectedUsers.add(user);
+        this.currentSessions.add(new Session(user));
         this.dataOutputStreams.put(user, dataOutputStream);
         this.dataInputStreams.put(user, new DataInputStream(socket.getInputStream()));
         dataOutputStream.writeUTF(new UserPacket(user).toJson());
@@ -71,18 +71,18 @@ public class DatabaseController {
     }
 
     public void updateEveryOneTilesExcept(ArrayList<Tile> modifiedTiles, User user) throws IOException {
-        for (User connectedUser : this.connectedUsers) {
-            if (connectedUser != user)
+        for (Session session : this.currentSessions)
+            if (session.getUser() != user)
                 this.dataOutputStreams.get(user).writeUTF(this.gson.toJson(new TilesPacket(modifiedTiles)));
-        }
     }
 
-    public void disconnectUser(User user) {
-        if (connectedUsers.contains(user)) {
-            connectedUsers.remove(user);
-            dataInputStreams.remove(user);
-            dataOutputStreams.remove(user);
-        }
+    public void endSession(User user) {
+        for (Session session : currentSessions)
+            if (session.getUser().equals(user)) {
+                currentSessions.remove(session);
+                dataInputStreams.remove(user);
+                dataOutputStreams.remove(user);
+            }
     }
 
     public Chat getRoomById(int id) {

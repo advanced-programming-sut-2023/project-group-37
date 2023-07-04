@@ -46,11 +46,9 @@ public class Tile extends Rectangle {
         this.y = y;
         this.setLayoutX(this.x * tileSize);
         this.setLayoutY(this.y * tileSize);
-
         this.texture = Texture.GROUND;
         this.setImage(this.texture.getImage());
         this.miniTile = new Tile(this);
-
         this.people = new ArrayList<>();
         this.militaryUnits = new ArrayList<>();
         this.building = null;

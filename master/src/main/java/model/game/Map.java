@@ -1,7 +1,11 @@
 package model.game;
 
+import com.google.gson.Gson;
 import controller.MultiMenuFunctions;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -56,8 +60,26 @@ public class Map {
     }
 
     public static void loadMaps() {
+        System.out.println("mofo");
         maps.add(GenerateMap.createMap1());
         maps.add(GenerateMap.createMap2());
+        maps.add(GenerateMap.createMap3());
+        Gson gson = new Gson();
+        String filePath = "./master/src/main/resources/Database/sampleMaps.json";
+        try {
+            FileWriter fileWriter = new FileWriter(filePath);
+            fileWriter.write("Hello");
+            fileWriter.close();
+            System.out.println("closed");
+        } catch (IOException ignored) {
+            System.out.println("ERRORED");
+            File file = new File(filePath);
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public String getName() {

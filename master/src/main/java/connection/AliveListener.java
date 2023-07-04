@@ -37,7 +37,7 @@ public class AliveListener extends Thread {
             for (QueryReceiver queryReceiver : this.queryReceivers) {
                 if (!queryReceiver.isQueryAlive()) {
                     queryReceiver.setIsDead(true);
-                    databaseController.disconnectUser(queryReceiver.getUser());
+                    databaseController.endSession(queryReceiver.getUser());
                 }
             }
         }

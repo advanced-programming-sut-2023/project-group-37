@@ -335,7 +335,7 @@ public class User implements Serializable {
         String filePath = "./master/src/main/resources/Database/userDatabase.json";
         try {
             FileWriter fileWriter = new FileWriter(filePath);
-            fileWriter.write(gson.toJson(users));
+            fileWriter.write("Salam");
             fileWriter.close();
         } catch (IOException ignored) {
             System.out.println("ERRORED");
