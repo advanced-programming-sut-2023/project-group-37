@@ -56,12 +56,12 @@ public class RelationHandler {
         messagePane.setPrefWidth(400);
         Label contentLabel = new Label(chatMessage.getMessage());
         Label timeLabel = new Label(chatMessage.getFormattedTimeSent());
-        timeLabel.setLayoutX(200);
-        timeLabel.setLayoutY(25);
-        contentLabel.setLayoutY(5);
+        timeLabel.setLayoutX(300);
+        timeLabel.setLayoutY(40);
+        contentLabel.setLayoutY(10);
         if (User.getCurrentUser().getUsername().equals(chatMessage.getSenderUsername())) {
             contentLabel.setBackground(Background.fill(Color.BLUE));
-            contentLabel.setLayoutX(100);
+            contentLabel.setLayoutX(300);
         } else {
             contentLabel.setBackground(Background.fill(Color.GREEN));
             contentLabel.setLayoutX(5);
@@ -207,12 +207,13 @@ public class RelationHandler {
         Label contentLabel = new Label(content);
         contentLabel.setBackground(Background.fill(Color.LIGHTBLUE));
         contentLabel.setStyle("-fx-font-size: 30");
-        contentLabel.setLayoutX(400 - contentLabel.getPrefWidth());
-        contentLabel.setLayoutY(10);
+        contentLabel.setLayoutX(300);
+        contentLabel.setLayoutY(30);
 
         Label timeLabel = new Label(chatMessage.getFormattedTimeSent());
         timeLabel.setLayoutX(200);
-        timeLabel.setLayoutY(25);
+        timeLabel.setLayoutY(45);
+        timeLabel.setStyle("-fx-font-size: 15");
 
         messagePane.getChildren().add(contentLabel);
         messagePane.getChildren().add(timeLabel);
