@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -44,6 +45,12 @@ public class RelationHandler {
     private VBox lobbyAdmin;
     private VBox lobbyOthers;
 
+    private final ArrayList<Chat> privateChats;
+    private final ArrayList<Chat> rooms;
+    private VBox usernames;
+    private VBox territories;
+    private Label capacity;
+
     public void setLobbyNames(VBox lobbyNames) {
         this.lobbyNames = lobbyNames;
     }
@@ -60,11 +67,6 @@ public class RelationHandler {
         this.lobbyOthers = lobbyOthers;
     }
 
-    private final ArrayList<Chat> privateChats;
-    private final ArrayList<Chat> rooms;
-    private VBox usernames;
-    private VBox territories;
-    private Label capacity;
 
     public ArrayList<Lobby> getLobbies() {
         return lobbies;
@@ -102,7 +104,83 @@ public class RelationHandler {
         this.territories = territories;
     }
 
-    private Pane createMessagePane(ChatMessage chatMessage) {
+    private void addActionToMessagePane(Pane messagePane, ChatMessage chatMessage, Chat.ChatType chatType) {
+        if (chatMessage.getSenderUsername().equals(User.getCurrentUser().getUsername())) {
+            messagePane.setOnMouseClicked((MouseEvent mouseEvent) -> {
+                Stage stage = new Stage();
+                Button delete = new Button("Delete");
+                delete.setBackground(Background.fill(Color.RED));
+                delete.setLayoutY(10);
+                delete.setLayoutX(10);
+
+                delete.setOnMouseClicked((MouseEvent mouseEvent2) -> Platform.runLater(() -> {
+                    switch (chatType) {
+                        case ROOM -> {
+                            this.roomVBox.getChildren().remove(messagePane);
+                            this.currentRoom.deleteMessage(chatMessage);
+                            this.sendChatPacket(new ChatPacket(this.currentRoom));
+                        }
+
+                        case PRIVATE -> {
+                            this.privateChatVBox.getChildren().remove(messagePane);
+                            this.currentPrivateChat.deleteMessage(chatMessage);
+                            this.sendChatPacket(new ChatPacket(this.currentPrivateChat));
+                        }
+
+                        case PUBLIC -> {
+                            this.publicChatVBox.getChildren().remove(messagePane);
+                            this.publicChat.deleteMessage(chatMessage);
+                            this.sendChatPacket(new ChatPacket(this.publicChat));
+                        }
+                    }
+                    stage.close();
+                }));
+
+                Button edit = new Button("Edit");
+                edit.setBackground(Background.fill(Color.GOLDENROD));
+                edit.setLayoutY(10);
+                edit.setLayoutX(100);
+
+                edit.setOnMouseClicked((MouseEvent mouseEvent3) -> Platform.runLater(() -> {
+                    Stage editStage = new Stage();
+                    TextField editField = new TextField();
+                    editField.setLayoutY(10);
+                    editField.setLayoutX(50);
+                    Button ok = new Button("OK");
+                    ok.setBackground(Background.fill(Color.GREEN));
+                    ok.setLayoutX(10);
+                    ok.setLayoutY(10);
+
+                    ok.setOnMouseClicked((MouseEvent mouseEvent4) -> {
+                        chatMessage.setMessage(editField.getText());
+                        switch (chatType) {
+                            case ROOM -> this.sendChatPacket(new ChatPacket(this.currentRoom));
+
+                            case PRIVATE -> this.sendChatPacket(new ChatPacket(this.currentPrivateChat));
+
+                            case PUBLIC -> this.sendChatPacket(new ChatPacket(this.publicChat));
+                        }
+                        editStage.close();
+                    });
+
+                    AnchorPane editPane = new AnchorPane(editField, ok);
+                    editPane.setPrefWidth(400);
+                    editPane.setPrefHeight(100);
+                    editStage.setScene(new Scene(editPane));
+                    editStage.show();
+                    stage.close();
+                }));
+
+                AnchorPane anchorPane = new AnchorPane(edit, delete);
+                anchorPane.setPrefHeight(50);
+                anchorPane.setPrefWidth(200);
+                stage.setScene(new Scene(anchorPane));
+                stage.show();
+            });
+        }
+    }
+
+    private Pane createMessagePane(ChatMessage chatMessage, Chat.ChatType chatType) {
         Pane messagePane = new Pane();
         messagePane.setPrefHeight(30);
         messagePane.setPrefWidth(400);
@@ -124,6 +202,8 @@ public class RelationHandler {
         timeLabel.setStyle("-fx-font-size: 10");
         messagePane.getChildren().add(contentLabel);
         messagePane.getChildren().add(timeLabel);
+
+        this.addActionToMessagePane(messagePane, chatMessage, chatType);
 
         return messagePane;
     }
@@ -156,7 +236,7 @@ public class RelationHandler {
                     this.publicChatVBox.getChildren().subList(0, this.publicChatVBox.getChildren().size()).clear();
 
                 for (ChatMessage chatMessage : this.publicChat.getMessages())
-                    this.publicChatVBox.getChildren().add(this.createMessagePane(chatMessage));
+                    this.publicChatVBox.getChildren().add(this.createMessagePane(chatMessage, Chat.ChatType.PUBLIC));
             } catch (Exception ignored) {
             }
         });
@@ -170,7 +250,7 @@ public class RelationHandler {
                     this.roomVBox.getChildren().subList(0, this.roomVBox.getChildren().size()).clear();
 
                 for (ChatMessage chatMessage : this.currentRoom.getMessages())
-                    this.roomVBox.getChildren().add(this.createMessagePane(chatMessage));
+                    this.roomVBox.getChildren().add(this.createMessagePane(chatMessage, Chat.ChatType.ROOM));
             } catch (Exception ignored) {
             }
         });
@@ -204,7 +284,7 @@ public class RelationHandler {
                     this.privateChatVBox.getChildren().subList(0, this.privateChatVBox.getChildren().size()).clear();
 
                 for (ChatMessage chatMessage : this.currentPrivateChat.getMessages())
-                    this.privateChatVBox.getChildren().add(this.createMessagePane(chatMessage));
+                    this.privateChatVBox.getChildren().add(this.createMessagePane(chatMessage, Chat.ChatType.PRIVATE));
             } catch (Exception ignored) {
             }
         });
@@ -309,6 +389,7 @@ public class RelationHandler {
 
         messagePane.getChildren().add(contentLabel);
         messagePane.getChildren().add(timeLabel);
+        this.addActionToMessagePane(messagePane, chatMessage, chatType);
 
         switch (chatType) {
             case ROOM -> {
