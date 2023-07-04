@@ -23,8 +23,7 @@ public class SessionCloser extends Thread {
                 databaseController.getCurrentSessions().remove(i);
             }
 
-        for (Session session : databaseController.getCurrentSessions())
-            if (session.getExpirationTime().compareTo(LocalDateTime.now()) <= 0)
-                databaseController.getCurrentSessions().remove(session);
+        databaseController.getCurrentSessions().removeIf(session -> session.getExpirationTime()
+                .compareTo(LocalDateTime.now()) <= 0);
     }
 }

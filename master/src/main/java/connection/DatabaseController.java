@@ -63,7 +63,6 @@ public class DatabaseController {
         this.dataOutputStreams.put(user, dataOutputStream);
         this.dataInputStreams.put(user, new DataInputStream(socket.getInputStream()));
         dataOutputStream.writeUTF(new UserPacket(user).toJson());
-
     }
 
     public void addRoom(Chat room) {
