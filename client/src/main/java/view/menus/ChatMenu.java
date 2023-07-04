@@ -65,7 +65,7 @@ public class ChatMenu extends Application {
         URL url = LoginMenu.class.getResource("/FXML/chatMenu.fxml");
         AnchorPane anchorPane = FXMLLoader.load(Objects.requireNonNull(url));
 
-        MultiMenuFunctions.setBackground(anchorPane, "main-menu-background.jpg");
+        MultiMenuFunctions.setBackground(anchorPane, "registration-bg.jpg");
 
         Scene scene = new Scene(anchorPane);
         stage.setScene(scene);
