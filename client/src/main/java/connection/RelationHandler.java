@@ -404,4 +404,14 @@ public class RelationHandler {
         System.out.println(others); //test
         return others;
     }
+
+    public void getLobbiesFromMaster() {
+        sendReqToGetLobbies();
+        try {
+            Thread.sleep(100); // make sure the packet has come !
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
