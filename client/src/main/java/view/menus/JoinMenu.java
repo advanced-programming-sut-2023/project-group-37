@@ -16,6 +16,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.chat.Lobby;
+import model.user.User;
 import view.enums.PopUp;
 
 import java.net.URL;
@@ -31,7 +32,7 @@ public class JoinMenu extends Application {
     @FXML
     private Rectangle searchButton;
     @FXML
-    private Label searchedLobby;
+    private Label wantedLobby;
     @FXML
     private AnchorPane showLobbyPane;
     @FXML
@@ -42,11 +43,15 @@ public class JoinMenu extends Application {
     private VBox admins;
     @FXML
     private VBox others;
+    private boolean hasSearched;
+    private Lobby searchedLobby;
 
     public JoinMenu() {
         this.appController = AppController.getInstance();
         lobbies = new ArrayList<>();
         relationHandler = RelationHandler.getInstance();
+        hasSearched = false;
+        searchedLobby = null;
     }
 
     @Override
@@ -85,14 +90,27 @@ public class JoinMenu extends Application {
         }
         relationHandler.clearVBoxes();
         relationHandler.addLobbyToPane(searchedLobby);
-
+        hasSearched = true;
     }
 
     public void join(MouseEvent mouseEvent) {
+        if (!hasSearched || searchedLobby == null) {
+            PopUp.SEARCH_LOBBY.show();
+            return;
+        }
+        searchedLobby.addMember(User.getCurrentUser());
+        //nothing to do after joining a lobby ??
+    }
 
+    public void refresh(MouseEvent mouseEvent) {
+        relationHandler.showLobbies();
+        hasSearched = false;
+        searchedLobby = null;
     }
 
     public void startGame(MouseEvent mouseEvent) {
         //TODO : start online game
     }
+
+
 }

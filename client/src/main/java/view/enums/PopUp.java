@@ -27,7 +27,8 @@ public enum PopUp {
     TRADE_SUCCESS("The trade was successfully completed!"),
     LOGIN_SUCCESSFUL("LoggedIn successfully!", true),
     EMPTY_FIELD("Please enter something!"),
-    LOBBY_NOT_FOUND("No lobby with this Id!");
+    LOBBY_NOT_FOUND("No lobby with this Id!"),
+    SEARCH_LOBBY("PLease search a lobby first!");
     private final Alert alert;
 
     PopUp(String message) {
