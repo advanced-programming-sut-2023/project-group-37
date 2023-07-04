@@ -11,7 +11,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -75,6 +77,9 @@ public class ChatMenu extends Application {
         searchButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/search.jpg", 30).getImage()));
         sendButtonPrivate.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/send.png", 30).getImage()));
         sendButtonPublic.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/send.png", 30).getImage()));
+        friendsVBox.setBackground(Background.fill(Color.WHITE));
+        publicChatVBox.setBackground(Background.fill(Color.WHITE));
+        privateChatVBox.setBackground(Background.fill(Color.WHITE));
 
         this.relationHandler.setPublicChatVBox(publicChatVBox);
         this.relationHandler.setPrivateChatVBox(privateChatVBox);
