@@ -115,6 +115,10 @@ public class DatabaseController {
         return null;
     }
 
+    public ArrayList<Lobby> getLobbies() {
+        return lobbies;
+    }
+
     public Lobby getLobbyById(int id) {
         for (Lobby lobby : this.lobbies) {
             if (lobby.getId() == id)

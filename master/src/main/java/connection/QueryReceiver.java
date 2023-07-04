@@ -2,6 +2,7 @@ package connection;
 
 import com.google.gson.Gson;
 import connection.packet.*;
+import connection.packet.game.LobbiesPacket;
 import connection.packet.game.TilesPacket;
 import connection.packet.registration.LoginPacket;
 import connection.packet.registration.RegisterPacket;
@@ -99,7 +100,16 @@ public class QueryReceiver extends Thread {
                 case REQ_UPDATE_CHAT -> this.updateChat(gson.fromJson(data, RequestChatPacket.class));
                 case ACCEPT_PACKET -> this.acceptReq(gson.fromJson(data, AcceptRequest.class));
                 case USER_PACKET -> this.updateTheUser(gson.fromJson(data, UserPacket.class));
+                case LOBBIES_PACKET -> this.sendLobbies(gson.fromJson(data, LobbiesPacket.class));
             }
+        }
+    }
+
+    private void sendLobbies(LobbiesPacket lobbiesPacket) {
+        try {
+            this.dataOutputStream.writeUTF(new LobbiesPacket(databaseController.getLobbies()).toJson());
+        } catch (IOException e) {
+            System.out.println("Couldn't send lobbies to client");
         }
     }
 
