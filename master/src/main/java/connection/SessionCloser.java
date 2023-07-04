@@ -15,7 +15,7 @@ public class SessionCloser extends Thread {
         for (int i = databaseController.getCurrentSessions().size() - 1; i >= 0; i--)
             if (currentSessions.get(i).getExpirationTime().compareTo(LocalDateTime.now()) <= 0) {
                 try {
-                    databaseController.getUserDataOutputStream(currentSessions.get(i).getUser())
+                    databaseController.getUserDataOutputStream(currentSessions.get(i).getUser().getUsername())
                             .writeUTF(new LogoutPacket().toJson());
                 } catch (IOException e) {
                     throw new RuntimeException(e);

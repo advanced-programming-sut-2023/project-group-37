@@ -107,6 +107,8 @@ public class AppController {
                         throw new RuntimeException(e);
                     }
                 }
+
+                case USER_NOT_EXISTS -> new Alert(Alert.AlertType.ERROR, popUpPacket.getMessage().toString()).show();
             }
         });
     }
