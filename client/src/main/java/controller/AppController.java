@@ -113,8 +113,8 @@ public class AppController {
                     }
                 }
 
-                case USER_NOT_EXISTS, USERNAME_ALREADY_EXISTS, USER_IS_LOGIN -> new Alert(Alert.AlertType.ERROR, popUpPacket.getMessage().toString()).show();
-
+                case USER_NOT_EXISTS, CANT_LOGIN, USERNAME_ALREADY_EXISTS, USER_IS_LOGIN ->
+                        new Alert(Alert.AlertType.ERROR, popUpPacket.getMessage().toString()).show();
             }
         });
     }
