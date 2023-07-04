@@ -12,5 +12,5 @@ public enum PacketType {
     CHAT_PACKET,
     POPUP_PACKET,
     TILES_PACKET,
-
+    TRADE_REQUEST_PACKET
 }
