@@ -1,5 +1,7 @@
 package view.menus;
 
+import connection.Connection;
+import connection.packet.relation.SearchPacket;
 import controller.AppController;
 import controller.MultiMenuFunctions;
 import javafx.application.Application;
@@ -16,6 +18,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.user.User;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 
@@ -65,8 +68,9 @@ public class ChatMenu extends Application {
     public void addFriend(MouseEvent mouseEvent) {
     }
 
-    public void search(MouseEvent mouseEvent) {
-        User foundUser = null;
+    public void search(MouseEvent mouseEvent) throws IOException {
+        Connection.getInstance().getDataOutputStream().writeUTF(new SearchPacket(friendName.getText()).toJson());
+
 
         setAvatar(foundUser);
     }
