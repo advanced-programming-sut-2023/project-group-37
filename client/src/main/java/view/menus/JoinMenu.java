@@ -1,8 +1,6 @@
 package view.menus;
 
-import connection.Connection;
 import connection.RelationHandler;
-import connection.packet.game.LobbiesPacket;
 import controller.AppController;
 import controller.MultiMenuFunctions;
 import javafx.application.Application;
@@ -18,8 +16,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.chat.Lobby;
+import view.enums.PopUp;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -76,6 +74,17 @@ public class JoinMenu extends Application {
     }
 
     public void search(MouseEvent mouseEvent) {
+        if (searchBox.getText().isEmpty()) {
+            PopUp.EMPTY_FIELD.show();
+            return;
+        }
+        Lobby searchedLobby = relationHandler.searchLobby(searchBox.getText());
+        if (searchedLobby == null) {
+            PopUp.LOBBY_NOT_FOUND.show();
+            return;
+        }
+        relationHandler.clearVBoxes();
+        relationHandler.addLobbyToPane(searchedLobby);
 
     }
 

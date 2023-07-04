@@ -25,7 +25,9 @@ public enum PopUp {
     INVALID_ID("Invalid id!"),
     TRADE_FAILED("This trade can't be done!"),
     TRADE_SUCCESS("The trade was successfully completed!"),
-    LOGIN_SUCCESSFUL("LoggedIn successfully!", true);
+    LOGIN_SUCCESSFUL("LoggedIn successfully!", true),
+    EMPTY_FIELD("Please enter something!"),
+    LOBBY_NOT_FOUND("No lobby with this Id!");
     private final Alert alert;
 
     PopUp(String message) {

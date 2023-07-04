@@ -367,11 +367,11 @@ public class RelationHandler {
 
     public void showLobbies() {
         for (Lobby lobby : lobbies) {
-            addLobbyToPain(lobby);
+            addLobbyToPane(lobby);
         }
     }
 
-    private void addLobbyToPain(Lobby lobby) {
+    public void addLobbyToPane(Lobby lobby) {
         Label name = new Label("" + lobby.getId());
         name.setStyle("-fx-font-size: 10");
         lobbyNames.getChildren().add(name);
@@ -414,4 +414,19 @@ public class RelationHandler {
         }
     }
 
+    public Lobby searchLobby(String lobbyId) {
+        for (Lobby lobby : lobbies) {
+            if (lobbyId.equals("" + lobby.getId())) {
+                return lobby;
+            }
+        }
+        return null;
+    }
+
+    public void clearVBoxes() {
+        lobbyNames.getChildren().clear();
+        lobbyCapacities.getChildren().clear();
+        lobbyAdmin.getChildren().clear();
+        lobbyOthers.getChildren().clear();
+    }
 }
