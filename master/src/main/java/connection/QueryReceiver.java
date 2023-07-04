@@ -117,6 +117,7 @@ public class QueryReceiver extends Thread {
     }
 
     private synchronized void updateChat(RequestChatPacket requestChatPacket) {
+        System.out.println("REQ");
         switch (requestChatPacket.getChat().getType()) {
             case PUBLIC -> sendPublic();
             case PRIVATE -> sendPrivate();

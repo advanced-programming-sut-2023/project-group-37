@@ -51,10 +51,6 @@ public class ChatMenu extends Application {
         this.appController = AppController.getInstance();
         this.relationHandler = RelationHandler.getInstance();
 
-        this.relationHandler.setPublicChatVBox(publicChatVBox);
-        this.relationHandler.setPrivateChatVBox(privateChatVBox);
-        this.relationHandler.setAvatar(avatar);
-
         try {
             Connection.getInstance().getDataOutputStream().writeUTF(new RequestChatPacket(relationHandler.getPublicChat()).toJson());
         } catch (IOException e) {
@@ -79,6 +75,10 @@ public class ChatMenu extends Application {
         searchButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/search.jpg", 30).getImage()));
         sendButtonPrivate.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/send.png", 30).getImage()));
         sendButtonPublic.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/send.png", 30).getImage()));
+
+        this.relationHandler.setPublicChatVBox(publicChatVBox);
+        this.relationHandler.setPrivateChatVBox(privateChatVBox);
+        this.relationHandler.setAvatar(avatar);
     }
 
     public void addFriend() { // TODO send reqChatPacket

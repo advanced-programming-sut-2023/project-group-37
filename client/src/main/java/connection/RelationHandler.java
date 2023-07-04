@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import model.chat.Chat;
 import model.chat.ChatMessage;
 import model.chat.Lobby;
+import model.chat.PublicChat;
 import model.user.User;
 
 import java.io.IOException;
@@ -42,6 +43,7 @@ public class RelationHandler {
     private RelationHandler() {
         this.privateChats = new ArrayList<>();
         this.rooms = new ArrayList<>();
+        this.publicChat = new PublicChat();
     }
 
     public static RelationHandler getInstance() {
@@ -51,15 +53,15 @@ public class RelationHandler {
     private Pane createMessagePane(ChatMessage chatMessage) {
         Pane messagePane = new Pane();
         messagePane.setPrefHeight(30);
-        messagePane.setPrefWidth(200);
+        messagePane.setPrefWidth(400);
         Label contentLabel = new Label(chatMessage.getMessage());
         Label timeLabel = new Label(chatMessage.getFormattedTimeSent());
-        timeLabel.setLayoutX(100);
+        timeLabel.setLayoutX(200);
         timeLabel.setLayoutY(25);
         contentLabel.setLayoutY(5);
         if (User.getCurrentUser().getUsername().equals(chatMessage.getSenderUsername())) {
             contentLabel.setBackground(Background.fill(Color.BLUE));
-            contentLabel.setLayoutX(70);
+            contentLabel.setLayoutX(100);
         } else {
             contentLabel.setBackground(Background.fill(Color.GREEN));
             contentLabel.setLayoutX(5);
@@ -122,6 +124,8 @@ public class RelationHandler {
     }
 
     public void handlePublicChat(Chat chat) {
+        System.out.println("PUB");
+        System.out.println(chat);
         this.publicChat = chat;
         User.getCurrentUser().joinChat(chat);
         this.setPublicChat(chat);
@@ -201,15 +205,15 @@ public class RelationHandler {
     public void sendMessage(String content, Chat.ChatType chatType) {
         ChatMessage chatMessage = new ChatMessage(User.getCurrentUser(), content);
         Pane messagePane = new Pane();
-        messagePane.setPrefWidth(200);
+        messagePane.setPrefWidth(400);
         messagePane.setPrefHeight(30);
         Label contentLabel = new Label(content);
         contentLabel.setBackground(Background.fill(Color.BLUE));
-        contentLabel.setLayoutX(70);
+        contentLabel.setLayoutX(100);
         contentLabel.setLayoutY(5);
 
         Label timeLabel = new Label(chatMessage.getFormattedTimeSent());
-        timeLabel.setLayoutX(100);
+        timeLabel.setLayoutX(200);
         timeLabel.setLayoutY(25);
 
         messagePane.getChildren().add(contentLabel);
