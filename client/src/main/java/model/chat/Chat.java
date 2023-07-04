@@ -62,6 +62,10 @@ public class Chat {
         this.subscribers.add(user);
     }
 
+    public void addMessage(ChatMessage chatMessage) {
+        this.messages.add(chatMessage);
+    }
+
     public void removeSubscriber(User user) {
         this.subscribers.remove(user);
     }
