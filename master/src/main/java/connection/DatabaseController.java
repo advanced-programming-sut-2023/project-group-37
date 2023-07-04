@@ -6,7 +6,6 @@ import connection.packet.registration.UserPacket;
 import connection.packet.relation.ChatPacket;
 import model.chat.Chat;
 import model.chat.Lobby;
-import model.chat.PublicChat;
 import model.game.Tile;
 import model.user.User;
 
@@ -24,7 +23,7 @@ public class DatabaseController {
     private final HashMap<User, DataOutputStream> dataOutputStreams;
     private final ArrayList<Chat> rooms;
     private final ArrayList<Lobby> lobbies;
-    private PublicChat publicChat;
+    private Chat publicChat;
     private final Gson gson;
 
     static {
@@ -35,7 +34,7 @@ public class DatabaseController {
         this.currentSessions = new ArrayList<>();
         this.rooms = new ArrayList<>();
         this.lobbies = new ArrayList<>();
-        this.publicChat = PublicChat.getInstance();
+        this.publicChat = new Chat(null, Chat.ChatType.PUBLIC);
         this.dataInputStreams = new HashMap<>();
         this.dataOutputStreams = new HashMap<>();
         this.gson = new Gson();
@@ -104,7 +103,7 @@ public class DatabaseController {
             }
     }
 
-    public PublicChat getPublicChat() {
+    public Chat getPublicChat() {
         return publicChat;
     }
 
@@ -136,7 +135,7 @@ public class DatabaseController {
             lobby.addMember(user);
     }
 
-    public void updatePublicChat(PublicChat publicChat) {
+    public void updatePublicChat(Chat publicChat) {
         this.publicChat = publicChat;
         for (Session session : this.currentSessions) {
             try {

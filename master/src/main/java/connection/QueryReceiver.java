@@ -8,7 +8,6 @@ import connection.packet.registration.RegisterPacket;
 import connection.packet.relation.*;
 import model.chat.Chat;
 import model.chat.Lobby;
-import model.chat.PublicChat;
 import model.user.User;
 import view.enums.Message;
 
@@ -48,7 +47,7 @@ public class QueryReceiver extends Thread {
 
     private synchronized void handleChatPacket(ChatPacket chatPacket) {
         if (chatPacket.getChat().getType() == Chat.ChatType.PUBLIC) {
-            databaseController.updatePublicChat((PublicChat) chatPacket.getChat());
+            databaseController.updatePublicChat(chatPacket.getChat());
             return;
         }
 

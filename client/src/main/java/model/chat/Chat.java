@@ -36,7 +36,8 @@ public class Chat {
         this.owner = owner;
         this.type = type;
         this.subscribers = new ArrayList<>();
-        this.subscribers.add(owner);
+        if (owner != null)
+            this.subscribers.add(owner);
         this.messages = new ArrayList<>();
     }
 
