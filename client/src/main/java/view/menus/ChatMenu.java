@@ -77,7 +77,7 @@ public class ChatMenu extends Application {
         searchButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/search.jpg", 30).getImage()));
         sendButtonPrivate.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/send.png", 30).getImage()));
         sendButtonPublic.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/send.png", 30).getImage()));
-        friendsVBox.setBackground(Background.fill(Color.WHITE));
+        friendsVBox.setBackground(Background.fill(Color.LIGHTBLUE));
         publicChatVBox.setBackground(Background.fill(Color.WHITE));
         privateChatVBox.setBackground(Background.fill(Color.WHITE));
 
