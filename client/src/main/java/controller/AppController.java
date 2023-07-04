@@ -1,13 +1,11 @@
 package controller;
 
-import connection.Connection;
-import connection.packet.registration.LoginPacket;
 import connection.packet.PopUpPacket;
+import connection.packet.registration.LoginPacket;
 import connection.packet.relation.LobbyPacket;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-import model.chat.Lobby;
 import model.user.User;
 import view.enums.Result;
 import view.menus.*;
@@ -26,6 +24,7 @@ public class AppController {
     private final ChangeMenu changeMenu;
     private final ChangePasswordMenu changePasswordMenu;
     private final AvatarMenu avatarMenu;
+    private boolean isStayLoggedIn;
 
     public AppController(Stage stage) {
         this.stage = stage;
@@ -56,13 +55,17 @@ public class AppController {
         if (loggedInUser != null) {
             stayLoggedInPacket = new LoginPacket(
                     loggedInUser.getUsername(), loggedInUser.getHashedPassword());
-            Connection.getInstance().setStayLoggedIn(true);
+            this.isStayLoggedIn = true;
             return;
         }
+        this.isStayLoggedIn = false;
         stayLoggedInPacket = null;
         this.loginMenu.start(this.stage);
     }
 
+    public boolean isStayLoggedIn() {
+        return this.isStayLoggedIn;
+    }
     public void runMenu(Result result) throws Exception {
 
         switch (result) {

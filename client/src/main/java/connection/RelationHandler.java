@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.chat.Chat;
@@ -15,6 +16,7 @@ import model.chat.Lobby;
 import model.user.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RelationHandler {
     private final static RelationHandler instance = new RelationHandler();
@@ -22,10 +24,12 @@ public class RelationHandler {
     private Chat publicChat;
     private final ArrayList<Chat> privateChats;
     private final ArrayList<Chat> rooms;
+    private final HashMap<Chat, VBox> chatVBox;
 
     private RelationHandler() {
         this.privateChats = new ArrayList<>();
         this.rooms = new ArrayList<>();
+        this.chatVBox = new HashMap<>();
     }
 
     public static RelationHandler getInstance() {
