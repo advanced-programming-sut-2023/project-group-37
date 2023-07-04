@@ -106,7 +106,15 @@ public class QueryReceiver extends Thread {
     }
 
     private void updateTheUser(UserPacket userPacket) {
-        // todo
+        for (Session currentSession : databaseController.getCurrentSessions()) {
+            if (currentSession.getUser().getUsername().equals(userPacket.getUser().getUsername())) {
+                currentSession.setUser(userPacket.getUser());
+            }
+        }
+        User user = User.getUserByUsername(userPacket.getUser().getUsername());
+        User.getUsers().remove(user);
+        User.getUsers().add(userPacket.getUser());
+        User.updateDatabase();
     }
 
     private void acceptReq(AcceptRequest acceptRequest) {
