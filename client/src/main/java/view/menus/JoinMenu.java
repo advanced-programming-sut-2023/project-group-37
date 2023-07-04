@@ -65,6 +65,10 @@ public class JoinMenu extends Application {
 
     @FXML
     private void initialize() {
+        relationHandler.setLobbyNames(names);
+        relationHandler.setLobbyCapacities(capacities);
+        relationHandler.setLobbyAdmin(admins);
+        relationHandler.setLobbyOthers(others);
         searchButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/search.jpg", 30)
                 .getImage()));
         getLobbiesFromMaster();

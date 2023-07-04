@@ -367,6 +367,32 @@ public class RelationHandler {
     }
 
     public void showLobbies() {
+        for (Lobby lobby : lobbies) {
+            addLobbyToPain(lobby);
+        }
+    }
 
+    private void addLobbyToPain(Lobby lobby) {
+        Label name = new Label("" + lobby.getId());
+        name.setStyle("-fx-font-size: 10");
+        lobbyNames.getChildren().add(name);
+
+        Label capacity = new Label("" + lobby.getCapacity());
+        capacity.setStyle("-fx-font-size: 10");
+        lobbyCapacities.getChildren().add(capacity);
+
+        Label admin = new Label(lobby.getAdmin().getNickName());
+        admin.setStyle("-fx-font-size: 10");
+        lobbyCapacities.getChildren().add(admin);
+
+        Label others = new Label(setOtherUsers());
+        others.setStyle("-fx-font-size: 10");
+        lobbyCapacities.getChildren().add(others);
+
+
+    }
+
+    private String setOtherUsers() {
+        return null;
     }
 }
