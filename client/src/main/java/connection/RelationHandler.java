@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -36,6 +37,7 @@ public class RelationHandler {
     private VBox publicChatVBox;
     private Circle avatar;
     private User foundFriend;
+    private VBox friendsVBox;
     private final ArrayList<Chat> privateChats;
     private final ArrayList<Chat> rooms;
 
@@ -75,6 +77,23 @@ public class RelationHandler {
         return messagePane;
     }
 
+    private Pane createFriendViewPane(Chat privateChat) {
+        User friend = privateChat.getSubscribers().get(0);
+        if (friend.getUsername().equals(User.getCurrentUser().getUsername()))
+            friend = privateChat.getSubscribers().get(1);
+
+        Circle circle = new Circle(13);
+        circle.setFill(new ImagePattern(friend.getAvatar()));
+
+        Label nickName = new Label(friend.getNickName());
+        nickName.setLayoutY(10);
+        nickName.setLayoutX(50);
+
+        Pane friendPane = new Pane(circle, nickName);
+        friendPane.setOnMouseClicked((MouseEvent mouseEvent) -> this.setCurrentPrivateChat(privateChat));
+        return friendPane;
+    }
+
     private void setPublicChat(Chat publicChat) {
         Platform.runLater(() -> {
             try {
@@ -98,6 +117,21 @@ public class RelationHandler {
 
                 for (ChatMessage chatMessage : this.currentRoom.getMessages())
                     this.roomVBox.getChildren().add(this.createMessagePane(chatMessage));
+            } catch (Exception ignored) {
+            }
+        });
+    }
+
+    private void addPrivateChat(Chat privateChat) {
+        this.privateChats.add(privateChat);
+        Platform.runLater(() -> {
+            try {
+                if (this.friendsVBox.getChildren().size() > 0)
+                    this.friendsVBox.getChildren().subList(0, this.friendsVBox.getChildren().size()).clear();
+
+                for (Chat chat : this.privateChats)
+                    this.friendsVBox.getChildren().add(this.createFriendViewPane(chat));
+
             } catch (Exception ignored) {
             }
         });
@@ -136,14 +170,6 @@ public class RelationHandler {
         return publicChat;
     }
 
-    public Chat getChatById(int id) {
-        for (Chat chat : this.privateChats) {
-            if (chat.getId() == id)
-                return chat;
-        }
-        return null;
-    }
-
     public void removeChatById(int id) {
         this.privateChats.removeIf(privateChat -> privateChat.getId() == id);
         this.rooms.removeIf(room -> room.getId() == id);
@@ -151,7 +177,7 @@ public class RelationHandler {
 
     public void handlePrivateChat(Chat privateChat) {
         this.removeChatById(privateChat.getId());
-        this.privateChats.add(privateChat);
+        this.addPrivateChat(privateChat);
         User.getCurrentUser().joinChat(privateChat);
 
         if (this.currentPrivateChat.getId() == privateChat.getId())
@@ -180,7 +206,6 @@ public class RelationHandler {
             accept.setLayoutY(100);
 
             accept.setOnMouseClicked((MouseEvent mouseEvent) -> {
-                User.getCurrentUser().addFriend(friendRequestPacket.getSender());
                 try {
                     Connection.getInstance().getDataOutputStream().writeUTF(new AcceptRequest(friendRequestPacket.getSender(),
                             friendRequestPacket.getReceiver()).toJson());
@@ -266,6 +291,10 @@ public class RelationHandler {
 
     public void setPrivateChatVBox(VBox privateChatVBox) {
         this.privateChatVBox = privateChatVBox;
+    }
+
+    public void setFriendsVBox(VBox friendsVBox) {
+        this.friendsVBox = friendsVBox;
     }
 
     public void handleSearch(String friendName) {

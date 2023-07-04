@@ -82,6 +82,7 @@ public class ChatMenu extends Application {
         privateChatVBox.setBackground(Background.fill(Color.WHITE));
 
         this.relationHandler.setPublicChatVBox(publicChatVBox);
+        this.relationHandler.setFriendsVBox(this.friendsVBox);
         this.relationHandler.setPrivateChatVBox(privateChatVBox);
         this.relationHandler.setAvatar(avatar);
     }
