@@ -15,6 +15,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class QueryReceiver extends Thread {
     private final RegistrationController registrationController;
@@ -92,8 +93,21 @@ public class QueryReceiver extends Thread {
                 case REQUEST_LOBBY_PACKET -> this.createLobby(gson.fromJson(data, RequestLobbyPacket.class));
                 case SEARCH_PACKET -> this.searchFriend(gson.fromJson(data, SearchPacket.class));
                 case REQ_UPDATE_CHAT -> this.updateChat(gson.fromJson(data, RequestChatPacket.class));
+                case ACCEPT_PACKET -> this.acceptReq(gson.fromJson(data, AcceptRequest.class));
             }
         }
+    }
+
+    private void acceptReq(AcceptRequest acceptRequest) {
+        Chat privateChat = new Chat(acceptRequest.getSender(), Chat.ChatType.PRIVATE, acceptRequest.getReceiver());
+        try {
+            this.dataOutputStream.writeUTF(new ChatPacket(privateChat).toJson());
+            this.databaseController.getUserDataOutputStream(acceptRequest.getReceiver()).writeUTF
+                    (new ChatPacket(privateChat).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     private void updateChat(RequestChatPacket requestChatPacket) {

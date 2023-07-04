@@ -1,5 +1,6 @@
 package connection;
 
+import connection.packet.relation.AcceptRequest;
 import connection.packet.relation.ChatPacket;
 import connection.packet.relation.FriendRequestPacket;
 import connection.packet.relation.SearchPacket;
@@ -160,7 +161,12 @@ public class RelationHandler {
 
             accept.setOnMouseClicked((MouseEvent mouseEvent) -> {
                 User.getCurrentUser().addFriend(friendRequestPacket.getSender());
-                // TODO create private chat
+                try {
+                    Connection.getInstance().getDataOutputStream().writeUTF(new AcceptRequest(friendRequestPacket.getSender(),
+                            friendRequestPacket.getReceiver()).toJson());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 stage.close();
             });
 

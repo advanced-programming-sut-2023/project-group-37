@@ -14,5 +14,7 @@ public enum PacketType {
     TILES_PACKET,
     SEARCH_PACKET,
     FOUND_USER_PACKET,
+    ACCEPT_PACKET,
+
 
 }
