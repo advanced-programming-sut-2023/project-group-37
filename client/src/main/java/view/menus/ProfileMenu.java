@@ -1,5 +1,7 @@
 package view.menus;
 
+import connection.Connection;
+import connection.packet.registration.UserPacket;
 import controller.AppController;
 import controller.MultiMenuFunctions;
 import controller.viewControllers.ChangeMenuController;
@@ -20,6 +22,7 @@ import view.enums.Result;
 import view.enums.Command;
 import view.enums.Message;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.Scanner;
@@ -165,10 +168,12 @@ public class ProfileMenu extends Application {
     }
 
     public void enterAvatarMenu(MouseEvent mouseEvent) throws Exception {
+        sendPacket();
         appController.runMenu(Result.ENTER_AVATAR_MENU);
     }
 
     public void enterMainMenu(MouseEvent mouseEvent) throws Exception {
+        sendPacket();
         User.updateDatabase();
         appController.runMenu(Result.ENTER_MAIN_MENU);
     }
@@ -176,5 +181,13 @@ public class ProfileMenu extends Application {
     public void deleteSlogan(MouseEvent mouseEvent) {
         User.getCurrentUser().setSlogan(null);
         slogan.setText("Slogan is empty!");
+    }
+
+    private void sendPacket() {
+        try {
+            Connection.getInstance().getDataOutputStream().writeUTF(new UserPacket(User.getCurrentUser()).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
