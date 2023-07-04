@@ -1,5 +1,6 @@
 package view.menus;
 
+import connection.RelationHandler;
 import controller.AppController;
 import controller.MultiMenuFunctions;
 import javafx.application.Application;
@@ -8,26 +9,27 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import model.chat.Chat;
 
 import java.net.URL;
 import java.util.Objects;
 
 public class LobbyMenu extends Application {
     private final AppController appController;
+    private final RelationHandler relationHandler;
+    @FXML
+    private Label lobbyName1;
     @FXML
     private Rectangle sendButton;
     @FXML
     private TextField chatBox;
     @FXML
-    private VBox yourChat;
-    @FXML
-    private VBox contactChat;
+    private VBox chatVBox;
     @FXML
     private AnchorPane chatPane;
     @FXML
@@ -41,6 +43,8 @@ public class LobbyMenu extends Application {
 
     public LobbyMenu() {
         this.appController = AppController.getInstance();
+        this.relationHandler = RelationHandler.getInstance();
+        this.relationHandler.setCurrentRoomVBox(this.chatVBox);
     }
 
     @Override
@@ -60,12 +64,12 @@ public class LobbyMenu extends Application {
         sendButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/send.png", 30).getImage()));
     }
 
-    public void leaveLobby(MouseEvent mouseEvent) {
+    public void leaveLobby() {
         System.out.println("leave");
     }
 
-    public void send(MouseEvent mouseEvent) {
-        System.out.println(chatBox.getText());
+    public void send() {
+        relationHandler.sendMessage(chatBox.getText(), Chat.ChatType.ROOM);
         chatBox.setText("");
     }
 }

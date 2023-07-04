@@ -1,5 +1,6 @@
 package connection;
 
+import connection.packet.relation.ChatPacket;
 import connection.packet.relation.FriendRequestPacket;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -10,26 +11,31 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.chat.Chat;
+import model.chat.ChatMessage;
 import model.chat.Lobby;
 import model.user.User;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class RelationHandler {
     private final static RelationHandler instance = new RelationHandler();
     private Lobby currentLobby;
+    private Chat currentRoom;
+    private VBox currentRoomVBox;
+    private Chat currentPrivateChat;
+    private VBox currentPrivateChatVBox;
     private Chat publicChat;
+    private VBox publicChatVBox;
     private final ArrayList<Chat> privateChats;
     private final ArrayList<Chat> rooms;
-    private final HashMap<Chat, VBox> chatVBox;
 
     private RelationHandler() {
         this.privateChats = new ArrayList<>();
         this.rooms = new ArrayList<>();
-        this.chatVBox = new HashMap<>();
     }
 
     public static RelationHandler getInstance() {
@@ -59,6 +65,10 @@ public class RelationHandler {
                 return chat;
         }
         return null;
+    }
+
+    public void sendMessage() {
+
     }
 
     public void removeChatById(int id) {
@@ -106,5 +116,45 @@ public class RelationHandler {
             stage.setScene(new Scene(anchorPane));
             stage.show();
         });
+    }
+
+    public void sendMessage(String content, Chat.ChatType chatType) {
+        ChatMessage chatMessage = new ChatMessage(User.getCurrentUser(), content);
+        Rectangle rectangle = new Rectangle(200, 30);
+        Label contentLabel = new Label(content);
+        contentLabel.setBackground(Background.fill(Color.LIGHTBLUE));
+        contentLabel.setLayoutX(70);
+        contentLabel.setLayoutY(5);
+        switch (chatType) {
+            case ROOM -> {
+                this.currentRoomVBox.getChildren().add(rectangle);
+                this.currentRoom.addMessage(chatMessage);
+                this.sendChatPacket(new ChatPacket(this.currentRoom));
+            }
+
+            case PRIVATE -> {
+                this.currentPrivateChatVBox.getChildren().add(rectangle);
+                this.currentPrivateChat.addMessage(chatMessage);
+                this.sendChatPacket(new ChatPacket(this.currentPrivateChat));
+            }
+
+            case PUBLIC -> {
+                this.publicChatVBox.getChildren().add(rectangle);
+                this.publicChat.addMessage(chatMessage);
+                this.sendChatPacket(new ChatPacket(this.publicChat));
+            }
+        }
+    }
+
+    public void sendChatPacket(ChatPacket chatPacket) {
+        try {
+            Connection.getInstance().getDataOutputStream().writeUTF(chatPacket.toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setCurrentRoomVBox(VBox roomVBox) {
+        this.currentRoomVBox = roomVBox;
     }
 }
