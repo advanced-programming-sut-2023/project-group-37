@@ -3,9 +3,11 @@ package controller;
 import connection.Connection;
 import connection.packet.registration.LoginPacket;
 import connection.packet.PopUpPacket;
+import connection.packet.relation.LobbyPacket;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import model.chat.Lobby;
 import model.user.User;
 import view.enums.Result;
 import view.menus.*;
@@ -103,5 +105,9 @@ public class AppController {
                 }
             }
         });
+    }
+
+    public void createLobby(LobbyPacket lobbyPacket) {
+        // todo
     }
 }

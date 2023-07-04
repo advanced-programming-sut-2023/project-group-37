@@ -17,12 +17,12 @@ public class Lobby {
         idCounter = 0;
     }
 
-    public Lobby(User admin, int capacity, ArrayList<User> members, Chat room, boolean isPublic) {
+    public Lobby(User admin, int capacity, boolean isPublic) {
         this.id = idCounter++;
         this.admin = admin;
         this.capacity = capacity;
-        this.members = members;
-        this.room = room;
+        this.members = new ArrayList<>();
+        this.room = new Chat(admin, Chat.ChatType.ROOM);
         this.isPublic = isPublic;
     }
 

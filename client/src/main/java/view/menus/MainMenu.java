@@ -1,13 +1,14 @@
 package view.menus;
 
+import connection.Connection;
+import connection.packet.relation.RequestLobbyPacket;
 import controller.AppController;
 import controller.viewControllers.MainMenuController;
 import controller.MultiMenuFunctions;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.user.User;
@@ -15,6 +16,7 @@ import view.enums.Result;
 import view.enums.Command;
 import view.enums.Message;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.Scanner;
@@ -106,7 +108,29 @@ public class MainMenu extends Application {
     }
 
     public void createLobby() {
+        TextInputDialog textInputDialog = new TextInputDialog("Enter capacity:");
+        textInputDialog.showAndWait();
 
+        int capacity = 8;
+        try {
+            capacity = Integer.parseInt(textInputDialog.getEditor().getText());
+        }
+        catch (Exception ignored) {
+        }
+
+        TextInputDialog privateInputDialog = new TextInputDialog("T");
+        privateInputDialog.setHeaderText("Want your lobby be public ?");
+        textInputDialog.showAndWait();
+
+
+        String isPublicString  = textInputDialog.getEditor().getText();
+        boolean isPublic = isPublicString.equals("F");
+
+        try {
+            Connection.getInstance().getDataOutputStream().writeUTF(new RequestLobbyPacket(capacity, isPublic).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void joinLobby() {

@@ -7,6 +7,9 @@ import connection.packet.registration.LoginPacket;
 import connection.packet.registration.RegisterPacket;
 import connection.packet.relation.ChatPacket;
 import connection.packet.relation.FriendRequestPacket;
+import connection.packet.relation.LobbyPacket;
+import connection.packet.relation.RequestLobbyPacket;
+import model.chat.Lobby;
 import model.user.User;
 import view.enums.Message;
 
@@ -86,6 +89,7 @@ public class QueryReceiver extends Thread {
                 case CHAT_PACKET -> this.handleChatPacket(gson.fromJson(data, ChatPacket.class));
                 case ALIVE_PACKET -> this.setQueryAlive(true);
                 case LOGOUT_PACKET -> this.databaseController.disconnectUser(this.user);
+                case REQUEST_LOBBY_PACKET -> this.createLobby(gson.fromJson(data, RequestLobbyPacket.class));
             }
         }
     }
@@ -129,6 +133,15 @@ public class QueryReceiver extends Thread {
 
         }
         catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void createLobby(RequestLobbyPacket requestLobbyPacket) {
+        try {
+            this.dataOutputStream.writeUTF(new LobbyPacket(new Lobby(
+                    this.user, requestLobbyPacket.getCapacity(), requestLobbyPacket.isPublic())).toJson());
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
