@@ -421,7 +421,7 @@ public class RelationHandler {
                 others += ", ";
             }
         }
-        System.out.println(others); //test
+        //System.out.println(others); //test
         return others;
     }
 
