@@ -66,6 +66,8 @@ public class RelationHandler {
             contentLabel.setBackground(Background.fill(Color.GREEN));
             contentLabel.setLayoutX(5);
         }
+        contentLabel.setStyle("-fx-font-size: 30");
+        timeLabel.setStyle("-fx-font-size: 15");
         messagePane.getChildren().add(contentLabel);
         messagePane.getChildren().add(timeLabel);
 
