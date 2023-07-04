@@ -90,6 +90,7 @@ public class AppController {
                 case LOGIN_SUCCESSFUL -> {
                     try {
                         this.runMenu(Result.ENTER_MAIN_MENU);
+                        new ChatMenu().start(new Stage());
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

@@ -1,5 +1,6 @@
 package view.menus;
 
+import connection.RelationHandler;
 import controller.AppController;
 import controller.MultiMenuFunctions;
 import javafx.application.Application;
@@ -7,20 +8,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import model.chat.Chat;
 import model.user.User;
 
 import java.net.URL;
 import java.util.Objects;
 
 public class ChatMenu extends Application {
-    private final AppController appController = AppController.getInstance();
+    private final AppController appController;
+    private final RelationHandler relationHandler;
     @FXML
     private VBox privateChatVBox;
     @FXML
@@ -42,6 +44,12 @@ public class ChatMenu extends Application {
     @FXML
     private Rectangle sendButtonPublic;
 
+    public ChatMenu() {
+        this.appController = AppController.getInstance();
+        this.relationHandler = RelationHandler.getInstance();
+        this.relationHandler.setPublicChatVBox(publicChatVBox);
+        this.relationHandler.setPrivateChatVBox(privateChatVBox);
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -62,19 +70,20 @@ public class ChatMenu extends Application {
         sendButtonPublic.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/send.png", 30).getImage()));
     }
 
-    public void addFriend(MouseEvent mouseEvent) {
+    public void addFriend() {
     }
 
-    public void search(MouseEvent mouseEvent) {
+    public void search() {
         User foundUser = null;
-
         setAvatar(foundUser);
     }
 
-    public void sendPrivate(MouseEvent mouseEvent) {
+    public void sendPrivate() {
+        this.relationHandler.sendMessage(this.privateChatBox.getText(), Chat.ChatType.PRIVATE);
     }
 
-    public void sendPublic(MouseEvent mouseEvent) {
+    public void sendPublic() {
+        this.relationHandler.sendMessage(this.publicChatBox.getText(), Chat.ChatType.PUBLIC);
     }
 
     public void setAvatar(User user) {
