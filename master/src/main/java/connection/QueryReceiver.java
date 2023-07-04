@@ -66,7 +66,7 @@ public class QueryReceiver extends Thread {
         Gson gson = new Gson();
         String data;
 
-        while (!isDead) {
+        while (!this.isDead) {
             try {
                 data = dataInputStream.readUTF();
             } catch (IOException e) {
@@ -138,6 +138,6 @@ public class QueryReceiver extends Thread {
     }
 
     public User getUser() {
-        return user;
+        return this.user;
     }
 }

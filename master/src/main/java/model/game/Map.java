@@ -57,6 +57,7 @@ public class Map {
 
     public static void loadMaps() {
         maps.add(GenerateMap.createMap1());
+        maps.add(GenerateMap.createMap2());
     }
 
     public String getName() {
@@ -142,7 +143,8 @@ public class Map {
 
         for (int i = Math.min(firstTile.getLocationX(), secondTile.getLocationX());
              i <= Math.max(firstTile.getLocationX(), secondTile.getLocationX()); i++) {
-            rectangleTiles.addAll(Arrays.asList(this.field[i]).subList(Math.min(firstTile.getLocationY(), secondTile.getLocationY()), Math.max(firstTile.getLocationY(), secondTile.getLocationY()) + 1));
+            rectangleTiles.addAll(Arrays.asList(this.field[i]).subList(Math.min(firstTile.getLocationY(),
+                    secondTile.getLocationY()), Math.max(firstTile.getLocationY(), secondTile.getLocationY()) + 1));
         }
 
         Tile.setSelectedTiles(rectangleTiles);

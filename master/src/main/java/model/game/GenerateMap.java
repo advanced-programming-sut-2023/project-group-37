@@ -1,12 +1,9 @@
 package model.game;
 
 public class GenerateMap {
+
     private static Map map;
 
-//        public static void main(String[] args) {
-//        createMap1();
-//        printMap();
-//    }
     public static Map createMap1() { // all i,j changes
         map = new Map("North vs South");
         //set ground
@@ -112,6 +109,77 @@ public class GenerateMap {
         return map;
     }
 
+    public static Map createMap2() { // all i,j changes
+        map = new Map("Closed Encounters");
+
+        //set ground
+        for (int i = 0; i < 200; i++) {
+            for (int j = 0; j < 200; j++) {
+                map.getField()[j][i].changeTexture(Texture.GROUND);
+                map.getField()[j][i].setPassability(Texture.GROUND.canHaveBuildingAndUnit());
+            }
+        }
+
+        for (int i = 0; i < 200; i++) {
+            for (int j = 60; j < 70; j++) {
+                map.getField()[j][i].changeTexture(Texture.GRASS);
+                map.getField()[j][i + 70].changeTexture(Texture.GRASS);
+                map.getField()[i][j].changeTexture(Texture.GRASS);
+                map.getField()[i + 70][j].changeTexture(Texture.GRASS);
+            }
+        }
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 200; j++) {
+                map.getField()[j][i].changeTexture(Texture.IRON);
+                map.getField()[j][200 - i].changeTexture(Texture.IRON);
+                map.getField()[i][j].changeTexture(Texture.IRON);
+                map.getField()[200 - i][j].changeTexture(Texture.IRON);
+            }
+        }
+
+        for (int i = 3; i < 6; i++) {
+            for (int j = 0; j < 200; j++) {
+                map.getField()[j][i].changeTexture(Texture.ROCK);
+                map.getField()[j][200 - i].changeTexture(Texture.ROCK);
+                map.getField()[i][j].changeTexture(Texture.ROCK);
+                map.getField()[200 - i][j].changeTexture(Texture.ROCK);
+            }
+        }
+
+        //trees
+        for (int i = 60; i < 130; i++) {
+            for (int j = 60; j < 130; j++) {
+                if (i % 4 == 1 && j % 4 == 1) {
+                    map.getField()[j][i].changeTreeRockTexture(Texture.DATE_PALM);
+                    map.getField()[j][i].setPassability(Texture.DATE_PALM.canHaveBuildingAndUnit());
+                } else if (i % 4 == 3 && j % 4 == 3) {
+                    map.getField()[j][i].changeTreeRockTexture(Texture.STONE);
+                    map.getField()[j][i].setPassability(Texture.STONE.canHaveBuildingAndUnit());
+                }
+            }
+        }
+
+        // 30 * 30 territory
+        setTerritory(map.getField()[30][30], 1);
+
+        setTerritory(map.getField()[30][100], 2);
+
+        setTerritory(map.getField()[30][170], 3);
+
+        setTerritory(map.getField()[100][30], 4);
+
+        setTerritory(map.getField()[100][170], 5);
+
+        setTerritory(map.getField()[170][30], 6);
+
+        setTerritory(map.getField()[170][100], 7);
+
+        setTerritory(map.getField()[170][170], 8);
+
+        map.setTilesPassability();
+        return map;
+    }
 
     public static void setTerritory(Tile headQuarter, int territoryNumber) {
         Territory territory = new Territory(map, territoryNumber, headQuarter);
