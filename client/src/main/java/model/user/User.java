@@ -348,6 +348,18 @@ public class User implements Serializable {
         }
     }
 
+    public Chat getChatById(int id) {
+        for (Chat chat : this.chats) {
+            if (chat.getId() == id)
+                return chat;
+        }
+        return null;
+    }
+
+    public void removeChatById(int id) {
+        this.chats.removeIf(chat -> chat.getId() == id);
+    }
+
     public ArrayList<User> getFriends() {
         return this.friends;
     }
@@ -369,6 +381,7 @@ public class User implements Serializable {
     }
 
     public void joinChat(Chat chat) {
+        this.removeChatById(chat.getId());
         this.chats.add(chat);
     }
 }

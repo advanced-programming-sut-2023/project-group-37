@@ -3,11 +3,10 @@ package model.chat;
 import model.user.User;
 
 public class PublicChat extends Chat {
+    private final static PublicChat publicChat = new PublicChat();
 
-    private static PublicChat publicChat;
-
-    public PublicChat(User owner, User... subscribers) {
-        super(owner, ChatType.PUBLIC, subscribers);
+    public PublicChat() {
+        super(null, ChatType.PUBLIC);
     }
 
     public static PublicChat getInstance() {
