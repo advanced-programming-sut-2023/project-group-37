@@ -89,8 +89,8 @@ public class AppController {
             switch (popUpPacket.getMessage()) {
                 case LOGIN_SUCCESSFUL -> {
                     try {
-                        this.runMenu(Result.ENTER_MAIN_MENU);
                         new ChatMenu().start(new Stage());
+                        this.runMenu(Result.ENTER_MAIN_MENU);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

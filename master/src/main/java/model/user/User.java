@@ -42,7 +42,7 @@ public class User implements Serializable {
 
     public User(RegisterPacket registerPacket) {
         this.username = registerPacket.getUsername();
-        this.hashedPassword = registerPacket.getPassword();
+        this.hashedPassword = PasswordHashing.encode(registerPacket.getPassword());
         this.nickname = registerPacket.getNickname();
         this.slogan = registerPacket.getSlogan();
         this.email = registerPacket.getEmail();
@@ -335,7 +335,7 @@ public class User implements Serializable {
         String filePath = "./master/src/main/resources/Database/userDatabase.json";
         try {
             FileWriter fileWriter = new FileWriter(filePath);
-            fileWriter.write("Salam");
+            fileWriter.write(gson.toJson(users));
             fileWriter.close();
         } catch (IOException ignored) {
             System.out.println("ERRORED");
