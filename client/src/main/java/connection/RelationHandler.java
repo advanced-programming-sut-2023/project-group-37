@@ -2,16 +2,20 @@ package connection;
 
 import connection.packet.relation.ChatPacket;
 import connection.packet.relation.FriendRequestPacket;
+import connection.packet.relation.SearchPacket;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import model.chat.Chat;
 import model.chat.ChatMessage;
@@ -30,6 +34,8 @@ public class RelationHandler {
     private VBox privateChatVBox;
     private Chat publicChat;
     private VBox publicChatVBox;
+    private Circle avatar;
+    private User foundFriend;
     private final ArrayList<Chat> privateChats;
     private final ArrayList<Chat> rooms;
 
@@ -54,8 +60,7 @@ public class RelationHandler {
         if (User.getCurrentUser().getUsername().equals(chatMessage.getSenderUsername())) {
             contentLabel.setBackground(Background.fill(Color.BLUE));
             contentLabel.setLayoutX(70);
-        }
-        else {
+        } else {
             contentLabel.setBackground(Background.fill(Color.GREEN));
             contentLabel.setLayoutX(5);
         }
@@ -222,11 +227,36 @@ public class RelationHandler {
         this.roomVBox = roomVBox;
     }
 
+    public void setAvatar(Circle avatar) {
+        this.avatar = avatar;
+    }
+
     public void setPublicChatVBox(VBox publicChatVBox) {
         this.publicChatVBox = publicChatVBox;
     }
 
     public void setPrivateChatVBox(VBox privateChatVBox) {
         this.privateChatVBox = privateChatVBox;
+    }
+
+    public void handleSearch(String friendName) {
+        try {
+            Connection.getInstance().getDataOutputStream().writeUTF(new SearchPacket(friendName).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void changeAvatar(User friend) {
+        this.avatar.setFill(new ImagePattern(friend.getAvatar()));
+        this.foundFriend = friend;
+    }
+
+    public void sendFriendReq() {
+        try {
+            Connection.getInstance().getDataOutputStream().writeUTF(new FriendRequestPacket(User.getCurrentUser(), foundFriend).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

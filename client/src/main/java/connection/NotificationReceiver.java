@@ -58,7 +58,7 @@ public class NotificationReceiver extends Thread {
 
     private void handleFoundFriend(FoundUserPacket foundUserPacket) {
         User friend = foundUserPacket.getFoundUser();
-        
+        relationHandler.changeAvatar(friend);
     }
 
     private void handleChat(ChatPacket chatPacket) {

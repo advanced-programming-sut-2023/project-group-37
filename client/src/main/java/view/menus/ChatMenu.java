@@ -53,6 +53,7 @@ public class ChatMenu extends Application {
         this.relationHandler = RelationHandler.getInstance();
         this.relationHandler.setPublicChatVBox(publicChatVBox);
         this.relationHandler.setPrivateChatVBox(privateChatVBox);
+        this.relationHandler.setAvatar(avatar);
     }
 
     @Override
@@ -75,15 +76,11 @@ public class ChatMenu extends Application {
     }
 
     public void addFriend() {
+        this.relationHandler.sendFriendReq();
     }
 
     public void search() {
-        User foundUser = null;
-        setAvatar(foundUser);
-    }
-    public void search(MouseEvent mouseEvent) throws IOException {
-        Connection.getInstance().getDataOutputStream().writeUTF(new SearchPacket(friendName.getText()).toJson());
-
+        this.relationHandler.handleSearch(friendName.getText());
     }
 
     public void sendPrivate() {
