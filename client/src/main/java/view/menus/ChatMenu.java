@@ -50,14 +50,16 @@ public class ChatMenu extends Application {
     public ChatMenu() {
         this.appController = AppController.getInstance();
         this.relationHandler = RelationHandler.getInstance();
+
+        this.relationHandler.setPublicChatVBox(publicChatVBox);
+        this.relationHandler.setPrivateChatVBox(privateChatVBox);
+        this.relationHandler.setAvatar(avatar);
+
         try {
             Connection.getInstance().getDataOutputStream().writeUTF(new RequestChatPacket(relationHandler.getPublicChat()).toJson());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        this.relationHandler.setPublicChatVBox(publicChatVBox);
-        this.relationHandler.setPrivateChatVBox(privateChatVBox);
-        this.relationHandler.setAvatar(avatar);
     }
 
     @Override
