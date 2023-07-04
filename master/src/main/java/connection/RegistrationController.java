@@ -21,10 +21,12 @@ public class RegistrationController {
     public User handleLogin(LoginPacket loginPacket) throws IOException {
         User user;
         if ((user = User.getUserByUsername(loginPacket.getUsername())) != null)
-            if (DatabaseController.getInstance().getSessionByUser(user) == null &&
-                    (!user.isWrongPassword(loginPacket.getPassword()) || !user.isWrongHashedPassword
-                            (loginPacket.getPassword())))
-                return user;
+            if (DatabaseController.getInstance().getSessionByUser(user) == null) {
+                if (!user.isWrongHashedPassword(loginPacket.getPassword()))
+                    return user;
+                if (!user.isWrongPassword(loginPacket.getPassword()))
+                    return user;
+            }
         return null;
     }
 

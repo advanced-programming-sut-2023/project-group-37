@@ -61,12 +61,6 @@ public class QueryReceiver extends Thread {
 
     @Override
     public synchronized void run() {
-        try {
-            this.dataOutputStream.writeUTF(new ChatPacket(PublicChat.getInstance()).toJson());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
         DataInputStream dataInputStream;
         try {
             dataInputStream = new DataInputStream(this.socket.getInputStream());

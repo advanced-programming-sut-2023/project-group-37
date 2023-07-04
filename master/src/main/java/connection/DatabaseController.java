@@ -3,6 +3,7 @@ package connection;
 import com.google.gson.Gson;
 import connection.packet.game.TilesPacket;
 import connection.packet.registration.UserPacket;
+import connection.packet.relation.ChatPacket;
 import model.chat.Chat;
 import model.chat.Lobby;
 import model.chat.PublicChat;
@@ -62,6 +63,12 @@ public class DatabaseController {
         this.dataOutputStreams.put(user, dataOutputStream);
         this.dataInputStreams.put(user, new DataInputStream(socket.getInputStream()));
         dataOutputStream.writeUTF(new UserPacket(user).toJson());
+        try {
+            dataOutputStream.writeUTF(new ChatPacket(PublicChat.getInstance()).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void addRoom(Chat room) {
