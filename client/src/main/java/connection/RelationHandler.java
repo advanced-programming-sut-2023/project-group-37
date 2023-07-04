@@ -53,20 +53,22 @@ public class RelationHandler {
         Pane messagePane = new Pane();
         messagePane.setPrefHeight(30);
         messagePane.setPrefWidth(400);
-        Label contentLabel = new Label(chatMessage.getMessage());
+        Label contentLabel = new Label("   " + chatMessage.getMessage());
         Label timeLabel = new Label(chatMessage.getFormattedTimeSent());
-        timeLabel.setLayoutX(300);
-        timeLabel.setLayoutY(40);
+        timeLabel.setLayoutY(15);
         contentLabel.setLayoutY(10);
+        contentLabel.setPrefWidth(300);
         if (User.getCurrentUser().getUsername().equals(chatMessage.getSenderUsername())) {
-            contentLabel.setBackground(Background.fill(Color.BLUE));
-            contentLabel.setLayoutX(300);
+            contentLabel.setBackground(Background.fill(Color.LIGHTPINK));
+            contentLabel.setLayoutX(90);
+            timeLabel.setLayoutX(60);
         } else {
             contentLabel.setBackground(Background.fill(Color.GREEN));
-            contentLabel.setLayoutX(5);
+            contentLabel.setLayoutX(10);
+            timeLabel.setLayoutX(320);
         }
-        contentLabel.setStyle("-fx-font-size: 30");
-        timeLabel.setStyle("-fx-font-size: 15");
+        contentLabel.setStyle("-fx-font-size: 15");
+        timeLabel.setStyle("-fx-font-size: 10");
         messagePane.getChildren().add(contentLabel);
         messagePane.getChildren().add(timeLabel);
 
@@ -209,16 +211,17 @@ public class RelationHandler {
         Pane messagePane = new Pane();
         messagePane.setPrefWidth(400);
         messagePane.setPrefHeight(30);
-        Label contentLabel = new Label(content);
-        contentLabel.setBackground(Background.fill(Color.LIGHTBLUE));
-        contentLabel.setStyle("-fx-font-size: 30");
-        contentLabel.setLayoutX(300);
-        contentLabel.setLayoutY(30);
+        Label contentLabel = new Label("   " + content);
+        contentLabel.setBackground(Background.fill(Color.LIGHTPINK));
+        contentLabel.setStyle("-fx-font-size: 15");
+        contentLabel.setLayoutX(90);
+        contentLabel.setLayoutY(10);
+        contentLabel.setPrefWidth(300);
 
         Label timeLabel = new Label(chatMessage.getFormattedTimeSent());
-        timeLabel.setLayoutX(200);
-        timeLabel.setLayoutY(45);
-        timeLabel.setStyle("-fx-font-size: 15");
+        timeLabel.setLayoutX(60);
+        timeLabel.setLayoutY(15);
+        timeLabel.setStyle("-fx-font-size: 10");
 
         messagePane.getChildren().add(contentLabel);
         messagePane.getChildren().add(timeLabel);
