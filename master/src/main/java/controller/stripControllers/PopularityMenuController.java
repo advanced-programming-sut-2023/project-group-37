@@ -168,33 +168,43 @@ public class PopularityMenuController {
 
     private void updateFace() {
         if (game.getCurrentTurnGovernment().getFearRate() > 0)
-            fearFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/green-face.png", 30).getImage());
+            fearFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/green-face.png", 30)
+                    .getImage());
         else if (game.getCurrentTurnGovernment().getFearRate() < 0)
-            fearFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/red-face.png", 30).getImage());
+            fearFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/red-face.png", 30)
+                    .getImage());
         else
-            fearFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/yellow-face.png", 30).getImage());
+            fearFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/yellow-face.png", 30)
+                    .getImage());
 
         if (game.getCurrentTurnGovernment().getTaxRate() > 0)
-            taxFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/green-face.png", 30).getImage());
+            taxFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/green-face.png", 30)
+                    .getImage());
         else if (game.getCurrentTurnGovernment().getTaxRate() < 0)
-            taxFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/red-face.png", 30).getImage());
+            taxFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/red-face.png", 30)
+                    .getImage());
         else
-            taxFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/yellow-face.png", 30).getImage());
+            taxFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/yellow-face.png", 30)
+                    .getImage());
 
         if (game.getCurrentTurnGovernment().getReligionPopularityRate() > 0)
-            religionFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/green-face.png", 30).getImage());
+            religionFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/green-face.png", 30)
+                    .getImage());
         else if (game.getCurrentTurnGovernment().getReligionPopularityRate() < 0)
-            religionFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/red-face.png", 30).getImage());
+            religionFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/red-face.png", 30)
+                    .getImage());
         else
-            religionFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/yellow-face.png", 30).getImage());
+            religionFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/yellow-face.png", 30)
+                    .getImage());
 
         if (game.getCurrentTurnGovernment().getFoodRate() > 0)
-            foodFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/green-face.png", 30).getImage());
+            foodFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/green-face.png", 30)
+                    .getImage());
         else if (game.getCurrentTurnGovernment().getFoodRate() < 0)
-            foodFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/red-face.png", 30).getImage());
+            foodFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/red-face.png", 30)
+                    .getImage());
         else
-            foodFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/yellow-face.png", 30).getImage());
+            foodFace.setImage(MultiMenuFunctions.getImageView("/Image/Popularity Face/yellow-face.png", 30)
+                    .getImage());
     }
-
-
 }
