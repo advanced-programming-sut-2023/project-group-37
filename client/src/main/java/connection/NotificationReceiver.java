@@ -20,6 +20,7 @@ public class NotificationReceiver extends Thread {
     private final DataInputStream dataInputStream;
     private final RelationHandler relationHandler;
     private boolean stayLoggedIn;
+
     public NotificationReceiver(DataInputStream dataInputStream) {
         this.dataInputStream = dataInputStream;
         this.stayLoggedIn = false;
@@ -44,7 +45,8 @@ public class NotificationReceiver extends Thread {
             switch (type) {
                 case POPUP_PACKET -> this.appController.handleAlert(gson.fromJson(data, PopUpPacket.class));
                 case USER_PACKET -> this.login(gson.fromJson(data, UserPacket.class));
-                case FRIEND_REQUEST_PACKET -> this.relationHandler.handleRequest(gson.fromJson(data, FriendRequestPacket.class));
+                case FRIEND_REQUEST_PACKET ->
+                        this.relationHandler.handleRequest(gson.fromJson(data, FriendRequestPacket.class));
                 case LOBBY_PACKET -> this.createLobby(gson.fromJson(data, LobbyPacket.class));
                 case CHAT_PACKET -> this.handleChat(gson.fromJson(data, ChatPacket.class));
                 case TILES_PACKET -> this.handleTiles(gson.fromJson(data, TilesPacket.class));
