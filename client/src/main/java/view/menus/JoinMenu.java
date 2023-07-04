@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import model.chat.Lobby;
 import model.user.User;
 import view.enums.PopUp;
+import view.enums.Result;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -105,6 +106,15 @@ public class JoinMenu extends Application {
         relationHandler.showLobbies();
         hasSearched = false;
         searchedLobby = null;
+    }
+
+    @FXML
+    private void backMainMenu() {
+        try {
+            this.appController.runMenu(Result.ENTER_MAIN_MENU);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

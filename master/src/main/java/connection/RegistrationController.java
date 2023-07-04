@@ -36,6 +36,7 @@ public class RegistrationController {
             this.dataOutputStream.writeUTF(new PopUpPacket(Message.USERNAME_ALREADY_EXISTS, true).toJson());
             return;
         }
+
         new User(registerPacket);
         this.dataOutputStream.writeUTF(new PopUpPacket(Message.REGISTER_SUCCESSFUL, false).toJson());
     }

@@ -61,5 +61,6 @@
             </children>
         </AnchorPane>
       <Button layoutX="79.0" layoutY="176.0" minWidth="162.0" mnemonicParsing="false" onMouseClicked="#refresh" prefHeight="66.0" prefWidth="184.0" text="Refresh" />
+      <Button layoutX="81.0" layoutY="296.0" mnemonicParsing="false" onMouseClicked="#backMainMenu" text="Back Main Menu" />
     </children>
 </AnchorPane>

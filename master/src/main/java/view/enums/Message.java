@@ -173,7 +173,8 @@ public enum Message {
     INVALID_FEAR_RATE("You have to enter a rate between -5 to 5"),
     FEAR_RATE_SET("Fear rate has been set to"),
     TERRITORY_EXISTS("Territory number already exists !"),
-    START_GAME_ERROR("Start Error");
+    START_GAME_ERROR("Start Error"),
+    USER_IS_LOGIN("Another client loggedIn with this user!");
 
     private final String message;
 

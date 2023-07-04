@@ -217,7 +217,12 @@ public class QueryReceiver extends Thread {
                     throw new RuntimeException(e);
                 }
                 this.gamingController = new GamingController(user);
-            } else this.dataOutputStream.writeUTF(new PopUpPacket(Message.CANT_LOGIN, true).toJson());
+            }
+            else {
+                if (this.databaseController.getConnectedUser(loginPacket.getUsername()) == null)
+                    this.dataOutputStream.writeUTF(new PopUpPacket(Message.CANT_LOGIN, true).toJson());
+                else this.dataOutputStream.writeUTF(new PopUpPacket(Message.USER_IS_LOGIN, true).toJson());
+            }
 
         } catch (IOException e) {
             throw new RuntimeException(e);
