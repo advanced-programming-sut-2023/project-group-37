@@ -85,7 +85,10 @@ public class DatabaseController {
     }
 
     public DataOutputStream getUserDataOutputStream(String username) {
-        return this.dataOutputStreams.get(this.getConnectedUser(username));
+        DataOutputStream dataOutputStream =  this.dataOutputStreams.get(this.getConnectedUser(username));
+        if (dataOutputStream == null)
+            System.out.println(this.currentSessions.size());
+        return dataOutputStream;
     }
 
     public void updateEveryOneTilesExcept(ArrayList<Tile> modifiedTiles, User user) throws IOException {

@@ -120,6 +120,7 @@ public class QueryReceiver extends Thread {
         Chat privateChat = new Chat(acceptRequest.getSender(), Chat.ChatType.PRIVATE, acceptRequest.getReceiver());
         try {
             this.dataOutputStream.writeUTF(new ChatPacket(privateChat).toJson());
+            System.out.println(acceptRequest.getReceiver().getUsername());
             this.databaseController.getUserDataOutputStream(acceptRequest.getReceiver().getUsername()).writeUTF
                     (new ChatPacket(privateChat).toJson());
         } catch (IOException e) {
