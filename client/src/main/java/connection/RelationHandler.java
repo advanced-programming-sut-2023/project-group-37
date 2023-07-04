@@ -9,7 +9,6 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -385,14 +384,24 @@ public class RelationHandler {
         admin.setStyle("-fx-font-size: 10");
         lobbyCapacities.getChildren().add(admin);
 
-        Label others = new Label(setOtherUsers());
+        Label others = new Label(setOtherUsers(lobby));
         others.setStyle("-fx-font-size: 10");
         lobbyCapacities.getChildren().add(others);
-
-
     }
 
-    private String setOtherUsers() {
-        return null;
+    private String setOtherUsers(Lobby lobby) {
+        String others = "";
+        int counter = 0;
+        for (User member : lobby.getMembers()) {
+            if (!member.equals(lobby.getAdmin())) {
+                others += counter + ". " + member.getNickName();
+                counter++;
+            }
+            if (counter != lobby.getMembers().size() - 1) {
+                others += ", ";
+            }
+        }
+        System.out.println(others); //test
+        return others;
     }
 }
