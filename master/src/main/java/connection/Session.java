@@ -5,7 +5,7 @@ import model.user.User;
 import java.time.LocalDateTime;
 
 public class Session {
-    private final User user;
+    private User user;
     private final String lastLoginTime;
     private final LocalDateTime expirationTime;
 
@@ -19,6 +19,10 @@ public class Session {
         return this.user;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getLastLoginTime() {
         return this.lastLoginTime;
     }
@@ -26,4 +30,5 @@ public class Session {
     public LocalDateTime getExpirationTime() {
         return this.expirationTime;
     }
+
 }

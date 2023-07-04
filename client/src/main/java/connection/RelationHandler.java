@@ -74,7 +74,7 @@ public class RelationHandler {
     }
 
     private void setPublicChat(Chat publicChat) {
-        Platform.runLater(()-> {
+        Platform.runLater(() -> {
             try {
                 this.publicChat = publicChat;
                 if (this.publicChatVBox.getChildren().size() > 0)
@@ -82,8 +82,7 @@ public class RelationHandler {
 
                 for (ChatMessage chatMessage : this.publicChat.getMessages())
                     this.publicChatVBox.getChildren().add(this.createMessagePane(chatMessage));
-            }
-            catch (Exception ignored) {
+            } catch (Exception ignored) {
             }
         });
     }
@@ -97,8 +96,7 @@ public class RelationHandler {
 
                 for (ChatMessage chatMessage : this.currentRoom.getMessages())
                     this.roomVBox.getChildren().add(this.createMessagePane(chatMessage));
-            }
-            catch (Exception ignored) {
+            } catch (Exception ignored) {
             }
         });
     }
@@ -112,8 +110,7 @@ public class RelationHandler {
 
                 for (ChatMessage chatMessage : this.currentPrivateChat.getMessages())
                     this.privateChatVBox.getChildren().add(this.createMessagePane(chatMessage));
-            }
-            catch (Exception ignored) {
+            } catch (Exception ignored) {
             }
         });
     }
