@@ -114,8 +114,7 @@ public class MainMenu extends Application {
         int capacity = 8;
         try {
             capacity = Integer.parseInt(textInputDialog.getEditor().getText());
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
         }
 
         TextInputDialog privateInputDialog = new TextInputDialog("T");
@@ -123,7 +122,7 @@ public class MainMenu extends Application {
         textInputDialog.showAndWait();
 
 
-        String isPublicString  = textInputDialog.getEditor().getText();
+        String isPublicString = textInputDialog.getEditor().getText();
         boolean isPublic = isPublicString.equals("F");
 
         try {
@@ -133,7 +132,7 @@ public class MainMenu extends Application {
         }
     }
 
-    public void joinLobby() {
-
+    public void joinLobby() throws Exception {
+        new JoinMenu().start(appController.getStage());
     }
 }

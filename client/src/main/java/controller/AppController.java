@@ -66,6 +66,7 @@ public class AppController {
     public boolean isStayLoggedIn() {
         return this.isStayLoggedIn;
     }
+
     public void runMenu(Result result) throws Exception {
 
         switch (result) {
@@ -82,6 +83,10 @@ public class AppController {
 
             // todo : how to show game parts menu ??
         }
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 
     public void handleAlert(PopUpPacket popUpPacket) {
