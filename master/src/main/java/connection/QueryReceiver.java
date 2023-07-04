@@ -5,6 +5,7 @@ import connection.packet.*;
 import connection.packet.game.TilesPacket;
 import connection.packet.registration.LoginPacket;
 import connection.packet.registration.RegisterPacket;
+import connection.packet.registration.UserPacket;
 import connection.packet.relation.*;
 import model.chat.Chat;
 import model.chat.Lobby;
@@ -99,8 +100,13 @@ public class QueryReceiver extends Thread {
                 case SEARCH_PACKET -> this.searchFriend(gson.fromJson(data, SearchPacket.class));
                 case REQ_UPDATE_CHAT -> this.updateChat(gson.fromJson(data, RequestChatPacket.class));
                 case ACCEPT_PACKET -> this.acceptReq(gson.fromJson(data, AcceptRequest.class));
+                case USER_PACKET -> this.updateTheUser(gson.fromJson(data, UserPacket.class));
             }
         }
+    }
+
+    private void updateTheUser(UserPacket userPacket) {
+        // todo
     }
 
     private void acceptReq(AcceptRequest acceptRequest) {
@@ -112,7 +118,6 @@ public class QueryReceiver extends Thread {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     private synchronized void updateChat(RequestChatPacket requestChatPacket) {

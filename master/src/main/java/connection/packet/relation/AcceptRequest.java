@@ -4,8 +4,8 @@ import connection.packet.Packet;
 import model.user.User;
 
 public class AcceptRequest extends Packet {
-    private User sender;
-    private User receiver;
+    private final User sender;
+    private final User receiver;
 
 
     public AcceptRequest(User sender, User receiver) {
