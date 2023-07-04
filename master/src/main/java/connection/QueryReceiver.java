@@ -91,8 +91,13 @@ public class QueryReceiver extends Thread {
                 case LOGOUT_PACKET -> this.databaseController.endSession(this.user);
                 case REQUEST_LOBBY_PACKET -> this.createLobby(gson.fromJson(data, RequestLobbyPacket.class));
                 case SEARCH_PACKET -> this.searchFriend(gson.fromJson(data, SearchPacket.class));
+                case REQ_UPDATE_CHAT -> this.updateChat(gson.fromJson(data, RequestChatPacket.class));
             }
         }
+    }
+
+    private void updateChat(RequestChatPacket requestChatPacket) {
+
     }
 
 
