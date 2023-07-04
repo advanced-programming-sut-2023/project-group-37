@@ -1,5 +1,6 @@
 package connection;
 
+import connection.packet.game.LobbiesPacket;
 import connection.packet.relation.AcceptRequest;
 import connection.packet.relation.ChatPacket;
 import connection.packet.relation.FriendRequestPacket;
@@ -38,11 +39,42 @@ public class RelationHandler {
     private Circle avatar;
     private User foundFriend;
     private VBox friendsVBox;
+    private VBox lobbyNames;
+    private VBox lobbyCapacities;
+    private VBox lobbyAdmin;
+    private VBox lobbyOthers;
+
+    public void setLobbyNames(VBox lobbyNames) {
+        this.lobbyNames = lobbyNames;
+    }
+
+    public void setLobbyCapacities(VBox lobbyCapacities) {
+        this.lobbyCapacities = lobbyCapacities;
+    }
+
+    public void setLobbyAdmin(VBox lobbyAdmin) {
+        this.lobbyAdmin = lobbyAdmin;
+    }
+
+    public void setLobbyOthers(VBox lobbyOthers) {
+        this.lobbyOthers = lobbyOthers;
+    }
+
     private final ArrayList<Chat> privateChats;
     private final ArrayList<Chat> rooms;
     private VBox usernames;
     private VBox territories;
     private Label capacity;
+
+    public ArrayList<Lobby> getLobbies() {
+        return lobbies;
+    }
+
+    public void setLobbies(ArrayList<Lobby> lobbies) {
+        this.lobbies = lobbies;
+    }
+
+    private ArrayList<Lobby> lobbies;
 
     private RelationHandler() {
         this.privateChats = new ArrayList<>();
@@ -346,5 +378,78 @@ public class RelationHandler {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void sendReqToGetLobbies() {
+        try {
+            Connection.getInstance().getDataOutputStream().writeUTF(new LobbiesPacket(null).toJson()); // null -> Its just a request
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void showLobbies() {
+        for (Lobby lobby : lobbies) {
+            addLobbyToPane(lobby);
+        }
+    }
+
+    public void addLobbyToPane(Lobby lobby) {
+        Label name = new Label("" + lobby.getId());
+        name.setStyle("-fx-font-size: 10");
+        lobbyNames.getChildren().add(name);
+
+        Label capacity = new Label("" + lobby.getCapacity());
+        capacity.setStyle("-fx-font-size: 10");
+        lobbyCapacities.getChildren().add(capacity);
+
+        Label admin = new Label(lobby.getAdmin().getNickName());
+        admin.setStyle("-fx-font-size: 10");
+        lobbyCapacities.getChildren().add(admin);
+
+        Label others = new Label(setOtherUsers(lobby));
+        others.setStyle("-fx-font-size: 10");
+        lobbyCapacities.getChildren().add(others);
+    }
+
+    private String setOtherUsers(Lobby lobby) {
+        String others = "";
+        int counter = 0;
+        for (User member : lobby.getMembers()) {
+            if (!member.equals(lobby.getAdmin())) {
+                others += counter + ". " + member.getNickName();
+                counter++;
+            }
+            if (counter != lobby.getMembers().size() - 1) {
+                others += ", ";
+            }
+        }
+        //System.out.println(others); //test
+        return others;
+    }
+
+    public void getLobbiesFromMaster() {
+        sendReqToGetLobbies();
+        try {
+            Thread.sleep(100); // make sure the packet has come !
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Lobby searchLobby(String lobbyId) {
+        for (Lobby lobby : lobbies) {
+            if (lobbyId.equals("" + lobby.getId())) {
+                return lobby;
+            }
+        }
+        return null;
+    }
+
+    public void clearVBoxes() {
+        lobbyNames.getChildren().clear();
+        lobbyCapacities.getChildren().clear();
+        lobbyAdmin.getChildren().clear();
+        lobbyOthers.getChildren().clear();
     }
 }

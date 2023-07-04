@@ -2,6 +2,7 @@ package connection;
 
 import com.google.gson.Gson;
 import connection.packet.*;
+import connection.packet.game.LobbiesPacket;
 import connection.packet.game.TilesPacket;
 import connection.packet.registration.UserPacket;
 import connection.packet.relation.ChatPacket;
@@ -11,10 +12,12 @@ import connection.packet.relation.LobbyPacket;
 import controller.AppController;
 import controller.MultiMenuFunctions;
 import model.chat.Chat;
+import model.chat.Lobby;
 import model.user.User;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class NotificationReceiver extends Thread {
     private final AppController appController;
@@ -46,15 +49,20 @@ public class NotificationReceiver extends Thread {
             switch (type) {
                 case POPUP_PACKET -> this.appController.handleAlert(gson.fromJson(data, PopUpPacket.class));
                 case USER_PACKET -> this.login(gson.fromJson(data, UserPacket.class));
-                case FRIEND_REQUEST_PACKET -> this.relationHandler.handleFriendRequest(gson.fromJson
-                        (data, FriendRequestPacket.class));
+                case FRIEND_REQUEST_PACKET ->
+                        this.relationHandler.handleFriendRequest(gson.fromJson(data, FriendRequestPacket.class));
                 case LOBBY_PACKET -> this.createLobby(gson.fromJson(data, LobbyPacket.class));
                 case CHAT_PACKET -> this.handleChat(gson.fromJson(data, ChatPacket.class));
                 case TILES_PACKET -> this.handleTiles(gson.fromJson(data, TilesPacket.class));
                 case FOUND_USER_PACKET -> this.handleFoundFriend(gson.fromJson(data, FoundUserPacket.class));
                 case REFRESH_LOBBY_PACKET -> this.handleRefreshLobby(gson.fromJson(data, RefreshLobbyPacket.class));
+                case LOBBIES_PACKET -> this.receiveLobbies(gson.fromJson(data, LobbiesPacket.class));
             }
         }
+    }
+
+    private void receiveLobbies(LobbiesPacket lobbiesPacket) {
+        relationHandler.setLobbies(lobbiesPacket.getLobbies());
     }
 
     private void handleRefreshLobby(RefreshLobbyPacket refreshLobbyPacket) {
@@ -64,7 +72,7 @@ public class NotificationReceiver extends Thread {
 
     private void handleFoundFriend(FoundUserPacket foundUserPacket) {
         User friend = foundUserPacket.getFoundUser();
-        this.relationHandler.changeAvatar(friend);
+        relationHandler.changeAvatar(friend);
     }
 
     private void handleChat(ChatPacket chatPacket) {

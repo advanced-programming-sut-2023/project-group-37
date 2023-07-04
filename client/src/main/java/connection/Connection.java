@@ -11,6 +11,7 @@ public class Connection {
     private static Connection connection;
     private final DataOutputStream dataOutputStream;
     private final NotificationReceiver notificationReceiver;
+
     public Connection(String host, int port) throws IOException {
         Socket socket = new Socket(host, port);
         DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
