@@ -53,9 +53,7 @@ public class LobbyMenu extends Application {
     public void start(Stage stage) throws Exception {
         URL url = LoginMenu.class.getResource("/FXML/lobbyMenu.fxml");
         AnchorPane anchorPane = FXMLLoader.load(Objects.requireNonNull(url));
-
         MultiMenuFunctions.setBackground(anchorPane, "registration-bg.jpg");
-
         Scene scene = new Scene(anchorPane);
         stage.setScene(scene);
         stage.show();
@@ -63,7 +61,11 @@ public class LobbyMenu extends Application {
 
     @FXML
     private void initialize() {
-        sendButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/send.png", 30).getImage()));
+        this.relationHandler.setCapacity(this.lobbyCapacity);
+        this.relationHandler.setUsernames(this.usernames);
+        this.relationHandler.setTerritories(this.territories);
+        this.sendButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/send.png",
+                30).getImage()));
         this.chatVBox.setBackground(Background.fill(Color.WHITE));
         this.lobbyName.setText(String.valueOf(this.relationHandler.getCurrentLobby().getId()));
     }
@@ -73,7 +75,7 @@ public class LobbyMenu extends Application {
     }
 
     public void send() {
-        relationHandler.sendMessage(chatBox.getText(), Chat.ChatType.ROOM);
-        chatBox.setText("");
+        this.relationHandler.sendMessage(chatBox.getText(), Chat.ChatType.ROOM);
+        this.chatBox.setText("");
     }
 }
