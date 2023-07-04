@@ -146,7 +146,7 @@ public class RelationHandler {
             this.setCurrentRoom(room);
     }
 
-    public void handleRequest(FriendRequestPacket friendRequestPacket) {
+    public void handleFriendRequest(FriendRequestPacket friendRequestPacket) {
         Platform.runLater(() -> {
             Stage stage = new Stage();
             Label label = new Label("A friend request from: " + friendRequestPacket.getSender().getUsername());
@@ -160,6 +160,7 @@ public class RelationHandler {
 
             accept.setOnMouseClicked((MouseEvent mouseEvent) -> {
                 User.getCurrentUser().addFriend(friendRequestPacket.getSender());
+                // TODO create private chat
                 stage.close();
             });
 

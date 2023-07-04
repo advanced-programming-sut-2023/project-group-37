@@ -1,6 +1,8 @@
 package view.menus;
 
+import connection.Connection;
 import connection.RelationHandler;
+import connection.packet.relation.RequestChatPacket;
 import controller.AppController;
 import controller.MultiMenuFunctions;
 import javafx.application.Application;
@@ -17,6 +19,7 @@ import javafx.stage.Stage;
 import model.chat.Chat;
 import model.user.User;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 
@@ -47,6 +50,11 @@ public class ChatMenu extends Application {
     public ChatMenu() {
         this.appController = AppController.getInstance();
         this.relationHandler = RelationHandler.getInstance();
+        try {
+            Connection.getInstance().getDataOutputStream().writeUTF(new RequestChatPacket(relationHandler.getPublicChat()).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         this.relationHandler.setPublicChatVBox(publicChatVBox);
         this.relationHandler.setPrivateChatVBox(privateChatVBox);
         this.relationHandler.setAvatar(avatar);
@@ -71,7 +79,7 @@ public class ChatMenu extends Application {
         sendButtonPublic.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/send.png", 30).getImage()));
     }
 
-    public void addFriend() {
+    public void addFriend() { // TODO send reqChatPacket
         this.relationHandler.sendFriendReq();
     }
 
