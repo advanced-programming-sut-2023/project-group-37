@@ -1,5 +1,6 @@
 package connection;
 
+import connection.packet.game.LobbiesPacket;
 import connection.packet.relation.AcceptRequest;
 import connection.packet.relation.ChatPacket;
 import connection.packet.relation.FriendRequestPacket;
@@ -321,6 +322,14 @@ public class RelationHandler {
     public void sendFriendReq() {
         try {
             Connection.getInstance().getDataOutputStream().writeUTF(new FriendRequestPacket(User.getCurrentUser(), foundFriend).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void sendReqToGetLobbies() {
+        try {
+            Connection.getInstance().getDataOutputStream().writeUTF(new LobbiesPacket(null).toJson()); // null -> Its just a request
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

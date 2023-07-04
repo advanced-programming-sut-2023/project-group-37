@@ -1,6 +1,8 @@
 package view.menus;
 
 import connection.Connection;
+import connection.RelationHandler;
+import connection.packet.game.LobbiesPacket;
 import controller.AppController;
 import controller.MultiMenuFunctions;
 import javafx.application.Application;
@@ -15,12 +17,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import model.chat.Lobby;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class JoinMenu extends Application {
     private final AppController appController;
+    private final RelationHandler relationHandler;
+    private ArrayList<Lobby> lobbies;
     @FXML
     private TextField searchBox;
     @FXML
@@ -40,6 +47,8 @@ public class JoinMenu extends Application {
 
     public JoinMenu() {
         this.appController = AppController.getInstance();
+        lobbies = new ArrayList<>();
+        relationHandler = RelationHandler.getInstance();
     }
 
     @Override
@@ -58,8 +67,14 @@ public class JoinMenu extends Application {
     private void initialize() {
         searchButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/search.jpg", 30)
                 .getImage()));
+        getLobbiesFromMaster();
+    }
+
+    private void getLobbiesFromMaster() {
+        relationHandler.sendReqToGetLobbies();
 
     }
+
 
     public void search(MouseEvent mouseEvent) {
 
