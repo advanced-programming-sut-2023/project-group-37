@@ -13,6 +13,7 @@ public class Lobby {
     private final Chat room;
     private final boolean isPublic;
 
+
     static {
         idCounter = 0;
     }
@@ -51,7 +52,7 @@ public class Lobby {
         this.room.addSubscriber(user);
     }
 
-    public void removeMember (User user) {
+    public void removeMember(User user) {
         this.members.remove(user);
         this.room.removeSubscriber(user);
     }

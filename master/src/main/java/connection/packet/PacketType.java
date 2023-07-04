@@ -18,4 +18,5 @@ public enum PacketType {
     REQ_UPDATE_CHAT,
     TRADE_REQUEST_PACKET,
     ACCEPT_PACKET,
+    LOBBIES_PACKET,
 }

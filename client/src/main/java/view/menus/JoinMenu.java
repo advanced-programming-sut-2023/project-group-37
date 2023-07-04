@@ -1,5 +1,6 @@
 package view.menus;
 
+import connection.RelationHandler;
 import controller.AppController;
 import controller.MultiMenuFunctions;
 import javafx.application.Application;
@@ -14,18 +15,24 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import model.chat.Lobby;
+import model.user.User;
+import view.enums.PopUp;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class JoinMenu extends Application {
     private final AppController appController;
+    private final RelationHandler relationHandler;
+    private ArrayList<Lobby> lobbies;
     @FXML
     private TextField searchBox;
     @FXML
     private Rectangle searchButton;
     @FXML
-    private Label searchedLobby;
+    private Label wantedLobby;
     @FXML
     private AnchorPane showLobbyPane;
     @FXML
@@ -36,9 +43,15 @@ public class JoinMenu extends Application {
     private VBox admins;
     @FXML
     private VBox others;
+    private boolean hasSearched;
+    private Lobby searchedLobby;
 
     public JoinMenu() {
         this.appController = AppController.getInstance();
+        lobbies = new ArrayList<>();
+        relationHandler = RelationHandler.getInstance();
+        hasSearched = false;
+        searchedLobby = null;
     }
 
     @Override
@@ -55,13 +68,49 @@ public class JoinMenu extends Application {
 
     @FXML
     private void initialize() {
-        searchButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/search.jpg", 30).getImage()));
+        relationHandler.setLobbyNames(names);
+        relationHandler.setLobbyCapacities(capacities);
+        relationHandler.setLobbyAdmin(admins);
+        relationHandler.setLobbyOthers(others);
+        searchButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/search.jpg", 30)
+                .getImage()));
+        relationHandler.getLobbiesFromMaster();
+        relationHandler.showLobbies();
     }
 
     public void search(MouseEvent mouseEvent) {
+        if (searchBox.getText().isEmpty()) {
+            PopUp.EMPTY_FIELD.show();
+            return;
+        }
+        Lobby searchedLobby = relationHandler.searchLobby(searchBox.getText());
+        if (searchedLobby == null) {
+            PopUp.LOBBY_NOT_FOUND.show();
+            return;
+        }
+        relationHandler.clearVBoxes();
+        relationHandler.addLobbyToPane(searchedLobby);
+        hasSearched = true;
     }
 
     public void join(MouseEvent mouseEvent) {
-
+        if (!hasSearched || searchedLobby == null) {
+            PopUp.SEARCH_LOBBY.show();
+            return;
+        }
+        searchedLobby.addMember(User.getCurrentUser());
+        //nothing to do after joining a lobby ??
     }
+
+    public void refresh(MouseEvent mouseEvent) {
+        relationHandler.showLobbies();
+        hasSearched = false;
+        searchedLobby = null;
+    }
+
+    public void startGame(MouseEvent mouseEvent) {
+        //TODO : start online game
+    }
+
+
 }
