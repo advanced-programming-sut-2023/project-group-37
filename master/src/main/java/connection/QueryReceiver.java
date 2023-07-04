@@ -10,6 +10,7 @@ import connection.packet.relation.FriendRequestPacket;
 import connection.packet.relation.LobbyPacket;
 import connection.packet.relation.RequestLobbyPacket;
 import model.chat.Lobby;
+import model.chat.PublicChat;
 import model.user.User;
 import view.enums.Message;
 
@@ -59,6 +60,12 @@ public class QueryReceiver extends Thread {
 
     @Override
     public synchronized void run() {
+        try {
+            this.dataOutputStream.writeUTF(new ChatPacket(PublicChat.getInstance()).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         DataInputStream dataInputStream;
         try {
             dataInputStream = new DataInputStream(this.socket.getInputStream());

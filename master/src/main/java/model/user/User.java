@@ -221,7 +221,7 @@ public class User implements Serializable {
     }
 
     public boolean isWrongHashedPassword(String hashedPassword) {
-        return !this.hashedPassword.equals(hashedPassword);
+        return this.hashedPassword.equals(hashedPassword);
     }
 
     public boolean isWrongAnswer(String answer) {
@@ -348,6 +348,18 @@ public class User implements Serializable {
         }
     }
 
+    public Chat getChatById(int id) {
+        for (Chat chat : this.chats) {
+            if (chat.getId() == id)
+                return chat;
+        }
+        return null;
+    }
+
+    public void removeChatById(int id) {
+        this.chats.removeIf(chat -> chat.getId() == id);
+    }
+
     public ArrayList<User> getFriends() {
         return this.friends;
     }
@@ -364,12 +376,12 @@ public class User implements Serializable {
         this.chats = chats;
     }
 
-    public void addFriend(User friend){
+    public void addFriend(User friend) {
         this.friends.add(friend);
     }
 
     public void joinChat(Chat chat) {
+        this.removeChatById(chat.getId());
         this.chats.add(chat);
     }
-
 }
