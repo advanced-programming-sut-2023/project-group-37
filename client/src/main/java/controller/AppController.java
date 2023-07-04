@@ -114,6 +114,10 @@ public class AppController {
     }
 
     public void createLobby(LobbyPacket lobbyPacket) {
-        // todo
+        try {
+            new LobbyMenu().start(this.stage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

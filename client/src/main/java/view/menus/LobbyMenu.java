@@ -65,6 +65,7 @@ public class LobbyMenu extends Application {
     private void initialize() {
         sendButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/send.png", 30).getImage()));
         this.chatVBox.setBackground(Background.fill(Color.WHITE));
+        this.lobbyName.setText(String.valueOf(this.relationHandler.getCurrentLobby().getId()));
     }
 
     public void leaveLobby() {
