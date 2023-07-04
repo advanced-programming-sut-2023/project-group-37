@@ -10,6 +10,7 @@ public class AliveListener extends Thread {
     static {
         aliveListener = new AliveListener();
     }
+
     public AliveListener() {
         this.queryReceivers = new ArrayList<>();
         this.databaseController = DatabaseController.getInstance();
@@ -22,6 +23,7 @@ public class AliveListener extends Thread {
     public synchronized void addQueryReceiver(QueryReceiver queryReceiver) {
         this.queryReceivers.add(queryReceiver);
     }
+
     @Override
     public void run() {
         while (true) {

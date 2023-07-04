@@ -1,7 +1,5 @@
 package view.menus;
 
-import connection.Connection;
-import connection.packet.relation.SearchPacket;
 import connection.RelationHandler;
 import controller.AppController;
 import controller.MultiMenuFunctions;
@@ -10,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
@@ -20,7 +17,6 @@ import javafx.stage.Stage;
 import model.chat.Chat;
 import model.user.User;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 
