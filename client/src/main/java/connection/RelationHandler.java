@@ -80,8 +80,7 @@ public class RelationHandler {
 
             for (ChatMessage chatMessage : this.publicChat.getMessages())
                 this.publicChatVBox.getChildren().add(this.createMessagePane(chatMessage));
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
 
         }
     }
@@ -94,8 +93,7 @@ public class RelationHandler {
 
             for (ChatMessage chatMessage : this.currentRoom.getMessages())
                 this.roomVBox.getChildren().add(this.createMessagePane(chatMessage));
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
 
         }
     }
@@ -108,8 +106,7 @@ public class RelationHandler {
 
             for (ChatMessage chatMessage : this.currentPrivateChat.getMessages())
                 this.privateChatVBox.getChildren().add(this.createMessagePane(chatMessage));
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
 
         }
     }
@@ -124,8 +121,6 @@ public class RelationHandler {
     }
 
     public void handlePublicChat(Chat chat) {
-        System.out.println("PUB");
-        System.out.println(chat);
         this.publicChat = chat;
         User.getCurrentUser().joinChat(chat);
         this.setPublicChat(chat);
@@ -208,9 +203,10 @@ public class RelationHandler {
         messagePane.setPrefWidth(400);
         messagePane.setPrefHeight(30);
         Label contentLabel = new Label(content);
-        contentLabel.setBackground(Background.fill(Color.BLUE));
-        contentLabel.setLayoutX(100);
-        contentLabel.setLayoutY(5);
+        contentLabel.setBackground(Background.fill(Color.LIGHTBLUE));
+        contentLabel.setStyle("-fx-font-size: 30");
+        contentLabel.setLayoutX(400 - contentLabel.getPrefWidth());
+        contentLabel.setLayoutY(10);
 
         Label timeLabel = new Label(chatMessage.getFormattedTimeSent());
         timeLabel.setLayoutX(200);
