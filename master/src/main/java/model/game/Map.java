@@ -28,8 +28,8 @@ public class Map {
         this.initializeTiles();
     }
 
-    public Map(String name, int size, Tile[][] map, boolean[][] tilesPassability,
-               HashMap<Integer, Territory> territories) {
+    public Map(String name, int size, Tile[][] map, boolean[][] tilesPassability, HashMap<Integer,
+            Territory> territories) {
         this.name = name;
         this.size = size;
         this.field = map;
@@ -83,12 +83,9 @@ public class Map {
 
     public void updateImages() {
         MultiMenuFunctions.removeAllImages();
-
-        for (Tile[] tiles : this.field) {
-            for (int j = 0; j < this.field.length; j++) {
+        for (Tile[] tiles : this.field)
+            for (int j = 0; j < this.field.length; j++)
                 tiles[j].updateImage();
-            }
-        }
     }
 
     public void updateLordImage() {
@@ -100,17 +97,15 @@ public class Map {
     }
 
     public void updateSizes() {
-        for (Tile[] tiles : this.field) {
+        for (Tile[] tiles : this.field)
             for (int j = 0; j < this.field[0].length; j++)
                 tiles[j].updateSize();
-        }
     }
 
     public void decreaseSize() {
-        for (Tile[] tiles : this.field) {
+        for (Tile[] tiles : this.field)
             for (int j = 0; j < this.field[0].length; j++)
                 tiles[j].updateSize();
-        }
     }
 
     public void setTilesPassability() {
@@ -128,12 +123,11 @@ public class Map {
     public Tile getTileByLocation(int x, int y) {
         if (x >= this.size || y >= this.size || x < 0 || y < 0)
             return null;
-
         return this.field[x][y];
     }
 
     public Tile getTileByXY(double x, double y) {
-        return this.getTileByLocation((int) x/20, (int) y/20);
+        return this.getTileByLocation((int) x / 20, (int) y / 20);
     }
 
     public ArrayList<Tile> getRectangleTilesByXY(double firstX, double firstY, double secondX, double secondY) {
@@ -148,7 +142,6 @@ public class Map {
         }
 
         Tile.setSelectedTiles(rectangleTiles);
-
         return rectangleTiles;
     }
 
