@@ -97,7 +97,25 @@ public class QueryReceiver extends Thread {
     }
 
     private void updateChat(RequestChatPacket requestChatPacket) {
+        switch (requestChatPacket.getChat().getType()) {
+            case PUBLIC -> sendPublic();
+            case PRIVATE -> sendPrivate();
+            case ROOM -> sendRoom();
+        }
+    }
 
+    private void sendRoom() {
+    }
+
+    private void sendPrivate() {
+    }
+
+    private void sendPublic() {
+        try {
+            this.dataOutputStream.writeUTF(new ChatPacket(databaseController.getPublicChat()).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

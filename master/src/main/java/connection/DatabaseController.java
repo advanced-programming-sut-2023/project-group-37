@@ -97,6 +97,10 @@ public class DatabaseController {
             }
     }
 
+    public PublicChat getPublicChat() {
+        return publicChat;
+    }
+
     public Chat getRoomById(int id) {
         for (Chat room : this.rooms) {
             if (room.getId() == id)
