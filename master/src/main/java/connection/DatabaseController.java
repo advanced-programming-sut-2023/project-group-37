@@ -18,14 +18,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DatabaseController {
-
     private static final DatabaseController DATABASE_CONTROLLER;
     private final ArrayList<Session> currentSessions;
     private final HashMap<User, DataInputStream> dataInputStreams;
     private final HashMap<User, DataOutputStream> dataOutputStreams;
     private final ArrayList<Chat> rooms;
     private final ArrayList<Lobby> lobbies;
-    private final PublicChat publicChat;
+    private PublicChat publicChat;
     private final Gson gson;
 
     static {
@@ -57,8 +56,13 @@ public class DatabaseController {
         return null;
     }
 
-    public void addSession(User user, Socket socket) throws IOException {
+    public synchronized void addSession(User user, Socket socket) throws IOException {
         DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+        this.publicChat.addSubscriber(user);
+        for (Session session : this.currentSessions) {
+            this.dataOutputStreams.get(session.getUser()).writeUTF(new ChatPacket(publicChat).toJson());
+        }
+
         this.currentSessions.add(new Session(user));
         this.dataOutputStreams.put(user, dataOutputStream);
         this.dataInputStreams.put(user, new DataInputStream(socket.getInputStream()));
@@ -109,6 +113,14 @@ public class DatabaseController {
         return null;
     }
 
+    public Lobby getLobbyById(int id) {
+        for (Lobby lobby : this.lobbies) {
+            if (lobby.getId() == id)
+                return lobby;
+        }
+        return null;
+    }
+
     public void joinAtRoom(User user, int id) {
         Chat room;
         if ((room = this.getRoomById(id)) != null)
@@ -116,6 +128,19 @@ public class DatabaseController {
     }
 
     public void joinAtLobby(User user, int id) {
+        Lobby lobby;
+        if ((lobby = this.lobbies.get(id)) != null)
+            lobby.addMember(user);
+    }
 
+    public void updatePublicChat(PublicChat publicChat) {
+        this.publicChat = publicChat;
+        for (Session session : this.currentSessions) {
+            try {
+                this.dataOutputStreams.get(session.getUser()).writeUTF(new ChatPacket(publicChat).toJson());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

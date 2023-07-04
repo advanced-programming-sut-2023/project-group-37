@@ -8,6 +8,7 @@ import connection.packet.registration.RegisterPacket;
 import connection.packet.relation.*;
 import model.chat.Chat;
 import model.chat.Lobby;
+import model.chat.PublicChat;
 import model.user.User;
 import view.enums.Message;
 
@@ -36,7 +37,7 @@ public class QueryReceiver extends Thread {
         this.isDead = false;
     }
 
-    private void handleFriendRequestPacket(FriendRequestPacket friendRequestPacket) {
+    private synchronized void handleFriendRequestPacket(FriendRequestPacket friendRequestPacket) {
         try {
             DatabaseController.getInstance().getUserDataOutputStream(
                     friendRequestPacket.getReceiver()).writeUTF(friendRequestPacket.toJson());
@@ -45,14 +46,19 @@ public class QueryReceiver extends Thread {
         }
     }
 
-    private void handleChatPacket(ChatPacket packet) {
-        // TODO: do we need to exclude the sender himself?
-        // TODO: add try catch or anything to avoid NullPointerException...
-        for (User subscriber : packet.getChat().getSubscribers()) {
-            try {
-                DatabaseController.getInstance().getUserDataOutputStream(subscriber).writeUTF(packet.toJson());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+    private synchronized void handleChatPacket(ChatPacket chatPacket) {
+        if (chatPacket.getChat().getType() == Chat.ChatType.PUBLIC) {
+            databaseController.updatePublicChat((PublicChat) chatPacket.getChat());
+            return;
+        }
+
+        for (User subscriber : chatPacket.getChat().getSubscribers()) {
+            if (!subscriber.getUsername().equals(this.user.getUsername())) {
+                try {
+                    DatabaseController.getInstance().getUserDataOutputStream(subscriber).writeUTF(chatPacket.toJson());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
@@ -110,7 +116,7 @@ public class QueryReceiver extends Thread {
 
     }
 
-    private void updateChat(RequestChatPacket requestChatPacket) {
+    private synchronized void updateChat(RequestChatPacket requestChatPacket) {
         switch (requestChatPacket.getChat().getType()) {
             case PUBLIC -> sendPublic();
             case PRIVATE -> sendPrivate();
@@ -118,7 +124,7 @@ public class QueryReceiver extends Thread {
         }
     }
 
-    private void sendRoom(RequestChatPacket requestChatPacket) {
+    private synchronized void sendRoom(RequestChatPacket requestChatPacket) {
         Chat wantedRoom = databaseController.getRoomById(requestChatPacket.getChat().getId());
         try {
             this.dataOutputStream.writeUTF(new ChatPacket(wantedRoom).toJson());
@@ -127,11 +133,11 @@ public class QueryReceiver extends Thread {
         }
     }
 
-    private void sendPrivate() {
+    private synchronized void sendPrivate() {
 
     }
 
-    private void sendPublic() {
+    private synchronized void sendPublic() {
         try {
             this.dataOutputStream.writeUTF(new ChatPacket(databaseController.getPublicChat()).toJson());
         } catch (IOException e) {
@@ -140,7 +146,7 @@ public class QueryReceiver extends Thread {
     }
 
 
-    private void searchFriend(SearchPacket searchPacket) {
+    private synchronized void searchFriend(SearchPacket searchPacket) {
         User friend;
         if ((friend = User.getUserByUsername(searchPacket.getUsername())) == null) {
             try {
@@ -177,7 +183,7 @@ public class QueryReceiver extends Thread {
         }
     }
 
-    private void handleLogin(LoginPacket loginPacket) {
+    private synchronized void handleLogin(LoginPacket loginPacket) {
         System.out.println("Q : login handle");
         User user;
         try {
@@ -197,7 +203,7 @@ public class QueryReceiver extends Thread {
         }
     }
 
-    private void createLobby(RequestLobbyPacket requestLobbyPacket) {
+    private synchronized void createLobby(RequestLobbyPacket requestLobbyPacket) {
         try {
             this.dataOutputStream.writeUTF(new LobbyPacket(new Lobby(
                     this.user, requestLobbyPacket.getCapacity(), requestLobbyPacket.isPublic())).toJson());
@@ -206,7 +212,7 @@ public class QueryReceiver extends Thread {
         }
     }
 
-    public void setIsDead(boolean isDead) {
+    public synchronized void setIsDead(boolean isDead) {
         this.isDead = isDead;
     }
 
