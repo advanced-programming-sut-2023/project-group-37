@@ -12,5 +12,7 @@ public enum PacketType {
     CHAT_PACKET,
     POPUP_PACKET,
     TILES_PACKET,
+    SEARCH_PACKET,
+    FOUND_USER_PACKET,
 
 }

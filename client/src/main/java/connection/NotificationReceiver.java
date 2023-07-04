@@ -5,6 +5,7 @@ import connection.packet.*;
 import connection.packet.game.TilesPacket;
 import connection.packet.registration.UserPacket;
 import connection.packet.relation.ChatPacket;
+import connection.packet.relation.FoundUserPacket;
 import connection.packet.relation.FriendRequestPacket;
 import connection.packet.relation.LobbyPacket;
 import controller.AppController;
@@ -50,8 +51,14 @@ public class NotificationReceiver extends Thread {
                 case LOBBY_PACKET -> this.createLobby(gson.fromJson(data, LobbyPacket.class));
                 case CHAT_PACKET -> this.handleChat(gson.fromJson(data, ChatPacket.class));
                 case TILES_PACKET -> this.handleTiles(gson.fromJson(data, TilesPacket.class));
+                case FOUND_USER_PACKET -> this.handleFoundFriend(gson.fromJson(data, FoundUserPacket.class));
             }
         }
+    }
+
+    private void handleFoundFriend(FoundUserPacket foundUserPacket) {
+        User friend = foundUserPacket.getFoundUser();
+        
     }
 
     private void handleChat(ChatPacket chatPacket) {

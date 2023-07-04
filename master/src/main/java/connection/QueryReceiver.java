@@ -5,10 +5,7 @@ import connection.packet.*;
 import connection.packet.game.TilesPacket;
 import connection.packet.registration.LoginPacket;
 import connection.packet.registration.RegisterPacket;
-import connection.packet.relation.ChatPacket;
-import connection.packet.relation.FriendRequestPacket;
-import connection.packet.relation.LobbyPacket;
-import connection.packet.relation.RequestLobbyPacket;
+import connection.packet.relation.*;
 import model.chat.Lobby;
 import model.chat.PublicChat;
 import model.user.User;
@@ -99,6 +96,25 @@ public class QueryReceiver extends Thread {
                 case ALIVE_PACKET -> this.setQueryAlive(true);
                 case LOGOUT_PACKET -> this.databaseController.endSession(this.user);
                 case REQUEST_LOBBY_PACKET -> this.createLobby(gson.fromJson(data, RequestLobbyPacket.class));
+                case SEARCH_PACKET -> this.searchFriend(gson.fromJson(data, SearchPacket.class));
+            }
+        }
+    }
+
+
+    private void searchFriend(SearchPacket searchPacket) {
+        User friend;
+        if ((friend = User.getUserByUsername(searchPacket.getUsername())) == null) {
+            try {
+                this.dataOutputStream.writeUTF(new PopUpPacket(Message.USER_NOT_EXISTS, true).toJson());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            try {
+                this.dataOutputStream.writeUTF(new FoundUserPacket(friend).toJson());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }
