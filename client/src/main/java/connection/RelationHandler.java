@@ -90,8 +90,8 @@ public class RelationHandler {
 
         Label nickName = new Label(friend.getNickName());
         nickName.setLayoutY(10);
-        nickName.setLayoutX(50);
-        nickName.setFont(new Font(20));
+        nickName.setLayoutX(80);
+        nickName.setFont(new Font(30));
 
         Pane friendPane = new Pane(circle, nickName);
         friendPane.setOnMouseClicked((MouseEvent mouseEvent) -> this.setCurrentPrivateChat(privateChat));
@@ -129,6 +129,9 @@ public class RelationHandler {
     private void addPrivateChat(Chat privateChat) {
         System.out.println("ADD PRIVATE CHAT");
         this.privateChats.add(privateChat);
+        if (this.currentPrivateChat == null)
+            this.currentPrivateChat = privateChat;
+
         Platform.runLater(() -> {
             try {
                 if (this.friendsVBox.getChildren().size() > 0)
@@ -143,6 +146,7 @@ public class RelationHandler {
     }
 
     private void setCurrentPrivateChat(Chat privateChat) {
+        this.currentPrivateChat = privateChat;
         Platform.runLater(() -> {
             try {
                 this.currentPrivateChat = privateChat;
