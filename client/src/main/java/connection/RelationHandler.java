@@ -415,12 +415,12 @@ public class RelationHandler {
     private String setOtherUsers(Lobby lobby) {
         String others = "";
         int counter = 0;
-        for (User member : lobby.getMembers()) {
+        for (User member : lobby.getGovernments().keySet()) {
             if (!member.equals(lobby.getAdmin())) {
                 others += counter + ". " + member.getNickName();
                 counter++;
             }
-            if (counter != lobby.getMembers().size() - 1) {
+            if (counter != lobby.getGovernments().size() - 1) {
                 others += ", ";
             }
         }
