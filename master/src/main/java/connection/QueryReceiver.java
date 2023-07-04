@@ -6,8 +6,8 @@ import connection.packet.game.TilesPacket;
 import connection.packet.registration.LoginPacket;
 import connection.packet.registration.RegisterPacket;
 import connection.packet.relation.*;
+import model.chat.Chat;
 import model.chat.Lobby;
-import model.chat.PublicChat;
 import model.user.User;
 import view.enums.Message;
 
@@ -100,14 +100,21 @@ public class QueryReceiver extends Thread {
         switch (requestChatPacket.getChat().getType()) {
             case PUBLIC -> sendPublic();
             case PRIVATE -> sendPrivate();
-            case ROOM -> sendRoom();
+            case ROOM -> sendRoom(requestChatPacket);
         }
     }
 
-    private void sendRoom() {
+    private void sendRoom(RequestChatPacket requestChatPacket) {
+        Chat wantedRoom = databaseController.getRoomById(requestChatPacket.getChat().getId());
+        try {
+            this.dataOutputStream.writeUTF(new ChatPacket(wantedRoom).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void sendPrivate() {
+
     }
 
     private void sendPublic() {
