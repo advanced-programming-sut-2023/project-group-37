@@ -2,7 +2,6 @@ package model.buildings;
 
 import model.game.Government;
 import model.game.Tile;
-import model.people.MilitaryUnit;
 
 import java.util.ArrayList;
 

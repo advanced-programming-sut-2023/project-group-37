@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
@@ -78,7 +77,7 @@ public class JoinMenu extends Application {
         relationHandler.showLobbies();
     }
 
-    public void search(MouseEvent mouseEvent) {
+    public void search() {
         if (searchBox.getText().isEmpty()) {
             PopUp.EMPTY_FIELD.show();
             return;
@@ -93,7 +92,7 @@ public class JoinMenu extends Application {
         hasSearched = true;
     }
 
-    public void join(MouseEvent mouseEvent) {
+    public void join() {
         if (!hasSearched || searchedLobby == null) {
             PopUp.SEARCH_LOBBY.show();
             return;
@@ -102,15 +101,10 @@ public class JoinMenu extends Application {
         //nothing to do after joining a lobby ??
     }
 
-    public void refresh(MouseEvent mouseEvent) {
+    public void refresh() {
         relationHandler.showLobbies();
         hasSearched = false;
         searchedLobby = null;
     }
-
-    public void startGame(MouseEvent mouseEvent) {
-        //TODO : start online game
-    }
-
 
 }

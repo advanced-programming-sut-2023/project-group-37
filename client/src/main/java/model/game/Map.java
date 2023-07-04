@@ -1,7 +1,11 @@
 package model.game;
 
+import com.google.gson.Gson;
 import controller.MultiMenuFunctions;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,8 +32,8 @@ public class Map {
         this.initializeTiles();
     }
 
-    public Map(String name, int size, Tile[][] map, boolean[][] tilesPassability,
-               HashMap<Integer, Territory> territories) {
+    public Map(String name, int size, Tile[][] map, boolean[][] tilesPassability, HashMap<Integer,
+            Territory> territories) {
         this.name = name;
         this.size = size;
         this.field = map;
@@ -56,7 +60,26 @@ public class Map {
     }
 
     public static void loadMaps() {
+        System.out.println("mofo");
         maps.add(GenerateMap.createMap1());
+        maps.add(GenerateMap.createMap2());
+        maps.add(GenerateMap.createMap3());
+        Gson gson = new Gson();
+        String filePath = "./master/src/main/resources/Database/sampleMaps.json";
+        try {
+            FileWriter fileWriter = new FileWriter(filePath);
+            fileWriter.write("Hello");
+            fileWriter.close();
+            System.out.println("closed");
+        } catch (IOException ignored) {
+            System.out.println("ERRORED");
+            File file = new File(filePath);
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public String getName() {
@@ -82,12 +105,9 @@ public class Map {
 
     public void updateImages() {
         MultiMenuFunctions.removeAllImages();
-
-        for (Tile[] tiles : this.field) {
-            for (int j = 0; j < this.field.length; j++) {
+        for (Tile[] tiles : this.field)
+            for (int j = 0; j < this.field.length; j++)
                 tiles[j].updateImage();
-            }
-        }
     }
 
     public void updateLordImage() {
@@ -99,17 +119,15 @@ public class Map {
     }
 
     public void updateSizes() {
-        for (Tile[] tiles : this.field) {
+        for (Tile[] tiles : this.field)
             for (int j = 0; j < this.field[0].length; j++)
                 tiles[j].updateSize();
-        }
     }
 
     public void decreaseSize() {
-        for (Tile[] tiles : this.field) {
+        for (Tile[] tiles : this.field)
             for (int j = 0; j < this.field[0].length; j++)
                 tiles[j].updateSize();
-        }
     }
 
     public void setTilesPassability() {
@@ -127,12 +145,11 @@ public class Map {
     public Tile getTileByLocation(int x, int y) {
         if (x >= this.size || y >= this.size || x < 0 || y < 0)
             return null;
-
         return this.field[x][y];
     }
 
     public Tile getTileByXY(double x, double y) {
-        return this.getTileByLocation((int) x/20, (int) y/20);
+        return this.getTileByLocation((int) x / 20, (int) y / 20);
     }
 
     public ArrayList<Tile> getRectangleTilesByXY(double firstX, double firstY, double secondX, double secondY) {
@@ -142,11 +159,11 @@ public class Map {
 
         for (int i = Math.min(firstTile.getLocationX(), secondTile.getLocationX());
              i <= Math.max(firstTile.getLocationX(), secondTile.getLocationX()); i++) {
-            rectangleTiles.addAll(Arrays.asList(this.field[i]).subList(Math.min(firstTile.getLocationY(), secondTile.getLocationY()), Math.max(firstTile.getLocationY(), secondTile.getLocationY()) + 1));
+            rectangleTiles.addAll(Arrays.asList(this.field[i]).subList(Math.min(firstTile.getLocationY(),
+                    secondTile.getLocationY()), Math.max(firstTile.getLocationY(), secondTile.getLocationY()) + 1));
         }
 
         Tile.setSelectedTiles(rectangleTiles);
-
         return rectangleTiles;
     }
 

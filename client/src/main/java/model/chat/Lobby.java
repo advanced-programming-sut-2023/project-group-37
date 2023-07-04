@@ -58,4 +58,8 @@ public class Lobby {
         this.users.remove(user);
         this.room.removeSubscriber(user);
     }
+
+    public boolean isPublic() {
+        return isPublic;
+    }
 }

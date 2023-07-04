@@ -119,7 +119,7 @@ public class MainMenu extends Application {
 
         TextInputDialog privateInputDialog = new TextInputDialog("T");
         privateInputDialog.setHeaderText("Want your lobby be public ?");
-        textInputDialog.showAndWait();
+        privateInputDialog.showAndWait();
 
 
         String isPublicString = textInputDialog.getEditor().getText();

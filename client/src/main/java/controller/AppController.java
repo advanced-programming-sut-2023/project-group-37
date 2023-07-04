@@ -118,7 +118,7 @@ public class AppController {
         });
     }
 
-    public void createLobby(LobbyPacket lobbyPacket) {
+    public void createLobby() {
         try {
             new LobbyMenu().start(this.stage);
         } catch (Exception e) {

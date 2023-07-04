@@ -4,7 +4,6 @@ import controller.GameController;
 import controller.MultiMenuFunctions;
 import model.buildings.*;
 import model.people.*;
-import view.animation.FaceAnimation;
 
 import java.util.ArrayList;
 

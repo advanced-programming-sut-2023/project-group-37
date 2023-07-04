@@ -91,7 +91,7 @@ public class NotificationReceiver extends Thread {
 
     private void createLobby(LobbyPacket lobbyPacket) {
         this.relationHandler.setCurrentLobby(lobbyPacket.getLobby());
-        this.appController.createLobby(lobbyPacket);
+        this.appController.createLobby();
     }
 
     private void handleTiles(TilesPacket tilesPacket) {

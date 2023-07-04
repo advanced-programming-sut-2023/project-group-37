@@ -228,6 +228,8 @@ public class QueryReceiver extends Thread {
         try {
             this.dataOutputStream.writeUTF(new LobbyPacket(new Lobby(
                     this.user, requestLobbyPacket.getCapacity(), requestLobbyPacket.isPublic())).toJson());
+            System.out.println(new LobbyPacket(new Lobby(
+                    this.user, requestLobbyPacket.getCapacity(), requestLobbyPacket.isPublic())).toJson());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
