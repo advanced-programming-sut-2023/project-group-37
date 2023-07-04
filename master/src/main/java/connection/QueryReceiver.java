@@ -132,16 +132,13 @@ public class QueryReceiver extends Thread {
                 try {
                     this.databaseController.addSession(user, this.socket);
                     this.dataOutputStream.writeUTF(new PopUpPacket(Message.LOGIN_SUCCESSFUL, false).toJson());
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
                 this.gamingController = new GamingController(user);
-            }
-            else this.dataOutputStream.writeUTF(new PopUpPacket(Message.CANT_LOGIN, true).toJson());
+            } else this.dataOutputStream.writeUTF(new PopUpPacket(Message.CANT_LOGIN, true).toJson());
 
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
