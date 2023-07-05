@@ -21,6 +21,7 @@ public class User implements Serializable {
     private static User currentUser;
     private static ArrayList<User> users;
     private static final Gson gson;
+    private boolean isOnline;
     private ArrayList<Chat> chats;
     private ArrayList<User> friends;
     private String username;
@@ -52,6 +53,7 @@ public class User implements Serializable {
         this.avatarNumber = ProfileMenuController.getRandomAvatarURL();
         this.friends = new ArrayList<>();
         this.chats = new ArrayList<>();
+        this.isOnline = false;
         users.add(this);
         User.updateDatabase();
     }
@@ -383,5 +385,13 @@ public class User implements Serializable {
     public void joinChat(Chat chat) {
         this.removeChatById(chat.getId());
         this.chats.add(chat);
+    }
+
+    public void setOnline(boolean b) {
+        this.isOnline = b;
+    }
+
+    public boolean getOnline() {
+        return this.isOnline;
     }
 }

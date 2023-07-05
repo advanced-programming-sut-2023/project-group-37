@@ -101,6 +101,7 @@ public class MainMenu extends Application {
 
     public void logout() throws Exception {
         Connection.getInstance().getDataOutputStream().writeUTF(new LogoutPacket().toJson());
+        User.getCurrentUser().setOnline(false);
         this.mainMenuController.logout();
         appController.runMenu(Result.ENTER_LOGIN_MENU);
     }

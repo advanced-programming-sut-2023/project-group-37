@@ -20,6 +20,7 @@ public class SessionCloser extends Thread {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+                databaseController.getCurrentSessions().get(i).getUser().setOnline(false);
                 databaseController.getCurrentSessions().remove(i);
             }
 

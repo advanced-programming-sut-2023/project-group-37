@@ -353,6 +353,7 @@ public class QueryReceiver extends Thread {
             if ((user = this.registrationController.handleLogin(loginPacket)) != null) {
                 this.user = user;
                 try {
+                    user.setOnline(true);
                     this.databaseController.addSession(user, this.socket);
                     this.dataOutputStream.writeUTF(new PopUpPacket(Message.LOGIN_SUCCESSFUL, false).toJson());
                 } catch (IOException e) {
