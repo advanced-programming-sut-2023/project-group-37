@@ -49,6 +49,7 @@ public class Lobby {
 
     public void addUser(User user) {
         this.users.add(user);
+        this.room.addSubscriber(user);
     }
 
     public void removeMember (User user) {

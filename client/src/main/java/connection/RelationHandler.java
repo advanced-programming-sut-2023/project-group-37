@@ -182,7 +182,7 @@ public class RelationHandler {
         Label contentLabel = new Label("   " + chatMessage.getMessage());
         Label timeLabel = new Label(chatMessage.getFormattedTimeSent());
         timeLabel.setLayoutY(15);
-        contentLabel.setLayoutY(10);
+        contentLabel.setLayoutY(12);
         contentLabel.setPrefWidth(300);
         if (User.getCurrentUser().getUsername().equals(chatMessage.getSenderUsername())) {
             contentLabel.setBackground(Background.fill(Color.LIGHTPINK));
@@ -394,7 +394,7 @@ public class RelationHandler {
         contentLabel.setBackground(Background.fill(Color.LIGHTPINK));
         contentLabel.setStyle("-fx-font-size: 15");
         contentLabel.setLayoutX(90);
-        contentLabel.setLayoutY(10);
+        contentLabel.setLayoutY(12);
         contentLabel.setPrefWidth(300);
 
         Label timeLabel = new Label(chatMessage.getFormattedTimeSent());
@@ -492,25 +492,26 @@ public class RelationHandler {
 
     public void addLobbyToPane(Lobby lobby) {
         Label name = new Label("" + lobby.getId());
-        name.setStyle("-fx-font-size: 10");
+        name.setPrefHeight(20);
         lobbyNames.getChildren().add(name);
 
         Label capacity = new Label("" + lobby.getCapacity());
-        capacity.setStyle("-fx-font-size: 10");
+        capacity.setPrefHeight(20);
         lobbyCapacities.getChildren().add(capacity);
 
         Label admin = new Label(lobby.getAdmin().getNickName());
-        admin.setStyle("-fx-font-size: 10");
-        lobbyCapacities.getChildren().add(admin);
+        admin.setPrefHeight(20);
+        lobbyAdmin.getChildren().add(admin);
 
         Label others = new Label(setOtherUsers(lobby));
         others.setStyle("-fx-font-size: 10");
-        lobbyCapacities.getChildren().add(others);
+        others.setPrefHeight(20);
+        lobbyOthers.getChildren().add(others);
     }
 
     private String setOtherUsers(Lobby lobby) {
         StringBuilder others = new StringBuilder();
-        int counter = 0;
+        int counter = 1;
         for (User member : lobby.getUsers()) {
             if (!member.equals(lobby.getAdmin())) {
                 others.append(counter).append(". ").append(member.getNickName());
@@ -520,7 +521,6 @@ public class RelationHandler {
                 others.append(", ");
             }
         }
-        //System.out.println(others); //test
         return others.toString();
     }
 

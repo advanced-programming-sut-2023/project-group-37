@@ -75,7 +75,8 @@ public class LobbyMenu extends Application {
         this.startButton.setBackground(Background.fill(Color.GREEN));
         this.leaveButton.setBackground(Background.fill(Color.RED));
 
-        this.startButton.setDisable(!User.getCurrentUser().getUsername().equals(relationHandler.getCurrentLobby().getAdmin().getUsername()));
+        this.startButton.setDisable(!User.getCurrentUser().getUsername().equals(
+                relationHandler.getCurrentLobby().getAdmin().getUsername()));
 
         this.relationHandler.setUsernames(this.usernames);
         this.relationHandler.setTerritories(this.territories);
