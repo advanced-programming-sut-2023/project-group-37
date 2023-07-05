@@ -7,23 +7,15 @@ import connection.packet.registration.LoginPacket;
 import connection.packet.registration.RegisterPacket;
 import connection.packet.registration.UserPacket;
 import connection.packet.relation.*;
-import controller.GameController;
 import model.chat.Chat;
 import model.chat.Lobby;
-import model.game.Game;
-import model.game.GameColor;
-import model.game.Government;
-import model.game.Map;
 import model.user.User;
 import view.enums.Message;
-import view.enums.Result;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class QueryReceiver extends Thread {
     private final RegistrationController registrationController;
@@ -80,18 +72,24 @@ public class QueryReceiver extends Thread {
         }
 
         Gson gson = new Gson();
-        String data;
+        String data = "";
 
         while (!this.isDead) {
             try {
                 data = dataInputStream.readUTF();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            } catch (Exception ignored) {
             }
 
-            Packet packet = gson.fromJson(data, Packet.class);
+            Packet packet;
+            try {
+                packet = gson.fromJson(data, Packet.class);
+            }
+            catch (Exception ignored) {
+                continue;
+            }
             PacketType type = packet.getType();
 
+            this.setQueryAlive(true);
             switch (type) {
                 case LOGIN_PACKET -> this.handleLogin(gson.fromJson(data, LoginPacket.class));
                 case REGISTER_PACKET -> this.handleRegister(gson.fromJson(data, RegisterPacket.class));
@@ -99,8 +97,7 @@ public class QueryReceiver extends Thread {
                 case FRIEND_REQUEST_PACKET -> this.handleFriendRequestPacket(gson.fromJson(data,
                         FriendRequestPacket.class));
                 case CHAT_PACKET -> this.handleChatPacket(gson.fromJson(data, ChatPacket.class));
-                case ALIVE_PACKET -> this.setQueryAlive(true);
-                case LOGOUT_PACKET -> this.databaseController.endSession(this.user);
+                case LOGOUT_PACKET -> this.databaseController.endSession(this.user.getUsername());
                 case REQUEST_LOBBY_PACKET -> this.createLobby(gson.fromJson(data, RequestLobbyPacket.class));
                 case SEARCH_PACKET -> this.searchFriend(gson.fromJson(data, SearchPacket.class));
                 case REQ_UPDATE_CHAT -> this.updateChat(gson.fromJson(data, RequestChatPacket.class));
@@ -128,6 +125,7 @@ public class QueryReceiver extends Thread {
             return;
         }
 
+        lobby.setStarted(true);
         for (User player : lobby.getUsers()) {
             try {
                 this.databaseController.getUserDataOutputStream(player.getUsername())
@@ -167,6 +165,17 @@ public class QueryReceiver extends Thread {
         User sender = this.databaseController.getConnectedUser(joinRequestPacket.getSenderUsername());
         if (sender == null)
             return;
+
+        if (lobby.isStarted() && lobby.isPublic()) {
+            try {
+                this.dataOutputStream.writeUTF(new JoinedLobbyPacket(lobby).toJson());
+                this.wait(200);
+                this.dataOutputStream.writeUTF(new StartGamePacket().toJson());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            return;
+        }
 
         if (lobby.getUsers().size() >= lobby.getCapacity()) {
             try {
@@ -290,7 +299,7 @@ public class QueryReceiver extends Thread {
     }
 
     void setQueryAlive(boolean isQueryAlive) {
-        this.isQueryAlive = true;
+        this.isQueryAlive = isQueryAlive;
     }
 
     public boolean isQueryAlive() {

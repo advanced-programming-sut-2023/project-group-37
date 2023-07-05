@@ -1,6 +1,7 @@
 package view.menus;
 
 import connection.Connection;
+import connection.packet.registration.LogoutPacket;
 import connection.packet.relation.RequestLobbyPacket;
 import controller.AppController;
 import controller.viewControllers.MainMenuController;
@@ -99,6 +100,7 @@ public class MainMenu extends Application {
     }
 
     public void logout() throws Exception {
+        Connection.getInstance().getDataOutputStream().writeUTF(new LogoutPacket().toJson());
         this.mainMenuController.logout();
         appController.runMenu(Result.ENTER_LOGIN_MENU);
     }

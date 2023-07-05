@@ -97,12 +97,14 @@ public class DatabaseController {
                 this.dataOutputStreams.get(user).writeUTF(this.gson.toJson(new TilesPacket(modifiedTiles)));
     }
 
-    public void endSession(User user) {
+    public void endSession(String username) {
+        System.out.println(username);
         for (Session session : currentSessions)
-            if (session.getUser().equals(user)) {
+            if (session.getUser().equals(this.getConnectedUser(username))) {
+                System.out.println("REMOVED");
                 currentSessions.remove(session);
-                dataInputStreams.remove(user);
-                dataOutputStreams.remove(user);
+                dataInputStreams.remove(this.getConnectedUser(username));
+                dataOutputStreams.remove(this.getConnectedUser(username));
             }
     }
 

@@ -1,5 +1,10 @@
 package connection;
 
+import connection.packet.PopUpPacket;
+import model.chat.Lobby;
+import view.enums.Message;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AliveListener extends Thread {
@@ -38,7 +43,21 @@ public class AliveListener extends Thread {
             for (QueryReceiver queryReceiver : this.queryReceivers) {
                 if (!queryReceiver.isQueryAlive()) {
                     queryReceiver.setIsDead(true);
-                    databaseController.endSession(queryReceiver.getUser());
+                    databaseController.endSession(queryReceiver.getUser().getUsername());
+
+                    for (Lobby lobby : this.databaseController.getLobbies()) {
+                        if (lobby.getUsers().contains(this.databaseController.getConnectedUser(
+                                queryReceiver.getUser().getUsername()))) {
+                            if (lobby.getUsers().size() == 2 && lobby.isStarted()) {
+                                try {
+                                    databaseController.getUserDataOutputStream(queryReceiver.getUser().getUsername())
+                                            .writeUTF(new PopUpPacket(Message.YOU_WIN, false).toJson());
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import model.user.User;
+import view.enums.Message;
 import view.enums.Result;
 import view.menus.*;
 
@@ -101,21 +102,17 @@ public class AppController {
                     }
                 }
                 case REGISTER_SUCCESSFUL -> {
-
-                    if (popUpPacket.isError())
-                        new Alert(Alert.AlertType.ERROR, popUpPacket.getMessage().toString()).show();
-                    else new Alert(Alert.AlertType.INFORMATION, popUpPacket.getMessage().toString()).show();
-
                     try {
                         this.runMenu(Result.ENTER_LOGIN_MENU);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 }
-
-                case USER_NOT_EXISTS, CANT_LOGIN, USERNAME_ALREADY_EXISTS, USER_IS_LOGIN, CANT_START ->
-                        new Alert(Alert.AlertType.ERROR, popUpPacket.getMessage().toString()).show();
             }
+            if (popUpPacket.isError())
+                new Alert(Alert.AlertType.ERROR, popUpPacket.getMessage().toString()).show();
+            else if (popUpPacket.getMessage() != Message.LOGIN_SUCCESSFUL)
+                new Alert(Alert.AlertType.INFORMATION, popUpPacket.getMessage().toString()).show();
         });
     }
 

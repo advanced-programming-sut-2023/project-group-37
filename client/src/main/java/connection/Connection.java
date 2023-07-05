@@ -19,7 +19,6 @@ public class Connection {
 
         this.notificationReceiver = new NotificationReceiver(dataInputStream);
         this.notificationReceiver.start();
-        new AliveSender(this.dataOutputStream).start();
 
         connection = this;
         if (AppController.stayLoggedInPacket != null)

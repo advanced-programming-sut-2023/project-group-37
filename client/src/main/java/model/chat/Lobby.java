@@ -13,6 +13,8 @@ public class Lobby {
     private final Chat room;
     private final boolean isPublic;
 
+    private boolean isStarted;
+
     static {
         idCounter = 0;
     }
@@ -25,6 +27,7 @@ public class Lobby {
         this.users.add(admin);
         this.room = new Chat(admin, Chat.ChatType.ROOM);
         this.isPublic = isPublic;
+        this.isStarted = false;
     }
 
     public int getId() {
@@ -55,6 +58,14 @@ public class Lobby {
     public void removeMember (User user) {
         this.users.remove(user);
         this.room.removeSubscriber(user);
+    }
+
+    public boolean isStarted() {
+        return isStarted;
+    }
+
+    public void setStarted(boolean started) {
+        isStarted = started;
     }
 
     public boolean isPublic() {
