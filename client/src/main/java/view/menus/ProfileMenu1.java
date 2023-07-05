@@ -10,6 +10,7 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -28,12 +29,11 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class ProfileMenu extends Application {
+public class ProfileMenu1 extends Application {
     private final AppController appController;
     private final ProfileMenuController profileMenuController;
     private final ChangeMenuController changeMenuController;
     private final Scanner scanner;
-
     //avatar
     public Circle avatar;
 
@@ -48,7 +48,7 @@ public class ProfileMenu extends Application {
     private Label username;
 
 
-    public ProfileMenu() {
+    public ProfileMenu1() {
         this.appController = AppController.getInstance();
         this.scanner = new Scanner(System.in);
         this.profileMenuController = ProfileMenuController.getInstance();

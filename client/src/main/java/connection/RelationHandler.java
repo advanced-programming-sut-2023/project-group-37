@@ -626,9 +626,9 @@ public class RelationHandler {
     }
 
     public void showScoreboard() {
-        sortUsersByHighscore(allUsers);
+        sortUsersByHighscore(this.allUsers);
         int i = 1;
-        for (User user : allUsers) {
+        for (User user : this.allUsers) {
             addUserToScoreboard(user, i);
             i++;
         }

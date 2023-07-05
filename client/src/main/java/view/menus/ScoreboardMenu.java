@@ -33,7 +33,7 @@ public class ScoreboardMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        URL url = LoginMenu.class.getResource("/FXML/profileMenu.fxml");
+        URL url = LoginMenu.class.getResource("/FXML/scoreboardMenu.fxml");
         AnchorPane anchorPane = FXMLLoader.load(Objects.requireNonNull(url));
         anchorPane.setPrefHeight(anchorPane.getPrefHeight() + 30);
         MultiMenuFunctions.setBackground(anchorPane, "registration-bg.jpg");
@@ -49,6 +49,11 @@ public class ScoreboardMenu extends Application {
         relationHandler.setScoreboardUsers(usernames);
         relationHandler.setScoreboardHighscores(highscores);
         relationHandler.getUsersFromServer();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         relationHandler.showScoreboard();
     }
 

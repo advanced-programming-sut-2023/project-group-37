@@ -2,7 +2,6 @@ package controller;
 
 import connection.packet.PopUpPacket;
 import connection.packet.registration.LoginPacket;
-import connection.packet.relation.LobbyPacket;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
@@ -19,7 +18,7 @@ public class AppController {
     private final ForgotMenu forgotMenu;
     private final RegisterMenu registerMenu;
     private final MainMenu mainMenu;
-    private final ProfileMenu profileMenu;
+    private final ProfileMenu1 profileMenu;
     private final StartGameMenu startGameMenu;
     private final GameMenu gameMenu;
     private final ChangeMenu changeMenu;
@@ -38,7 +37,7 @@ public class AppController {
         this.forgotMenu = new ForgotMenu();
         this.registerMenu = new RegisterMenu();
         this.mainMenu = new MainMenu();
-        this.profileMenu = new ProfileMenu();
+        this.profileMenu = new ProfileMenu1();
         this.startGameMenu = new StartGameMenu();
         this.gameMenu = new GameMenu();
         this.changeMenu = new ChangeMenu();

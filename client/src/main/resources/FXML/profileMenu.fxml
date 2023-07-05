@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../CSS/registration.css"
             xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="view.menus.ProfileMenu">
+            fx:controller="view.menus.ProfileMenu1">
     <children>
         <VBox layoutX="50.0" layoutY="134.0" prefHeight="236.0" prefWidth="118.0">
             <children>
@@ -78,8 +78,8 @@
                         prefWidth="122.0" text="Change Email"/>
                 <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#changeSlogan" prefHeight="34.0"
                         prefWidth="122.0" text="Change Slogan"/>
-                <Button lineSpacing="20.0" mnemonicParsing="false" onMouseClicked="#showScoreboard" prefHeight="31.0"
-                        prefWidth="118.0" text="Show Scoreboard"/>
+                <Button lineSpacing="20.0" mnemonicParsing="false"
+                        onMouseClicked="#showScoreboard" prefHeight="31.0" prefWidth="118.0" text="Show Scoreboard"/>
             </children>
         </VBox>
         <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="63.0" layoutY="63.0" onMouseClicked="#enterAvatarMenu"
