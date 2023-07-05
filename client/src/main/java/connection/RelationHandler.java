@@ -67,6 +67,7 @@ public class RelationHandler {
     private Button startButton;
     private ChoiceBox mapChoiceBox;
     private VBox scoreboardAvatars;
+    private VBox scoreboardStatus;
 
     public void setLobbyNames(VBox lobbyNames) {
         this.lobbyNames = lobbyNames;
@@ -667,6 +668,11 @@ public class RelationHandler {
         avatar.setFill(new ImagePattern(user.getAvatar()));
         scoreboardAvatars.getChildren().add(avatar);
 
+        Circle isOnline = new Circle(15);
+        if (user.getOnline()) isOnline.setFill(Color.GREEN);
+        else isOnline.setFill(Color.RED);
+        scoreboardStatus.getChildren().add(isOnline);
+
 
         if (i == 1) {
             rank.setBackground(Background.fill(Color.GOLD));
@@ -693,5 +699,9 @@ public class RelationHandler {
 
     public void setScoreboardAvatars(VBox avatars) {
         this.scoreboardAvatars = avatars;
+    }
+
+    public void setScoreboardStatus(VBox status) {
+        this.scoreboardStatus = status;
     }
 }

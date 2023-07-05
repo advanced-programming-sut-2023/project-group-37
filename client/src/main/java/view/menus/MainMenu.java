@@ -95,6 +95,7 @@ public class MainMenu extends Application {
     }
 
     public void exit() {
+        User.getCurrentUser().setOnline(false);
         User.updateDatabase();
         System.exit(0);
     }
