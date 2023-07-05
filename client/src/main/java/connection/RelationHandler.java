@@ -1,6 +1,7 @@
 package connection;
 
 import connection.packet.game.LobbiesPacket;
+import connection.packet.game.StartRequestPacket;
 import connection.packet.relation.AcceptRequest;
 import connection.packet.relation.ChatPacket;
 import connection.packet.relation.FriendRequestPacket;
@@ -50,6 +51,8 @@ public class RelationHandler {
     private VBox usernames;
     private VBox territories;
 
+    private Button startButton;
+
     public void setLobbyNames(VBox lobbyNames) {
         this.lobbyNames = lobbyNames;
     }
@@ -93,6 +96,10 @@ public class RelationHandler {
 
     public void setUsernames(VBox usernames) {
         this.usernames = usernames;
+    }
+
+    public void setStartButton(Button startButton) {
+        this.startButton = startButton;
     }
 
     public void setTerritories(VBox territories) {
@@ -382,6 +389,17 @@ public class RelationHandler {
                 this.usernames.getChildren().add(new Label(user.getUsername()));
                 territoryNumber++;
             }
+
+            this.startButton.setDisable(!User.getCurrentUser().getUsername().equals(
+                    this.currentLobby.getAdmin().getUsername()));
+
+            this.startButton.setOnMouseClicked((MouseEvent mouseEvent) -> {
+                try {
+                    Connection.getInstance().getDataOutputStream().writeUTF(new StartRequestPacket(currentLobby.getId()).toJson());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         });
     }
 

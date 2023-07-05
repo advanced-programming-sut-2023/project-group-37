@@ -100,6 +100,27 @@ public class QueryReceiver extends Thread {
                 case USER_PACKET -> this.updateTheUser(gson.fromJson(data, UserPacket.class));
                 case LOBBIES_PACKET -> this.sendLobbies();
                 case JOIN_REQUEST_PACKET -> this.handleJoining(gson.fromJson(data, JoinRequestPacket.class));
+                case LEAVE_REQUEST_PACKET -> this.handleLeaveLobby(gson.fromJson(data, LeaveRequestPacket.class));
+            }
+        }
+    }
+
+    private void handleLeaveLobby(LeaveRequestPacket leaveRequestPacket) {
+        Lobby lobby = this.databaseController.getLobbyById(leaveRequestPacket.getLobbyId());
+        if (lobby == null)
+            return;
+
+        lobby.removeMember(this.user);
+        if (lobby.getAdmin().getUsername().equals(this.user.getUsername())) {
+            if (lobby.getUsers().size() > 0)
+                lobby.setAdmin(lobby.getUsers().get(0));
+        }
+
+        for (User subscriber : lobby.getUsers()) {
+            try {
+                this.databaseController.getUserDataOutputStream(subscriber.getUsername()).writeUTF(new RefreshLobbyPacket(lobby).toJson());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }
