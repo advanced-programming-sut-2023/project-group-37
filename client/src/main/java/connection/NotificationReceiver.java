@@ -73,10 +73,15 @@ public class NotificationReceiver extends Thread {
             ArrayList<Government> governments = new ArrayList<>();
             Map map = Map.getMaps().get(0);
 
-            int index = 1;
-            for (User player : this.relationHandler.getCurrentLobby().getUsers()) {
-                governments.add(new Government(player, GameColor.values()[index - 1], map, index));
-                index++;
+            try {
+                int index = 1;
+                for (User player : this.relationHandler.getCurrentLobby().getUsers()) {
+                    governments.add(new Government(player, GameColor.values()[index - 1], map, index));
+                    index++;
+                }
+            }
+            catch (Exception ignored) {
+                governments.add(new Government(User.getCurrentUser(), GameColor.values()[0], map, 1));
             }
 
             Game game = new Game(map, governments);

@@ -93,7 +93,7 @@ public class AppController {
     public void handleAlert(PopUpPacket popUpPacket) {
         Platform.runLater(() -> {
             switch (popUpPacket.getMessage()) {
-                case LOGIN_SUCCESSFUL -> {
+                case LOGIN_SUCCESSFUL, REMOVE_LOBBY, YOU_WIN -> {
                     try {
                         new ChatMenu().start(new Stage());
                         this.runMenu(Result.ENTER_MAIN_MENU);
@@ -108,6 +108,7 @@ public class AppController {
                         throw new RuntimeException(e);
                     }
                 }
+
             }
             if (popUpPacket.isError())
                 new Alert(Alert.AlertType.ERROR, popUpPacket.getMessage().toString()).show();

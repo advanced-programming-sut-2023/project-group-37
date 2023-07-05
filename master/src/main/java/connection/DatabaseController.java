@@ -98,14 +98,19 @@ public class DatabaseController {
     }
 
     public void endSession(String username) {
-        System.out.println(username);
-        for (Session session : currentSessions)
-            if (session.getUser().equals(this.getConnectedUser(username))) {
-                System.out.println("REMOVED");
-                currentSessions.remove(session);
-                dataInputStreams.remove(this.getConnectedUser(username));
-                dataOutputStreams.remove(this.getConnectedUser(username));
-            }
+        try {
+            System.out.println(username);
+            for (Session session : currentSessions)
+                if (session.getUser().equals(this.getConnectedUser(username))) {
+                    System.out.println("REMOVED");
+                    currentSessions.remove(session);
+                    dataInputStreams.remove(this.getConnectedUser(username));
+                    dataOutputStreams.remove(this.getConnectedUser(username));
+                }
+        }
+        catch (Exception ignored) {
+
+        }
     }
 
     public Chat getPublicChat() {

@@ -176,8 +176,9 @@ public enum Message {
     START_GAME_ERROR("Start Error"),
     USER_IS_LOGIN("Another client loggedIn with this user!"),
     LOBBY_IS_FULL("The lobby is full"),
-    CANT_START("No other player to start the game!"),
-    YOU_WIN("You win the game !");
+    CANT_START("No other player to start game!"),
+    YOU_WIN("You win the game !"),
+    REMOVE_LOBBY("Sorry but you are still Alone!");
 
     private final String message;
 

@@ -1,5 +1,9 @@
 package controller;
 
+import connection.Connection;
+import connection.RelationHandler;
+import connection.packet.game.LeaveRequestPacket;
+import connection.packet.registration.LogoutPacket;
 import javafx.scene.ImageCursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -17,7 +21,9 @@ import model.graphic.CursorType;
 import model.graphic.DownPane;
 import view.animation.FaceAnimation;
 import view.animation.MoveAnimation;
+import view.enums.Result;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -157,6 +163,34 @@ public class MapController {
                     }
                 }
                 case "P" -> this.downPane.paste();
+                case "L" -> {
+                    try {
+                        Connection.getInstance().getDataOutputStream().writeUTF(
+                                new LeaveRequestPacket(RelationHandler.getInstance().getCurrentLobby()).toJson());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    try {
+                        AppController.getInstance().runMenu(Result.ENTER_MAIN_MENU);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                case "O" -> {
+                    try {
+                        Connection.getInstance().getDataOutputStream().writeUTF(
+                                new LogoutPacket().toJson());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    try {
+                        AppController.getInstance().runMenu(Result.ENTER_LOGIN_MENU);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
         });
 

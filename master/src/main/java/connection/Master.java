@@ -7,12 +7,13 @@ import java.net.Socket;
 public class Master {
     public Master(int port) {
         System.out.println("Starting Stronghold service...");
+        new LobbyAliveListener().start();
+        new SessionCloser().start();
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             while (true) {
                 Socket socket = serverSocket.accept();
                 new QueryReceiver(socket).start();
-                new SessionCloser();
             }
         } catch (IOException e) {
             // todo: try to reconnect?
