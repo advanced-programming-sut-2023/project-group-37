@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.menus.ScoreboardMenu">
+   <children>
+      <Label alignment="CENTER" layoutX="160.0" layoutY="-7.0" prefHeight="61.0" prefWidth="262.0" text="Scoreboard" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe Print" size="26.0" />
+         </font>
+      </Label>
+      <VBox fx:id="ranks" layoutX="110.0" layoutY="107.0" prefHeight="278.0" prefWidth="90.0" />
+      <Label alignment="CENTER" layoutX="114.0" layoutY="59.0" prefHeight="46.0" prefWidth="90.0" text="Rank" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe Print" size="24.0" />
+         </font>
+      </Label>
+      <VBox fx:id="usernames" layoutX="241.0" layoutY="107.0" prefHeight="278.0" prefWidth="118.0" />
+      <Label alignment="CENTER" layoutX="237.0" layoutY="59.0" prefHeight="46.0" prefWidth="125.0" text="Username" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe Print" size="24.0" />
+         </font>
+      </Label>
+      <VBox fx:id="highscores" layoutX="392.0" layoutY="107.0" prefHeight="278.0" prefWidth="118.0" />
+      <Label alignment="CENTER" layoutX="388.0" layoutY="59.0" prefHeight="46.0" prefWidth="125.0" text="Highscore" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe Print" size="24.0" />
+         </font>
+      </Label>
+      <Button layoutX="15.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#enterMainMenu" prefHeight="30.0" prefWidth="83.0" stylesheets="@../CSS/registration.css" text="Back" />
+   </children>
+</AnchorPane>
