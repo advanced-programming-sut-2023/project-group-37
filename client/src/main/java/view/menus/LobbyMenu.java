@@ -77,7 +77,6 @@ public class LobbyMenu extends Application {
 
         this.startButton.setDisable(!User.getCurrentUser().getUsername().equals(relationHandler.getCurrentLobby().getAdmin().getUsername()));
 
-        this.relationHandler.setCapacity(this.lobbyCapacity);
         this.relationHandler.setUsernames(this.usernames);
         this.relationHandler.setTerritories(this.territories);
         this.sendButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/send.png",

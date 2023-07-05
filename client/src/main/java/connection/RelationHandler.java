@@ -49,7 +49,6 @@ public class RelationHandler {
     private final ArrayList<Chat> rooms;
     private VBox usernames;
     private VBox territories;
-    private Label capacity;
 
     public void setLobbyNames(VBox lobbyNames) {
         this.lobbyNames = lobbyNames;
@@ -90,10 +89,6 @@ public class RelationHandler {
 
     public Chat getPublicChat() {
         return this.publicChat;
-    }
-
-    public void setCapacity(Label capacity) {
-        this.capacity = capacity;
     }
 
     public void setUsernames(VBox usernames) {
@@ -304,7 +299,8 @@ public class RelationHandler {
 
     public void setCurrentLobby(Lobby currentLobby) {
         this.currentLobby = currentLobby;
-        this.currentRoom = currentLobby.getRoom();
+        this.setCurrentRoom(currentLobby.getRoom());
+        this.refreshLobbyUsers();
     }
 
     public void handlePublicChat(Chat chat) {
@@ -374,8 +370,18 @@ public class RelationHandler {
         });
     }
 
-    public void handleRefreshLobby(Lobby lobby) {
-        // TODO: fill here...
+    public void refreshLobbyUsers() {
+        if (this.usernames.getChildren().size() > 0)
+            this.usernames.getChildren().subList(0, this.usernames.getChildren().size()).clear();
+        if (this.territories.getChildren().size() > 0)
+            this.territories.getChildren().subList(0, this.territories.getChildren().size()).clear();
+
+        int territoryNumber = 1;
+        for (User user : this.currentLobby.getUsers()) {
+            this.territories.getChildren().add(new Label(String.valueOf(territoryNumber)));
+            this.usernames.getChildren().add(new Label(user.getUsername()));
+            territoryNumber++;
+        }
     }
 
     public void sendMessage(String content, Chat.ChatType chatType) {
