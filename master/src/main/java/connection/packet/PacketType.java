@@ -23,4 +23,5 @@ public enum PacketType {
     LEAVE_REQUEST_PACKET,
     JOINED_LOBBY_PACKET,
     START_REQUEST_PACKET,
+    START_PACKET
 }

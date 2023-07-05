@@ -7,15 +7,23 @@ import connection.packet.registration.LoginPacket;
 import connection.packet.registration.RegisterPacket;
 import connection.packet.registration.UserPacket;
 import connection.packet.relation.*;
+import controller.GameController;
 import model.chat.Chat;
 import model.chat.Lobby;
+import model.game.Game;
+import model.game.GameColor;
+import model.game.Government;
+import model.game.Map;
 import model.user.User;
 import view.enums.Message;
+import view.enums.Result;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class QueryReceiver extends Thread {
     private final RegistrationController registrationController;
@@ -101,11 +109,31 @@ public class QueryReceiver extends Thread {
                 case LOBBIES_PACKET -> this.sendLobbies();
                 case JOIN_REQUEST_PACKET -> this.handleJoining(gson.fromJson(data, JoinRequestPacket.class));
                 case LEAVE_REQUEST_PACKET -> this.handleLeaveLobby(gson.fromJson(data, LeaveRequestPacket.class));
+                case START_REQUEST_PACKET -> this.handleStartingGame(gson.fromJson(data, StartRequestPacket.class));
             }
         }
     }
 
-    private void handleLeaveLobby(LeaveRequestPacket leaveRequestPacket) {
+    private synchronized void handleStartingGame(StartRequestPacket startRequestPacket){
+        Lobby lobby = this.databaseController.getLobbyById(startRequestPacket.getLobbyId());
+        if (lobby == null)
+            return;
+
+        Map map = Map.getMapByName(startRequestPacket.getMapName());
+        if (map == null)
+            return;
+
+        for (User player : lobby.getUsers()) {
+            try {
+                this.databaseController.getUserDataOutputStream(player.getUsername())
+                        .writeUTF(new StartGamePacket().toJson());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private synchronized void handleLeaveLobby(LeaveRequestPacket leaveRequestPacket) {
         Lobby lobby = this.databaseController.getLobbyById(leaveRequestPacket.getLobbyId());
         if (lobby == null)
             return;
@@ -114,6 +142,7 @@ public class QueryReceiver extends Thread {
         if (lobby.getAdmin().getUsername().equals(this.user.getUsername())) {
             if (lobby.getUsers().size() > 0)
                 lobby.setAdmin(lobby.getUsers().get(0));
+            else this.databaseController.removeLobby(lobby);
         }
 
         for (User subscriber : lobby.getUsers()) {

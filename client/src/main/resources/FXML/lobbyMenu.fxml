@@ -61,5 +61,11 @@
             <Font name="Arial Black" size="15.0" />
          </font>
       </Button>
+      <Label layoutX="27.0" layoutY="149.0" text="Map :" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="mapChoiceBox" layoutX="14.0" layoutY="187.0" prefHeight="26.0" prefWidth="138.0" />
     </children>
 </AnchorPane>

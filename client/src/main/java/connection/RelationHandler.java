@@ -389,17 +389,6 @@ public class RelationHandler {
                 this.usernames.getChildren().add(new Label(user.getUsername()));
                 territoryNumber++;
             }
-
-            this.startButton.setDisable(!User.getCurrentUser().getUsername().equals(
-                    this.currentLobby.getAdmin().getUsername()));
-
-            this.startButton.setOnMouseClicked((MouseEvent mouseEvent) -> {
-                try {
-                    Connection.getInstance().getDataOutputStream().writeUTF(new StartRequestPacket(currentLobby.getId()).toJson());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
         });
     }
 
@@ -568,6 +557,11 @@ public class RelationHandler {
     }
 
     public void startGame() {
-        //todo
+        try {
+            Connection.getInstance().getDataOutputStream().writeUTF(new StartRequestPacket(
+                    this.currentLobby.getId()).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
@@ -18,6 +19,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.chat.Chat;
+import model.game.Map;
 import model.user.User;
 import view.enums.Result;
 
@@ -28,6 +30,8 @@ import java.util.Objects;
 public class LobbyMenu extends Application {
     private final AppController appController;
     private final RelationHandler relationHandler;
+    @FXML
+    private ChoiceBox mapChoiceBox;
     @FXML
     private Button leaveButton;
     @FXML
@@ -69,6 +73,9 @@ public class LobbyMenu extends Application {
 
     @FXML
     private void initialize() {
+        for (Map map : Map.getMaps())
+            mapChoiceBox.getItems().add(map.getName());
+
         Border border = new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
 
         territories.setBorder(border);
