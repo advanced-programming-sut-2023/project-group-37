@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.skin.ListViewSkin;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -31,6 +32,9 @@ import model.user.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class RelationHandler {
     private final static RelationHandler instance = new RelationHandler();
@@ -622,6 +626,43 @@ public class RelationHandler {
     }
 
     public void showScoreboard() {
+        sortUsersByHighscore(allUsers);
+        int i = 1;
+        for (User user : allUsers) {
+            addUserToScoreboard(user, i);
+            i++;
+        }
+    }
 
+    private void addUserToScoreboard(User user, int i) {
+        Label rank = new Label("" + i);
+        rank.setPrefHeight(20);
+        scoreboardRanks.getChildren().add(rank);
+
+        Label username = new Label(user.getUsername());
+        username.setPrefHeight(20);
+        scoreboardUsers.getChildren().add(username);
+
+        Label highscore = new Label("" + user.getHighScore());
+        highscore.setPrefHeight(20);
+        scoreboardHighscores.getChildren().add(highscore);
+
+        if (i == 1) {
+            rank.setBackground(Background.fill(Color.GOLD));
+            username.setBackground(Background.fill(Color.GOLD));
+            highscore.setBackground(Background.fill(Color.GOLD));
+        } else if (i == 2) {
+            rank.setBackground(Background.fill(Color.SILVER));
+            username.setBackground(Background.fill(Color.SILVER));
+            highscore.setBackground(Background.fill(Color.SILVER));
+        } else if (i == 3) {
+            rank.setBackground(Background.fill(Color.BROWN));
+            username.setBackground(Background.fill(Color.BROWN));
+            highscore.setBackground(Background.fill(Color.BROWN));
+        }
+    }
+
+    private void sortUsersByHighscore(ArrayList<User> allUsers) {
+        allUsers.sort(Comparator.comparingInt(User::getHighScore));
     }
 }
