@@ -31,7 +31,7 @@ public class LobbyMenu extends Application {
     private final AppController appController;
     private final RelationHandler relationHandler;
     @FXML
-    private ChoiceBox mapChoiceBox;
+    private ChoiceBox<String> mapChoiceBox;
     @FXML
     private Button leaveButton;
     @FXML
@@ -73,8 +73,9 @@ public class LobbyMenu extends Application {
 
     @FXML
     private void initialize() {
-//        for (Map map : Map.getMaps())
-//            mapChoiceBox.getItems().add(map.getName());
+        mapChoiceBox.getItems().add("North vs South");
+        mapChoiceBox.getItems().add("Closed Encounters");
+        mapChoiceBox.getItems().add("Empty Handed");
 
         Border border = new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
 
