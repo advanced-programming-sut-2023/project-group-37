@@ -23,6 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -662,7 +663,7 @@ public class RelationHandler {
         highscore.setStyle("-fx-font-size: 20");
         scoreboardHighscores.getChildren().add(highscore);
 
-        Circle avatar = new Circle();
+        Circle avatar = new Circle(15);
         avatar.setFill(new ImagePattern(user.getAvatar()));
         scoreboardAvatars.getChildren().add(avatar);
 
