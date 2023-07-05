@@ -79,6 +79,7 @@ public class LobbyMenu extends Application {
 
         this.relationHandler.setUsernames(this.usernames);
         this.relationHandler.setTerritories(this.territories);
+        this.relationHandler.setRoomVBox(this.chatVBox);
         this.sendButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/send.png",
                 30).getImage()));
         this.chatVBox.setBackground(Background.fill(Color.WHITE));

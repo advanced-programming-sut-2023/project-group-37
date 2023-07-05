@@ -300,7 +300,6 @@ public class RelationHandler {
     public void setCurrentLobby(Lobby currentLobby) {
         this.currentLobby = currentLobby;
         this.setCurrentRoom(currentLobby.getRoom());
-        this.refreshLobbyUsers();
     }
 
     public void handlePublicChat(Chat chat) {
@@ -371,17 +370,19 @@ public class RelationHandler {
     }
 
     public void refreshLobbyUsers() {
-        if (this.usernames.getChildren().size() > 0)
-            this.usernames.getChildren().subList(0, this.usernames.getChildren().size()).clear();
-        if (this.territories.getChildren().size() > 0)
-            this.territories.getChildren().subList(0, this.territories.getChildren().size()).clear();
+        Platform.runLater(() -> {
+            if (this.usernames.getChildren().size() > 0)
+                this.usernames.getChildren().subList(0, this.usernames.getChildren().size()).clear();
+            if (this.territories.getChildren().size() > 0)
+                this.territories.getChildren().subList(0, this.territories.getChildren().size()).clear();
 
-        int territoryNumber = 1;
-        for (User user : this.currentLobby.getUsers()) {
-            this.territories.getChildren().add(new Label(String.valueOf(territoryNumber)));
-            this.usernames.getChildren().add(new Label(user.getUsername()));
-            territoryNumber++;
-        }
+            int territoryNumber = 1;
+            for (User user : this.currentLobby.getUsers()) {
+                this.territories.getChildren().add(new Label(String.valueOf(territoryNumber)));
+                this.usernames.getChildren().add(new Label(user.getUsername()));
+                territoryNumber++;
+            }
+        });
     }
 
     public void sendMessage(String content, Chat.ChatType chatType) {

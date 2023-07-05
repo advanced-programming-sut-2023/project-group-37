@@ -104,7 +104,7 @@ public class QueryReceiver extends Thread {
         }
     }
 
-    private void handleJoining(JoinRequestPacket joinRequestPacket) {
+    private synchronized void handleJoining(JoinRequestPacket joinRequestPacket) {
         Lobby lobby = this.databaseController.getLobbyById(joinRequestPacket.getLobbyId());
         if (lobby == null)
             return;
@@ -139,7 +139,7 @@ public class QueryReceiver extends Thread {
         }
     }
 
-    private void sendLobbies() {
+    private synchronized void sendLobbies() {
         try {
             this.dataOutputStream.writeUTF(new LobbiesPacket(databaseController.getLobbies()).toJson());
         } catch (IOException e) {
@@ -147,7 +147,7 @@ public class QueryReceiver extends Thread {
         }
     }
 
-    private void updateTheUser(UserPacket userPacket) {
+    private synchronized void updateTheUser(UserPacket userPacket) {
         for (Session currentSession : databaseController.getCurrentSessions()) {
             if (currentSession.getUser().getUsername().equals(userPacket.getUser().getUsername())) {
                 currentSession.setUser(userPacket.getUser());
@@ -159,7 +159,7 @@ public class QueryReceiver extends Thread {
         User.updateDatabase();
     }
 
-    private void acceptReq(AcceptRequest acceptRequest) {
+    private synchronized void acceptReq(AcceptRequest acceptRequest) {
         System.out.println("ACCEPT REQ");
         Chat privateChat = new Chat(acceptRequest.getSender(), Chat.ChatType.PRIVATE, acceptRequest.getReceiver());
         try {

@@ -65,6 +65,12 @@ public class NotificationReceiver extends Thread {
     private void joinToLobby(JoinedLobbyPacket joinedLobbyPacket) {
         this.relationHandler.setCurrentLobby(joinedLobbyPacket.getLobby());
         this.appController.createLobby();
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        this.relationHandler.refreshLobbyUsers();
     }
 
     private void receiveLobbies(LobbiesPacket lobbiesPacket) {
@@ -73,6 +79,12 @@ public class NotificationReceiver extends Thread {
 
     private void handleRefreshLobby(RefreshLobbyPacket refreshLobbyPacket) {
         this.relationHandler.setCurrentLobby(refreshLobbyPacket.getLobby());
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        this.relationHandler.refreshLobbyUsers();
     }
 
     private void handleFoundFriend(FoundUserPacket foundUserPacket) {
@@ -98,6 +110,12 @@ public class NotificationReceiver extends Thread {
     private void createLobby(LobbyPacket lobbyPacket) {
         this.relationHandler.setCurrentLobby(lobbyPacket.getLobby());
         this.appController.createLobby();
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        this.relationHandler.refreshLobbyUsers();
     }
 
     private void handleTiles(TilesPacket tilesPacket) {
