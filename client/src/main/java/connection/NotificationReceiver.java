@@ -2,22 +2,27 @@ package connection;
 
 import com.google.gson.Gson;
 import connection.packet.*;
-import connection.packet.game.JoinedLobbyPacket;
-import connection.packet.game.LobbiesPacket;
-import connection.packet.game.RefreshLobbyPacket;
-import connection.packet.game.TilesPacket;
+import connection.packet.game.*;
 import connection.packet.registration.UserPacket;
 import connection.packet.relation.ChatPacket;
 import connection.packet.relation.FoundUserPacket;
 import connection.packet.relation.FriendRequestPacket;
 import connection.packet.relation.LobbyPacket;
 import controller.AppController;
+import controller.GameController;
 import controller.MultiMenuFunctions;
+import javafx.application.Platform;
 import model.chat.Chat;
+import model.game.Game;
+import model.game.GameColor;
+import model.game.Government;
+import model.game.Map;
 import model.user.User;
+import view.enums.Result;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class NotificationReceiver extends Thread {
     private final AppController appController;
@@ -58,8 +63,31 @@ public class NotificationReceiver extends Thread {
                 case REFRESH_LOBBY_PACKET -> this.handleRefreshLobby(gson.fromJson(data, RefreshLobbyPacket.class));
                 case LOBBIES_PACKET -> this.receiveLobbies(gson.fromJson(data, LobbiesPacket.class));
                 case JOINED_LOBBY_PACKET -> this.joinToLobby(gson.fromJson(data, JoinedLobbyPacket.class));
+                case START_PACKET -> this.startGame();
             }
         }
+    }
+
+    private void startGame() {
+        Platform.runLater(() -> {
+            ArrayList<Government> governments = new ArrayList<>();
+            Map map = Map.getMaps().get(0);
+
+            int index = 1;
+            for (User player : this.relationHandler.getCurrentLobby().getUsers()) {
+                governments.add(new Government(player, GameColor.values()[index - 1], map, index));
+                index++;
+            }
+
+            Game game = new Game(map, governments);
+            GameController.getInstance().setCurrentGame(game);
+
+            try {
+                appController.runMenu(Result.ENTER_GAME_MENU);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     private void joinToLobby(JoinedLobbyPacket joinedLobbyPacket) {

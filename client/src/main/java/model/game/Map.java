@@ -19,8 +19,8 @@ public class Map {
     private final HashMap<Integer, Territory> territories;
 
     static {
-        loadMaps();
         maps = new ArrayList<>();
+        maps.add(GenerateMap.createMap1());
     }
 
     public Map(String name) {
@@ -60,17 +60,15 @@ public class Map {
     }
 
     public static void loadMaps() {
-        System.out.println("mofo");
         maps.add(GenerateMap.createMap1());
-        maps.add(GenerateMap.createMap2());
-        maps.add(GenerateMap.createMap3());
+//        maps.add(GenerateMap.createMap2());
+//        maps.add(GenerateMap.createMap3());
         Gson gson = new Gson();
         String filePath = "./master/src/main/resources/Database/sampleMaps.json";
         try {
             FileWriter fileWriter = new FileWriter(filePath);
-            fileWriter.write("Hello");
+            fileWriter.write(gson.toJson(maps));
             fileWriter.close();
-            System.out.println("closed");
         } catch (IOException ignored) {
             System.out.println("ERRORED");
             File file = new File(filePath);

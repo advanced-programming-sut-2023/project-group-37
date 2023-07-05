@@ -122,9 +122,9 @@ public class GenerateMap {
         for (int i = 0; i < 200; i++) {
             for (int j = 60; j < 70; j++) {
                 map.getField()[j][i].changeTexture(Texture.GRASS);
-                map.getField()[j][i + 70].changeTexture(Texture.GRASS);
+                map.getField()[j][i].changeTexture(Texture.GRASS);
                 map.getField()[i][j].changeTexture(Texture.GRASS);
-                map.getField()[i + 70][j].changeTexture(Texture.GRASS);
+                map.getField()[i][j].changeTexture(Texture.GRASS);
             }
         }
 

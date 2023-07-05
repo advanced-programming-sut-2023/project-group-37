@@ -33,4 +33,5 @@ module Stronghold {
     opens connection.packet.registration to com.google.gson;
     exports connection.packet.game;
     opens connection.packet.game to com.google.gson;
+    opens model.game to com.google.gson;
 }

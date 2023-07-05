@@ -115,22 +115,27 @@ public class QueryReceiver extends Thread {
     }
 
     private synchronized void handleStartingGame(StartRequestPacket startRequestPacket){
-//        Lobby lobby = this.databaseController.getLobbyById(startRequestPacket.getLobbyId());
-//        if (lobby == null)
-//            return;
-//
-//        Map map = Map.getMapByName(startRequestPacket.getMapName());
-//        if (map == null)
-//            return;
-//
-//        for (User player : lobby.getUsers()) {
-//            try {
-//                this.databaseController.getUserDataOutputStream(player.getUsername())
-//                        .writeUTF(new StartGamePacket().toJson());
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
+        Lobby lobby = this.databaseController.getLobbyById(startRequestPacket.getLobbyId());
+        if (lobby == null)
+            return;
+
+        if (lobby.getUsers().size() == 1) {
+            try {
+                this.dataOutputStream.writeUTF(new PopUpPacket(Message.CANT_START, true).toJson());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return;
+        }
+
+        for (User player : lobby.getUsers()) {
+            try {
+                this.databaseController.getUserDataOutputStream(player.getUsername())
+                        .writeUTF(new StartGamePacket().toJson());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private synchronized void handleLeaveLobby(LeaveRequestPacket leaveRequestPacket) {
@@ -186,6 +191,21 @@ public class QueryReceiver extends Thread {
             this.dataOutputStream.writeUTF(new JoinedLobbyPacket(lobby).toJson());
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+
+        if (lobby.getUsers().size() == lobby.getCapacity()) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            for (User player : lobby.getUsers()) {
+                try {
+                    this.databaseController.getUserDataOutputStream(player.getUsername()).writeUTF(new StartGamePacket().toJson());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 

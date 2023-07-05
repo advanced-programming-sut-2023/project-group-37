@@ -175,7 +175,8 @@ public enum Message {
     TERRITORY_EXISTS("Territory number already exists !"),
     START_GAME_ERROR("Start Error"),
     USER_IS_LOGIN("Another client loggedIn with this user!"),
-    LOBBY_IS_FULL("The lobby is full");
+    LOBBY_IS_FULL("The lobby is full"),
+    CANT_START("No other player to start game!");
 
     private final String message;
 

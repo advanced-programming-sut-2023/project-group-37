@@ -73,8 +73,8 @@ public class LobbyMenu extends Application {
 
     @FXML
     private void initialize() {
-        for (Map map : Map.getMaps())
-            mapChoiceBox.getItems().add(map.getName());
+//        for (Map map : Map.getMaps())
+//            mapChoiceBox.getItems().add(map.getName());
 
         Border border = new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
 
@@ -86,6 +86,7 @@ public class LobbyMenu extends Application {
         this.leaveButton.setBackground(Background.fill(Color.RED));
 
         this.relationHandler.setStartButton(this.startButton);
+        this.relationHandler.setMapChoiceBox(this.mapChoiceBox);
 
         this.relationHandler.setUsernames(this.usernames);
         this.relationHandler.setTerritories(this.territories);

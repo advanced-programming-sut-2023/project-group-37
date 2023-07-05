@@ -9,6 +9,7 @@ import connection.packet.relation.SearchPacket;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -50,8 +51,8 @@ public class RelationHandler {
     private final ArrayList<Chat> rooms;
     private VBox usernames;
     private VBox territories;
-
     private Button startButton;
+    private ChoiceBox mapChoiceBox;
 
     public void setLobbyNames(VBox lobbyNames) {
         this.lobbyNames = lobbyNames;
@@ -100,6 +101,10 @@ public class RelationHandler {
 
     public void setStartButton(Button startButton) {
         this.startButton = startButton;
+    }
+
+    public void setMapChoiceBox(ChoiceBox mapChoiceBox) {
+        this.mapChoiceBox = mapChoiceBox;
     }
 
     public void setTerritories(VBox territories) {
@@ -389,6 +394,9 @@ public class RelationHandler {
                 this.usernames.getChildren().add(new Label(user.getUsername()));
                 territoryNumber++;
             }
+            boolean isAdmin = User.getCurrentUser().getUsername().equals(this.currentLobby.getAdmin().getUsername());
+            this.startButton.setDisable(!isAdmin);
+            this.mapChoiceBox.setDisable(!isAdmin);
         });
     }
 
