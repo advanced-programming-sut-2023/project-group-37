@@ -20,6 +20,8 @@ public class ScoreboardMenu extends Application {
     private final AppController appController;
     private final RelationHandler relationHandler;
     @FXML
+    private VBox avatars;
+    @FXML
     private VBox ranks;
     @FXML
     private VBox usernames;
@@ -48,6 +50,7 @@ public class ScoreboardMenu extends Application {
         relationHandler.setScoreboardRanks(ranks);
         relationHandler.setScoreboardUsers(usernames);
         relationHandler.setScoreboardHighscores(highscores);
+        relationHandler.setScoreboardAvatars(avatars);
         relationHandler.getUsersFromServer();
         try {
             Thread.sleep(100);

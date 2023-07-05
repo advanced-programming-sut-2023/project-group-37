@@ -8,6 +8,7 @@ import connection.packet.relation.ChatPacket;
 import connection.packet.relation.FriendRequestPacket;
 import connection.packet.relation.SearchPacket;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -23,6 +24,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.chat.Chat;
 import model.chat.ChatMessage;
@@ -63,6 +65,7 @@ public class RelationHandler {
     private VBox territories;
     private Button startButton;
     private ChoiceBox mapChoiceBox;
+    private VBox scoreboardAvatars;
 
     public void setLobbyNames(VBox lobbyNames) {
         this.lobbyNames = lobbyNames;
@@ -637,15 +640,32 @@ public class RelationHandler {
     private void addUserToScoreboard(User user, int i) {
         Label rank = new Label("" + i);
         rank.setPrefHeight(20);
+        rank.setPrefWidth(scoreboardRanks.getPrefWidth());
+        rank.setTextAlignment(TextAlignment.CENTER);
+        rank.setAlignment(Pos.CENTER);
+        rank.setStyle("-fx-font-size: 20");
         scoreboardRanks.getChildren().add(rank);
 
         Label username = new Label(user.getUsername());
         username.setPrefHeight(20);
+        username.setPrefWidth(scoreboardUsers.getPrefWidth());
+        username.setTextAlignment(TextAlignment.CENTER);
+        username.setAlignment(Pos.CENTER);
+        username.setStyle("-fx-font-size: 20");
         scoreboardUsers.getChildren().add(username);
 
         Label highscore = new Label("" + user.getHighScore());
         highscore.setPrefHeight(20);
+        highscore.setPrefWidth(scoreboardHighscores.getPrefWidth());
+        highscore.setTextAlignment(TextAlignment.CENTER);
+        highscore.setAlignment(Pos.CENTER);
+        highscore.setStyle("-fx-font-size: 20");
         scoreboardHighscores.getChildren().add(highscore);
+
+        Circle avatar = new Circle();
+        avatar.setFill(new ImagePattern(user.getAvatar()));
+        scoreboardAvatars.getChildren().add(avatar);
+
 
         if (i == 1) {
             rank.setBackground(Background.fill(Color.GOLD));
@@ -659,10 +679,18 @@ public class RelationHandler {
             rank.setBackground(Background.fill(Color.BROWN));
             username.setBackground(Background.fill(Color.BROWN));
             highscore.setBackground(Background.fill(Color.BROWN));
+        } else {
+            rank.setBackground(Background.fill(Color.WHITE));
+            username.setBackground(Background.fill(Color.WHITE));
+            highscore.setBackground(Background.fill(Color.WHITE));
         }
     }
 
     private void sortUsersByHighscore(ArrayList<User> allUsers) {
         allUsers.sort(Comparator.comparingInt(User::getHighScore));
+    }
+
+    public void setScoreboardAvatars(VBox avatars) {
+        this.scoreboardAvatars = avatars;
     }
 }
