@@ -12,6 +12,6 @@ public class SearchPacket extends Packet {
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
 }
