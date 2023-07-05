@@ -197,6 +197,14 @@ public class RelationHandler {
             contentLabel.setBackground(Background.fill(Color.GREEN));
             contentLabel.setLayoutX(10);
             timeLabel.setLayoutX(320);
+
+            if (chatType != Chat.ChatType.PRIVATE) {
+                Label senderName = new Label(chatMessage.getSenderUsername());
+                senderName.setLayoutX(280);
+                senderName.setLayoutY(0);
+                senderName.setFont(new Font(10));
+                messagePane.getChildren().add(senderName);
+            }
         }
         contentLabel.setStyle("-fx-font-size: 15");
         timeLabel.setStyle("-fx-font-size: 10");
