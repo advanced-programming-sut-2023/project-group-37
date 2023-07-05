@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import model.chat.Chat;
 import model.chat.ChatMessage;
 import model.chat.Lobby;
+import model.chat.MessageState;
 import model.user.User;
 
 import java.io.IOException;
@@ -200,10 +201,18 @@ public class RelationHandler {
             contentLabel.setBackground(Background.fill(Color.LIGHTPINK));
             contentLabel.setLayoutX(90);
             timeLabel.setLayoutX(60);
+
+            Label sent = new Label(chatMessage.getState().getSymbol());
+            sent.setLayoutX(100);
+            sent.setLayoutY(25);
+            sent.setFont(new Font(4));
+            messagePane.getChildren().add(sent);
         } else {
             contentLabel.setBackground(Background.fill(Color.GREEN));
             contentLabel.setLayoutX(10);
             timeLabel.setLayoutX(320);
+
+            chatMessage.setState(MessageState.SEEN);
 
             if (chatType != Chat.ChatType.PRIVATE) {
                 Label senderName = new Label(chatMessage.getSenderUsername());
@@ -417,6 +426,12 @@ public class RelationHandler {
         timeLabel.setLayoutY(15);
         timeLabel.setStyle("-fx-font-size: 10");
 
+        Label sent = new Label(MessageState.SENT.getSymbol());
+        sent.setLayoutY(25);
+        sent.setLayoutX(100);
+        sent.setFont(new Font(10));
+        messagePane.getChildren().add(sent);
+
         messagePane.getChildren().add(contentLabel);
         messagePane.getChildren().add(timeLabel);
         this.addActionToMessagePane(messagePane, chatMessage, chatType);
@@ -435,6 +450,7 @@ public class RelationHandler {
             }
 
             case PUBLIC -> {
+                sent.setText(MessageState.SEEN.getSymbol());
                 this.publicChatVBox.getChildren().add(messagePane);
                 this.publicChat.addMessage(chatMessage);
                 this.sendChatPacket(new ChatPacket(this.publicChat));

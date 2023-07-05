@@ -7,9 +7,9 @@ import java.time.format.DateTimeFormatter;
 
 public class ChatMessage {
     private static int idCounter;
-    private static final DateTimeFormatter formatter;
     private final int id;
-    private transient final User sender;
+    private static final DateTimeFormatter formatter;
+    private final String senderUsername;
     private final String timeSent;
     private String message;
     private MessageState state;
@@ -21,7 +21,7 @@ public class ChatMessage {
 
     public ChatMessage(User sender, String message) {
         this.id = idCounter++;
-        this.sender = sender;
+        this.senderUsername = sender.getUsername();
         this.timeSent = LocalDateTime.now().toString();
         this.message = message;
         this.state = MessageState.SENDING;
@@ -31,16 +31,8 @@ public class ChatMessage {
         return this.id;
     }
 
-    public User getSender() {
-        return this.sender;
-    }
-
     public String getSenderUsername() {
-        return this.sender.getUsername();
-    }
-
-    public String getTimeSent() {
-        return this.timeSent;
+        return this.senderUsername;
     }
 
     public String getMessage() {

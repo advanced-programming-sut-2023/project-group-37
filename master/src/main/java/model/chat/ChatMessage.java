@@ -35,10 +35,6 @@ public class ChatMessage {
         return this.senderUsername;
     }
 
-    public String getTimeSent() {
-        return this.timeSent;
-    }
-
     public String getMessage() {
         return this.message;
     }
