@@ -121,6 +121,7 @@ public class QueryReceiver extends Thread {
 
     private void sendUsers() {
         try {
+            System.out.println(User.getUsers());
             this.dataOutputStream.writeUTF(new UsersPacket(User.getUsers()).toJson());
         } catch (IOException e) {
             throw new RuntimeException(e);
