@@ -56,7 +56,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="startButton" layoutX="41.0" layoutY="255.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="116.0" text="Start game" textFill="WHITE">
+      <Button fx:id="startButton" layoutX="41.0" layoutY="255.0" mnemonicParsing="false" onMouseClicked="#startTheGame" prefHeight="38.0" prefWidth="116.0" text="Start game" textFill="WHITE">
          <font>
             <Font name="Arial Black" size="15.0" />
          </font>

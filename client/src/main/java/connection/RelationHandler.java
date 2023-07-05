@@ -541,4 +541,8 @@ public class RelationHandler {
         lobbyAdmin.getChildren().clear();
         lobbyOthers.getChildren().clear();
     }
+
+    public void startGame() {
+        //todo
+    }
 }

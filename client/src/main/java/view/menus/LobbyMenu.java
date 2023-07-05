@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -85,6 +86,7 @@ public class LobbyMenu extends Application {
         territories.setBackground(Background.fill(Color.LIGHTYELLOW));
         usernames.setBackground(Background.fill(Color.LIGHTYELLOW));
         this.lobbyName.setText(String.valueOf(this.relationHandler.getCurrentLobby().getId()));
+        this.lobbyCapacity.setText(String.valueOf(this.relationHandler.getCurrentLobby().getCapacity()));
     }
 
     public void leaveLobby() {
@@ -94,5 +96,9 @@ public class LobbyMenu extends Application {
     public void send() {
         this.relationHandler.sendMessage(chatBox.getText(), Chat.ChatType.ROOM);
         this.chatBox.setText("");
+    }
+
+    public void startTheGame() {
+        this.relationHandler.startGame();
     }
 }
