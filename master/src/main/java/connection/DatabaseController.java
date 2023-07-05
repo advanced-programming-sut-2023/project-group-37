@@ -130,18 +130,6 @@ public class DatabaseController {
         return null;
     }
 
-    public void joinAtRoom(User user, int id) {
-        Chat room;
-        if ((room = this.getRoomById(id)) != null)
-            room.addSubscriber(user);
-    }
-
-    public void joinAtLobby(User user, int id) {
-        Lobby lobby;
-        if ((lobby = this.lobbies.get(id)) != null)
-            lobby.addUser(user);
-    }
-
     public void updatePublicChat(Chat publicChat) {
         this.publicChat = publicChat;
         for (Session session : this.currentSessions) {
@@ -151,5 +139,9 @@ public class DatabaseController {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public void removeLobby(Lobby lobby) {
+        this.lobbies.remove(lobby);
     }
 }

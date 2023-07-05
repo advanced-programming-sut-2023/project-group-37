@@ -1,14 +1,16 @@
 package view.menus;
 
+import connection.Connection;
 import connection.RelationHandler;
+import connection.packet.game.JoinRequestPacket;
 import controller.AppController;
 import controller.MultiMenuFunctions;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -19,20 +21,17 @@ import model.user.User;
 import view.enums.PopUp;
 import view.enums.Result;
 
+import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class JoinMenu extends Application {
     private final AppController appController;
     private final RelationHandler relationHandler;
-    private ArrayList<Lobby> lobbies;
     @FXML
     private TextField searchBox;
     @FXML
     private Rectangle searchButton;
-    @FXML
-    private Label wantedLobby;
     @FXML
     private AnchorPane showLobbyPane;
     @FXML
@@ -43,15 +42,10 @@ public class JoinMenu extends Application {
     private VBox admins;
     @FXML
     private VBox others;
-    private boolean hasSearched;
-    private Lobby searchedLobby;
 
     public JoinMenu() {
         this.appController = AppController.getInstance();
-        lobbies = new ArrayList<>();
         relationHandler = RelationHandler.getInstance();
-        hasSearched = false;
-        searchedLobby = null;
     }
 
     @Override
@@ -102,22 +96,30 @@ public class JoinMenu extends Application {
         }
         relationHandler.clearVBoxes();
         relationHandler.addLobbyToPane(searchedLobby);
-        hasSearched = true;
     }
 
     public void join() {
-        if (!hasSearched || searchedLobby == null) {
-            PopUp.SEARCH_LOBBY.show();
+        TextInputDialog idInput = new TextInputDialog("Enter Id to join:");
+        idInput.showAndWait();
+
+        Lobby searchedLobby = relationHandler.searchLobby(idInput.getEditor().getText());
+        if (searchedLobby == null) {
+            PopUp.LOBBY_NOT_FOUND.show();
             return;
         }
-        searchedLobby.addUser(User.getCurrentUser());
-        //nothing to do after joining a lobby ??
+
+        try {
+            Connection.getInstance().getDataOutputStream().writeUTF(new JoinRequestPacket(
+                    User.getCurrentUser(), Integer.parseInt(idInput.getEditor().getText())).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void refresh() {
+        relationHandler.clearVBoxes();
+        relationHandler.getLobbiesFromMaster();
         relationHandler.showLobbies();
-        hasSearched = false;
-        searchedLobby = null;
     }
 
     @FXML

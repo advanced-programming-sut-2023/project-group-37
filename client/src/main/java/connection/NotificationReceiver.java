@@ -2,6 +2,7 @@ package connection;
 
 import com.google.gson.Gson;
 import connection.packet.*;
+import connection.packet.game.JoinedLobbyPacket;
 import connection.packet.game.LobbiesPacket;
 import connection.packet.game.RefreshLobbyPacket;
 import connection.packet.game.TilesPacket;
@@ -56,8 +57,20 @@ public class NotificationReceiver extends Thread {
                 case FOUND_USER_PACKET -> this.handleFoundFriend(gson.fromJson(data, FoundUserPacket.class));
                 case REFRESH_LOBBY_PACKET -> this.handleRefreshLobby(gson.fromJson(data, RefreshLobbyPacket.class));
                 case LOBBIES_PACKET -> this.receiveLobbies(gson.fromJson(data, LobbiesPacket.class));
+                case JOINED_LOBBY_PACKET -> this.joinToLobby(gson.fromJson(data, JoinedLobbyPacket.class));
             }
         }
+    }
+
+    private void joinToLobby(JoinedLobbyPacket joinedLobbyPacket) {
+        this.relationHandler.setCurrentLobby(joinedLobbyPacket.getLobby());
+        this.appController.createLobby();
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        this.relationHandler.refreshLobbyUsers();
     }
 
     private void receiveLobbies(LobbiesPacket lobbiesPacket) {
@@ -66,7 +79,12 @@ public class NotificationReceiver extends Thread {
 
     private void handleRefreshLobby(RefreshLobbyPacket refreshLobbyPacket) {
         this.relationHandler.setCurrentLobby(refreshLobbyPacket.getLobby());
-        // TODO: setCurrentRoom?
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        this.relationHandler.refreshLobbyUsers();
     }
 
     private void handleFoundFriend(FoundUserPacket foundUserPacket) {
@@ -92,6 +110,12 @@ public class NotificationReceiver extends Thread {
     private void createLobby(LobbyPacket lobbyPacket) {
         this.relationHandler.setCurrentLobby(lobbyPacket.getLobby());
         this.appController.createLobby();
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        this.relationHandler.refreshLobbyUsers();
     }
 
     private void handleTiles(TilesPacket tilesPacket) {

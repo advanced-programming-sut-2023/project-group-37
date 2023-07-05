@@ -1,6 +1,7 @@
 package connection;
 
 import connection.packet.game.LobbiesPacket;
+import connection.packet.game.StartRequestPacket;
 import connection.packet.relation.AcceptRequest;
 import connection.packet.relation.ChatPacket;
 import connection.packet.relation.FriendRequestPacket;
@@ -49,7 +50,8 @@ public class RelationHandler {
     private final ArrayList<Chat> rooms;
     private VBox usernames;
     private VBox territories;
-    private Label capacity;
+
+    private Button startButton;
 
     public void setLobbyNames(VBox lobbyNames) {
         this.lobbyNames = lobbyNames;
@@ -92,12 +94,12 @@ public class RelationHandler {
         return this.publicChat;
     }
 
-    public void setCapacity(Label capacity) {
-        this.capacity = capacity;
-    }
-
     public void setUsernames(VBox usernames) {
         this.usernames = usernames;
+    }
+
+    public void setStartButton(Button startButton) {
+        this.startButton = startButton;
     }
 
     public void setTerritories(VBox territories) {
@@ -187,7 +189,7 @@ public class RelationHandler {
         Label contentLabel = new Label("   " + chatMessage.getMessage());
         Label timeLabel = new Label(chatMessage.getFormattedTimeSent());
         timeLabel.setLayoutY(15);
-        contentLabel.setLayoutY(10);
+        contentLabel.setLayoutY(12);
         contentLabel.setPrefWidth(300);
         if (User.getCurrentUser().getUsername().equals(chatMessage.getSenderUsername())) {
             contentLabel.setBackground(Background.fill(Color.LIGHTPINK));
@@ -304,7 +306,7 @@ public class RelationHandler {
 
     public void setCurrentLobby(Lobby currentLobby) {
         this.currentLobby = currentLobby;
-        this.currentRoom = currentLobby.getRoom();
+        this.setCurrentRoom(currentLobby.getRoom());
     }
 
     public void handlePublicChat(Chat chat) {
@@ -374,8 +376,20 @@ public class RelationHandler {
         });
     }
 
-    public void handleRefreshLobby(Lobby lobby) {
-        // TODO: fill here...
+    public void refreshLobbyUsers() {
+        Platform.runLater(() -> {
+            if (this.usernames.getChildren().size() > 0)
+                this.usernames.getChildren().subList(0, this.usernames.getChildren().size()).clear();
+            if (this.territories.getChildren().size() > 0)
+                this.territories.getChildren().subList(0, this.territories.getChildren().size()).clear();
+
+            int territoryNumber = 1;
+            for (User user : this.currentLobby.getUsers()) {
+                this.territories.getChildren().add(new Label(String.valueOf(territoryNumber)));
+                this.usernames.getChildren().add(new Label(user.getUsername()));
+                territoryNumber++;
+            }
+        });
     }
 
     public void sendMessage(String content, Chat.ChatType chatType) {
@@ -387,7 +401,7 @@ public class RelationHandler {
         contentLabel.setBackground(Background.fill(Color.LIGHTPINK));
         contentLabel.setStyle("-fx-font-size: 15");
         contentLabel.setLayoutX(90);
-        contentLabel.setLayoutY(10);
+        contentLabel.setLayoutY(12);
         contentLabel.setPrefWidth(300);
 
         Label timeLabel = new Label(chatMessage.getFormattedTimeSent());
@@ -485,25 +499,26 @@ public class RelationHandler {
 
     public void addLobbyToPane(Lobby lobby) {
         Label name = new Label("" + lobby.getId());
-        name.setStyle("-fx-font-size: 10");
+        name.setPrefHeight(20);
         lobbyNames.getChildren().add(name);
 
         Label capacity = new Label("" + lobby.getCapacity());
-        capacity.setStyle("-fx-font-size: 10");
+        capacity.setPrefHeight(20);
         lobbyCapacities.getChildren().add(capacity);
 
         Label admin = new Label(lobby.getAdmin().getNickName());
-        admin.setStyle("-fx-font-size: 10");
-        lobbyCapacities.getChildren().add(admin);
+        admin.setPrefHeight(20);
+        lobbyAdmin.getChildren().add(admin);
 
         Label others = new Label(setOtherUsers(lobby));
         others.setStyle("-fx-font-size: 10");
-        lobbyCapacities.getChildren().add(others);
+        others.setPrefHeight(20);
+        lobbyOthers.getChildren().add(others);
     }
 
     private String setOtherUsers(Lobby lobby) {
         StringBuilder others = new StringBuilder();
-        int counter = 0;
+        int counter = 1;
         for (User member : lobby.getUsers()) {
             if (!member.equals(lobby.getAdmin())) {
                 others.append(counter).append(". ").append(member.getNickName());
@@ -513,7 +528,6 @@ public class RelationHandler {
                 others.append(", ");
             }
         }
-        //System.out.println(others); //test
         return others.toString();
     }
 
@@ -543,6 +557,11 @@ public class RelationHandler {
     }
 
     public void startGame() {
-        //todo
+        try {
+            Connection.getInstance().getDataOutputStream().writeUTF(new StartRequestPacket(
+                    this.currentLobby.getId()).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

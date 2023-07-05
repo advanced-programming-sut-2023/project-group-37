@@ -9,7 +9,7 @@
     <children>
         <VBox fx:id="usernames" alignment="TOP_CENTER" layoutX="281.0" layoutY="54.0" prefHeight="267.0" prefWidth="138.0" spacing="20.0" stylesheets="@../CSS/GameStyle.css" />
         <VBox fx:id="territories" alignment="TOP_CENTER" layoutX="176.0" layoutY="54.0" prefHeight="267.0" prefWidth="90.0" spacing="20.0" />
-        <Label alignment="CENTER" layoutX="40.0" layoutY="54.0" prefHeight="27.0" prefWidth="68.0" text="Lobby " textFill="#00a2ff">
+        <Label alignment="CENTER" layoutX="18.0" layoutY="54.0" prefHeight="27.0" prefWidth="90.0" text="LobbyId: " textFill="#00a2ff">
             <font>
                 <Font name="Arial Black" size="18.0" />
             </font>
@@ -61,5 +61,11 @@
             <Font name="Arial Black" size="15.0" />
          </font>
       </Button>
+      <Label layoutX="27.0" layoutY="149.0" text="Map :" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="mapChoiceBox" layoutX="14.0" layoutY="187.0" prefHeight="26.0" prefWidth="138.0" />
     </children>
 </AnchorPane>

@@ -1,6 +1,8 @@
 package view.menus;
 
+import connection.Connection;
 import connection.RelationHandler;
+import connection.packet.game.LeaveRequestPacket;
 import controller.AppController;
 import controller.MultiMenuFunctions;
 import javafx.application.Application;
@@ -8,23 +10,28 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.chat.Chat;
+import model.game.Map;
 import model.user.User;
+import view.enums.Result;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 
 public class LobbyMenu extends Application {
     private final AppController appController;
     private final RelationHandler relationHandler;
+    @FXML
+    private ChoiceBox mapChoiceBox;
     @FXML
     private Button leaveButton;
     @FXML
@@ -66,6 +73,9 @@ public class LobbyMenu extends Application {
 
     @FXML
     private void initialize() {
+        for (Map map : Map.getMaps())
+            mapChoiceBox.getItems().add(map.getName());
+
         Border border = new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
 
         territories.setBorder(border);
@@ -75,11 +85,11 @@ public class LobbyMenu extends Application {
         this.startButton.setBackground(Background.fill(Color.GREEN));
         this.leaveButton.setBackground(Background.fill(Color.RED));
 
-        this.startButton.setDisable(!User.getCurrentUser().getUsername().equals(relationHandler.getCurrentLobby().getAdmin().getUsername()));
+        this.relationHandler.setStartButton(this.startButton);
 
-        this.relationHandler.setCapacity(this.lobbyCapacity);
         this.relationHandler.setUsernames(this.usernames);
         this.relationHandler.setTerritories(this.territories);
+        this.relationHandler.setRoomVBox(this.chatVBox);
         this.sendButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/send.png",
                 30).getImage()));
         this.chatVBox.setBackground(Background.fill(Color.WHITE));
@@ -90,7 +100,18 @@ public class LobbyMenu extends Application {
     }
 
     public void leaveLobby() {
-        System.out.println("leave");
+        try {
+            Connection.getInstance().getDataOutputStream().writeUTF(
+                    new LeaveRequestPacket(relationHandler.getCurrentLobby()).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            this.appController.runMenu(Result.ENTER_MAIN_MENU);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void send() {

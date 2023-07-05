@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Lobby {
     private static int idCounter;
     private final int id;
-    private final User admin;
+    private User admin;
     private final int capacity;
     private final ArrayList<User> users;
     private final Chat room;
@@ -49,6 +49,7 @@ public class Lobby {
 
     public void addUser(User user) {
         this.users.add(user);
+        this.room.addSubscriber(user);
     }
 
     public void removeMember (User user) {
@@ -58,5 +59,9 @@ public class Lobby {
 
     public boolean isPublic() {
         return isPublic;
+    }
+
+    public void setAdmin(User user) {
+        this.admin = user;
     }
 }
