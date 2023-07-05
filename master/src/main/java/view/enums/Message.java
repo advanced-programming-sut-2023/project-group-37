@@ -174,7 +174,8 @@ public enum Message {
     FEAR_RATE_SET("Fear rate has been set to"),
     TERRITORY_EXISTS("Territory number already exists !"),
     START_GAME_ERROR("Start Error"),
-    USER_IS_LOGIN("Another client loggedIn with this user!");
+    USER_IS_LOGIN("Another client loggedIn with this user!"),
+    LOBBY_IS_FULL("The lobby is full");
 
     private final String message;
 

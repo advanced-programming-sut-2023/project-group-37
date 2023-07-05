@@ -2,8 +2,7 @@ package connection;
 
 import com.google.gson.Gson;
 import connection.packet.*;
-import connection.packet.game.LobbiesPacket;
-import connection.packet.game.TilesPacket;
+import connection.packet.game.*;
 import connection.packet.registration.LoginPacket;
 import connection.packet.registration.RegisterPacket;
 import connection.packet.registration.UserPacket;
@@ -17,7 +16,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Arrays;
 
 public class QueryReceiver extends Thread {
     private final RegistrationController registrationController;
@@ -100,12 +98,48 @@ public class QueryReceiver extends Thread {
                 case REQ_UPDATE_CHAT -> this.updateChat(gson.fromJson(data, RequestChatPacket.class));
                 case ACCEPT_PACKET -> this.acceptReq(gson.fromJson(data, AcceptRequest.class));
                 case USER_PACKET -> this.updateTheUser(gson.fromJson(data, UserPacket.class));
-                case LOBBIES_PACKET -> this.sendLobbies(gson.fromJson(data, LobbiesPacket.class));
+                case LOBBIES_PACKET -> this.sendLobbies();
+                case JOIN_REQUEST_PACKET -> this.handleJoining(gson.fromJson(data, JoinRequestPacket.class));
             }
         }
     }
 
-    private void sendLobbies(LobbiesPacket lobbiesPacket) {
+    private void handleJoining(JoinRequestPacket joinRequestPacket) {
+        Lobby lobby = this.databaseController.getLobbyById(joinRequestPacket.getLobbyId());
+        if (lobby == null)
+            return;
+
+        User sender = this.databaseController.getConnectedUser(joinRequestPacket.getSenderUsername());
+        if (sender == null)
+            return;
+
+        if (lobby.getUsers().size() >= lobby.getCapacity()) {
+            try {
+                this.dataOutputStream.writeUTF(new PopUpPacket(Message.LOBBY_IS_FULL, true).toJson());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return;
+        }
+
+        lobby.addUser(sender);
+        for (User player : lobby.getUsers()) {
+            if (player != sender) {
+                try {
+                    this.databaseController.getUserDataOutputStream(player.getUsername()).writeUTF(new RefreshLobbyPacket(lobby).toJson());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        try {
+            this.dataOutputStream.writeUTF(new JoinedLobbyPacket(lobby).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void sendLobbies() {
         try {
             this.dataOutputStream.writeUTF(new LobbiesPacket(databaseController.getLobbies()).toJson());
         } catch (IOException e) {
@@ -231,8 +265,11 @@ public class QueryReceiver extends Thread {
 
     private synchronized void createLobby(RequestLobbyPacket requestLobbyPacket) {
         try {
-            this.dataOutputStream.writeUTF(new LobbyPacket(new Lobby(
-                    this.user, requestLobbyPacket.getCapacity(), requestLobbyPacket.isPublic())).toJson());
+            Lobby lobby = new Lobby(
+                    this.user, requestLobbyPacket.getCapacity(), requestLobbyPacket.isPublic());
+
+            this.databaseController.addLobby(lobby);
+            this.dataOutputStream.writeUTF(new LobbyPacket(lobby).toJson());
             System.out.println(new LobbyPacket(new Lobby(
                     this.user, requestLobbyPacket.getCapacity(), requestLobbyPacket.isPublic())).toJson());
         } catch (IOException e) {
