@@ -64,8 +64,13 @@ public class NotificationReceiver extends Thread {
                 case LOBBIES_PACKET -> this.receiveLobbies(gson.fromJson(data, LobbiesPacket.class));
                 case JOINED_LOBBY_PACKET -> this.joinToLobby(gson.fromJson(data, JoinedLobbyPacket.class));
                 case START_PACKET -> this.startGame();
+                case USERS_PACKET -> this.receiveUsers(gson.fromJson(data, UsersPacket.class));
             }
         }
+    }
+
+    private void receiveUsers(UsersPacket usersPacket) {
+        relationHandler.setAllUsers(usersPacket.getAllUsers());
     }
 
     private void startGame() {
@@ -79,8 +84,7 @@ public class NotificationReceiver extends Thread {
                     governments.add(new Government(player, GameColor.values()[index - 1], map, index));
                     index++;
                 }
-            }
-            catch (Exception ignored) {
+            } catch (Exception ignored) {
                 governments.add(new Government(User.getCurrentUser(), GameColor.values()[0], map, 1));
             }
 

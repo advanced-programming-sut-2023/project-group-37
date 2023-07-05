@@ -54,6 +54,7 @@ public class RelationHandler {
 
     private final ArrayList<Chat> privateChats;
     private final ArrayList<Chat> rooms;
+    private ArrayList<User> allUsers;
     private VBox usernames;
     private VBox territories;
     private Button startButton;
@@ -61,6 +62,14 @@ public class RelationHandler {
 
     public void setLobbyNames(VBox lobbyNames) {
         this.lobbyNames = lobbyNames;
+    }
+
+    public ArrayList<User> getAllUsers() {
+        return allUsers;
+    }
+
+    public void setAllUsers(ArrayList<User> allUsers) {
+        this.allUsers = allUsers;
     }
 
     public void setLobbyCapacities(VBox lobbyCapacities) {

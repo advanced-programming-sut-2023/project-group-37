@@ -48,6 +48,7 @@ public class ScoreboardMenu extends Application {
         relationHandler.setScoreboardRanks(ranks);
         relationHandler.setScoreboardUsers(usernames);
         relationHandler.setScoreboardHighscores(highscores);
+        relationHandler.getUsersFromServer();
         relationHandler.showScoreboard();
     }
 

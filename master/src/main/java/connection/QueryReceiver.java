@@ -83,8 +83,7 @@ public class QueryReceiver extends Thread {
             Packet packet;
             try {
                 packet = gson.fromJson(data, Packet.class);
-            }
-            catch (Exception ignored) {
+            } catch (Exception ignored) {
                 continue;
             }
             try {
@@ -112,15 +111,23 @@ public class QueryReceiver extends Thread {
                     case JOIN_REQUEST_PACKET -> this.handleJoining(gson.fromJson(data, JoinRequestPacket.class));
                     case LEAVE_REQUEST_PACKET -> this.handleLeaveLobby(gson.fromJson(data, LeaveRequestPacket.class));
                     case START_REQUEST_PACKET -> this.handleStartingGame(gson.fromJson(data, StartRequestPacket.class));
+                    case USERS_PACKET -> this.sendUsers();
                 }
-            }
-            catch (Exception ignored) {
+            } catch (Exception ignored) {
 
             }
         }
     }
 
-    private synchronized void handleStartingGame(StartRequestPacket startRequestPacket){
+    private void sendUsers() {
+        try {
+            this.dataOutputStream.writeUTF(new UsersPacket(User.getUsers()).toJson());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private synchronized void handleStartingGame(StartRequestPacket startRequestPacket) {
         Lobby lobby = this.databaseController.getLobbyById(startRequestPacket.getLobbyId());
         if (lobby == null)
             return;
@@ -359,8 +366,7 @@ public class QueryReceiver extends Thread {
 
                 if (lobby != null)
                     this.dataOutputStream.writeUTF(new StartGamePacket().toJson());
-            }
-            else {
+            } else {
                 if (this.databaseController.getConnectedUser(loginPacket.getUsername()) == null)
                     this.dataOutputStream.writeUTF(new PopUpPacket(Message.CANT_LOGIN, true).toJson());
                 else this.dataOutputStream.writeUTF(new PopUpPacket(Message.USER_IS_LOGIN, true).toJson());
