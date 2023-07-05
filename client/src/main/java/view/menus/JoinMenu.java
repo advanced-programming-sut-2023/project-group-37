@@ -9,8 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -68,6 +68,18 @@ public class JoinMenu extends Application {
 
     @FXML
     private void initialize() {
+        Border border = new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+
+        names.setBackground(Background.fill(Color.LIGHTSKYBLUE));
+        capacities.setBackground(Background.fill(Color.WHITE));
+        admins.setBackground(Background.fill(Color.LIGHTSKYBLUE));
+        others.setBackground(Background.fill(Color.WHITE));
+
+        names.setBorder(border);
+        capacities.setBorder(border);
+        admins.setBorder(border);
+        others.setBorder(border);
+
         relationHandler.setLobbyNames(names);
         relationHandler.setLobbyCapacities(capacities);
         relationHandler.setLobbyAdmin(admins);

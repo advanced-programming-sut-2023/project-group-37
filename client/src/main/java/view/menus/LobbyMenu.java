@@ -7,16 +7,16 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.chat.Chat;
+import model.user.User;
 
 import java.net.URL;
 import java.util.Objects;
@@ -24,6 +24,10 @@ import java.util.Objects;
 public class LobbyMenu extends Application {
     private final AppController appController;
     private final RelationHandler relationHandler;
+    @FXML
+    private Button leaveButton;
+    @FXML
+    private Button startButton;
     @FXML
     private Label lobbyName1;
     @FXML
@@ -61,12 +65,25 @@ public class LobbyMenu extends Application {
 
     @FXML
     private void initialize() {
+        Border border = new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+
+        territories.setBorder(border);
+        usernames.setBorder(border);
+        chatVBox.setBorder(border);
+
+        this.startButton.setBackground(Background.fill(Color.GREEN));
+        this.leaveButton.setBackground(Background.fill(Color.RED));
+
+        this.startButton.setDisable(!User.getCurrentUser().getUsername().equals(relationHandler.getCurrentLobby().getAdmin().getUsername()));
+
         this.relationHandler.setCapacity(this.lobbyCapacity);
         this.relationHandler.setUsernames(this.usernames);
         this.relationHandler.setTerritories(this.territories);
         this.sendButton.setFill(new ImagePattern(MultiMenuFunctions.getImageView("/Image/Button/send.png",
                 30).getImage()));
         this.chatVBox.setBackground(Background.fill(Color.WHITE));
+        territories.setBackground(Background.fill(Color.LIGHTYELLOW));
+        usernames.setBackground(Background.fill(Color.LIGHTYELLOW));
         this.lobbyName.setText(String.valueOf(this.relationHandler.getCurrentLobby().getId()));
     }
 
