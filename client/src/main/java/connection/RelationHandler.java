@@ -2,6 +2,7 @@ package connection;
 
 import connection.packet.game.LobbiesPacket;
 import connection.packet.game.StartRequestPacket;
+import connection.packet.game.UsersPacket;
 import connection.packet.relation.AcceptRequest;
 import connection.packet.relation.ChatPacket;
 import connection.packet.relation.FriendRequestPacket;
@@ -47,6 +48,9 @@ public class RelationHandler {
     private VBox lobbyCapacities;
     private VBox lobbyAdmin;
     private VBox lobbyOthers;
+    private VBox scoreboardUsers;
+    private VBox scoreboardRanks;
+    private VBox scoreboardHighscores;
 
     private final ArrayList<Chat> privateChats;
     private final ArrayList<Chat> rooms;
@@ -71,6 +75,17 @@ public class RelationHandler {
         this.lobbyOthers = lobbyOthers;
     }
 
+    public void setScoreboardUsers(VBox scoreboardUsers) {
+        this.scoreboardUsers = scoreboardUsers;
+    }
+
+    public void setScoreboardRanks(VBox scoreboardRanks) {
+        this.scoreboardRanks = scoreboardRanks;
+    }
+
+    public void setScoreboardHighscores(VBox scoreboardHighscores) {
+        this.scoreboardHighscores = scoreboardHighscores;
+    }
 
     public ArrayList<Lobby> getLobbies() {
         return lobbies;
@@ -587,5 +602,17 @@ public class RelationHandler {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void getUsersFromServer() {
+        try {
+            Connection.getInstance().getDataOutputStream().writeUTF(new UsersPacket(null).toJson()); // null -> Its just a request
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void showScoreboard() {
+
     }
 }

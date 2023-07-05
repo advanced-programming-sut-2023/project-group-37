@@ -1,20 +1,24 @@
 package view.menus;
 
+import connection.RelationHandler;
 import controller.AppController;
 import controller.MultiMenuFunctions;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import view.enums.Result;
 
 import java.net.URL;
 import java.util.Objects;
 
 public class ScoreboardMenu extends Application {
     private final AppController appController;
+    private final RelationHandler relationHandler;
     @FXML
     private VBox ranks;
     @FXML
@@ -24,6 +28,7 @@ public class ScoreboardMenu extends Application {
 
     public ScoreboardMenu() {
         this.appController = AppController.getInstance();
+        this.relationHandler = RelationHandler.getInstance();
     }
 
     @Override
@@ -40,6 +45,13 @@ public class ScoreboardMenu extends Application {
 
     @FXML
     private void initialize() {
+        relationHandler.setScoreboardRanks(ranks);
+        relationHandler.setScoreboardUsers(usernames);
+        relationHandler.setScoreboardHighscores(highscores);
+        relationHandler.showScoreboard();
+    }
 
+    public void enterMainMenu(MouseEvent mouseEvent) throws Exception {
+        appController.runMenu(Result.ENTER_MAIN_MENU);
     }
 }
