@@ -190,4 +190,9 @@ public class ProfileMenu extends Application {
             throw new RuntimeException(e);
         }
     }
+
+    public void showScoreboard() throws Exception {
+        new ScoreboardMenu().start(appController.getStage());
+    }
+
 }

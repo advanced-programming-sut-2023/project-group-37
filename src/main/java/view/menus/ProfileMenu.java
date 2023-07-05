@@ -177,4 +177,5 @@ public class ProfileMenu extends Application {
         User.getCurrentUser().setSlogan(null);
         slogan.setText("Slogan is empty!");
     }
+
 }
