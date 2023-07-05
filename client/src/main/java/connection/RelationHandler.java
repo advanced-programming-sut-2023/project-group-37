@@ -504,7 +504,7 @@ public class RelationHandler {
     private String setOtherUsers(Lobby lobby) {
         StringBuilder others = new StringBuilder();
         int counter = 0;
-        for (User member : lobby.getUsers().keySet()) {
+        for (User member : lobby.getUsers()) {
             if (!member.equals(lobby.getAdmin())) {
                 others.append(counter).append(". ").append(member.getNickName());
                 counter++;

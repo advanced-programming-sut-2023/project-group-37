@@ -2,17 +2,16 @@ package model.chat;
 
 import model.user.User;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Lobby {
     private static int idCounter;
     private final int id;
     private final User admin;
     private final int capacity;
-    private final HashMap<User, Integer> users;
+    private final ArrayList<User> users;
     private final Chat room;
     private final boolean isPublic;
-    private int territoryCount;
 
     static {
         idCounter = 0;
@@ -22,9 +21,8 @@ public class Lobby {
         this.id = idCounter++;
         this.admin = admin;
         this.capacity = capacity;
-        this.users = new HashMap<>();
-        this.territoryCount = 0;
-        this.users.put(admin, ++territoryCount);
+        this.users = new ArrayList<>();
+        this.users.add(admin);
         this.room = new Chat(admin, Chat.ChatType.ROOM);
         this.isPublic = isPublic;
     }
@@ -41,7 +39,7 @@ public class Lobby {
         return this.capacity;
     }
 
-    public HashMap<User, Integer> getUsers() {
+    public ArrayList<User> getUsers() {
         return this.users;
     }
 
@@ -50,8 +48,7 @@ public class Lobby {
     }
 
     public void addUser(User user) {
-        this.users.put(user, ++this.territoryCount);
-        this.room.addSubscriber(user);
+        this.users.add(user);
     }
 
     public void removeMember (User user) {

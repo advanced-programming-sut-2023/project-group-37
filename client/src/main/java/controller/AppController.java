@@ -120,10 +120,12 @@ public class AppController {
     }
 
     public void createLobby() {
-        try {
-            new LobbyMenu().start(this.stage);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        Platform.runLater(() -> {
+            try {
+                new LobbyMenu().start(this.stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }
