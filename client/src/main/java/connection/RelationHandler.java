@@ -231,16 +231,16 @@ public class RelationHandler {
         timeLabel.setLayoutY(15);
         contentLabel.setLayoutY(12);
         contentLabel.setPrefWidth(300);
+        Label sent = null;
         if (User.getCurrentUser().getUsername().equals(chatMessage.getSenderUsername())) {
             contentLabel.setBackground(Background.fill(Color.LIGHTPINK));
             contentLabel.setLayoutX(90);
             timeLabel.setLayoutX(60);
 
-            Label sent = new Label(chatMessage.getState().getSymbol());
-            sent.setLayoutX(100);
-            sent.setLayoutY(25);
-            sent.setFont(new Font(4));
-            messagePane.getChildren().add(sent);
+            sent = new Label(chatMessage.getState().getSymbol());
+            sent.setLayoutY(10);
+            sent.setLayoutX(350);
+            sent.setStyle("-fx-font-size: 30");
         } else {
             contentLabel.setBackground(Background.fill(Color.GREEN));
             contentLabel.setLayoutX(10);
@@ -260,6 +260,8 @@ public class RelationHandler {
         timeLabel.setStyle("-fx-font-size: 10");
         messagePane.getChildren().add(contentLabel);
         messagePane.getChildren().add(timeLabel);
+        if (sent != null)
+            messagePane.getChildren().add(sent);
 
         this.addActionToMessagePane(messagePane, chatMessage, chatType);
 
@@ -287,14 +289,19 @@ public class RelationHandler {
     }
 
     private void setPublicChat(Chat publicChat) {
+
         Platform.runLater(() -> {
             try {
                 this.publicChat = publicChat;
                 if (this.publicChatVBox.getChildren().size() > 0)
                     this.publicChatVBox.getChildren().subList(0, this.publicChatVBox.getChildren().size()).clear();
 
-                for (ChatMessage chatMessage : this.publicChat.getMessages())
+                for (ChatMessage chatMessage : this.publicChat.getMessages()) {
+                    if (!User.getCurrentUser().getUsername().equals(chatMessage.getSenderUsername()))
+                        chatMessage.setState(MessageState.SEEN);
                     this.publicChatVBox.getChildren().add(this.createMessagePane(chatMessage, Chat.ChatType.PUBLIC));
+                }
+
             } catch (Exception ignored) {
             }
         });
@@ -341,8 +348,11 @@ public class RelationHandler {
                 if (this.privateChatVBox.getChildren().size() > 0)
                     this.privateChatVBox.getChildren().subList(0, this.privateChatVBox.getChildren().size()).clear();
 
-                for (ChatMessage chatMessage : this.currentPrivateChat.getMessages())
+                for (ChatMessage chatMessage : this.currentPrivateChat.getMessages()) {
+                    if (!chatMessage.getSenderUsername().equals(User.getCurrentUser().getUsername()))
+                        chatMessage.setState(MessageState.SEEN);
                     this.privateChatVBox.getChildren().add(this.createMessagePane(chatMessage, Chat.ChatType.PRIVATE));
+                }
             } catch (Exception ignored) {
             }
         });
@@ -460,14 +470,14 @@ public class RelationHandler {
         timeLabel.setLayoutY(15);
         timeLabel.setStyle("-fx-font-size: 10");
 
-        Label sent = new Label(MessageState.SENT.getSymbol());
-        sent.setLayoutY(25);
-        sent.setLayoutX(100);
-        sent.setFont(new Font(10));
-        messagePane.getChildren().add(sent);
+        Label sent = new Label("**");
+        sent.setLayoutY(10);
+        sent.setLayoutX(350);
+        sent.setStyle("-fx-font-size: 30");
 
         messagePane.getChildren().add(contentLabel);
         messagePane.getChildren().add(timeLabel);
+        messagePane.getChildren().add(sent);
         this.addActionToMessagePane(messagePane, chatMessage, chatType);
 
         switch (chatType) {
