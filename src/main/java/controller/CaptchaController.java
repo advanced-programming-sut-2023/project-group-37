@@ -1,6 +1,8 @@
 package controller;
 
 import javafx.scene.image.Image;
+import view.Main;
+import view.menus.RegisterMenu;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -27,6 +29,7 @@ public class CaptchaController {
 
         random = new Random();
     }
+
     public void generateCaptcha() {
         int randomNumber = random.nextInt(0, allCaptchaImageFiles.size());
 
