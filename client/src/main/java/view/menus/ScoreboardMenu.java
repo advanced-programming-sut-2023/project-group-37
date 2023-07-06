@@ -19,6 +19,7 @@ import java.util.Objects;
 public class ScoreboardMenu extends Application {
     private final AppController appController;
     private final RelationHandler relationHandler;
+    public VBox lastSeen;
     @FXML
     private VBox status;
     @FXML
@@ -53,6 +54,7 @@ public class ScoreboardMenu extends Application {
         relationHandler.setScoreboardUsers(usernames);
         relationHandler.setScoreboardHighscores(highscores);
         relationHandler.setScoreboardAvatars(avatars);
+        relationHandler.setLastSeen(this.lastSeen);
         relationHandler.getUsersFromServer();
         relationHandler.setScoreboardStatus(status);
         try {

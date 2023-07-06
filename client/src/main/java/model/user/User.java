@@ -34,6 +34,7 @@ public class User implements Serializable {
     private int highScore;
     private int rank;
     private int avatarNumber;
+    private String lastSeen;
 
     static {
         users = new ArrayList<>();
@@ -56,6 +57,7 @@ public class User implements Serializable {
         this.isOnline = false;
         users.add(this);
         User.updateDatabase();
+        this.lastSeen = "Never";
     }
 
     public User(String username, String password, String nickname, String email, String recoveryQuestion,
@@ -74,6 +76,7 @@ public class User implements Serializable {
         this.avatarNumber = ProfileMenuController.getRandomAvatarURL();
         users.add(this);
         User.updateDatabase();
+        this.lastSeen = "Never";
     }
 
     public static User getCurrentUser() {
@@ -393,5 +396,13 @@ public class User implements Serializable {
 
     public boolean getOnline() {
         return this.isOnline;
+    }
+
+    public String getLastSeen() {
+        return lastSeen;
+    }
+
+    public void setLastSeen(String lastSeen) {
+        this.lastSeen = lastSeen;
     }
 }

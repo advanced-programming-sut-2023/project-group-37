@@ -2,7 +2,6 @@ package model.user;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import connection.DatabaseController;
 import connection.packet.registration.RegisterPacket;
 import controller.viewControllers.ProfileMenuController;
 import javafx.scene.image.Image;
@@ -22,6 +21,7 @@ public class User implements Serializable {
     private static User currentUser;
     private static ArrayList<User> users;
     private static final Gson gson;
+    private boolean isOnline;
     private ArrayList<Chat> chats;
     private ArrayList<User> friends;
     private String username;
@@ -34,7 +34,7 @@ public class User implements Serializable {
     private int highScore;
     private int rank;
     private int avatarNumber;
-    private boolean isOnline;
+    private String lastSeen;
 
     static {
         users = new ArrayList<>();
@@ -57,6 +57,7 @@ public class User implements Serializable {
         this.isOnline = false;
         users.add(this);
         User.updateDatabase();
+        this.lastSeen = "Never";
     }
 
     public User(String username, String password, String nickname, String email, String recoveryQuestion,
@@ -75,6 +76,7 @@ public class User implements Serializable {
         this.avatarNumber = ProfileMenuController.getRandomAvatarURL();
         users.add(this);
         User.updateDatabase();
+        this.lastSeen = "Never";
     }
 
     public static User getCurrentUser() {
@@ -394,5 +396,13 @@ public class User implements Serializable {
 
     public boolean getOnline() {
         return this.isOnline;
+    }
+
+    public String getLastSeen() {
+        return lastSeen;
+    }
+
+    public void setLastSeen(String lastSeen) {
+        this.lastSeen = lastSeen;
     }
 }

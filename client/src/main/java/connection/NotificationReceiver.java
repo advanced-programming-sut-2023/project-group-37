@@ -71,6 +71,18 @@ public class NotificationReceiver extends Thread {
 
     private void receiveUsers(UsersPacket usersPacket) {
         relationHandler.setAllUsers(usersPacket.getAllUsers());
+        Platform.runLater(() -> {
+            try {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ignored) {
+                }
+                relationHandler.showScoreboard();
+            }
+            catch (Exception ignored) {
+
+            }
+        });
     }
 
     private void startGame() {

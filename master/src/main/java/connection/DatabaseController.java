@@ -2,6 +2,7 @@ package connection;
 
 import com.google.gson.Gson;
 import connection.packet.game.TilesPacket;
+import connection.packet.game.UsersPacket;
 import connection.packet.registration.UserPacket;
 import connection.packet.relation.ChatPacket;
 import model.chat.Chat;
@@ -13,6 +14,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -99,9 +102,12 @@ public class DatabaseController {
 
     public void endSession(String username) {
         try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             System.out.println(username);
             for (Session session : currentSessions)
                 if (session.getUser().equals(this.getConnectedUser(username))) {
+                    session.getUser().setOnline(false);
+                    session.getUser().setLastSeen(formatter.format(LocalDateTime.parse(LocalDateTime.now().toString())));
                     System.out.println("REMOVED");
                     currentSessions.remove(session);
                     dataInputStreams.remove(this.getConnectedUser(username));
@@ -111,6 +117,8 @@ public class DatabaseController {
         catch (Exception ignored) {
 
         }
+
+        this.refreshAllStatuses();
     }
 
     public Chat getPublicChat() {
@@ -150,5 +158,17 @@ public class DatabaseController {
 
     public void removeLobby(Lobby lobby) {
         this.lobbies.remove(lobby);
+    }
+
+    public void refreshAllStatuses() {
+        for (Session session : this.currentSessions) {
+            try {
+                System.out.println("REFRESH");
+                this.getUserDataOutputStream(session.getUser().getUsername()).writeUTF(new UsersPacket(User.getUsers()).toJson());
+            } catch (IOException e) {
+                System.out.println("ERROR");
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

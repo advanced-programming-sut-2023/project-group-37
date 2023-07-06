@@ -68,6 +68,7 @@ public class RelationHandler {
     private ChoiceBox mapChoiceBox;
     private VBox scoreboardAvatars;
     private VBox scoreboardStatus;
+    private VBox lastSeen;
 
     public void setLobbyNames(VBox lobbyNames) {
         this.lobbyNames = lobbyNames;
@@ -631,12 +632,24 @@ public class RelationHandler {
     }
 
     public void showScoreboard() {
+        removeAllChild(scoreboardRanks);
+        removeAllChild(scoreboardUsers);
+        removeAllChild(scoreboardAvatars);
+        removeAllChild(scoreboardStatus);
+        removeAllChild(scoreboardHighscores);
+        removeAllChild(lastSeen);
+
         sortUsersByHighscore(this.allUsers);
         int i = 1;
         for (User user : this.allUsers) {
             addUserToScoreboard(user, i);
             i++;
         }
+    }
+
+    private void removeAllChild(VBox vBox) {
+        if (vBox.getChildren().size() > 0)
+            vBox.getChildren().subList(0, vBox.getChildren().size()).clear();
     }
 
     private void addUserToScoreboard(User user, int i) {
@@ -663,6 +676,17 @@ public class RelationHandler {
         highscore.setAlignment(Pos.CENTER);
         highscore.setStyle("-fx-font-size: 20");
         scoreboardHighscores.getChildren().add(highscore);
+
+        Label seen = new Label(user.getLastSeen());
+        seen.setTextFill(Color.WHITE);
+        if (user.getOnline())
+            seen.setText("Now");
+        seen.setPrefHeight(20);
+        seen.setPrefWidth(lastSeen.getPrefWidth());
+        seen.setTextAlignment(TextAlignment.CENTER);
+        seen.setAlignment(Pos.CENTER);
+        seen.setStyle("-fx-font-size: 20");
+        lastSeen.getChildren().add(seen);
 
         Circle avatar = new Circle(15);
         avatar.setFill(new ImagePattern(user.getAvatar()));
@@ -703,5 +727,9 @@ public class RelationHandler {
 
     public void setScoreboardStatus(VBox status) {
         this.scoreboardStatus = status;
+    }
+
+    public void setLastSeen(VBox lastSeen) {
+        this.lastSeen = lastSeen;
     }
 }

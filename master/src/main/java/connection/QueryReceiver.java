@@ -326,9 +326,6 @@ public class QueryReceiver extends Thread {
 
     void setQueryAlive(boolean isQueryAlive) {
         this.isQueryAlive = isQueryAlive;
-        if (isQueryAlive)
-            System.out.println("TRUE");
-        else System.out.println("FALSE");
     }
 
     public boolean isQueryAlive() {
@@ -356,6 +353,9 @@ public class QueryReceiver extends Thread {
                     user.setOnline(true);
                     this.databaseController.addSession(user, this.socket);
                     this.dataOutputStream.writeUTF(new PopUpPacket(Message.LOGIN_SUCCESSFUL, false).toJson());
+
+                    this.databaseController.refreshAllStatuses();
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
